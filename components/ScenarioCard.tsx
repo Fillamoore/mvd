@@ -76,30 +76,30 @@ export default function ScenarioCard({
   };
 
   return (
-    <div className="space-y-4 md:space-y-6"> {/* Reduced spacing on mobile */}
-      {/* Scenario Prompt - Full width on mobile */}
-      <div className="bg-white rounded-lg border border-gray-200 p-4 md:p-6 text-left w-full"> {/* Added w-full, reduced padding on mobile */}
-        <div className="text-base md:text-lg font-medium text-gray-900 leading-tight"> {/* Smaller font, tighter line spacing */}
+    <div className="space-y-4 md:space-y-6">
+      {/* Scenario Prompt - Medium light indigo grey */}
+      <div className="bg-indigo-50 border-indigo-200 rounded-lg border p-4 md:p-6 text-left w-full"> 
+        <div className="text-base md:text-lg font-medium text-indigo-900 leading-tight">
           {prompt}
         </div>
       </div>
 
-      {/* Response Options */}
-      <div className="space-y-3 md:space-y-4"> {/* Reduced spacing on mobile */}
+      {/* Response Options - Very light indigo grey */}
+      <div className="space-y-3 md:space-y-4">
         {responses.map((response) => (
           <div 
             key={response.id} 
             onClick={() => handleResponseClick(response.id)}
-            className="relative bg-white rounded-lg border border-gray-200 p-4 md:p-6 pr-12 md:pr-16 /* Reduced padding on mobile */
-                       cursor-pointer transition-all duration-200 ease-in-out w-full /* Added w-full */
-                       hover:shadow-md hover:border-gray-300"
+            className="relative bg-indigo-25 border-indigo-100 rounded-lg border p-4 md:p-6 pr-12 md:pr-16 
+                       cursor-pointer transition-all duration-200 ease-in-out w-full
+                       hover:shadow-md hover:border-indigo-200"
           >
-            {/* Response Text - Smaller font, tighter line spacing on mobile */}
-            <div className="text-sm md:text-base text-gray-700 leading-snug md:leading-normal"> 
+            {/* Response Text */}
+            <div className="text-sm md:text-base text-gray-800 leading-snug md:leading-normal"> 
               {response.text}
             </div>
             
-            {/* Rating Box - Slightly smaller on mobile but same position */}
+            {/* Rating Box */}
             <div className="absolute bottom-2 right-2">
               <RatingBox 
                 initialRating={ratingStates[response.id]?.value || null}
