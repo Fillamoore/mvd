@@ -1,40 +1,40 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
+interface RatingState {
+  value: number | null;
+  isIncreasing: boolean; // We need to track direction for each rating
+}
+
 interface ScenariosProgressState {
-  // Current ratings for all responses across all scenarios
   ratings: {
-    [scenarioId: string]: { // We can add scenario-level organization later
-      [responseId: string]: number | null;
+    [scenarioId: string]: {
+      [responseId: string]: RatingState;
     };
   };
   
-  // Actions to update the state
-  setRating: (scenarioId: string, responseId: string, rating: number | null) => void;
+  setRating: (scenarioId: string, responseId: string, rating: RatingState) => void;
   cycleRating: (scenarioId: string, responseId: string) => void;
   resetScenario: (scenarioId: string) => void;
   resetAllProgress: () => void;
 }
 
-// Default empty state
+// Default empty state with proper structure
 const defaultState = {
   ratings: {
-    // We'll initialize with a default scenario for now
     'default-scenario': {
-      A: null,
-      B: null, 
-      C: null,
+      A: { value: null, isIncreasing: true },
+      B: { value: null, isIncreasing: true },
+      C: { value: null, isIncreasing: true },
     },
   },
 };
 
-// Create the persisted store with clear naming
 export const useScenariosProgressLocalStore = create<ScenariosProgressState>()(
   persist(
     (set, get) => ({
       ...defaultState,
 
-      // Set a specific rating for a specific scenario
       setRating: (scenarioId, responseId, rating) =>
         set((state) => ({
           ratings: {
@@ -46,21 +46,35 @@ export const useScenariosProgressLocalStore = create<ScenariosProgressState>()(
           },
         })),
 
-      // Cycle the rating for a specific response in a specific scenario
       cycleRating: (scenarioId, responseId) =>
         set((state) => {
-          const currentRating = state.ratings[scenarioId]?.[responseId] ?? null;
+          const currentState = state.ratings[scenarioId]?.[responseId] || 
+                              { value: null, isIncreasing: true };
           
-          let newRating: number | null;
+          let newValue: number | null;
+          let newIsIncreasing: boolean = currentState.isIncreasing;
 
-          if (currentRating === null) {
-            newRating = 1;
-          } else if (currentRating === 5) {
-            newRating = 4;
-          } else if (currentRating === 1) {
-            newRating = 2;
+          if (currentState.value === null) {
+            newValue = 1;
+            newIsIncreasing = true;
           } else {
-            newRating = currentRating < 5 ? currentRating + 1 : currentRating - 1;
+            if (currentState.isIncreasing) {
+              if (currentState.value < 5) {
+                newValue = currentState.value + 1;
+                newIsIncreasing = true;
+              } else {
+                newValue = 4;
+                newIsIncreasing = false;
+              }
+            } else {
+              if (currentState.value > 1) {
+                newValue = currentState.value - 1;
+                newIsIncreasing = false;
+              } else {
+                newValue = 2;
+                newIsIncreasing = true;
+              }
+            }
           }
 
           return {
@@ -68,30 +82,28 @@ export const useScenariosProgressLocalStore = create<ScenariosProgressState>()(
               ...state.ratings,
               [scenarioId]: {
                 ...(state.ratings[scenarioId] || {}),
-                [responseId]: newRating,
+                [responseId]: { value: newValue, isIncreasing: newIsIncreasing },
               },
             },
           };
         }),
 
-      // Reset a specific scenario
       resetScenario: (scenarioId) =>
         set((state) => ({
           ratings: {
             ...state.ratings,
             [scenarioId]: {
-              A: null,
-              B: null,
-              C: null,
+              A: { value: null, isIncreasing: true },
+              B: { value: null, isIncreasing: true },
+              C: { value: null, isIncreasing: true },
             },
           },
         })),
 
-      // Reset all progress across all scenarios
       resetAllProgress: () => set(defaultState),
     }),
     {
-      name: 'scenarios-progress-store', // Clear localStorage key
+      name: 'scenarios-progress-store',
       storage: createJSONStorage(() => localStorage),
     }
   )

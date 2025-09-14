@@ -1,6 +1,6 @@
 'use client';
 
-import { useScenariosProgressLocalStore } from '@/store/useScenariosProgressLocalStore';
+import { useScenariosProgressLocalStore } from '../store/useScenariosProgressLocalStore';
 
 interface RatingBoxProps {
   scenarioId: string;
@@ -15,13 +15,13 @@ export default function RatingBox({
   readonly = false, 
   borderColor = "border-lilac-300"
 }: RatingBoxProps) {
-  // Get the rating value from the store
   const ratingValue = useScenariosProgressLocalStore((state) => 
-    state.ratings[scenarioId]?.[responseId] ?? null
+    state.ratings[scenarioId]?.[responseId]?.value ?? null
   );
   const cycleRating = useScenariosProgressLocalStore((state) => state.cycleRating);
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // ← THIS IS THE KEY FIX!
     if (!readonly) {
       cycleRating(scenarioId, responseId);
     }

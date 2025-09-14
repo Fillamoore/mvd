@@ -13,7 +13,7 @@ const sampleScenario = {
     },
     {
       id: "C",
-      text: "Third response to ensure all responses are visible and properly aligned to the right with consistent styling and font weight. This should wrap to multiple lines to test the layout properly."
+      text: "Third response to ensure all responses are visible and properly aligned to the right with consistent styling and font weight."
     }
   ]
 };
@@ -28,6 +28,7 @@ export default function TestRatingPage() {
           <p className="text-sm md:text-base text-gray-600 mb-6 md:mb-8">All three responses should be visible with proper right alignment</p>
           
           <ScenarioCard 
+            scenarioId="test-scenario-1" // ← ADD THIS REQUIRED PROP
             prompt={sampleScenario.prompt}
             responses={sampleScenario.responses}
           />

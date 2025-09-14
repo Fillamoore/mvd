@@ -1,6 +1,7 @@
 'use client';
 
 import RatingBox from './RatingBox';
+import { useScenariosProgressLocalStore } from '../store/useScenariosProgressLocalStore';
 
 interface ResponseOption {
   id: string;
@@ -28,7 +29,7 @@ export default function ScenarioCard({
     <div className="space-y-4 md:space-y-6 w-full">
       {/* Scenario Prompt - Left aligned */}
       <div className="bg-lilac-200 border-lilac-400 rounded-lg border p-4 md:p-6 text-left 
-                     w-full md:w-4/5 lg:w-3/5 self-start">
+                     max-w-[90%] md:max-w-[80%] lg:max-w-[60%] self-start"> {/* Use max-w instead of w */}
         <div className="text-base md:text-lg font-medium text-gray-900 leading-tight">
           {prompt}
         </div>
@@ -42,7 +43,7 @@ export default function ScenarioCard({
             onClick={() => handleResponseClick(response.id)}
             className="relative bg-lilac-100 border-lilac-300 rounded-lg border p-4 md:p-6 pr-12 md:pr-16 
                        cursor-pointer transition-all duration-200 ease-in-out 
-                       w-full md:w-4/5 lg:w-3/5 self-end
+                       max-w-[90%] md:max-w-[80%] lg:max-w-[60%] self-end ml-auto {/* Use max-w and ml-auto */}
                        hover:shadow-md hover:border-lilac-400"
           >
             {/* Response Text */}
@@ -50,7 +51,7 @@ export default function ScenarioCard({
               {response.text}
             </div>
             
-            {/* Rating Box - Now with scenario context */}
+            {/* Rating Box */}
             <div className="absolute bottom-2 right-2">
               <RatingBox 
                 scenarioId={scenarioId}
