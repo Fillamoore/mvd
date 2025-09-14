@@ -44,5 +44,87 @@ a {
     color-scheme: dark;
   }
 }
+/* Custom animation for concertina expansion with dynamic height */
+@keyframes concertinaExpand {
+  from {
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    max-height: 500px; /* Maximum height, but content determines actual height */
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    transform: translateY(0);
+  }
+}
 
+.concertina-enter {
+  animation: concertinaExpand 0.3s ease-out forwards;
+  overflow: hidden; /* Ensure content doesn't overflow during animation */
+}
 
+/* Ensure expert rationale boxes take full content height */
+.expert-rationale {
+  height: auto; /* Dynamic height based on content */
+  min-height: 60px; /* Minimum height */
+}
+
+//* Custom animation for concertina expansion with dynamic height */
+@keyframes concertinaExpand {
+  from {
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    max-height: 1000px; /* Much larger maximum to accommodate images */
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-top: 0;
+    transform: translateY(0);
+  }
+}
+
+/* Simplest fix: Remove height restrictions entirely */
+.concertina-enter {
+  animation: concertinaExpand 0.4s ease-out forwards;
+  overflow: visible; /* Allow content to expand naturally */
+  max-height: none !important; /* Remove any height limits */
+}
+
+/* Fade-up animation for initial content */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeUp {
+  animation: fadeUp 0.6s ease-out forwards;
+}
+
+/* Optional: Stagger delays for sequential animation */
+.delay-100 {
+  animation-delay: 0.1s;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}

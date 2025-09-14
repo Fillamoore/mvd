@@ -15,13 +15,14 @@ export default function RatingBox({
   readonly = false, 
   borderColor = "border-lilac-300"
 }: RatingBoxProps) {
+  // Get the rating value from the store
   const ratingValue = useScenariosProgressLocalStore((state) => 
     state.ratings[scenarioId]?.[responseId]?.value ?? null
   );
   const cycleRating = useScenariosProgressLocalStore((state) => state.cycleRating);
 
   const handleClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // ← THIS IS THE KEY FIX!
+    e.stopPropagation(); // Prevent event from bubbling to parent card
     if (!readonly) {
       cycleRating(scenarioId, responseId);
     }
@@ -49,9 +50,9 @@ export default function RatingBox({
         ${getBackgroundColor(ratingValue)}
         ${borderColor}
         shadow-none outline-none ring-0
-        ${readonly ? '' : 'cursor-pointer hover:opacity-90'}
+        ${readonly ? 'cursor-default opacity-90' : 'cursor-pointer hover:opacity-90'}
       `}
-      title={readonly ? '' : 'Click to cycle rating'}
+      title={readonly ? 'Rating completed' : 'Click to cycle rating'}
     >
       <span className="text-xl select-none">
         {ratingValue || ''}
