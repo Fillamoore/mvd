@@ -26,7 +26,6 @@ export default function ScenarioCard({
   onRatingChange,
   userRatings = {}
 }: ScenarioCardProps) {
-  // Initialize state with proper direction tracking for each response
   const [ratingStates, setRatingStates] = useState<{ [key: string]: RatingState }>(
     Object.fromEntries(
       responses.map(response => [
@@ -45,27 +44,22 @@ export default function ScenarioCard({
     let newIsIncreasing: boolean = currentState.isIncreasing;
 
     if (currentState.value === null) {
-      // First click: start at 1, direction increasing
       newValue = 1;
       newIsIncreasing = true;
     } else {
       if (currentState.isIncreasing) {
         if (currentState.value < 5) {
-          // Normal increment: 1→2, 2→3, etc.
           newValue = currentState.value + 1;
           newIsIncreasing = true;
         } else {
-          // At max (5): start decreasing
           newValue = 4;
           newIsIncreasing = false;
         }
       } else {
         if (currentState.value > 1) {
-          // Normal decrement: 4→3, 3→2, etc.
           newValue = currentState.value - 1;
           newIsIncreasing = false;
         } else {
-          // At min (1): start increasing again
           newValue = 2;
           newIsIncreasing = true;
         }
@@ -82,30 +76,30 @@ export default function ScenarioCard({
   };
 
   return (
-    <div className="space-y-6">
-      {/* Scenario Prompt - Left justified in its own box */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6 text-left">
-        <div className="text-lg font-medium text-gray-900">
+    <div className="space-y-4 md:space-y-6"> {/* Reduced spacing on mobile */}
+      {/* Scenario Prompt - Full width on mobile */}
+      <div className="bg-white rounded-lg border border-gray-200 p-4 md:p-6 text-left w-full"> {/* Added w-full, reduced padding on mobile */}
+        <div className="text-base md:text-lg font-medium text-gray-900 leading-tight"> {/* Smaller font, tighter line spacing */}
           {prompt}
         </div>
       </div>
 
       {/* Response Options */}
-      <div className="space-y-4">
+      <div className="space-y-3 md:space-y-4"> {/* Reduced spacing on mobile */}
         {responses.map((response) => (
           <div 
             key={response.id} 
             onClick={() => handleResponseClick(response.id)}
-            className="relative bg-white rounded-lg border border-gray-200 p-6 pr-16 
-                       cursor-pointer transition-all duration-200 ease-in-out
+            className="relative bg-white rounded-lg border border-gray-200 p-4 md:p-6 pr-12 md:pr-16 /* Reduced padding on mobile */
+                       cursor-pointer transition-all duration-200 ease-in-out w-full /* Added w-full */
                        hover:shadow-md hover:border-gray-300"
           >
-            {/* Response Text - Left aligned */}
-            <div className="text-gray-700">
+            {/* Response Text - Smaller font, tighter line spacing on mobile */}
+            <div className="text-sm md:text-base text-gray-700 leading-snug md:leading-normal"> 
               {response.text}
             </div>
             
-            {/* Rating Box - Absolutely positioned in bottom-right corner */}
+            {/* Rating Box - Slightly smaller on mobile but same position */}
             <div className="absolute bottom-2 right-2">
               <RatingBox 
                 initialRating={ratingStates[response.id]?.value || null}
