@@ -8,11 +8,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Darker indigo shades
-        'indigo-50': '#eef2ff',    // Lighter response background
-        'indigo-100': '#e0e7ff',   // Darker scenario background  
-        'indigo-200': '#c7d2fe',   // Response border
-        'indigo-300': '#a5b4fc',   // Scenario border & hover
+        // Custom lilac color palette
+        'lilac': {
+          100: '#f5f3ff',  // Very light lilac (response cards)
+          200: '#ede9fe',  // Light lilac (scenario card)
+          300: '#ddd6fe',  // Medium lilac (response border)
+          400: '#c4b5fd',  // Darker lilac (scenario border, hover)
+          900: '#4c1d95',  // Dark lilac (text)
+        },
       },
     },
   },
