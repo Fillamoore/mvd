@@ -77,10 +77,10 @@ export default function ScenarioCard({
 
   return (
     <div className="space-y-4 md:space-y-6 w-full">
-      {/* Scenario Prompt - Left aligned, darker text */}
+      {/* Scenario Prompt - Left aligned */}
       <div className="bg-lilac-200 border-lilac-400 rounded-lg border p-4 md:p-6 text-left 
-                     w-[90%] md:w-3/5 self-start ml-0 mr-auto"> {/* Left justified, 90% width on mobile, 60% on desktop */}
-        <div className="text-base md:text-lg font-medium text-gray-900 leading-tight"> {/* Much darker text */}
+                     w-[90%] md:w-3/5 self-start ml-0 mr-auto">
+        <div className="text-base md:text-lg font-medium text-gray-900 leading-tight">
           {prompt}
         </div>
       </div>
@@ -93,11 +93,11 @@ export default function ScenarioCard({
             onClick={() => handleResponseClick(response.id)}
             className="relative bg-lilac-100 border-lilac-300 rounded-lg border p-4 md:p-6 pr-12 md:pr-16 
                        cursor-pointer transition-all duration-200 ease-in-out 
-                       w-[90%] md:w-3/5 self-end ml-auto mr-0 /* Right justified, 90% width on mobile, 60% on desktop */
+                       w-[90%] md:w-3/5 self-end ml-auto mr-0
                        hover:shadow-md hover:border-lilac-400"
           >
-            {/* Response Text - Same dark color */}
-            <div className="text-sm md:text-base text-gray-900 leading-snug md:leading-normal"> {/* Same dark text */}
+            {/* Response Text - Same font weight as scenario */}
+            <div className="text-sm md:text-base text-gray-900 leading-snug md:leading-normal font-medium"> {/* Added font-medium */}
               {response.text}
             </div>
             
@@ -106,6 +106,7 @@ export default function ScenarioCard({
               <RatingBox 
                 initialRating={ratingStates[response.id]?.value || null}
                 readonly={true}
+                borderColor="border-lilac-300" // Pass border color to maintain consistency
               />
             </div>
           </div>

@@ -3,18 +3,23 @@
 interface RatingBoxProps {
   initialRating?: number | null;
   readonly?: boolean;
+  borderColor?: string; // New prop for consistent border color
 }
 
-export default function RatingBox({ initialRating = null, readonly = false }: RatingBoxProps) {
-  const getColor = (rating: number | null) => {
-    if (rating === null) return 'bg-gray-100 border-gray-300 text-gray-400';
+export default function RatingBox({ 
+  initialRating = null, 
+  readonly = false, 
+  borderColor = "border-gray-300" // Default fallback
+}: RatingBoxProps) {
+  const getBackgroundColor = (rating: number | null) => {
+    if (rating === null) return 'bg-gray-100 text-gray-400';
     switch (rating) {
-      case 1: return 'bg-red-100 border-red-300 text-red-700';
-      case 2: return 'bg-orange-100 border-orange-300 text-orange-700';
-      case 3: return 'bg-yellow-100 border-yellow-300 text-yellow-700';
-      case 4: return 'bg-green-100 border-green-300 text-green-700';
-      case 5: return 'bg-green-200 border-green-400 text-green-800';
-      default: return 'bg-gray-100 border-gray-300 text-gray-400';
+      case 1: return 'bg-red-100 text-red-700';
+      case 2: return 'bg-orange-100 text-orange-700';
+      case 3: return 'bg-yellow-100 text-yellow-700';
+      case 4: return 'bg-green-100 text-green-700';
+      case 5: return 'bg-green-200 text-green-800';
+      default: return 'bg-gray-100 text-gray-400';
     }
   };
 
@@ -24,7 +29,8 @@ export default function RatingBox({ initialRating = null, readonly = false }: Ra
         w-8 h-8 flex items-center justify-center 
         border-2 rounded-md font-bold
         transition-colors duration-200 ease-in-out
-        ${getColor(initialRating)}
+        ${getBackgroundColor(initialRating)}
+        ${borderColor} /* Use the passed border color */
         shadow-none outline-none ring-0
         ${readonly ? '' : 'cursor-pointer hover:opacity-90'}
       `}
