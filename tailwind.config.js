@@ -8,11 +8,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Add very light indigo shades
-        'indigo-25': '#f8fafc',
-        'indigo-50': '#eef2ff',
-        'indigo-100': '#e0e7ff',
-        'indigo-200': '#c7d2fe',
+        // Darker indigo shades
+        'indigo-50': '#eef2ff',    // Lighter response background
+        'indigo-100': '#e0e7ff',   // Darker scenario background  
+        'indigo-200': '#c7d2fe',   // Response border
+        'indigo-300': '#a5b4fc',   // Scenario border & hover
       },
     },
   },
