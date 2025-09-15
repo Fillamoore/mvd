@@ -1,4 +1,4 @@
-// components/MobileFooter.tsx - UPDATED
+// components/MobileFooter.tsx - VERIFY THIS EXISTS
 'use client';
 
 import Link from 'next/link';
@@ -10,7 +10,7 @@ export default function MobileFooter() {
   return (
     <footer className="bg-white border-t border-gray-200 p-3">
       <div className="flex justify-around items-center">
-        {/* Master View Icon - navigates to Mobile Master page */}
+        {/* Master View Icon */}
         <Link
           href="/mobile-master"
           className={`flex flex-col items-center p-2 rounded-lg transition-colors ${
@@ -25,7 +25,7 @@ export default function MobileFooter() {
           <span className="text-xs mt-1">Master</span>
         </Link>
 
-        {/* Scenario Player Icon - navigates to Scenario Player */}
+        {/* Scenario Player Icon */}
         <Link
           href="/scenario-player"
           className={`flex flex-col items-center p-2 rounded-lg transition-colors ${

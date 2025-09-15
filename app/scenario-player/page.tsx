@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import ScenarioCard from '@/components/ScenarioCard';
 import { sampleScenario } from '@/data/sampleScenario';
 import { useScenariosProgressLocalStore } from '@/store/useScenariosProgressLocalStore';
+import MobileFooter from '@/components/MobileFooter';
 
 export default function ScenarioPlayerPage() {
   const [isRevealed, setIsRevealed] = useState(false);
@@ -49,7 +50,7 @@ export default function ScenarioPlayerPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-8">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto pb-16 md:pb-0"> {/* Padding for mobile footer */}
         
         {/* Scenario Card */}
         <div className="mb-8">
@@ -95,6 +96,11 @@ export default function ScenarioPlayerPage() {
               Try Again
             </button>
           )}
+        </div>
+
+        {/* Mobile Footer for Scenario Player */}
+        <div className="md:hidden fixed bottom-0 left-0 right-0">
+          <MobileFooter />
         </div>
 
       </div>
