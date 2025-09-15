@@ -1,9 +1,10 @@
+// store/useScenariosProgressLocalStore.ts - COMPLETE AND CORRECTED
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
 interface RatingState {
   value: number | null;
-  isIncreasing: boolean; // We need to track direction for each rating
+  isIncreasing: boolean;
 }
 
 interface ScenariosProgressState {
@@ -13,13 +14,18 @@ interface ScenariosProgressState {
     };
   };
   
+  currentModuleId: number;
+  currentScenarioIndex: number;
+  
   setRating: (scenarioId: string, responseId: string, rating: RatingState) => void;
   cycleRating: (scenarioId: string, responseId: string) => void;
   resetScenario: (scenarioId: string) => void;
   resetAllProgress: () => void;
+  
+  setCurrentModule: (moduleId: number) => void;
+  setCurrentScenarioIndex: (index: number) => void;
 }
 
-// Default empty state with proper structure
 const defaultState = {
   ratings: {
     'default-scenario': {
@@ -28,6 +34,8 @@ const defaultState = {
       C: { value: null, isIncreasing: true },
     },
   },
+  currentModuleId: 1,
+  currentScenarioIndex: 0,
 };
 
 export const useScenariosProgressLocalStore = create<ScenariosProgressState>()(
@@ -101,6 +109,15 @@ export const useScenariosProgressLocalStore = create<ScenariosProgressState>()(
         })),
 
       resetAllProgress: () => set(defaultState),
+      
+      setCurrentModule: (moduleId) =>
+        set({ 
+          currentModuleId: moduleId,
+          currentScenarioIndex: 0 // Reset to first scenario when changing modules
+        }),
+      
+      setCurrentScenarioIndex: (index) =>
+        set({ currentScenarioIndex: index }),
     }),
     {
       name: 'scenarios-progress-store',

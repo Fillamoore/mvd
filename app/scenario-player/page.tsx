@@ -1,108 +1,136 @@
+// app/scenario-player/page.tsx - FIXED
 'use client';
 
 import { useState, useEffect } from 'react';
-import ScenarioCard from '@/components/ScenarioCard';
-import { sampleScenario } from '@/data/sampleScenario';
-import { useScenariosProgressLocalStore } from '@/store/useScenariosProgressLocalStore';
-import MobileFooter from '@/components/MobileFooter';
+import { useSearchParams, useRouter } from 'next/navigation';
+import ScenarioCard from '../../components/ScenarioCard';
+import MobileScenariosPlayerFooter from '../../components/MobileScenariosPlayerFooter';
+import DesktopScenariosPlayerFooter from '../../components/DesktopScenariosPlayerFooter';
+import { scenarios } from '../../data/scenarios';
+import { modules, getModuleById } from '../../data/modules';
+import { useScenariosProgressLocalStore } from '../../store/useScenariosProgressLocalStore';
 
-export default function ScenarioPlayerPage() {
+export default function ScenarioPlayer() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const moduleId = parseInt(searchParams.get('module') || '1');
+  const [currentScenarioIndex, setCurrentScenarioIndex] = useState(0);
   const [isRevealed, setIsRevealed] = useState(false);
-  const [showScore, setShowScore] = useState(false);
-  const ratings = useScenariosProgressLocalStore((state) => state.ratings[sampleScenario.id]);
-  const resetScenario = useScenariosProgressLocalStore((state) => state.resetScenario);
-
-  const calculateScore = () => {
-    if (!ratings) return 0;
-    
-    let totalScore = 0;
-    let totalResponses = 0;
-
-    sampleScenario.responses.forEach(response => {
-      const userRating = ratings[response.id]?.value;
-      if (userRating !== null && userRating !== undefined) {
-        const accuracy = 1 - (Math.abs(response.expertRating - userRating) / 4);
-        totalScore += accuracy;
-        totalResponses++;
-      }
-    });
-
-    return totalResponses > 0 ? (totalScore / totalResponses) : 0;
-  };
+  
+  const currentModule = getModuleById(moduleId);
+  const moduleScenarios = scenarios.filter(scenario => scenario.moduleId === moduleId);
+  const currentScenario = moduleScenarios[currentScenarioIndex];
+  
+  const ratings = useScenariosProgressLocalStore((state) => state.ratings);
+  const scenarioRatings = ratings[currentScenario?.id] || {};
+  const allRated = Object.values(scenarioRatings).every(rating => rating?.value !== null);
 
   const handleReveal = () => {
-    setIsRevealed(true);
-    // Delay score appearance until after rationale animation completes
-    setTimeout(() => setShowScore(true), 400);
+    if (allRated) {
+      setIsRevealed(true);
+    }
   };
 
-  const handleReset = () => {
+  const handlePreviousModule = () => {
+    if (moduleId > 1) {
+      router.push(`/scenario-player?module=${moduleId - 1}`);
+    }
+  };
+
+  const handleNextModule = () => {
+    if (moduleId < 49) {
+      router.push(`/scenario-player?module=${moduleId + 1}`);
+    }
+  };
+
+  const handleSkipScenario = () => {
+    if (currentScenarioIndex < moduleScenarios.length - 1) {
+      setCurrentScenarioIndex(prev => prev + 1);
+      setIsRevealed(false);
+    }
+  };
+
+  const handlePreviousScenario = () => {
+    if (currentScenarioIndex > 0) {
+      setCurrentScenarioIndex(prev => prev - 1);
+      setIsRevealed(false);
+    }
+  };
+
+  const handleNextScenario = () => {
+    if (currentScenarioIndex < moduleScenarios.length - 1) {
+      setCurrentScenarioIndex(prev => prev + 1);
+      setIsRevealed(false);
+    }
+  };
+
+  useEffect(() => {
+    setCurrentScenarioIndex(0);
     setIsRevealed(false);
-    setShowScore(false);
-    resetScenario(sampleScenario.id);
-  };
+  }, [moduleId]);
 
-  const allRated = ratings && Object.values(ratings).every(rating => 
-    rating?.value !== null && rating?.value !== undefined
-  );
-
-  const score = calculateScore();
+  if (!currentModule || !currentScenario) {
+    return (
+      <div className="h-full flex items-center justify-center">
+        <div className="text-gray-500">Loading scenario...</div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-8">
-      <div className="max-w-4xl mx-auto pb-16 md:pb-0"> {/* Padding for mobile footer */}
-        
-        {/* Scenario Card */}
-        <div className="mb-8">
-          <ScenarioCard 
-            scenarioId={sampleScenario.id}
-            prompt={sampleScenario.prompt}
-            responses={sampleScenario.responses.map(r => ({ id: r.id, text: r.text }))}
-            expertRationales={isRevealed ? sampleScenario.responses : undefined}
-            readonly={isRevealed}
-          />
+    <div className="h-full flex flex-col">
+      {/* Module Header */}
+      <div className="p-6 pb-0">
+        <h1 className="text-2xl font-bold text-gray-900">{currentModule.name}</h1>
+        <p className="text-gray-600 mt-1">{currentModule.description}</p>
+        <div className="mt-2 text-sm text-gray-500">
+          Module {moduleId} • {moduleScenarios.length} scenario{moduleScenarios.length !== 1 ? 's' : ''} {/* FIXED: moduleId instead of currentModuleId */}
         </div>
+      </div>
 
-        {/* Score Box - Fades in after rationale animation */}
-        {showScore && (
-          <div className="flex justify-end mb-8">
-            <div className="bg-lilac-100 border-lilac-300 rounded-lg border p-4 
-                          max-w-[90%] md:max-w-[80%] lg:max-w-[60%] animate-fadeIn">
-              <div className="text-xl font-bold text-gray-900 text-right">
-                {score.toFixed(2)}
-              </div>
-            </div>
-          </div>
-        )}
+      {/* Scenario Content */}
+      <div className="flex-1 overflow-auto p-6">
+        <ScenarioCard
+          scenarioId={currentScenario.id}
+          prompt={currentScenario.prompt}
+          responses={currentScenario.responses}
+          expertRationales={isRevealed ? currentScenario.responses : undefined}
+          isRevealed={isRevealed}
+        />
+      </div>
 
-        {/* Action Buttons */}
-        <div className="flex gap-4 justify-center">
-          {!isRevealed ? (
-            <button
-              onClick={handleReveal}
-              disabled={!allRated}
-              className="px-6 py-3 bg-indigo-600 text-white rounded-lg font-medium
-                       hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed
-                       transition-colors duration-200"
-            >
-              Reveal
-            </button>
-          ) : (
-            <button
-              onClick={handleReset}
-              className="px-6 py-3 bg-gray-600 text-white rounded-lg font-medium
-                       hover:bg-gray-700 transition-colors duration-200"
-            >
-              Try Again
-            </button>
-          )}
-        </div>
+      {/* Mobile Footer */}
+      <div className="md:hidden">
+        <MobileScenariosPlayerFooter
+          onReveal={handleReveal}
+          onPreviousModule={handlePreviousModule}
+          onNextModule={handleNextModule}
+          onSkipScenario={handleSkipScenario}
+          onPreviousScenario={handlePreviousScenario}
+          onNextScenario={handleNextScenario}
+          currentModuleId={moduleId}
+          currentScenarioIndex={currentScenarioIndex}
+          totalScenarios={moduleScenarios.length}
+          allRated={allRated}
+          isRevealed={isRevealed}
+        />
+      </div>
 
-        {/* Mobile Footer for Scenario Player */}
-        <div className="md:hidden fixed bottom-0 left-0 right-0">
-          <MobileFooter />
-        </div>
-
+      {/* Desktop Footer */}
+      <div className="hidden md:block">
+        <DesktopScenariosPlayerFooter
+          onReveal={handleReveal}
+          onPreviousModule={handlePreviousModule}
+          onNextModule={handleNextModule}
+          onSkipScenario={handleSkipScenario}
+          onPreviousScenario={handlePreviousScenario}
+          onNextScenario={handleNextScenario}
+          currentModuleId={moduleId} 
+          currentScenarioIndex={currentScenarioIndex}
+          totalScenarios={moduleScenarios.length}
+          allRated={allRated}
+          isRevealed={isRevealed}
+        />
       </div>
     </div>
   );

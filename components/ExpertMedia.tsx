@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 interface ExpertMediaProps {
   media: {
     url: string;
@@ -8,19 +10,16 @@ interface ExpertMediaProps {
 
 export default function ExpertMedia({ media }: ExpertMediaProps) {
   return (
-    <div className="mt-4">
-      {/* Image with border directly */}
-      <img
+    <div className="expert-media">
+      <Image
         src={media.url}
         alt={media.altText}
-        className="w-full h-auto border border-lilac-300 rounded-lg"
+        width={400}
+        height={300}
+        className="rounded-lg"
       />
-      
-      {/* Optional caption */}
       {media.caption && (
-        <p className="text-xs text-gray-500 text-center mt-2">
-          {media.caption}
-        </p>
+        <p className="caption">{media.caption}</p>
       )}
     </div>
   );

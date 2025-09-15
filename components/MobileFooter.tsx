@@ -1,11 +1,21 @@
-// components/MobileFooter.tsx - UPDATED WITH CUSTOM ICON
+// components/MobileFooter.tsx - UPDATED WITH REVEAL BUTTON
 'use client';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 
-export default function MobileFooter() {
+interface MobileFooterProps {
+  onReveal?: () => void;
+  revealDisabled?: boolean;
+  isRevealed?: boolean;
+}
+
+export default function MobileFooter({ 
+  onReal, 
+  revealDisabled = false, 
+  isRevealed = false 
+}: MobileFooterProps) {
   const pathname = usePathname();
 
   return (
@@ -29,25 +39,22 @@ export default function MobileFooter() {
           />
         </Link>
 
-        {/* Scenario Player Icon - UPDATED WITH CUSTOM IMAGE */}
-        <Link
-          href="/scenario-player"
+        {/* Reveal Button for Mobile */}
+        <button
+          onClick={onReveal}
+          disabled={revealDisabled}
           className={`flex flex-col items-center p-2 rounded-lg transition-colors ${
-            pathname === '/scenario-player' 
-              ? 'text-indigo-600 bg-indigo-50' 
-              : 'text-gray-600 hover:text-indigo-600'
+            isRevealed
+              ? 'text-green-600 bg-green-50'
+              : revealDisabled
+              ? 'text-gray-400 cursor-not-allowed'
+              : 'text-blue-600 hover:bg-blue-50'
           }`}
         >
-          <div className="w-6 h-6 rounded flex items-center justify-center overflow-hidden">
-            <Image
-              src="/scenario-player-icon.png"
-              alt="Scenario Player"
-              width={24}
-              height={24}
-              className="w-full h-full object-contain"
-            />
-          </div>
-        </Link>
+          <span className="text-sm font-medium">
+            {isRevealed ? 'Revealed' : 'Reveal'}
+          </span>
+        </button>
 
         {/* Settings Icon */}
         <Link
@@ -65,7 +72,6 @@ export default function MobileFooter() {
             height={24}
             className="w-full h-full object-contain"
           />         
-
         </Link>
       </div>
     </footer>

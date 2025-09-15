@@ -185,13 +185,16 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
 
   return (
     <div className={`${isMobile ? 'h-full flex flex-col' : 'h-full flex flex-col'} bg-white ${isMobile ? '' : 'border-r border-gray-200'} p-4`}>
-      {/* Header */}
+
+      {/* Header  - no longer needed?*/}
+      {/*
       <div className="flex items-center mb-4">
         <div className="w-8 h-8 bg-indigo-600 text-white rounded flex items-center justify-center mr-3">
           <span className="font-bold text-xs">AA</span>
         </div>
         <h1 className="text-lg font-bold text-gray-900">Advisory Accelerator</h1>
       </div>
+      */}
 
       {/* Accreditation Header */}
       <div className="mb-4">
@@ -205,7 +208,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
               onClick={() => setShowScoreBreakdown(!showScoreBreakdown)}
               className="text-xs bg-gray-100 px-2 py-1 rounded hover:bg-gray-200 transition-colors"
             >
-              Overall: {mockData.overallScore}
+              {mockData.overallScore}
             </button>
           )}
         </div>
