@@ -245,7 +245,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
       </div>
 
       {/* Timeline Progress - REDUCED MARGIN AND LARGER DOT */}
-      <div className="mb-4 px-8">
+      <div className={`mb-4 px-8 ${isMobile ? 'scale-90' : ''}`}>
         <div className="w-full bg-gray-200 rounded-full h-1.5 relative">
           <div
             className="bg-indigo-600 h-1.5 rounded-full"
