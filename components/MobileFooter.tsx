@@ -42,16 +42,6 @@ export default function MobileFooter() {
               width={24}
               height={24}
               className="w-full h-full object-contain"
-              onError={(e) => {
-                // Fallback to emoji if image missing
-                const target = e.target as HTMLImageElement;
-                target.style.display = 'none';
-                target.nextSibling?.remove(); // Remove any existing fallback
-                const fallback = document.createElement('div');
-                fallback.className = 'w-6 h-6 bg-blue-400 rounded flex items-center justify-center';
-                fallback.innerHTML = '<span class="text-white text-xs">🎮</span>';
-                target.parentNode?.appendChild(fallback);
-              }}
             />
           </div>
           <span className="text-xs mt-1">Player</span>
@@ -66,10 +56,14 @@ export default function MobileFooter() {
               : 'text-gray-600 hover:text-indigo-600'
           }`}
         >
-          <div className="w-6 h-6 bg-gray-400 rounded flex items-center justify-center">
-            <span className="text-white text-xs">⚙️</span>
-          </div>
-          <span className="text-xs mt-1">Settings</span>
+          <Image
+            src="/settings-icon.png"
+            alt="Settings"
+            width={24}
+            height={24}
+            className="w-full h-full object-contain"
+          />         
+
         </Link>
       </div>
     </footer>
