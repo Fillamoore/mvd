@@ -1,4 +1,4 @@
-// app/mobile-master/page.tsx - UPDATED NAME
+// app/mobile-master/page.tsx - UPDATED
 import MasterView from '@/components/MasterView';
 import MobileFooter from '@/components/MobileFooter';
 
