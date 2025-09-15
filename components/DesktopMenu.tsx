@@ -1,4 +1,4 @@
-// components/DesktopMenu.tsx
+// components/DesktopMenu.tsx - UPDATE IF NEEDED
 'use client';
 
 import Link from 'next/link';
@@ -27,6 +27,8 @@ export default function DesktopMenu() {
       {/* Separator */}
       <div className="w-8 h-px bg-gray-300 my-2"></div>
 
+      {/* Optional: Remove or update if this was linking to modules */}
+      {/* You might want to remove this since desktop already shows MasterView */}
     </aside>
   );
 }
