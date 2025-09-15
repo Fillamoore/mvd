@@ -1,7 +1,9 @@
-// components/DesktopSidebar.tsx - CLEANED UP
+// components/DesktopSidebar.tsx - COMPLETE WITH MODULE ICONS
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import type { SyntheticEvent } from 'react';
 
 // Mock data with deterministic values
 const mockData = {
@@ -90,11 +92,18 @@ export default function DesktopSidebar() {
   const [showScoreBreakdown, setShowScoreBreakdown] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [spiralTiles, setSpiralTiles] = useState<{id: number, row: number, col: number}[]>([]);
+  const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     setIsClient(true);
     setSpiralTiles(generateCorrectClockwiseSpiralOrder(7));
   }, []);
+
+  const handleImageError = (moduleId: number) => (e: SyntheticEvent<HTMLImageElement, Event>) => {
+    const target = e.target as HTMLImageElement;
+    target.style.display = 'none';
+    setImageErrors(prev => new Set(prev).add(moduleId));
+  };
 
   const timelinePosition = 35;
 
@@ -203,7 +212,7 @@ export default function DesktopSidebar() {
         </div>
       </div>
 
-      {/* Modules List */}
+      {/* Modules List with Icons */}
       <div className="flex-1 overflow-y-auto">
         <h3 className="text-sm font-semibold text-gray-700 mb-3">Modules</h3>
         <div className="space-y-2">
@@ -216,9 +225,33 @@ export default function DesktopSidebar() {
                   : 'bg-gray-50 border-gray-200'
               }`}
             >
-              <div className="font-medium">{module.name}</div>
+              <div className="flex items-center">
+                {/* Module Icon with Fallback */}
+                <div className="w-8 h-8 mr-3 flex-shrink-0 bg-gray-100 rounded flex items-center justify-center">
+                  {imageErrors.has(module.id) ? (
+                    <div className="w-6 h-6 bg-indigo-100 rounded flex items-center justify-center">
+                      <span className="text-xs font-medium text-indigo-600">{module.id}</span>
+                    </div>
+                  ) : (
+                    <Image
+                      src={`/module-infographics/${module.id}.png`}
+                      alt={`Module ${module.id} icon`}
+                      width={32}
+                      height={32}
+                      className="w-full h-full object-contain"
+                      onError={handleImageError(module.id)}
+                    />
+                  )}
+                </div>
+                
+                {/* Module Name */}
+                <div className="font-medium flex-1 min-w-0">
+                  {module.name}
+                </div>
+              </div>
+              
               {module.completed && (
-                <div className="text-xs text-gray-500 mt-1">
+                <div className="text-xs text-gray-500 mt-2 ml-11">
                   Score: {(module.score * 100).toFixed(0)}%
                 </div>
               )}

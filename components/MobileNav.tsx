@@ -9,7 +9,6 @@ export default function MobileNav() {
 
   const navItems = [
     { href: '/', label: '🏠', text: 'Home' },
-    { href: '/modules', label: '📚', text: 'Modules' },
     { href: '/scenario-player', label: '🎮', text: 'Player' },
     { href: '/settings', label: '⚙️', text: 'Settings' },
   ];

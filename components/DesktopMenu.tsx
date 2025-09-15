@@ -27,20 +27,6 @@ export default function DesktopMenu() {
       {/* Separator */}
       <div className="w-8 h-px bg-gray-300 my-2"></div>
 
-      {/* Master View Icon (optional - for quick access) */}
-      <Link
-        href="/modules"
-        className={`p-3 rounded-lg transition-colors ${
-          pathname === '/modules' 
-            ? 'bg-indigo-100 text-indigo-600' 
-            : 'text-gray-600 hover:bg-gray-100 hover:text-indigo-600'
-        }`}
-        title="Master View"
-      >
-        <div className="w-8 h-8 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded flex items-center justify-center">
-          <span className="text-white text-xs font-bold">M</span>
-        </div>
-      </Link>
     </aside>
   );
 }
