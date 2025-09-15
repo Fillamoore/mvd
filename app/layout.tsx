@@ -1,12 +1,15 @@
-// app/layout.tsx - UPDATED
+// app/layout.tsx - FIXED
 import { Inter } from 'next/font/google'
 import './globals.css'
 import type { Metadata, Viewport } from 'next'
 import DesktopSidebar from '@/components/DesktopSidebar'
 import DesktopMenu from '@/components/DesktopMenu'
-import MobileFooter from '@/components/MobileFooter'
 
-const inter = Inter({ subsets: ['latin'] })
+// Initialize the Inter font
+const inter = Inter({ 
+  subsets: ['latin'],
+  display: 'swap', // Optional: improves loading performance
+})
 
 export const metadata: Metadata = {
   title: 'Advisory Accelerator',
@@ -31,23 +34,22 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className={inter.className}>
+      <body>
         {/* Desktop: Three-panel layout */}
         <div className="hidden md:flex h-screen">
-          <DesktopMenu /> {/* Left menu - 80px */}
-          <DesktopSidebar /> {/* Master view sidebar */}
+          <DesktopMenu />
+          <DesktopSidebar />
           <main className="flex-1 overflow-auto bg-gray-50">
-            {children} {/* This should show Scenario Player */}
+            {children}
           </main>
         </div>
 
-        {/* Mobile: Single panel with footer */}
+        {/* Mobile: Single panel layout - NO FOOTER HERE */}
         <div className="md:hidden flex flex-col h-screen">
-          <main className="flex-1 overflow-auto bg-gray-50 pb-16"> {/* Padding for footer */}
-            {children} {/* This should show Scenario Player */}
+          <main className="flex-1 overflow-auto bg-gray-50">
+            {children}
           </main>
-          <MobileFooter /> {/* Bottom navigation */}
         </div>
       </body>
     </html>

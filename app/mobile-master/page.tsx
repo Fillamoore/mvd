@@ -1,4 +1,4 @@
-// app/mobile-master/page.tsx - UPDATED
+// app/mobile-master/page.tsx - FIXED
 import MasterView from '@/components/MasterView';
 import MobileFooter from '@/components/MobileFooter';
 
@@ -8,6 +8,7 @@ export default function MobileMasterPage() {
       <div className="flex-1 overflow-hidden">
         <MasterView isMobile={true} />
       </div>
+      {/* MobileFooter is now ONLY here, not in the layout */}
       <MobileFooter />
     </div>
   );

@@ -157,12 +157,12 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
   // Don't render grid until client-side
   if (!isClient || spiralTiles.length === 0) {
     return (
-      <div className={`${isMobile ? 'h-full flex flex-col' : 'h-full'} bg-white ${isMobile ? '' : 'border-r border-gray-200'} p-4`}>
-        <div className="flex items-center mb-6">
-          <div className="w-10 h-10 bg-indigo-600 text-white rounded flex items-center justify-center mr-3">
-            <span className="font-bold text-sm">AA</span>
+      <div className={`${isMobile ? 'h-full flex flex-col' : 'h-full flex flex-col'} bg-white ${isMobile ? '' : 'border-r border-gray-200'} p-4`}>
+        <div className="flex items-center mb-4">
+          <div className="w-8 h-8 bg-indigo-600 text-white rounded flex items-center justify-center mr-3">
+            <span className="font-bold text-xs">AA</span>
           </div>
-          <h1 className="text-xl font-bold text-gray-900">Advisory Accelerator</h1>
+          <h1 className="text-lg font-bold text-gray-900">Advisory Accelerator</h1>
         </div>
         <div className="text-sm text-gray-500">Loading grid...</div>
       </div>
@@ -184,19 +184,19 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
   });
 
   return (
-    <div className={`${isMobile ? 'h-full flex flex-col' : 'h-full'} bg-white ${isMobile ? '' : 'border-r border-gray-200'} p-4`}>
+    <div className={`${isMobile ? 'h-full flex flex-col' : 'h-full flex flex-col'} bg-white ${isMobile ? '' : 'border-r border-gray-200'} p-4`}>
       {/* Header */}
-      <div className="flex items-center mb-6">
-        <div className="w-10 h-10 bg-indigo-600 text-white rounded flex items-center justify-center mr-3">
-          <span className="font-bold text-sm">AA</span>
+      <div className="flex items-center mb-4">
+        <div className="w-8 h-8 bg-indigo-600 text-white rounded flex items-center justify-center mr-3">
+          <span className="font-bold text-xs">AA</span>
         </div>
-        <h1 className="text-xl font-bold text-gray-900">Advisory Accelerator</h1>
+        <h1 className="text-lg font-bold text-gray-900">Advisory Accelerator</h1>
       </div>
 
       {/* Accreditation Header */}
-      <div className="mb-6">
-        <div className="flex justify-between items-center mb-3">
-          <div className="text-sm font-semibold text-gray-700">
+      <div className="mb-4">
+        <div className="flex justify-between items-center mb-2">
+          <div className="text-xs font-semibold text-gray-700">
             {mockData.currentLevel}
           </div>
           
@@ -211,8 +211,8 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
         </div>
 
         {showScoreBreakdown && (
-          <div className="bg-blue-50 p-3 rounded-lg mb-3 text-xs">
-            <div className="font-semibold mb-2">Score Breakdown:</div>
+          <div className="bg-blue-50 p-2 rounded-lg mb-2 text-xs">
+            <div className="font-semibold mb-1">Score Breakdown:</div>
             <div>Foundation: 72%</div>
             <div>Intermediate: 45%</div>
             <div>Advanced: 15%</div>
@@ -220,8 +220,8 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
         )}
       </div>
 
-      {/* 7x7 Grid Visualization */}
-      <div className="mb-6">
+      {/* 7x7 Grid Visualization - SMALLER ON MOBILE */}
+      <div className={`mb-4 ${isMobile ? 'scale-75 origin-top-left' : ''}`}>
         <div className="grid grid-cols-7 gap-1 w-full">
           {grid.map((row, rowIndex) => 
             row.map((tile, colIndex) => (
@@ -245,47 +245,47 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
       </div>
 
       {/* Timeline Progress */}
-      <div className="mb-6">
-        <div className="w-full bg-gray-200 rounded-full h-2 relative">
+      <div className="mb-4">
+        <div className="w-full bg-gray-200 rounded-full h-1.5 relative">
           <div
-            className="bg-indigo-600 h-2 rounded-full"
+            className="bg-indigo-600 h-1.5 rounded-full"
             style={{ width: `${timelinePosition}%` }}
           />
-          {/* Dot positioned ON the timeline */}
+          {/* Dot positioned ON the timeline - smaller */}
           <div
-            className="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-green-500 rounded-full border-2 border-white shadow"
-            style={{ left: `${timelinePosition}%`, marginLeft: '-6px' }}
+            className="absolute top-1/2 transform -translate-y-1/2 w-2 h-2 bg-green-500 rounded-full border border-white shadow"
+            style={{ left: `${timelinePosition}%`, marginLeft: '-4px' }}
           />
         </div>
       </div>
 
-      {/* Modules List with Icons - Scrollable Container */}
+      {/* Modules List with Icons - PROPERLY CONSTRAINED */}
       <div className="flex-1 flex flex-col min-h-0">
-        <h3 className="text-sm font-semibold text-gray-700 mb-3">Modules</h3>
+        <h3 className="text-xs font-semibold text-gray-700 mb-2">Modules</h3>
         <div className="flex-1 overflow-y-auto">
-          <div className="space-y-2 pr-2">
+          <div className="space-y-1 pr-1">
             {mockData.modules.map((module) => (
               <div
                 key={module.id}
-                className={`p-3 rounded-lg border text-sm ${
+                className={`p-2 rounded border text-xs ${
                   module.completed
                     ? 'bg-green-50 border-green-200'
                     : 'bg-gray-50 border-gray-200'
                 }`}
               >
                 <div className="flex items-center">
-                  {/* Module Icon with Fallback */}
-                  <div className="w-8 h-8 mr-3 flex-shrink-0 bg-gray-100 rounded flex items-center justify-center">
+                  {/* Module Icon with Fallback - smaller */}
+                  <div className="w-6 h-6 mr-2 flex-shrink-0 bg-gray-100 rounded flex items-center justify-center">
                     {imageErrors.has(module.id) ? (
-                      <div className="w-6 h-6 bg-indigo-100 rounded flex items-center justify-center">
-                        <span className="text-xs font-medium text-indigo-600">{module.id}</span>
+                      <div className="w-4 h-4 bg-indigo-100 rounded flex items-center justify-center">
+                        <span className="text-[10px] font-medium text-indigo-600">{module.id}</span>
                       </div>
                     ) : (
                       <Image
                         src={`/module-infographics/${module.id}.png`}
                         alt={`Module ${module.id} icon`}
-                        width={32}
-                        height={32}
+                        width={24}
+                        height={24}
                         className="w-full h-full object-contain"
                         onError={handleImageError(module.id)}
                       />
@@ -293,13 +293,13 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
                   </div>
                   
                   {/* Module Name */}
-                  <div className="font-medium flex-1 min-w-0">
+                  <div className="font-medium flex-1 min-w-0 text-xs">
                     {module.name}
                   </div>
                 </div>
                 
                 {module.completed && (
-                  <div className="text-xs text-gray-500 mt-2 ml-11">
+                  <div className="text-[10px] text-gray-500 mt-1 ml-8">
                     Score: {(module.score * 100).toFixed(0)}%
                   </div>
                 )}
