@@ -220,14 +220,14 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
         )}
       </div>
 
-      {/* 7x7 Grid Visualization - CENTERED AND SMALLER */}
-      <div className={`mb-2.5 ${isMobile ? 'scale-55 origin-top' : ''} flex justify-center`}>
+      {/* 7x7 Grid Visualization - PROPERLY SIZED AND CENTERED */}
+      <div className={`mb-6 flex justify-center ${isMobile ? 'scale-90' : ''}`}> {/* Fixed scaling */}
         <div className="grid grid-cols-7 gap-1 w-fit">
           {grid.map((row, rowIndex) => 
             row.map((tile, colIndex) => (
               <div
                 key={`${rowIndex}-${colIndex}`}
-                className={`aspect-square rounded-sm border ${
+                className={`w-7 h-7 rounded-sm border ${ /* Fixed size */
                   tile?.completed
                     ? 'border-indigo-600'
                     : 'bg-gray-200 border-gray-300'
@@ -245,7 +245,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
       </div>
 
       {/* Timeline Progress - REDUCED MARGIN AND LARGER DOT */}
-      <div className="mb-4">
+      <div className="mb-4 px-8">
         <div className="w-full bg-gray-200 rounded-full h-1.5 relative">
           <div
             className="bg-indigo-600 h-1.5 rounded-full"

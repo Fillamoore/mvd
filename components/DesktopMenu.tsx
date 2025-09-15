@@ -3,12 +3,13 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 
 export default function DesktopMenu() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-20 bg-gray-50 border-r border-gray-200 flex flex-col items-center py-4">
+    <aside className="w-10 bg-gray-50 border-r border-gray-200 flex flex-col items-center py-4">
       {/* Settings Icon */}
       <Link
         href="/settings"
@@ -19,16 +20,15 @@ export default function DesktopMenu() {
         }`}
         title="Settings"
       >
-        <div className="w-8 h-8 bg-gray-400 rounded flex items-center justify-center">
-          <span className="text-white text-sm">⚙️</span>
-        </div>
+          <Image
+            src="/settings-icon.png"
+            alt="Settings"
+            width={24}
+            height={24}
+            className="w-full h-full object-contain"
+          />  
       </Link>
 
-      {/* Separator */}
-      <div className="w-8 h-px bg-gray-300 my-2"></div>
-
-      {/* Optional: Remove or update if this was linking to modules */}
-      {/* You might want to remove this since desktop already shows MasterView */}
     </aside>
   );
 }
