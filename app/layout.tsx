@@ -38,14 +38,14 @@ export default function RootLayout({
           <DesktopMenu /> {/* Left menu - 80px */}
           <DesktopSidebar /> {/* Master view sidebar */}
           <main className="flex-1 overflow-auto bg-gray-50">
-            {children} {/* Scenario Player content */}
+            {children} {/* This should show Scenario Player */}
           </main>
         </div>
 
         {/* Mobile: Single panel with footer */}
         <div className="md:hidden flex flex-col h-screen">
           <main className="flex-1 overflow-auto bg-gray-50 pb-16"> {/* Padding for footer */}
-            {children} {/* Scenario Player content */}
+            {children} {/* This should show Scenario Player */}
           </main>
           <MobileFooter /> {/* Bottom navigation */}
         </div>
