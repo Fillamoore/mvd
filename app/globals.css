@@ -1,3 +1,4 @@
+/* app/globals.css - FIXED VERSION */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -44,7 +45,8 @@ a {
     color-scheme: dark;
   }
 }
-/* Custom animation for concertina expansion with dynamic height */
+
+/* Custom animation for concertina expansion */
 @keyframes concertinaExpand {
   from {
     opacity: 0;
@@ -55,7 +57,7 @@ a {
   }
   to {
     opacity: 1;
-    max-height: 500px; /* Maximum height, but content determines actual height */
+    max-height: 500px;
     padding-top: 1rem;
     padding-bottom: 1rem;
     transform: translateY(0);
@@ -64,17 +66,17 @@ a {
 
 .concertina-enter {
   animation: concertinaExpand 0.3s ease-out forwards;
-  overflow: hidden; /* Ensure content doesn't overflow during animation */
+  overflow: hidden;
 }
 
-/* Ensure expert rationale boxes take full content height */
+/* Expert rationale boxes */
 .expert-rationale {
-  height: auto; /* Dynamic height based on content */
-  min-height: 60px; /* Minimum height */
+  height: auto;
+  min-height: 60px;
 }
 
-//* Custom animation for concertina expansion with dynamic height */
-@keyframes concertinaExpand {
+/* Updated concertina animation */
+@keyframes concertinaExpandFull {
   from {
     opacity: 0;
     max-height: 0;
@@ -85,7 +87,7 @@ a {
   }
   to {
     opacity: 1;
-    max-height: 1000px; /* Much larger maximum to accommodate images */
+    max-height: 1000px;
     padding-top: 1rem;
     padding-bottom: 1rem;
     margin-top: 0;
@@ -93,14 +95,13 @@ a {
   }
 }
 
-/* Simplest fix: Remove height restrictions entirely */
-.concertina-enter {
-  animation: concertinaExpand 0.4s ease-out forwards;
-  overflow: visible; /* Allow content to expand naturally */
-  max-height: none !important; /* Remove any height limits */
+.concertina-enter-full {
+  animation: concertinaExpandFull 0.4s ease-out forwards;
+  overflow: visible;
+  max-height: none !important;
 }
 
-/* Fade-up animation for initial content */
+/* Fade-up animation */
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -116,7 +117,6 @@ a {
   animation: fadeUp 0.6s ease-out forwards;
 }
 
-/* Optional: Stagger delays for sequential animation */
 .delay-100 {
   animation-delay: 0.1s;
 }
@@ -127,4 +127,18 @@ a {
 
 .delay-300 {
   animation-delay: 0.3s;
+}
+
+/* Additional utility classes */
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

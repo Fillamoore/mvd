@@ -1,8 +1,7 @@
-// app/layout.tsx - Enhanced with navigation
+// app/layout.tsx - UPDATED to use your existing DesktopSidebar
 import { Inter } from 'next/font/google'
 import './globals.css'
 import type { Metadata, Viewport } from 'next'
-import MobileNav from '@/components/MobileNav'
 import DesktopSidebar from '@/components/DesktopSidebar'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -32,20 +31,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {/* Desktop Layout */}
+        {/* Desktop: Two-panel layout with your existing sidebar */}
         <div className="hidden md:flex h-screen">
           <DesktopSidebar />
-          <main className="flex-1 overflow-auto">
+          <main className="flex-1 overflow-auto bg-gray-50">
             {children}
           </main>
         </div>
 
-        {/* Mobile Layout */}
+        {/* Mobile: Single panel (no sidebar) */}
         <div className="md:hidden flex flex-col h-screen">
-          <main className="flex-1 overflow-auto pb-16"> {/* Padding for bottom nav */}
+          <main className="flex-1 overflow-auto bg-gray-50 pb-16"> {/* Padding for future mobile nav */}
             {children}
           </main>
-          <MobileNav />
         </div>
       </body>
     </html>
