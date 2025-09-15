@@ -8,7 +8,6 @@ export default function MobileMasterPage() {
       <div className="flex-1 overflow-hidden">
         <MasterView isMobile={true} />
       </div>
-      {/* MobileFooter is now ONLY here, not in the layout */}
       <MobileFooter />
     </div>
   );
