@@ -220,9 +220,9 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
         )}
       </div>
 
-      {/* 7x7 Grid Visualization - SMALLER ON MOBILE */}
-      <div className={`mb-4 ${isMobile ? 'scale-75 origin-top-left' : ''}`}>
-        <div className="grid grid-cols-7 gap-1 w-full">
+      {/* 7x7 Grid Visualization - CENTERED AND SMALLER */}
+      <div className={`mb-2.5 ${isMobile ? 'scale-55 origin-top' : ''} flex justify-center`}>
+        <div className="grid grid-cols-7 gap-1 w-fit">
           {grid.map((row, rowIndex) => 
             row.map((tile, colIndex) => (
               <div
@@ -244,22 +244,22 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
         </div>
       </div>
 
-      {/* Timeline Progress */}
+      {/* Timeline Progress - REDUCED MARGIN AND LARGER DOT */}
       <div className="mb-4">
         <div className="w-full bg-gray-200 rounded-full h-1.5 relative">
           <div
             className="bg-indigo-600 h-1.5 rounded-full"
             style={{ width: `${timelinePosition}%` }}
           />
-          {/* Dot positioned ON the timeline - smaller */}
+          {/* Dot positioned ON the timeline - TWICE AS BIG */}
           <div
-            className="absolute top-1/2 transform -translate-y-1/2 w-2 h-2 bg-green-500 rounded-full border border-white shadow"
-            style={{ left: `${timelinePosition}%`, marginLeft: '-4px' }}
+            className="absolute top-1/2 transform -translate-y-1/2 w-4 h-4 bg-green-500 rounded-full border-2 border-white shadow"
+            style={{ left: `${timelinePosition}%`, marginLeft: '-8px' }}
           />
         </div>
       </div>
 
-      {/* Modules List with Icons - PROPERLY CONSTRAINED */}
+      {/* Modules List with Icons */}
       <div className="flex-1 flex flex-col min-h-0">
         <h3 className="text-xs font-semibold text-gray-700 mb-2">Modules</h3>
         <div className="flex-1 overflow-y-auto">
@@ -274,7 +274,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
                 }`}
               >
                 <div className="flex items-center">
-                  {/* Module Icon with Fallback - smaller */}
+                  {/* Module Icon with Fallback */}
                   <div className="w-6 h-6 mr-2 flex-shrink-0 bg-gray-100 rounded flex items-center justify-center">
                     {imageErrors.has(module.id) ? (
                       <div className="w-4 h-4 bg-indigo-100 rounded flex items-center justify-center">

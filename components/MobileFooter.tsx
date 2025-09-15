@@ -1,8 +1,9 @@
-// components/MobileFooter.tsx - VERIFY THIS EXISTS
+// components/MobileFooter.tsx - UPDATED WITH CUSTOM ICON
 'use client';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 
 export default function MobileFooter() {
   const pathname = usePathname();
@@ -25,7 +26,7 @@ export default function MobileFooter() {
           <span className="text-xs mt-1">Master</span>
         </Link>
 
-        {/* Scenario Player Icon */}
+        {/* Scenario Player Icon - UPDATED WITH CUSTOM IMAGE */}
         <Link
           href="/scenario-player"
           className={`flex flex-col items-center p-2 rounded-lg transition-colors ${
@@ -34,8 +35,24 @@ export default function MobileFooter() {
               : 'text-gray-600 hover:text-indigo-600'
           }`}
         >
-          <div className="w-6 h-6 bg-blue-400 rounded flex items-center justify-center">
-            <span className="text-white text-xs">🎮</span>
+          <div className="w-6 h-6 rounded flex items-center justify-center overflow-hidden">
+            <Image
+              src="/scenario-player-icon.png"
+              alt="Scenario Player"
+              width={24}
+              height={24}
+              className="w-full h-full object-contain"
+              onError={(e) => {
+                // Fallback to emoji if image missing
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                target.nextSibling?.remove(); // Remove any existing fallback
+                const fallback = document.createElement('div');
+                fallback.className = 'w-6 h-6 bg-blue-400 rounded flex items-center justify-center';
+                fallback.innerHTML = '<span class="text-white text-xs">🎮</span>';
+                target.parentNode?.appendChild(fallback);
+              }}
+            />
           </div>
           <span className="text-xs mt-1">Player</span>
         </Link>
