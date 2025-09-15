@@ -10,9 +10,13 @@ const mockData = {
   showOverallScore: true,
   progress: 0.25,
   modules: [
-    { id: 1, name: 'Client Discovery', completed: true, score: 0.85 },
-    { id: 2, name: 'Requirements Analysis', completed: true, score: 0.92 },
-    { id: 3, name: 'Solution Design', completed: false, score: 0 },
+    { id: 1, name: 'Growth mindset', completed: true, score: 0.85 },
+    { id: 2, name: 'Professional curiosity', completed: true, score: 0.92 },
+    { id: 3, name: 'Active listening', completed: false, score: 0 },
+    { id: 4, name: 'Clear writing', completed: false, score: 0 },
+    { id: 5, name: 'Structured thinking', completed: false, score: 0 },
+    { id: 6, name: 'Time management', completed: false, score: 0 },
+    { id: 7, name: 'Stakeholder awareness', completed: false, score: 0 },
   ]
 };
 
