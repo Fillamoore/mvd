@@ -20,10 +20,13 @@ export default function MobileFooter() {
               : 'text-gray-600 hover:text-indigo-600'
           }`}
         >
-          <div className="w-6 h-6 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded flex items-center justify-center">
-            <span className="text-white text-xs font-bold">M</span>
-          </div>
-          <span className="text-xs mt-1">Master</span>
+          <Image
+            src="/master-icon.png"
+            alt="Master Screen"
+            width={24}
+            height={24}
+            className="w-full h-full object-contain"
+          />
         </Link>
 
         {/* Scenario Player Icon - UPDATED WITH CUSTOM IMAGE */}
@@ -44,7 +47,6 @@ export default function MobileFooter() {
               className="w-full h-full object-contain"
             />
           </div>
-          <span className="text-xs mt-1">Player</span>
         </Link>
 
         {/* Settings Icon */}
