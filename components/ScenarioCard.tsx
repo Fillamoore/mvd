@@ -1,71 +1,62 @@
-// components/ScenarioCard.tsx - PROPERLY TYPED
+// components/ScenarioCard.tsx - FIXED VERSION
 'use client';
 
 import RatingBox from './RatingBox';
 import ExpertMedia from './ExpertMedia';
 import { useScenariosProgressLocalStore } from '../store/useScenariosProgressLocalStore';
-
-interface ResponseOption {
-  id: string;
-  text: string;
-}
-
-interface ExpertMediaType {
-  url: string;
-  caption?: string;
-  altText: string;
-}
-
-interface Resource {
-  type: 'article' | 'video' | 'intranet' | 'policy';
-  title: string;
-  url: string;
-  description: string;
-}
-
-interface ScenarioResponse {
-  id: string;
-  text: string;
-  expertRationale: string;
-  expertRating: number;
-  expertMedia?: ExpertMediaType;
-  resources?: Resource[];
-}
+import { getScenarioUniqueId } from '@/data/scenarios';
+import type { ExpertMedia as ExpertMediaType, Resource } from '@/data/scenarios';
 
 interface ScenarioCardProps {
-  scenarioId: string;
+  scenarioId: number;
+  moduleId: number;
   prompt: string;
-  responses: ResponseOption[];
-  expertRationales?: ScenarioResponse[];
+  responses: Array<{
+    id: string;
+    text: string;
+  }>;
+  expertRationales?: Array<{
+    id: string;
+    text: string;
+    expertRationale: string;
+    expertRating: number;
+    expertMedia?: ExpertMediaType;
+    resources?: Resource[];
+  }>;
   readonly?: boolean;
   isRevealed?: boolean;
 }
 
 export default function ScenarioCard({ 
   scenarioId, 
+  moduleId,        
   prompt, 
   responses, 
   expertRationales, 
   readonly = false,
   isRevealed = false
 }: ScenarioCardProps) {
-  const cycleRating = useScenariosProgressLocalStore((state) => state.cycleRating);
-  const ratings = useScenariosProgressLocalStore((state) => state.ratings[scenarioId] || {});
+  const uniqueScenarioId = getScenarioUniqueId(moduleId, scenarioId);
   
+  const cycleRating = useScenariosProgressLocalStore((state) => state.cycleRating);
+  const allRatings = useScenariosProgressLocalStore((state) => state.ratings);
+  const scenarioRatings = allRatings[uniqueScenarioId] || {};
+
   const handleResponseClick = (responseId: string) => {
     if (!readonly && !isRevealed) {
-      cycleRating(scenarioId, responseId);
+      cycleRating(uniqueScenarioId, responseId);
     }
   };
 
-  const getRatingColor = (rating: number) => {
+  // FIXED: Get the proper Tailwind classes for the rating (matching RatingBox component)
+  const getRatingClass = (rating: number): string => {
     switch (rating) {
-      case 1: return 'bg-red-500 text-white';
-      case 2: return 'bg-orange-500 text-white';
-      case 3: return 'bg-yellow-500 text-white';
-      case 4: return 'bg-green-500 text-white';
-      case 5: return 'bg-green-600 text-white';
-      default: return 'bg-gray-300 text-gray-600';
+      case 1: return 'bg-red-100 text-red-700 border-red-300';
+      case 2: return 'bg-orange-100 text-orange-700 border-orange-300';
+      case 3: return 'bg-yellow-100 text-yellow-700 border-yellow-300';
+      case 4: return 'bg-green-100 text-green-700 border-green-300';
+      case 5: return 'bg-green-200 text-green-800 border-green-400';
+      default: return 'bg-gray-100 text-gray-400 border-gray-300';
     }
   };
 
@@ -78,7 +69,7 @@ export default function ScenarioCard({
       <div className="responses-container space-y-4 ml-auto max-w-md">
         {responses.map((response) => {
           const expertResponse = expertRationales?.find(r => r.id === response.id);
-          const userRating = ratings[response.id]?.value || 0;
+          const userRating = scenarioRatings[response.id]?.value || 0;
           
           return (
             <div key={response.id} className="response-container">
@@ -86,43 +77,57 @@ export default function ScenarioCard({
                 className="response-card bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm cursor-pointer transition-all duration-200 hover:shadow-md"
                 onClick={() => handleResponseClick(response.id)}
               >
-                <div className="flex justify-between items-start">
-                  <p className="text-gray-800 font-medium flex-1 mr-4">{response.text}</p>
+                <div className="flex flex-col"> {/* FIXED: Changed to flex-col */}
+                  <p className="text-gray-800 font-medium flex-1 mb-4">{response.text}</p>
                   
-                  {!isRevealed && (
-                    <div 
-                      className="flex-shrink-0"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (!readonly) {
-                          cycleRating(scenarioId, response.id);
-                        }
-                      }}
-                    >
-                      <RatingBox 
-                        scenarioId={scenarioId}
-                        responseId={response.id}
-                        readonly={readonly}
-                      />
-                    </div>
-                  )}
-                  
-                  {isRevealed && expertResponse && (
-                    <div className={`flex-shrink-0 w-8 h-8 rounded-md flex items-center justify-center font-bold text-sm ${getRatingColor(expertResponse.expertRating)}`}>
-                      {expertResponse.expertRating}
-                    </div>
-                  )}
+                  <div className="flex justify-end"> {/* FIXED: Added container to align rating to bottom right */}
+                    {!isRevealed && (
+                      <div 
+                        className="flex-shrink-0"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (!readonly) {
+                            cycleRating(uniqueScenarioId, response.id);
+                          }
+                        }}
+                      >
+                        <RatingBox 
+                          scenarioId={uniqueScenarioId}
+                          responseId={response.id}
+                          readonly={readonly}
+                        />
+                      </div>
+                    )}
+                    
+                    {isRevealed && expertResponse && (
+                      // FIXED: Use exact same RatingBox styling and dimensions
+                      <div className={`
+                        w-8 h-8 flex items-center justify-center 
+                        border-2 rounded-md font-bold text-xl
+                        ${getRatingClass(expertResponse.expertRating)}
+                        flex-shrink-0
+                      `}>
+                        {expertResponse.expertRating}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
 
               {isRevealed && expertResponse && (
                 <div className="expert-rationale-container">
                   <div className="expert-rationale bg-yellow-50 border border-yellow-200 rounded-lg p-4 mt-2 shadow-sm">
-                    <div className="flex justify-between items-start mb-3">
+                    <div className="flex justify-between items-center mb-3">
                       <h4 className="text-sm font-semibold text-yellow-800">Expert Rationale</h4>
-                      <span className={`w-6 h-6 rounded-md flex items-center justify-center font-bold text-xs ${getRatingColor(expertResponse.expertRating)}`}>
+                      {/* FIXED: Use exact same RatingBox styling and dimensions as response cards */}
+                      <div className={`
+                        w-8 h-8 flex items-center justify-center 
+                        border-2 rounded-md font-bold text-xl
+                        ${getRatingClass(expertResponse.expertRating)}
+                        flex-shrink-0
+                      `}>
                         {expertResponse.expertRating}
-                      </span>
+                      </div>
                     </div>
                     <p className="text-yellow-700 text-sm mb-3">{expertResponse.expertRationale}</p>
                     

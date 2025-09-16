@@ -1,4 +1,5 @@
 // data/scenarios.ts
+
 export interface ExpertMedia {
   url: string;
   caption?: string;
@@ -13,7 +14,7 @@ export interface Resource {
 }
 
 export interface ScenarioResponse {
-  id: string;
+  id: string; // KEEP AS STRING (A, B, C)
   text: string;
   expertRationale: string;
   expertRating: number;
@@ -22,7 +23,7 @@ export interface ScenarioResponse {
 }
 
 export interface Scenario {
-  id: string;
+  id: number; // SCENARIO NUMBER WITHIN MODULE (1-5)
   moduleId: number;
   prompt: string;
   responses: ScenarioResponse[];
@@ -31,32 +32,38 @@ export interface Scenario {
 export const scenarios: Scenario[] = [
   // MODULE 1: Growth mindset (5 scenarios)
   {
-    id: 'growth-mindset-1',
+    id: 1, // Scenario 1 of Module 1
     moduleId: 1,
-    prompt: 'A junior team member is struggling with a complex technical problem and says "I\'m just not good at this kind of work." How do you respond?',
+    prompt: "A client is hesitant about migrating to the cloud due to security concerns. They're particularly worried about data sovereignty and compliance with regional regulations. How do you address their specific concerns while maintaining confidence in the cloud solution?",
     responses: [
       {
-        id: 'A',
-        text: 'Tell them to focus on their strengths and assign the task to someone else',
-        expertRationale: 'This avoids addressing the growth mindset issue and reinforces fixed mindset thinking.',
+        id: "A",
+        text: "Explain that cloud providers often have better security than on-premise solutions due to dedicated security teams and continuous updates.",
+        expertRationale: "This is a good start as it addresses the security concern directly with factual information about cloud provider capabilities. Major providers like AWS, Azure, and GCP invest billions in security and offer more robust protection than most companies can achieve on-premise.",
+        expertRating: 4,
+        // ADD THE EXPERT MEDIA TO THIS RESPONSE
+        expertMedia: {
+          url: "/expert-media/cloud-security-insight.png",
+          caption: "Cloud Shared Responsibility Model",
+          altText: "Diagram showing how cloud security is a shared responsibility between provider and customer"
+        }
+      },
+      {
+        id: "B", 
+        text: "Suggest they maintain a hybrid approach to keep sensitive data on-premise while using cloud for less critical applications.",
+        expertRationale: "While this seems practical, it avoids addressing the core concern about cloud security and may reinforce their fears rather than building confidence. A hybrid approach often creates more complexity without solving the fundamental trust issue.",
         expertRating: 2
       },
       {
-        id: 'B',
-        text: 'Explain that abilities can be developed through practice and offer to pair on the problem',
-        expertRationale: 'Excellent approach. Promotes growth mindset and turns challenge into learning opportunity.',
-        expertRating: 5
-      },
-      {
-        id: 'C',
-        text: 'Ignore the comment and just provide the technical solution',
-        expertRationale: 'Misses the underlying mindset issue and fails to support development.',
+        id: "C",
+        text: "Tell them that security is their responsibility regardless of where the data is stored, so the location doesn't matter.",
+        expertRationale: "This is dismissive and incorrect. While clients have responsibilities, cloud providers offer significant security advantages and compliance certifications that should be highlighted. This response misses the opportunity to educate and build trust.",
         expertRating: 1
       }
     ]
   },
   {
-    id: 'growth-mindset-2',
+    id: 2, // Scenario 2 of Module 1
     moduleId: 1,
     prompt: 'A colleague receives critical feedback on their work and becomes defensive. How do you help them reframe this?',
     responses: [
@@ -81,7 +88,7 @@ export const scenarios: Scenario[] = [
     ]
   },
   {
-    id: 'growth-mindset-3',
+    id: 3, // Scenario 3 of Module 1
     moduleId: 1,
     prompt: 'You\'re assigned a project outside your comfort zone. What\'s your approach?',
     responses: [
@@ -106,7 +113,7 @@ export const scenarios: Scenario[] = [
     ]
   },
   {
-    id: 'growth-mindset-4',
+    id: 4, // Scenario 4 of Module 1
     moduleId: 1,
     prompt: 'A team member fails at a task they\'ve been practicing. How do you encourage them?',
     responses: [
@@ -131,7 +138,7 @@ export const scenarios: Scenario[] = [
     ]
   },
   {
-    id: 'growth-mindset-5',
+    id: 5, // Scenario 5 of Module 1
     moduleId: 1,
     prompt: 'How do you respond when someone says "I\'m not a natural leader"?',
     responses: [
@@ -158,7 +165,7 @@ export const scenarios: Scenario[] = [
 
   // MODULE 2: Professional curiosity (5 scenarios)
   {
-    id: 'professional-curiosity-1',
+    id: 1, // Scenario 1 of Module 2
     moduleId: 2,
     prompt: 'During a client meeting, the client mentions an unfamiliar industry term. What do you do?',
     responses: [
@@ -183,7 +190,7 @@ export const scenarios: Scenario[] = [
     ]
   },
   {
-    id: 'professional-curiosity-2',
+    id: 2, // Scenario 2 of Module 2
     moduleId: 2,
     prompt: 'You notice an unusual pattern in client data. How do you investigate?',
     responses: [
@@ -208,7 +215,7 @@ export const scenarios: Scenario[] = [
     ]
   },
   {
-    id: 'professional-curiosity-3',
+    id: 3, // Scenario 3 of Module 2
     moduleId: 2,
     prompt: 'A colleague from another department describes their work. How do you engage?',
     responses: [
@@ -233,7 +240,7 @@ export const scenarios: Scenario[] = [
     ]
   },
   {
-    id: 'professional-curiosity-4',
+    id: 4, // Scenario 4 of Module 2
     moduleId: 2,
     prompt: 'You read an article contradicting your current approach. How do you respond?',
     responses: [
@@ -258,7 +265,7 @@ export const scenarios: Scenario[] = [
     ]
   },
   {
-    id: 'professional-curiosity-5',
+    id: 5, // Scenario 5 of Module 2
     moduleId: 2,
     prompt: 'A client describes a problem you\'ve solved before. How do you approach?',
     responses: [
@@ -285,7 +292,7 @@ export const scenarios: Scenario[] = [
 
   // MODULE 3: Active listening (5 scenarios)
   {
-    id: 'active-listening-1',
+    id: 1, // Scenario 1 of Module 3
     moduleId: 3,
     prompt: 'A team member is explaining a complex problem. How do you ensure understanding?',
     responses: [
@@ -309,11 +316,12 @@ export const scenarios: Scenario[] = [
       }
     ]
   },
-  // ... Continue this pattern for all 49 modules, each with 5 scenarios
+
+  // ... Continue this pattern for all modules: id: 1-5 for each module
 
   // MODULE 49: Networking for influence (5 scenarios)
   {
-    id: 'networking-influence-1',
+    id: 1, // Scenario 1 of Module 49
     moduleId: 49,
     prompt: 'You want to build influence with a key decision-maker. What\'s your approach?',
     responses: [
@@ -338,7 +346,7 @@ export const scenarios: Scenario[] = [
     ]
   },
   {
-    id: 'networking-influence-2',
+    id: 2, // Scenario 2 of Module 49
     moduleId: 49,
     prompt: 'How do you maintain professional relationships with contacts you rarely see?',
     responses: [
@@ -363,7 +371,7 @@ export const scenarios: Scenario[] = [
     ]
   },
   {
-    id: 'networking-influence-3',
+    id: 3, // Scenario 3 of Module 49
     moduleId: 49,
     prompt: 'You meet someone influential at a conference. How do you follow up?',
     responses: [
@@ -388,7 +396,7 @@ export const scenarios: Scenario[] = [
     ]
   },
   {
-    id: 'networking-influence-4',
+    id: 4, // Scenario 4 of Module 49
     moduleId: 49,
     prompt: 'How do you build network influence across different organizational levels?',
     responses: [
@@ -413,7 +421,7 @@ export const scenarios: Scenario[] = [
     ]
   },
   {
-    id: 'networking-influence-5',
+    id: 5, // Scenario 5 of Module 49
     moduleId: 49,
     prompt: 'A contact helps you significantly. How do you strengthen this relationship?',
     responses: [
@@ -439,8 +447,14 @@ export const scenarios: Scenario[] = [
   }
 ];
 
-export const getScenarioById = (id: string) => {
-  return scenarios.find(scenario => scenario.id === id);
+// Helper function to get unique scenario identifier
+export const getScenarioUniqueId = (moduleId: number, scenarioId: number): string => {
+  return `${moduleId}.${scenarioId}`;
+};
+
+// UPDATE helper functions to work with moduleId + scenarioId
+export const getScenarioById = (moduleId: number, scenarioId: number) => {
+  return scenarios.find(scenario => scenario.moduleId === moduleId && scenario.id === scenarioId);
 };
 
 export const getScenariosByModuleId = (moduleId: number) => {
@@ -451,7 +465,6 @@ export const getScenarioCountByModuleId = (moduleId: number) => {
   return getScenariosByModuleId(moduleId).length;
 };
 
-// Get random scenario from a module (for demo purposes)
 export const getRandomScenarioFromModule = (moduleId: number) => {
   const moduleScenarios = getScenariosByModuleId(moduleId);
   if (moduleScenarios.length === 0) return null;

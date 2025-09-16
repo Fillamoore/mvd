@@ -1,51 +1,52 @@
-// app/layout.tsx - FIXED
-import { Inter } from 'next/font/google'
-import './globals.css'
-import type { Metadata, Viewport } from 'next'
-import DesktopSidebar from '@/components/DesktopSidebar'
-import DesktopMenu from '@/components/DesktopMenu'
+// app/layout.tsx - WITH METADATA AND CSS IMPORT
 
-// Initialize the Inter font
-const inter = Inter({ 
-  subsets: ['latin'],
-  display: 'swap', // Optional: improves loading performance
-})
+import type { Metadata } from 'next';
+import './globals.css'; // MAKE SURE THIS IMPORT EXISTS
+import { ReactNode } from 'react';
+import DesktopSidebar from '../components/DesktopSidebar';
+import DesktopMenu from '../components/DesktopMenu';
 
 export const metadata: Metadata = {
   title: 'Advisory Accelerator',
-  description: 'Enabling advisory-led working at pace and scale',
-  manifest: '/manifest.json',
-  icons: {
-    icon: '/aaicon.ico',
-  },
-}
+  description: 'Enabling Advisory-led working at pace and scale',
+};
 
-export const viewport: Viewport = {
-  themeColor: '#000000',
+// REMOVE viewport from metadata and use the new format
+export const viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
+};
+
+interface RootLayoutProps {
+  children: ReactNode;
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className={inter.className}>
-      <body>
-        {/* Desktop: Three-panel layout */}
-        <div className="hidden md:flex h-screen">
-          <DesktopMenu />
-          <DesktopSidebar />
-          <main className="flex-1 overflow-auto bg-gray-50">
-            {children}
-          </main>
+    <html>
+      <body className="flex flex-col h-screen">
+        {/* Desktop layout */}
+        <div className="hidden md:flex flex-col h-screen">
+          {/* Header menu - fixed height */}
+          <header className="h-10 flex-shrink-0">
+            <DesktopMenu />
+          </header>
+          
+          {/* Main content area - grows to fill remaining space */}
+          <div className="flex flex-1 overflow-hidden">
+            {/* Sidebar - fixed width */}
+            <aside className="w-80 flex-shrink-0 border-r border-gray-200 overflow-auto">
+              <DesktopSidebar />
+            </aside>
+            
+            {/* Main content - flexible width */}
+            <main className="flex-1 overflow-auto bg-gray-50">
+              {children}
+            </main>
+          </div>
         </div>
 
-        {/* Mobile: Single panel layout - NO FOOTER HERE */}
+        {/* Mobile layout */}
         <div className="md:hidden flex flex-col h-screen">
           <main className="flex-1 overflow-auto bg-gray-50">
             {children}
@@ -53,5 +54,5 @@ export default function RootLayout({
         </div>
       </body>
     </html>
-  )
+  );
 }

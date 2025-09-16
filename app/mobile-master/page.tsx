@@ -1,6 +1,6 @@
 // app/mobile-master/page.tsx - FIXED
 import MasterView from '@/components/MasterView';
-import MobileFooter from '@/components/MobileFooter';
+import MobileFooter from '@/components/MobileMasterScreenFooter';
 
 export default function MobileMasterPage() {
   return (

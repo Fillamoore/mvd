@@ -7,7 +7,7 @@ interface RatingState {
   isIncreasing: boolean;
 }
 
-interface ScenariosProgressState {
+export interface ScenariosProgressState {
   ratings: {
     [scenarioId: string]: {
       [responseId: string]: RatingState;
@@ -16,6 +16,7 @@ interface ScenariosProgressState {
   
   currentModuleId: number;
   currentScenarioIndex: number;
+  userLevel: 'Foundation' | 'Intermediate' | 'Advanced';
   
   setRating: (scenarioId: string, responseId: string, rating: RatingState) => void;
   cycleRating: (scenarioId: string, responseId: string) => void;
@@ -24,6 +25,7 @@ interface ScenariosProgressState {
   
   setCurrentModule: (moduleId: number) => void;
   setCurrentScenarioIndex: (index: number) => void;
+  setUserLevel: (level: 'Foundation' | 'Intermediate' | 'Advanced') => void;
 }
 
 const defaultState = {
@@ -36,6 +38,7 @@ const defaultState = {
   },
   currentModuleId: 1,
   currentScenarioIndex: 0,
+  userLevel: 'Foundation' as const,
 };
 
 export const useScenariosProgressLocalStore = create<ScenariosProgressState>()(
@@ -118,6 +121,9 @@ export const useScenariosProgressLocalStore = create<ScenariosProgressState>()(
       
       setCurrentScenarioIndex: (index) =>
         set({ currentScenarioIndex: index }),
+
+      setUserLevel: (level) =>
+        set({ userLevel: level }),
     }),
     {
       name: 'scenarios-progress-store',

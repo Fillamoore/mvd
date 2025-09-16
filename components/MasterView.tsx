@@ -4,65 +4,24 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import type { SyntheticEvent } from 'react';
+import { modules, getModuleById } from '@/data/modules';
+import { useScenariosProgressLocalStore } from '@/store/useScenariosProgressLocalStore';
+import type { ScenariosProgressState } from '@/store/useScenariosProgressLocalStore';
+import { getScenarioUniqueId } from '@/data/scenarios';
+import { getScenariosByModuleId } from '@/data/scenarios'; // Add this import
 
-// Mock data with deterministic values
-const mockData = {
-  currentLevel: 'Foundation',
-  overallScore: '2.1',
+// View data for the MasterView UI components
+// components/MasterView.tsx - UPDATE masterViewData
+const masterViewData = {
   showOverallScore: true,
+  overallScore: '2.1',
   progress: 0.25,
-  modules: [
-    { id: 1, name: '1. Growth mindset', completed: true, score: 0.85 },
-    { id: 2, name: '2. Professional curiosity', completed: true, score: 0.92 },
-    { id: 3, name: '3. Active listening', completed: false, score: 0 },
-    { id: 4, name: '4. Clear writing', completed: false, score: 0 },
-    { id: 5, name: '5. Structured thinking', completed: false, score: 0 },
-    { id: 6, name: '6. Time management', completed: false, score: 0 },
-    { id: 7, name: '7. Stakeholder awareness', completed: false, score: 0 },
-    { id: 8, name: '8. Note-taking discipline', completed: false, score: 0 },
-    { id: 9, name: '9. Asking good questions', completed: false, score: 0 },
-    { id: 10, name: '10. Self-awareness', completed: false, score: 0 },
-    { id: 11, name: '11. Emotional intelligence', completed: true, score: 0.85 },
-    { id: 12, name: '12. Team collaboration', completed: true, score: 0.92 },
-    { id: 13, name: '13. Adaptability', completed: false, score: 0 },
-    { id: 14, name: '14. Presentation basics', completed: false, score: 0 },
-    { id: 15, name: '15. Business etiquette', completed: false, score: 0 },
-    { id: 16, name: '16. Problem structuring', completed: false, score: 0 },
-    { id: 17, name: '17. Hypothesis-led working', completed: false, score: 0 },
-    { id: 18, name: '18. Basic financial literacy', completed: false, score: 0 },
-    { id: 19, name: '19. Industry scanning', completed: false, score: 0 },
-    { id: 20, name: '20. Root-cause analysis', completed: false, score: 0 },
-    { id: 21, name: '21. Data interpretation', completed: true, score: 0.85 },
-    { id: 22, name: '22. Excel modelling', completed: true, score: 0.92 },
-    { id: 23, name: '23. Storyboarding', completed: false, score: 0 },
-    { id: 24, name: '24. Meeting facilitation', completed: false, score: 0 },
-    { id: 25, name: '25. Influence without authority', completed: false, score: 0 },
-    { id: 26, name: '26. Client empathy', completed: false, score: 0 },
-    { id: 27, name: '27. Negotiation basics', completed: false, score: 0 },
-    { id: 28, name: '28. Risk awareness', completed: false, score: 0 },
-    { id: 29, name: '29. Managing ambiguity', completed: false, score: 0 },
-    { id: 30, name: '30. Persuasive communication', completed: false, score: 0 },
-    { id: 31, name: '31. Strategic thinking', completed: true, score: 0.85 },
-    { id: 32, name: '32. Market dynamics', completed: true, score: 0.92 },
-    { id: 33, name: '33. Policy awareness', completed: false, score: 0 },
-    { id: 34, name: '34. Systems thinking', completed: false, score: 0 },
-    { id: 35, name: '35. Sustainability lens', completed: false, score: 0 },
-    { id: 36, name: '36. Commercial awareness', completed: false, score: 0 },
-    { id: 37, name: '37. Investment logic', completed: false, score: 0 },
-    { id: 38, name: '38. Value-chain analysis', completed: false, score: 0 },
-    { id: 39, name: '39. Scenario planning', completed: false, score: 0 },
-    { id: 40, name: '40. Competitive positioning', completed: false, score: 0 },
-    { id: 41, name: '41. Change management', completed: true, score: 0.85 },
-    { id: 42, name: '42. Advisory presence', completed: true, score: 0.92 },
-    { id: 43, name: '43. Executive communication', completed: false, score: 0 },
-    { id: 44, name: '44. Building trust', completed: false, score: 0 },
-    { id: 45, name: '45. Ethical judgement', completed: false, score: 0 },
-    { id: 46, name: '46. Coaching juniors', completed: false, score: 0 },
-    { id: 47, name: '47. Handling conflict', completed: false, score: 0 },
-    { id: 48, name: '48. Managing up', completed: false, score: 0 },
-    { id: 49, name: '49. Networking for influence', completed: false, score: 0 },
-    { id: 50, name: '50. Thought leadership', completed: false, score: 0 }
-  ]
+  moduleItems: modules.map(module => ({
+    id: module.id,
+    name: module.name,
+    completed: false, // Will be set dynamically
+    score: 0 // Will be calculated dynamically
+  }))
 };
 
 // Generate CORRECT clockwise spiral order for 7x7 grid 
@@ -126,20 +85,54 @@ const generateCorrectClockwiseSpiralOrder = (size: number) => {
   return result;
 };
 
-// Deterministic scores based on tile ID (no randomness)
-const getTileScore = (tileId: number) => {
-  return 0.5 + ((tileId % 10) / 20);
+// Calculate user's actual module score from store ratings
+// components/MasterView.tsx - UPDATE getTileScore function
+const getTileScore = (moduleId: number, ratings: ScenariosProgressState['ratings']): number => {
+  const moduleScenarios = getScenariosByModuleId(moduleId); // Use the helper function
+  
+  if (moduleScenarios.length === 0) {
+    return 0;
+  }
+
+  let totalModuleScore = 0;
+  let completedScenarios = 0;
+
+  moduleScenarios.forEach((scenario) => {
+    const uniqueScenarioId = getScenarioUniqueId(moduleId, scenario.id);
+    const scenarioRatings = ratings[uniqueScenarioId];
+    
+    if (scenarioRatings) {
+      const responseRatings = Object.values(scenarioRatings);
+      const completedResponses = responseRatings.filter(r => r.value !== null);
+      
+      if (completedResponses.length === 3) {
+        const scenarioScore = completedResponses.reduce((sum, rating) => sum + (rating.value || 0), 0) / 3;
+        totalModuleScore += scenarioScore;
+        completedScenarios++;
+      }
+    }
+  });
+
+  return completedScenarios > 0 ? (totalModuleScore / completedScenarios) / 5 : 0;
 };
 
 interface MasterViewProps {
   isMobile?: boolean;
+  onModuleSelect?: (moduleId: number) => void;
 }
 
-export default function MasterView({ isMobile = false }: MasterViewProps) {
+export default function MasterView({ isMobile = false, onModuleSelect }: MasterViewProps) {
   const [showScoreBreakdown, setShowScoreBreakdown] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [spiralTiles, setSpiralTiles] = useState<{id: number, row: number, col: number}[]>([]);
   const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
+  const [debugSelectedModule, setDebugSelectedModule] = useState<number | null>(null);
+  
+  // FIXED: Use individual selectors to avoid infinite loop
+  const currentModuleId = useScenariosProgressLocalStore(state => state.currentModuleId);
+  const setCurrentModule = useScenariosProgressLocalStore(state => state.setCurrentModule);
+  const userLevel = useScenariosProgressLocalStore(state => state.userLevel || 'Foundation');
+  const ratings = useScenariosProgressLocalStore(state => state.ratings);
 
   useEffect(() => {
     setIsClient(true);
@@ -152,18 +145,33 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
     setImageErrors(prev => new Set(prev).add(moduleId));
   };
 
+  const isModuleSelectable = (moduleId: number): boolean => {
+    if (userLevel === 'Foundation' && moduleId > 9) return false;
+    if (userLevel === 'Intermediate' && moduleId > 26) return false;
+    return true;
+  };
+
+  const handleModuleClick = (moduleId: number, moduleName: string) => {
+    if (!isModuleSelectable(moduleId)) {
+      console.log(`[DEBUG] Module ${moduleId} is not selectable for ${userLevel} level`);
+      return;
+    }
+
+    console.log(`[DEBUG] Module selected: ${moduleId} - ${moduleName}`);
+    setDebugSelectedModule(moduleId);
+    setCurrentModule(moduleId);
+    
+    if (onModuleSelect) {
+      onModuleSelect(moduleId);
+    }
+  };
+
   const timelinePosition = 35;
 
   // Don't render grid until client-side
   if (!isClient || spiralTiles.length === 0) {
     return (
       <div className={`${isMobile ? 'h-full flex flex-col' : 'h-full flex flex-col'} bg-white ${isMobile ? '' : 'border-r border-gray-200'} p-4`}>
-        <div className="flex items-center mb-4">
-          <div className="w-8 h-8 bg-indigo-600 text-white rounded flex items-center justify-center mr-3">
-            <span className="font-bold text-xs">AA</span>
-          </div>
-          <h1 className="text-lg font-bold text-gray-900">Advisory Accelerator</h1>
-        </div>
         <div className="text-sm text-gray-500">Loading grid...</div>
       </div>
     );
@@ -172,43 +180,86 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
   // Create empty grid
   const grid = Array(7).fill(0).map(() => Array(7).fill(null));
   
-  // Fill grid with spiral order tiles
+  // Fill grid with spiral order tiles using actual user scores
   spiralTiles.forEach(({id, row, col}) => {
     if (row >= 0 && row < 7 && col >= 0 && col < 7) {
+      const moduleScore = getTileScore(id, ratings);
+      const hasProgress = moduleScore > 0;
+      
       grid[row][col] = {
         id,
-        completed: id <= 12, // First 12 completed for demo
-        score: getTileScore(id)
+        completed: hasProgress,
+        score: moduleScore
       };
     }
   });
 
+  // Update module items with actual completion status and scores
+  const updatedModuleItems = masterViewData.moduleItems.map(module => ({
+    ...module,
+    completed: getTileScore(module.id, ratings) > 0,
+    score: getTileScore(module.id, ratings)
+  }));
+
   return (
     <div className={`${isMobile ? 'h-full flex flex-col' : 'h-full flex flex-col'} bg-white ${isMobile ? '' : 'border-r border-gray-200'} p-4`}>
 
-      {/* Header  - no longer needed?*/}
       {/*
-      <div className="flex items-center mb-4">
-        <div className="w-8 h-8 bg-indigo-600 text-white rounded flex items-center justify-center mr-3">
-          <span className="font-bold text-xs">AA</span>
+      
+      <div className="bg-gray-100 border border-gray-300 rounded p-3 mb-4">
+        <div className="text-xs font-semibold text-gray-700 mb-2">CURRENT STATE</div>
+        
+        <div className="grid grid-cols-2 gap-2 text-xs">
+          <div>
+            <span className="text-gray-600">User Level:</span>
+            <span className="font-semibold ml-2">{userLevel}</span>
+          </div>
+          <div>
+            <span className="text-gray-600">Current Module:</span>
+            <span className="font-semibold ml-2">{currentModuleId}</span>
+          </div>
+          <div>
+            <span className="text-gray-600">Max Allowed:</span>
+            <span className="font-semibold ml-2">
+              {userLevel === 'Foundation' ? 9 : userLevel === 'Intermediate' ? 26 : 49}
+            </span>
+          </div>
+          <div>
+            <span className="text-gray-600">Completed Modules:</span>
+            <span className="font-semibold ml-2">
+              {updatedModuleItems.filter(m => m.completed).length} of {updatedModuleItems.length}
+            </span>
+          </div>
         </div>
-        <h1 className="text-lg font-bold text-gray-900">Advisory Accelerator</h1>
       </div>
+
+      {debugSelectedModule && (
+        <div className="bg-blue-100 border border-blue-300 text-blue-700 px-3 py-2 rounded mb-3 text-xs">
+          <strong>SELECTED:</strong> Module {debugSelectedModule}
+          <button 
+            onClick={() => setDebugSelectedModule(null)}
+            className="ml-2 text-blue-500 hover:text-blue-700"
+          >
+            × Clear
+          </button>
+        </div>
+      )}
+
       */}
 
       {/* Accreditation Header */}
       <div className="mb-4">
         <div className="flex justify-between items-center mb-2">
           <div className="text-xs font-semibold text-gray-700">
-            {mockData.currentLevel}
+            {userLevel}
           </div>
           
-          {mockData.showOverallScore && (
+          {masterViewData.showOverallScore && (
             <button
               onClick={() => setShowScoreBreakdown(!showScoreBreakdown)}
               className="text-xs bg-gray-100 px-2 py-1 rounded hover:bg-gray-200 transition-colors"
             >
-              {mockData.overallScore}
+              {masterViewData.overallScore}
             </button>
           )}
         </div>
@@ -216,21 +267,20 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
         {showScoreBreakdown && (
           <div className="bg-blue-50 p-2 rounded-lg mb-2 text-xs">
             <div className="font-semibold mb-1">Score Breakdown:</div>
-            <div>Foundation: 72%</div>
-            <div>Intermediate: 45%</div>
-            <div>Advanced: 15%</div>
+            <div>Completed Modules: {updatedModuleItems.filter(m => m.completed).length}</div>
+            <div>Total Progress: {(updatedModuleItems.reduce((sum, m) => sum + m.score, 0) / updatedModuleItems.length * 100).toFixed(1)}%</div>
           </div>
         )}
       </div>
 
-      {/* 7x7 Grid Visualization - PROPERLY SIZED AND CENTERED */}
-      <div className={`mb-6 flex justify-center ${isMobile ? 'scale-90' : ''}`}> {/* Fixed scaling */}
+      {/* 7x7 Grid Visualization */}
+      <div className={`mb-6 flex justify-center ${isMobile ? 'scale-90' : ''}`}>
         <div className="grid grid-cols-7 gap-1 w-fit">
           {grid.map((row, rowIndex) => 
             row.map((tile, colIndex) => (
               <div
                 key={`${rowIndex}-${colIndex}`}
-                className={`w-7 h-7 rounded-sm border ${ /* Fixed size */
+                className={`w-7 h-7 rounded-sm border ${
                   tile?.completed
                     ? 'border-indigo-600'
                     : 'bg-gray-200 border-gray-300'
@@ -240,21 +290,20 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
                     ? `rgba(99, 102, 241, ${tile.score})`
                     : '#f3f4f6'
                 }}
-                title={tile ? `Module ${tile.id}${tile.completed ? ` - Score: ${tile.score.toFixed(2)}` : ''}` : ''}
+                title={tile ? `Module ${tile.id}${tile.completed ? ` - Score: ${(tile.score * 100).toFixed(0)}%` : ''}` : ''}
               />
             ))
           )}
         </div>
       </div>
 
-      {/* Timeline Progress - REDUCED MARGIN AND LARGER DOT */}
+      {/* Timeline Progress */}
       <div className={`mb-4 px-8 ${isMobile ? 'scale-90' : ''}`}>
         <div className="w-full bg-gray-200 rounded-full h-1.5 relative">
           <div
             className="bg-indigo-600 h-1.5 rounded-full"
             style={{ width: `${timelinePosition}%` }}
           />
-          {/* Dot positioned ON the timeline - TWICE AS BIG */}
           <div
             className="absolute top-1/2 transform -translate-y-1/2 w-4 h-4 bg-green-500 rounded-full border-2 border-white shadow"
             style={{ left: `${timelinePosition}%`, marginLeft: '-8px' }}
@@ -262,52 +311,78 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
         </div>
       </div>
 
-      {/* Modules List with Icons */}
+      {/* Modules List */}
       <div className="flex-1 flex flex-col min-h-0">
         <h3 className="text-xs font-semibold text-gray-700 mb-2">Modules</h3>
         <div className="flex-1 overflow-y-auto">
           <div className="space-y-1 pr-1">
-            {mockData.modules.map((module) => (
-              <div
-                key={module.id}
-                className={`p-2 rounded border text-xs ${
-                  module.completed
-                    ? 'bg-green-50 border-green-200'
-                    : 'bg-gray-50 border-gray-200'
-                }`}
-              >
-                <div className="flex items-center">
-                  {/* Module Icon with Fallback */}
-                  <div className="w-6 h-6 mr-2 flex-shrink-0 bg-gray-100 rounded flex items-center justify-center">
-                    {imageErrors.has(module.id) ? (
-                      <div className="w-4 h-4 bg-indigo-100 rounded flex items-center justify-center">
-                        <span className="text-[10px] font-medium text-indigo-600">{module.id}</span>
-                      </div>
-                    ) : (
-                      <Image
-                        src={`/module-infographics/${module.id}.png`}
-                        alt={`Module ${module.id} icon`}
-                        width={24}
-                        height={24}
-                        className="w-full h-full object-contain"
-                        onError={handleImageError(module.id)}
-                      />
-                    )}
+            {updatedModuleItems.map((module) => {
+              const isSelectable = isModuleSelectable(module.id);
+              const isSelected = debugSelectedModule === module.id;
+              const isCurrentModule = currentModuleId === module.id;
+              
+              return (
+                <div
+                  key={module.id}
+                  className={`p-2 rounded border text-xs cursor-pointer transition-colors ${
+                    module.completed
+                      ? 'bg-green-50 border-green-200'
+                      : 'bg-gray-50 border-gray-200'
+                  } ${
+                    isSelected 
+                      ? 'ring-2 ring-indigo-500 ring-opacity-50' 
+                      : isCurrentModule
+                      ? 'ring-2 ring-blue-500 ring-opacity-50 bg-blue-50'
+                      : 'hover:bg-gray-100'
+                  } ${
+                    !isSelectable ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
+                  onClick={() => isSelectable && handleModuleClick(module.id, module.name)}
+                  title={!isSelectable ? 
+                    `Not available for ${userLevel} level` : 
+                    `Select ${module.name}`
+                  }
+                >
+                  <div className="flex items-center">
+                    {/* Module Icon */}
+                    <div className="w-6 h-6 mr-2 flex-shrink-0 bg-gray-100 rounded flex items-center justify-center">
+                      {imageErrors.has(module.id) ? (
+                        <div className="w-4 h-4 bg-indigo-100 rounded flex items-center justify-center">
+                          <span className="text-[10px] font-medium text-indigo-600">{module.id}</span>
+                        </div>
+                      ) : (
+                        <Image
+                          src={`/module-infographics/${module.id}.png`}
+                          alt={`Module ${module.id} icon`}
+                          width={24}
+                          height={24}
+                          className="w-full h-full object-contain"
+                          onError={handleImageError(module.id)}
+                        />
+                      )}
+                    </div>
+                    
+                    {/* Module Name */}
+                    <div className="font-medium flex-1 min-w-0 text-xs">
+                      {/*{module.id}. {module.name}*/}
+                      {module.name}
+                      {isCurrentModule && (
+                        <span className="text-[10px] text-blue-600 ml-1">(current)</span>
+                      )}
+                      {!isSelectable && (
+                        <span className="text-[10px] text-gray-400 ml-1">(locked)</span>
+                      )}
+                    </div>
                   </div>
                   
-                  {/* Module Name */}
-                  <div className="font-medium flex-1 min-w-0 text-xs">
-                    {module.name}
-                  </div>
+                  {module.completed && (
+                    <div className="text-[10px] text-gray-500 mt-1 ml-8">
+                      Score: {(module.score * 100).toFixed(0)}%
+                    </div>
+                  )}
                 </div>
-                
-                {module.completed && (
-                  <div className="text-[10px] text-gray-500 mt-1 ml-8">
-                    Score: {(module.score * 100).toFixed(0)}%
-                  </div>
-                )}
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

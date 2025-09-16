@@ -6,24 +6,17 @@ import Image from 'next/image';
 
 interface MobileScenariosPlayerFooterProps {
   onReveal: () => void;
-  onPreviousModule: () => void;
-  onNextModule: () => void;
-  onSkipScenario: () => void;
-  onPreviousScenario: () => void;
   onNextScenario: () => void;
   currentModuleId: number;
   currentScenarioIndex: number;
   totalScenarios: number;
   allRated: boolean;
   isRevealed: boolean;
+  onModuleChange?: (moduleId: number) => void;
 }
 
 export default function MobileScenariosPlayerFooter({
   onReveal,
-  onPreviousModule,
-  onNextModule,
-  onSkipScenario,
-  onPreviousScenario,
   onNextScenario,
   currentModuleId,
   currentScenarioIndex,
@@ -31,74 +24,23 @@ export default function MobileScenariosPlayerFooter({
   allRated,
   isRevealed
 }: MobileScenariosPlayerFooterProps) {
-  const canGoPreviousModule = currentModuleId > 1;
-  const canGoNextModule = currentModuleId < 49;
-  const canSkipScenario = currentScenarioIndex < totalScenarios - 1;
-  const canGoPreviousScenario = currentScenarioIndex > 0;
+
   const canGoNextScenario = currentScenarioIndex < totalScenarios - 1;
 
   return (
     <footer className="bg-white border-t border-gray-200 p-3">
       {/* Top Row: Module Navigation */}
       <div className="flex justify-between items-center mb-4">
-        {/* Previous Module */}
-        <button 
-          onClick={onPreviousModule}
-          disabled={!canGoPreviousModule}
-          className={`p-2 rounded ${
-            canGoPreviousModule 
-              ? 'bg-gray-200 hover:bg-gray-300' 
-              : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-          }`}
-        >
-          <Image
-            src="/prev-module.png"
-            alt="Previous Module"
-            width={20}
-            height={20}
-            className="w-5 h-5"
-          />
-        </button>
 
         {/* Current Module Info */}
         <span className="text-sm font-medium text-gray-700">
           Module {currentModuleId}
         </span>
 
-        {/* Next Module */}
-        <button 
-          onClick={onNextModule}
-          disabled={!canGoNextModule}
-          className={`p-2 rounded ${
-            canGoNextModule 
-              ? 'bg-gray-200 hover:bg-gray-300' 
-              : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-          }`}
-        >
-          <Image
-            src="/next-module.png"
-            alt="Next Module"
-            width={20}
-            height={20}
-            className="w-5 h-5"
-          />
-        </button>
       </div>
 
       {/* Middle Row: Scenario Navigation and Reveal */}
       <div className="flex justify-between items-center mb-4">
-        {/* Previous Scenario */}
-        <button 
-          onClick={onPreviousScenario}
-          disabled={!canGoPreviousScenario}
-          className={`px-3 py-2 rounded ${
-            canGoPreviousScenario 
-              ? 'bg-gray-200 hover:bg-gray-300' 
-              : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-          }`}
-        >
-          〈
-        </button>
 
         {/* Scenario Progress */}
         <span className="text-sm text-gray-600">
@@ -118,25 +60,6 @@ export default function MobileScenariosPlayerFooter({
           〉
         </button>
 
-        {/* Skip Scenario */}
-        <button 
-          onClick={onSkipScenario}
-          disabled={!canSkipScenario}
-          className={`p-2 rounded ml-2 ${
-            canSkipScenario 
-              ? 'bg-orange-200 hover:bg-orange-300' 
-              : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-          }`}
-        >
-          <Image
-            src="/skip-scenario.png"
-            alt="Skip Scenario"
-            width={20}
-            height={20}
-            className="w-5 h-5"
-          />
-        </button>
-
         {/* Reveal */}
         <button
           onClick={onReveal}
@@ -148,7 +71,7 @@ export default function MobileScenariosPlayerFooter({
           }`}
         >
           <Image
-            src="/reveal.png"
+            src="/reveal-icon.png"
             alt="Reveal Expert Rationales"
             width={20}
             height={20}
@@ -163,7 +86,7 @@ export default function MobileScenariosPlayerFooter({
           href="/mobile-master"
           className="flex items-center px-4 py-2 text-sm text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded"
         >
-          ← Back to Modules
+          ←
         </Link>
       </div>
     </footer>
