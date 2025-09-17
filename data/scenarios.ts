@@ -34,7 +34,7 @@ export const scenarios: Scenario[] = [
   {
     id: 1, // Scenario 1 of Module 1
     moduleId: 1,
-    prompt: "A client is hesitant about migrating to the cloud due to security concerns. They&apos;re particularly worried about data sovereignty and compliance with regional regulations. How do you address their specific concerns while maintaining confidence in the cloud solution?",
+    prompt: "A client is hesitant about migrating to the cloud due to security concerns. They\'re particularly worried about data sovereignty and compliance with regional regulations. How do you address their specific concerns while maintaining confidence in the cloud solution?",
     responses: [
       {
         id: "A",
@@ -55,7 +55,7 @@ export const scenarios: Scenario[] = [
       },
       {
         id: "C",
-        text: "Tell them that security is their responsibility regardless of where the data is stored, so the location doesn&apos;t matter.",
+        text: "Tell them that security is their responsibility regardless of where the data is stored, so the location doesn\'t matter.",
         expertRationale: "This is dismissive and incorrect. While clients have responsibilities, cloud providers offer significant security advantages and compliance certifications that should be highlighted. This response misses the opportunity to educate and build trust.",
         expertRating: 1
       }
@@ -89,7 +89,7 @@ export const scenarios: Scenario[] = [
   {
     id: 3, // Scenario 3 of Module 1
     moduleId: 1,
-    prompt: "You&apos;re assigned a project outside your comfort zone. What&apos;s your approach?",
+    prompt: "You\'re assigned a project outside your comfort zone. What\'s your approach?",
     responses: [
       {
         id: "A",
@@ -114,7 +114,7 @@ export const scenarios: Scenario[] = [
   {
     id: 4, // Scenario 4 of Module 1
     moduleId: 1,
-    prompt: "A team member fails at a task they&apos;ve been practicing. How do you encourage them?",
+    prompt: "A team member fails at a task they\'ve been practicing. How do you encourage them?",
     responses: [
       {
         id: "A",
@@ -139,7 +139,7 @@ export const scenarios: Scenario[] = [
   {
     id: 5, // Scenario 5 of Module 1
     moduleId: 1,
-    prompt: "How do you respond when someone says &quot;I&apos;m not a natural leader&quot;?",
+    prompt: "How do you respond when someone says &quot;I\'m not a natural leader&quot;?",
     responses: [
       {
         id: "A",
@@ -195,7 +195,7 @@ export const scenarios: Scenario[] = [
     responses: [
       {
         id: "A",
-        text: "Assume it&apos;s a data error and proceed with standard analysis",
+        text: "Assume it\'s a data error and proceed with standard analysis",
         expertRationale: "Misses potential insights by not investigating anomalies.",
         expertRating: 2
       },
@@ -207,7 +207,7 @@ export const scenarios: Scenario[] = [
       },
       {
         id: "C",
-        text: "Mention it briefly in report but don&apos;t dedicate time to understand",
+        text: "Mention it briefly in report but don\'t dedicate time to understand",
         expertRationale: "Superficial engagement with interesting finding.",
         expertRating: 3
       }
@@ -220,7 +220,7 @@ export const scenarios: Scenario[] = [
     responses: [
       {
         id: "A",
-        text: "Listen politely but don&apos;t ask questions to avoid appearing ignorant",
+        text: "Listen politely but don\'t ask questions to avoid appearing ignorant",
         expertRationale: "Misses cross-functional learning opportunity.",
         expertRating: 2
       },
@@ -257,7 +257,7 @@ export const scenarios: Scenario[] = [
       },
       {
         id: "C",
-        text: "Share it with others to criticize the article&apos;s methodology",
+        text: "Share it with others to criticize the article\'s methodology",
         expertRationale: "Defensive response that avoids personal reflection.",
         expertRating: 1
       }
@@ -266,7 +266,7 @@ export const scenarios: Scenario[] = [
   {
     id: 5, // Scenario 5 of Module 2
     moduleId: 2,
-    prompt: "A client describes a problem you&apos;ve solved before. How do you approach?",
+    prompt: "A client describes a problem you\'ve solved before. How do you approach?",
     responses: [
       {
         id: "A",
@@ -282,7 +282,7 @@ export const scenarios: Scenario[] = [
       },
       {
         id: "C",
-        text: "Delegate to junior team member since you&apos;ve seen this before",
+        text: "Delegate to junior team member since you\'ve seen this before",
         expertRationale: "Misses opportunity to deepen understanding through curiosity.",
         expertRating: 3
       }
@@ -309,7 +309,7 @@ export const scenarios: Scenario[] = [
       },
       {
         id: "C",
-        text: "Take notes but don&apos;t engage verbally until they finish speaking",
+        text: "Take notes but don\'t engage verbally until they finish speaking",
         expertRationale: "Passive listening without active engagement or verification.",
         expertRating: 3
       }
@@ -322,12 +322,12 @@ export const scenarios: Scenario[] = [
   {
     id: 1, // Scenario 1 of Module 49
     moduleId: 49,
-    prompt: "You want to build influence with a key decision-maker. What&apos;s your approach?",
+    prompt: "You want to build influence with a key decision-maker. What\'s your approach?",
     responses: [
       {
         id: "A",
         text: "Send frequent emails highlighting your accomplishments",
-        expertRationale: "One-way communication that doesn&apos;t build genuine relationship.",
+        expertRationale: "One-way communication that doesn\'t build genuine relationship.",
         expertRating: 2
       },
       {
@@ -363,7 +363,7 @@ export const scenarios: Scenario[] = [
       },
       {
         id: "C",
-        text: "Connect on social media but don&apos;t engage personally",
+        text: "Connect on social media but don\'t engage personally",
         expertRationale: "Passive connection without meaningful relationship building.",
         expertRating: 2
       }
@@ -427,7 +427,7 @@ export const scenarios: Scenario[] = [
       {
         id: "A",
         text: "Send a quick thank you email and move on",
-        expertRationale: "Minimal effort that doesn&apos;t fully acknowledge value received.",
+        expertRationale: "Minimal effort that doesn\'t fully acknowledge value received.",
         expertRating: 2
       },
       {
