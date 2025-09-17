@@ -4,11 +4,12 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import ScenarioCard from '../../components/ScenarioCard';
-import ScenarioFooter from '../../components/DesktopScenariosPlayerFooter'; // PROPER FOOTER
-import { getScenariosByModuleId } from '../../data/scenarios'; // ADD getScenariosByModuleId
+import ScenarioFooter from '../../components/DesktopScenariosPlayerFooter'; 
+import { getScenariosByModuleId } from '../../data/scenarios'; 
 import { getModuleById } from '../../data/modules';
 import { useScenariosProgressLocalStore } from '../../store/useScenariosProgressLocalStore';
-import { getScenarioUniqueId } from '@/data/scenarios'; // ADD THIS IMPORT
+import { getScenarioUniqueId } from '@/data/scenarios'; 
+import Image from 'next/image';
 
 export default function ScenarioPlayer() {
   const searchParams = useSearchParams();
@@ -80,18 +81,42 @@ export default function ScenarioPlayer() {
   return (
     <div className="h-full flex flex-col">
       {/* Module Header */}
-      <div className="p-6 pb-0">
-        <h1 className="text-2xl font-bold text-gray-900">{currentModule.name}</h1>
-        <p className="text-gray-600 mt-1">{currentModule.description}</p>
-        <div className="text-sm text-gray-500 mt-2">
-          Scenario {currentScenarioIndex + 1} of {moduleScenarios.length}
+     <div className="scenarios-area-header p-2 bg-black text-white flex justify-between items-center">
+        <div className="flex items-center gap-2">
+          <div style={{ backgroundColor: '#dfd5dbff', borderRadius: '3px', padding: '3px' }}>
+            <Image
+              src={`/module-infographics/${String(currentModule.id)}.png`}
+              alt={`Module ${module.id} icon`}
+              width={32}
+              height={32}
+              className="w-6 h-6 object-contain"
+            /> 
+          </div>        
+          <h1 className="ml-1 text-sm font-bold text-lilac-300">{currentModule.name}</h1>
+        </div>
+        
+        <div className="flex items-center gap-2">
+          <div className="inline-flex items-center justify-center text-sm text-lilac-300 border-2 border-lilac-300 rounded-md px-1.5 py-1 min-w-[2.5rem]">
+  {currentScenarioIndex + 1}/{moduleScenarios.length}
+</div>
+          <div className = "bg-black rounded-md p-1">
+
+            <Image
+              src={`/more-icon.png`}
+              alt='Menu'
+              width={42}
+              height={42}
+              className="w-6 h-6 object-contain"
+            /> 
+          </div>
+          
         </div>
       </div>
 
       {/* Scenario Content */}
       <div className="flex-1 overflow-auto p-6">
         <ScenarioCard
-          moduleId={moduleId} // ADD THIS PROP
+          moduleId={moduleId}
           scenarioId={currentScenario.id}
           prompt={currentScenario.prompt}
           responses={currentScenario.responses.map(r => ({ id: r.id, text: r.text }))}
@@ -109,7 +134,7 @@ export default function ScenarioPlayer() {
         totalScenarios={moduleScenarios.length}
         allRated={allRatingsComplete}
         isRevealed={isRevealed}
-        onModuleChange={handleModuleChange} // ADD THIS IF YOUR FOOTER SUPPORTS MODULE NAV
+        onModuleChange={handleModuleChange} 
       />
     </div>
   );

@@ -11,7 +11,6 @@ import { getScenarioUniqueId } from '@/data/scenarios';
 import { getScenariosByModuleId } from '@/data/scenarios'; // Add this import
 
 // View data for the MasterView UI components
-// components/MasterView.tsx - UPDATE masterViewData
 const masterViewData = {
   showOverallScore: true,
   overallScore: '2.1',
@@ -19,12 +18,12 @@ const masterViewData = {
   moduleItems: modules.map(module => ({
     id: module.id,
     name: module.name,
-    completed: false, // Will be set dynamically
-    score: 0 // Will be calculated dynamically
+    completed: false,
+    score: 0
   }))
 };
 
-// Generate CORRECT clockwise spiral order for 7x7 grid 
+// Generate CORRECT clockwise spiral order for 7x7 grid
 const generateCorrectClockwiseSpiralOrder = (size: number) => {
   const result: {id: number, row: number, col: number}[] = [];
   const grid: number[][] = Array(size).fill(0).map(() => Array(size).fill(0));
@@ -86,9 +85,8 @@ const generateCorrectClockwiseSpiralOrder = (size: number) => {
 };
 
 // Calculate user's actual module score from store ratings
-// components/MasterView.tsx - UPDATE getTileScore function
 const getTileScore = (moduleId: number, ratings: ScenariosProgressState['ratings']): number => {
-  const moduleScenarios = getScenariosByModuleId(moduleId); // Use the helper function
+  const moduleScenarios = getScenariosByModuleId(moduleId);
   
   if (moduleScenarios.length === 0) {
     return 0;
@@ -128,7 +126,6 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
   const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
   const [debugSelectedModule, setDebugSelectedModule] = useState<number | null>(null);
   
-  // FIXED: Use individual selectors to avoid infinite loop
   const currentModuleId = useScenariosProgressLocalStore(state => state.currentModuleId);
   const setCurrentModule = useScenariosProgressLocalStore(state => state.setCurrentModule);
   const userLevel = useScenariosProgressLocalStore(state => state.userLevel || 'Foundation');
@@ -168,7 +165,6 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
 
   const timelinePosition = 35;
 
-  // Don't render grid until client-side
   if (!isClient || spiralTiles.length === 0) {
     return (
       <div className={`${isMobile ? 'h-full flex flex-col' : 'h-full flex flex-col'} bg-white ${isMobile ? '' : 'border-r border-gray-200'} p-4`}>
@@ -177,10 +173,8 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
     );
   }
 
-  // Create empty grid
   const grid = Array(7).fill(0).map(() => Array(7).fill(null));
   
-  // Fill grid with spiral order tiles using actual user scores
   spiralTiles.forEach(({id, row, col}) => {
     if (row >= 0 && row < 7 && col >= 0 && col < 7) {
       const moduleScore = getTileScore(id, ratings);
@@ -194,7 +188,6 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
     }
   });
 
-  // Update module items with actual completion status and scores
   const updatedModuleItems = masterViewData.moduleItems.map(module => ({
     ...module,
     completed: getTileScore(module.id, ratings) > 0,
@@ -202,7 +195,7 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
   }));
 
   return (
-    <div className={`${isMobile ? 'h-full flex flex-col' : 'h-full flex flex-col'} bg-white ${isMobile ? '' : 'border-r border-gray-200'} p-4`}>
+    <div className={`${isMobile ? 'h-full flex flex-col' : 'h-full flex flex-col'} bg-black ${isMobile ? '' : 'border-r border-gray-200'} p-3 overflow-x-hidden`}>
 
       {/*
       
@@ -248,12 +241,13 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
       */}
 
       {/* Accreditation Header */}
-      <div className="mb-4">
+      <div className="mb-2">
         <div className="flex justify-between items-center mb-2">
-          <div className="text-xs font-semibold text-gray-700">
+          <div className="text-base text-lilac-300">
             {userLevel}
           </div>
           
+          {/*
           {masterViewData.showOverallScore && (
             <button
               onClick={() => setShowScoreBreakdown(!showScoreBreakdown)}
@@ -262,8 +256,10 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
               {masterViewData.overallScore}
             </button>
           )}
+          */}  
         </div>
 
+        {/*}    
         {showScoreBreakdown && (
           <div className="bg-blue-50 p-2 rounded-lg mb-2 text-xs">
             <div className="font-semibold mb-1">Score Breakdown:</div>
@@ -271,81 +267,86 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
             <div>Total Progress: {(updatedModuleItems.reduce((sum, m) => sum + m.score, 0) / updatedModuleItems.length * 100).toFixed(1)}%</div>
           </div>
         )}
+        */}
+
       </div>
 
       {/* 7x7 Grid Visualization */}
       <div className={`mb-6 flex justify-center ${isMobile ? 'scale-90' : ''}`}>
         <div className="grid grid-cols-7 gap-1 w-fit">
           {grid.map((row, rowIndex) => 
-            row.map((tile, colIndex) => (
-              <div
-                key={`${rowIndex}-${colIndex}`}
-                className={`w-7 h-7 rounded-sm border ${
-                  tile?.completed
-                    ? 'border-indigo-600'
-                    : 'bg-gray-200 border-gray-300'
-                }`}
-                style={{
-                  backgroundColor: tile?.completed
-                    ? `rgba(99, 102, 241, ${tile.score})`
-                    : '#f3f4f6'
-                }}
-                title={tile ? `Module ${tile.id}${tile.completed ? ` - Score: ${(tile.score * 100).toFixed(0)}%` : ''}` : ''}
-              />
-            ))
+            row.map((tile, colIndex) => {
+              if (!tile) return null;
+
+              const { id, completed, score } = tile;
+
+              // Determine level-based background class
+              let bgClass = '';
+              if (id <= 9) {
+                bgClass = 'bg-lilac-charcoal-f';
+              } else if (id <= 25) {
+                bgClass = 'bg-lilac-charcoal-i';
+              } else {
+                bgClass = 'bg-lilac-charcoal-a';
+              }
+
+              const dynamicBg = completed
+                ? `rgba(200, 160, 255, ${score})`
+                : undefined;
+
+              return (
+                <div
+                  key={`${rowIndex}-${colIndex}`}
+                  className={`w-8 h-8 rounded-[4px] ${completed ? 'border border-indigo-600' : bgClass}`}
+                  style={{
+                    backgroundColor: dynamicBg,
+                  }}
+                  title={`Module ${id}${completed ? ` - Score: ${(score * 100).toFixed(0)}%` : ''}`}
+                />
+              );
+            })
           )}
         </div>
       </div>
 
       {/* Timeline Progress */}
-      <div className={`mb-4 px-8 ${isMobile ? 'scale-90' : ''}`}>
+      <div className={`mb-4 px-[24px] ${isMobile ? 'scale-90' : ''}`}>
         <div className="w-full bg-gray-200 rounded-full h-1.5 relative">
           <div
-            className="bg-indigo-600 h-1.5 rounded-full"
+            className="bg-lilac-500 h-1.5 rounded-full"
             style={{ width: `${timelinePosition}%` }}
           />
           <div
-            className="absolute top-1/2 transform -translate-y-1/2 w-4 h-4 bg-green-500 rounded-full border-2 border-white shadow"
+            className="absolute top-1/2 transform -translate-y-1/2 w-4 h-4 bg-lilac-900 rounded-full border-2 border-white shadow"
             style={{ left: `${timelinePosition}%`, marginLeft: '-8px' }}
           />
         </div>
       </div>
 
       {/* Modules List */}
-      <div className="flex-1 flex flex-col min-h-0">
-        <h3 className="text-xs font-semibold text-gray-700 mb-2">Modules</h3>
-        <div className="flex-1 overflow-y-auto">
-          <div className="space-y-1 pr-1">
+      <div className="flex-1 bg-black text-white flex flex-col min-h-0">
+        <h3 className="text-xs font-semibold text-white mb-2 ml-3">Modules</h3>
+        <div className="flex-1 overflow-y-auto overflow-x-hidden max-w-full custom-scrollbar pr-1">
+          <div className="space-y-1">
             {updatedModuleItems.map((module) => {
               const isSelectable = isModuleSelectable(module.id);
-              const isSelected = debugSelectedModule === module.id;
-              const isCurrentModule = currentModuleId === module.id;
-              
+              const isActive = currentModuleId === module.id;
+
               return (
                 <div
                   key={module.id}
-                  className={`p-2 rounded border text-xs cursor-pointer transition-colors ${
-                    module.completed
-                      ? 'bg-green-50 border-green-200'
-                      : 'bg-gray-50 border-gray-200'
-                  } ${
-                    isSelected 
-                      ? 'ring-2 ring-indigo-500 ring-opacity-50' 
-                      : isCurrentModule
-                      ? 'ring-2 ring-blue-500 ring-opacity-50 bg-blue-50'
-                      : 'hover:bg-gray-100'
-                  } ${
-                    !isSelectable ? 'opacity-50 cursor-not-allowed' : ''
-                  }`}
+                  className={`p-2 mx-3 rounded-[6px] text-xs transition-colors w-[calc(100%-24px)] box-border
+                    ${module.id <= 9 ? 'bg-lilac-charcoal-f' : module.id <= 25 ? 'bg-lilac-charcoal-i' : 'bg-lilac-charcoal-a'}
+                    ${isSelectable ? 'cursor-pointer hover:ring-2 hover:ring-lilac-300' : 'cursor-not-allowed'}
+                  `}
                   onClick={() => isSelectable && handleModuleClick(module.id, module.name)}
                   title={!isSelectable ? 
                     `Not available for ${userLevel} level` : 
-                    `Select ${module.name}`
-                  }
+                    `Select ${module.name}`}
                 >
-                  <div className="flex items-center">
+                  <div className="flex items-center min-w-0">
                     {/* Module Icon */}
-                    <div className="w-6 h-6 mr-2 flex-shrink-0 bg-gray-100 rounded flex items-center justify-center">
+                    <div className="w-8 h-8 mr-2 flex-shrink-0 bg-[#dfd5db] rounded-[3px] p-[4px] flex items-center justify-center">
                       {imageErrors.has(module.id) ? (
                         <div className="w-4 h-4 bg-indigo-100 rounded flex items-center justify-center">
                           <span className="text-[10px] font-medium text-indigo-600">{module.id}</span>
@@ -361,22 +362,13 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
                         />
                       )}
                     </div>
-                    
                     {/* Module Name */}
-                    <div className="font-medium flex-1 min-w-0 text-xs">
-                      {/*{module.id}. {module.name}*/}
+                    <div className="font-medium flex-1 text-xs text-white overflow-hidden text-ellipsis whitespace-nowrap">
                       {module.name}
-                      {isCurrentModule && (
-                        <span className="text-[10px] text-blue-600 ml-1">(current)</span>
-                      )}
-                      {!isSelectable && (
-                        <span className="text-[10px] text-gray-400 ml-1">(locked)</span>
-                      )}
                     </div>
                   </div>
-                  
                   {module.completed && (
-                    <div className="text-[10px] text-gray-500 mt-1 ml-8">
+                    <div className="text-[10px] text-gray-300 mt-1 ml-8">
                       Score: {(module.score * 100).toFixed(0)}%
                     </div>
                   )}

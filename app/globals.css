@@ -166,3 +166,28 @@ a {
 .animate-once-pulse {
   animation: once-pulse 1.5s ease-out 1;
 }
+
+html {
+  overflow-y: scroll;
+}
+
+/* In your globals.css file */
+.custom-scrollbar {
+  overflow-y: auto;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #3f3f46 #171717; /* Firefox */
+}
+
+/* For WebKit (Chrome, Safari, Edge) */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px; /* makes it thin */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #171717; /* dark track */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #3f3f46; /* dark gray thumb */
+  border-radius: 4px;
+}

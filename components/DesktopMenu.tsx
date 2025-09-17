@@ -26,8 +26,8 @@ export default function DesktopMenu() {
         href="/menu"
         className={`rounded-lg transition-colors p-2 flex items-center justify-center ${
           pathname === '/menu'
-            ? 'bg-indigo-100 text-indigo-600'
-            : 'text-gray-600 hover:bg-gray-100 hover:text-indigo-600'
+            ? 'bg-indigo-100 text-indigo-200'
+            : 'hover:bg-gray-100 hover:text-indigo-200'
         }`}
         title="Menu"
       >

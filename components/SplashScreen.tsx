@@ -6,13 +6,14 @@ import { generateCorrectClockwiseSpiralOrder } from '@/utils/spiral';
 
 const GRID_SIZE = 7;
 const TOTAL_TILES = 49;
-const ANIMATION_INTERVAL = 50;
+const ANIMATION_INTERVAL = 70;
 
 export default function SplashScreen({ onComplete }: { onComplete: () => void }) {
   const [phase, setPhase] = useState<'logo' | 'grid' | 'animating' | 'done'>('logo');
-  const [visibleTiles, setVisibleTiles] = useState(0);
+  const [visibleTiles, setVisibleTiles] = useState(TOTAL_TILES); // show all tiles initially
   const [spiralOrder, setSpiralOrder] = useState<{ id: number; row: number; col: number }[]>([]);
   const [tileScores, setTileScores] = useState<number[][]>([]);
+  const [animatedTiles, setAnimatedTiles] = useState<Set<number>>(new Set());
   const [dotPosition, setDotPosition] = useState(0);
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -39,11 +40,18 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
   useEffect(() => {
     switch (phase) {
       case 'logo':
-        setTimeout(() => isMountedRef.current && setPhase('grid'), 800);
+        setTimeout(() => isMountedRef.current && setPhase('grid'), 700);
         break;
 
       case 'grid':
-        setTimeout(() => isMountedRef.current && setPhase('animating'), 800);
+        setVisibleTiles(TOTAL_TILES); // show all tiles statically
+        setTimeout(() => {
+          if (isMountedRef.current) {
+            setVisibleTiles(0); // reset for animation
+            setAnimatedTiles(new Set());
+            setPhase('animating');
+          }
+        }, 700);
         break;
 
       case 'animating':
@@ -64,7 +72,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
     if (visibleTiles === TOTAL_TILES && phase === 'animating') {
       setTimeout(() => {
         if (isMountedRef.current) setPhase('done');
-      }, ANIMATION_INTERVAL);
+      }, 700); // allow pulse to play
     }
   }, [visibleTiles, phase]);
 
@@ -72,6 +80,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
     currentTileRef.current = 0;
     setVisibleTiles(0);
     setDotPosition(0);
+    setAnimatedTiles(new Set());
 
     if (intervalRef.current) clearInterval(intervalRef.current);
 
@@ -82,6 +91,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
         currentTileRef.current = next;
         setVisibleTiles(next);
         setDotPosition(Math.min(next * (100 / TOTAL_TILES), 100));
+        setAnimatedTiles((prev) => new Set(prev).add(next - 1));
       }
 
       if (next >= TOTAL_TILES) {
@@ -94,35 +104,46 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
   const renderGrid = () => {
     if (!spiralOrder.length || !tileScores.length) return null;
 
-    const grid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(null));
-    spiralOrder.forEach(({ row, col }, index) => {
-      if (index < visibleTiles) {
-        grid[row][col] = tileScores[row][col];
-      }
+    const spiralMap = new Map<string, { index: number; id: number }>();
+    spiralOrder.forEach(({ row, col, id }, index) => {
+      spiralMap.set(`${row},${col}`, { index, id });
     });
 
     return (
       <div className="grid grid-cols-7 gap-2 mx-auto mt-2">
-        {grid.map((row, rowIndex) =>
-          row.map((score, colIndex) => {
-            const isFinal = visibleTiles === TOTAL_TILES &&
-              spiralOrder[visibleTiles - 1]?.row === rowIndex &&
-              spiralOrder[visibleTiles - 1]?.col === colIndex;
+        {Array(GRID_SIZE).fill(null).map((_, rowIndex) =>
+          Array(GRID_SIZE).fill(null).map((_, colIndex) => {
+            const key = `${rowIndex},${colIndex}`;
+            const spiralEntry = spiralMap.get(key);
+            const score = tileScores[rowIndex][colIndex];
 
-            const backgroundColor = score
+            if (!spiralEntry) {
+              return (
+                <div
+                  key={key}
+                  className="w-14 h-14 border border-gray-700 rounded-lg bg-black"
+                />
+              );
+            }
+
+            const { id, index } = spiralEntry;
+            const isVisible = phase === 'grid' || animatedTiles.has(index);
+            const isFinal = animatedTiles.has(TOTAL_TILES - 1) && index === TOTAL_TILES - 1;
+
+            let bgClass = '';
+            if (id <= 9) bgClass = 'bg-lilac-charcoal-f';
+            else if (id <= 25) bgClass = 'bg-lilac-charcoal-i';
+            else bgClass = 'bg-lilac-charcoal-a';
+
+            const dynamicBg = isVisible && phase !== 'grid'
               ? `rgba(200, 160, 255, ${score})`
-              : '#1a1a1a';
+              : undefined;
 
             return (
               <div
-                key={`${rowIndex}-${colIndex}`}
-                className={`w-14 h-14 border border-gray-700 ${
-                  isFinal ? 'animate-once-pulse' : ''
-                }`}
-                style={{
-                  backgroundColor,
-                  borderRadius: '8px',
-                }}
+                key={key}
+                className={`w-14 h-14 border border-gray-700 rounded-lg ${isFinal ? 'animate-once-pulse' : ''} ${!dynamicBg ? bgClass : ''}`}
+                style={dynamicBg ? { backgroundColor: dynamicBg } : undefined}
               />
             );
           })
@@ -132,7 +153,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
   };
 
   const renderProgressBar = () => {
-    const isFinalDot = visibleTiles === TOTAL_TILES;
+    const isFinalDot = animatedTiles.has(TOTAL_TILES - 1);
 
     return (
       <div className="w-full max-w-xs md:max-w-md h-1.5 bg-gray-800 rounded-full relative mt-6">

@@ -8,7 +8,7 @@ import ClientLayoutWrapper from './ClientLayoutWrapper'; // New client component
 
 export const metadata: Metadata = {
   title: 'Advisory Accelerator',
-  description: 'Enabling Advisory-led working at pace and scale',
+  description: 'Enabling advisory-led working at pace and scale',
 };
 
 export const viewport = {
@@ -28,11 +28,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <ClientLayoutWrapper>
           {/* Desktop layout */}
           <div className="hidden md:flex flex-col h-screen">
+            {/* Don't need this anymore
             <header className="h-10 flex-shrink-0">
               <DesktopMenu />
             </header>
+            */}
             <div className="flex flex-1 overflow-hidden">
-              <aside className="w-80 flex-shrink-0 border-r border-gray-200 overflow-auto">
+              <aside className="w-82 flex-shrink-0 border-r border-gray-200 overflow-auto">
                 <DesktopSidebar />
               </aside>
               <main className="flex-1 overflow-auto bg-gray-50">
