@@ -201,7 +201,7 @@ export const scenarios: Scenario[] = [
       },
       {
         id: "B",
-        text: "Investigate thoroughly, asking &quot;why&quot; at each step to understand root causes",
+        text: "Investigate thoroughly, asking questions at each step to understand root causes",
         expertRationale: "Demonstrates deep curiosity and systematic investigation.",
         expertRating: 5
       },
