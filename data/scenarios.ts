@@ -34,7 +34,7 @@ export const scenarios: Scenario[] = [
   {
     id: 1, // Scenario 1 of Module 1
     moduleId: 1,
-    prompt: "A client is hesitant about migrating to the cloud due to security concerns. They're particularly worried about data sovereignty and compliance with regional regulations. How do you address their specific concerns while maintaining confidence in the cloud solution?",
+    prompt: "A client is hesitant about migrating to the cloud due to security concerns. They&apos;re particularly worried about data sovereignty and compliance with regional regulations. How do you address their specific concerns while maintaining confidence in the cloud solution?",
     responses: [
       {
         id: "A",
