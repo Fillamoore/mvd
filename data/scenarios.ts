@@ -41,7 +41,6 @@ export const scenarios: Scenario[] = [
         text: "Explain that cloud providers often have better security than on-premise solutions due to dedicated security teams and continuous updates.",
         expertRationale: "This is a good start as it addresses the security concern directly with factual information about cloud provider capabilities. Major providers like AWS, Azure, and GCP invest billions in security and offer more robust protection than most companies can achieve on-premise.",
         expertRating: 4,
-        // ADD THE EXPERT MEDIA TO THIS RESPONSE
         expertMedia: {
           url: "/expert-media/cloud-security-insight.png",
           caption: "Cloud Shared Responsibility Model",
@@ -49,7 +48,7 @@ export const scenarios: Scenario[] = [
         }
       },
       {
-        id: "B", 
+        id: "B",
         text: "Suggest they maintain a hybrid approach to keep sensitive data on-premise while using cloud for less critical applications.",
         expertRationale: "While this seems practical, it avoids addressing the core concern about cloud security and may reinforce their fears rather than building confidence. A hybrid approach often creates more complexity without solving the fundamental trust issue.",
         expertRating: 2
