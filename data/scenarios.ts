@@ -139,7 +139,7 @@ export const scenarios: Scenario[] = [
   {
     id: 5, // Scenario 5 of Module 1
     moduleId: 1,
-    prompt: "How do you respond when someone says &quot;I\'m not a natural leader&quot;?",
+    prompt: "How do you respond when someone says \"I\'m not a natural leader\"?",
     responses: [
       {
         id: "A",
