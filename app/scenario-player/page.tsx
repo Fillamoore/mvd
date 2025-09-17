@@ -71,7 +71,7 @@ export default function ScenarioPlayer() {
       <div className="h-full flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-xl font-semibold text-gray-900">No scenarios found</h2>
-          <p className="text-gray-600 mt-2">This module doesn't have any scenarios yet.</p>
+          <p className="text-gray-600 mt-2">This module does not have any scenarios yet.</p>
         </div>
       </div>
     );
