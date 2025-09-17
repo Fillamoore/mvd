@@ -1,17 +1,16 @@
-// app/layout.tsx - WITH METADATA AND CSS IMPORT
-
+// app/layout.tsx - UPDATED (Server Component)
 import type { Metadata } from 'next';
-import './globals.css'; // MAKE SURE THIS IMPORT EXISTS
+import './globals.css';
 import { ReactNode } from 'react';
 import DesktopSidebar from '../components/DesktopSidebar';
 import DesktopMenu from '../components/DesktopMenu';
+import ClientLayoutWrapper from './ClientLayoutWrapper'; // New client component
 
 export const metadata: Metadata = {
   title: 'Advisory Accelerator',
   description: 'Enabling Advisory-led working at pace and scale',
 };
 
-// REMOVE viewport from metadata and use the new format
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
@@ -25,33 +24,30 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html>
       <body className="flex flex-col h-screen">
-        {/* Desktop layout */}
-        <div className="hidden md:flex flex-col h-screen">
-          {/* Header menu - fixed height */}
-          <header className="h-10 flex-shrink-0">
-            <DesktopMenu />
-          </header>
-          
-          {/* Main content area - grows to fill remaining space */}
-          <div className="flex flex-1 overflow-hidden">
-            {/* Sidebar - fixed width */}
-            <aside className="w-80 flex-shrink-0 border-r border-gray-200 overflow-auto">
-              <DesktopSidebar />
-            </aside>
-            
-            {/* Main content - flexible width */}
+        {/* Wrap children in a client component to handle SplashScreen */}
+        <ClientLayoutWrapper>
+          {/* Desktop layout */}
+          <div className="hidden md:flex flex-col h-screen">
+            <header className="h-10 flex-shrink-0">
+              <DesktopMenu />
+            </header>
+            <div className="flex flex-1 overflow-hidden">
+              <aside className="w-80 flex-shrink-0 border-r border-gray-200 overflow-auto">
+                <DesktopSidebar />
+              </aside>
+              <main className="flex-1 overflow-auto bg-gray-50">
+                {children}
+              </main>
+            </div>
+          </div>
+
+          {/* Mobile layout */}
+          <div className="md:hidden flex flex-col h-screen">
             <main className="flex-1 overflow-auto bg-gray-50">
               {children}
             </main>
           </div>
-        </div>
-
-        {/* Mobile layout */}
-        <div className="md:hidden flex flex-col h-screen">
-          <main className="flex-1 overflow-auto bg-gray-50">
-            {children}
-          </main>
-        </div>
+        </ClientLayoutWrapper>
       </body>
     </html>
   );

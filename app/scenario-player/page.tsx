@@ -5,8 +5,8 @@ import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import ScenarioCard from '../../components/ScenarioCard';
 import ScenarioFooter from '../../components/DesktopScenariosPlayerFooter'; // PROPER FOOTER
-import { scenarios, getScenariosByModuleId } from '../../data/scenarios'; // ADD getScenariosByModuleId
-import { modules, getModuleById } from '../../data/modules';
+import { getScenariosByModuleId } from '../../data/scenarios'; // ADD getScenariosByModuleId
+import { getModuleById } from '../../data/modules';
 import { useScenariosProgressLocalStore } from '../../store/useScenariosProgressLocalStore';
 import { getScenarioUniqueId } from '@/data/scenarios'; // ADD THIS IMPORT
 
@@ -82,6 +82,7 @@ export default function ScenarioPlayer() {
       {/* Module Header */}
       <div className="p-6 pb-0">
         <h1 className="text-2xl font-bold text-gray-900">{currentModule.name}</h1>
+        <p className="text-gray-600 mt-1">{currentModule.description}</p>
         <div className="text-sm text-gray-500 mt-2">
           Scenario {currentScenarioIndex + 1} of {moduleScenarios.length}
         </div>

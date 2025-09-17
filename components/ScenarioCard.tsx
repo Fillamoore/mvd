@@ -78,7 +78,7 @@ export default function ScenarioCard({
                 onClick={() => handleResponseClick(response.id)}
               >
                 <div className="flex flex-col"> {/* FIXED: Changed to flex-col */}
-                  <p className="text-gray-800 font-medium flex-1 mb-4">{response.text}</p>
+                  <p className="text-gray-800 font-medium flex-1 mb-2">{response.text}</p>
                   
                   <div className="flex justify-end"> {/* FIXED: Added container to align rating to bottom right */}
                     {!isRevealed && (
