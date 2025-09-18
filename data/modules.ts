@@ -34,7 +34,7 @@ export const modules: Module[] = [
   { id: 22, name: 'Excel modelling',              tier: 'intermediate', description: 'Building transparent, decision-focused spreadsheet models.' },
   { id: 23, name: 'Storyboarding',                tier: 'intermediate', description: 'Designing the narrative flow of presentations and reports.' },
   { id: 24, name: 'Meeting facilitation',         tier: 'intermediate', description: 'Running focused sessions that produce decisions and actions.' },
-  { id: 25, name: 'Influence without authority',  tier: 'intermediate', description: 'Shaping outcomes when you don’t hold formal power.' },
+  { id: 25, name: 'Influence without authority',  tier: 'intermediate', description: 'Shaping outcomes when you don\’t hold formal power.' },
 
   // ADVANCED: Modules 26-50
   { id: 26, name: 'Client empathy',               tier: 'advanced', description: 'Understanding client pressures to craft adoptable solutions.' },
@@ -42,7 +42,7 @@ export const modules: Module[] = [
   { id: 28, name: 'Risk awareness',               tier: 'advanced', description: 'Spotting and communicating project and strategic risks.' },
   { id: 29, name: 'Managing ambiguity',           tier: 'advanced', description: 'Progressing with structure despite incomplete information.' },
   { id: 30, name: 'Persuasive communication',     tier: 'advanced', description: 'Framing messages that move stakeholders to act.' },
-  { id: 31, name: 'Strategic thinking',           tier: 'advanced', description: 'Connecting today’s choices to long-term business direction.' },
+  { id: 31, name: 'Strategic thinking',           tier: 'advanced', description: 'Connecting today\’s choices to long-term business direction.' },
   { id: 32, name: 'Market dynamics',              tier: 'advanced', description: 'Understanding competitive forces and evolving market trends.' },
   { id: 33, name: 'Policy awareness',             tier: 'advanced', description: 'Factoring regulation and policy into practical advice.' },
   { id: 34, name: 'Systems thinking',             tier: 'advanced', description: 'Seeing interdependencies and designing resilient solutions.' },
