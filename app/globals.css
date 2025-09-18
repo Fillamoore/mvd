@@ -171,23 +171,46 @@ html {
   overflow-y: scroll;
 }
 
-/* In your globals.css file */
-.custom-scrollbar {
+/* --------------------------------------------------------------------
+   Left-shifted custom scrollbar (5px inset)
+   -------------------------------------------------------------------- */
+
+/* Outer wrapper: creates 5px inset */
+.custom-scrollbar-outer {
+  position: relative;
+  min-height: 0;
+  padding-right: 5px;
+}
+
+/* Inner scrollable element: the real scrolling container */
+.custom-scrollbar-inner {
+  box-sizing: content-box;
+  width: calc(100% + 5px);
+  margin-right: -5px;
+  min-height: 0;
   overflow-y: auto;
-  scrollbar-width: thin; /* Firefox */
-  scrollbar-color: #3f3f46 #171717; /* Firefox */
+  overflow-x: hidden;
+
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: #3f3f46 #171717;
 }
 
-/* For WebKit (Chrome, Safari, Edge) */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 8px; /* makes it thin */
+/* WebKit (Chrome, Edge, Safari) */
+.custom-scrollbar-inner::-webkit-scrollbar {
+  width: 8px;
 }
 
-.custom-scrollbar::-webkit-scrollbar-track {
+.custom-scrollbar-inner::-webkit-scrollbar-track {
   background: #171717; /* dark track */
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
+.custom-scrollbar-inner::-webkit-scrollbar-thumb {
   background-color: #3f3f46; /* dark gray thumb */
   border-radius: 4px;
+}
+
+/* Legacy placeholder so old .custom-scrollbar class doesn't break */
+.custom-scrollbar {
+  min-height: 0;
 }

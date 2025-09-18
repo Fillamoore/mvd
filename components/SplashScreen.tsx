@@ -1,3 +1,4 @@
+// components/SplashScreen.tsx
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
@@ -8,9 +9,10 @@ const GRID_SIZE = 7;
 const TOTAL_TILES = 49;
 const ANIMATION_INTERVAL = 70;
 
-export default function SplashScreen({ onComplete }: { onComplete: () => void }) {
+// Corrected: The onComplete prop is removed from the function signature.
+export default function SplashScreen() { 
   const [phase, setPhase] = useState<'logo' | 'grid' | 'animating' | 'done'>('logo');
-  const [visibleTiles, setVisibleTiles] = useState(TOTAL_TILES); // show all tiles initially
+  const [visibleTiles, setVisibleTiles] = useState(TOTAL_TILES);
   const [spiralOrder, setSpiralOrder] = useState<{ id: number; row: number; col: number }[]>([]);
   const [tileScores, setTileScores] = useState<number[][]>([]);
   const [animatedTiles, setAnimatedTiles] = useState<Set<number>>(new Set());
@@ -44,10 +46,10 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
         break;
 
       case 'grid':
-        setVisibleTiles(TOTAL_TILES); // show all tiles statically
+        setVisibleTiles(TOTAL_TILES);
         setTimeout(() => {
           if (isMountedRef.current) {
-            setVisibleTiles(0); // reset for animation
+            setVisibleTiles(0);
             setAnimatedTiles(new Set());
             setPhase('animating');
           }
@@ -59,7 +61,13 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
         break;
 
       case 'done':
-        setTimeout(() => isMountedRef.current && onComplete(), 2000);
+        // CORRECTED: The onComplete() call is removed. The component now
+        // simply waits for the animation to end. The fade is handled by the parent.
+        setTimeout(() => {
+          if (isMountedRef.current) {
+            // No action needed here, the animation is complete.
+          }
+        }, 2000);
         break;
     }
 
@@ -72,7 +80,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
     if (visibleTiles === TOTAL_TILES && phase === 'animating') {
       setTimeout(() => {
         if (isMountedRef.current) setPhase('done');
-      }, 700); // allow pulse to play
+      }, 700);
     }
   }, [visibleTiles, phase]);
 
@@ -172,7 +180,9 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
   };
 
   return (
-    <div className="fixed inset-0 flex flex-col items-center justify-center h-screen bg-black text-white z-50">
+    <div className={`
+      fixed inset-0 flex flex-col items-center justify-center h-screen bg-black text-white z-50
+    `}>
       <div className={`flex flex-col items-center scale-[0.8] ${phase === 'logo' ? 'opacity-0 pointer-events-none' : 'opacity-100 transition-opacity duration-500'}`}>
         <Image
           src="/aalogo.png"
@@ -181,7 +191,6 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
           height={140}
           priority
         />
-
         <div className="mt-2 flex flex-col items-center min-h-[360px]">
           {renderGrid()}
           {renderProgressBar()}

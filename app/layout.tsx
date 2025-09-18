@@ -24,17 +24,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html>
       <body className="flex flex-col h-screen">
-        {/* Wrap children in a client component to handle SplashScreen */}
         <ClientLayoutWrapper>
+
           {/* Desktop layout */}
           <div className="hidden md:flex flex-col h-screen">
-            {/* Don't need this anymore
-            <header className="h-10 flex-shrink-0">
-              <DesktopMenu />
-            </header>
-            */}
             <div className="flex flex-1 overflow-hidden">
-              <aside className="w-82 flex-shrink-0 border-r border-gray-200 overflow-auto">
+              <aside className="layout w-96 flex-shrink-0 border-r border-gray-200 overflow-auto">
                 <DesktopSidebar />
               </aside>
               <main className="flex-1 overflow-auto bg-gray-50">
@@ -49,6 +44,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               {children}
             </main>
           </div>
+
         </ClientLayoutWrapper>
       </body>
     </html>

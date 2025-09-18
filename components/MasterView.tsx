@@ -23,7 +23,6 @@ const masterViewData = {
   }))
 };
 
-// Generate CORRECT clockwise spiral order for 7x7 grid
 const generateCorrectClockwiseSpiralOrder = (size: number) => {
   const result: {id: number, row: number, col: number}[] = [];
   const grid: number[][] = Array(size).fill(0).map(() => Array(size).fill(0));
@@ -195,7 +194,7 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
   }));
 
   return (
-    <div className={`${isMobile ? 'h-full flex flex-col' : 'h-full flex flex-col'} bg-black ${isMobile ? '' : 'border-r border-gray-200'} p-3 overflow-x-hidden`}>
+    <div className={`${isMobile ? 'h-full flex flex-col' : 'h-full flex flex-col'} bg-black ${isMobile ? '' : 'border-r border-gray-200'} overflow-x-hidden`}>
 
       {/*
       
@@ -240,35 +239,9 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
 
       */}
 
-      {/* Accreditation Header */}
-      <div className="mb-2">
-        <div className="flex justify-between items-center mb-2">
-          <div className="text-base text-lilac-300">
-            {userLevel}
-          </div>
-          
-          {/*
-          {masterViewData.showOverallScore && (
-            <button
-              onClick={() => setShowScoreBreakdown(!showScoreBreakdown)}
-              className="text-xs bg-gray-100 px-2 py-1 rounded hover:bg-gray-200 transition-colors"
-            >
-              {masterViewData.overallScore}
-            </button>
-          )}
-          */}  
-        </div>
-
-        {/*}    
-        {showScoreBreakdown && (
-          <div className="bg-blue-50 p-2 rounded-lg mb-2 text-xs">
-            <div className="font-semibold mb-1">Score Breakdown:</div>
-            <div>Completed Modules: {updatedModuleItems.filter(m => m.completed).length}</div>
-            <div>Total Progress: {(updatedModuleItems.reduce((sum, m) => sum + m.score, 0) / updatedModuleItems.length * 100).toFixed(1)}%</div>
-          </div>
-        )}
-        */}
-
+      {/* Header */}
+      <div className="pt-4 pb-4 text-base font-bold text-center text-lilac-300">
+        {userLevel}
       </div>
 
       {/* 7x7 Grid Visualization */}
@@ -301,7 +274,7 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
                   style={{
                     backgroundColor: dynamicBg,
                   }}
-                  title={`Module ${id}${completed ? ` - Score: ${(score * 100).toFixed(0)}%` : ''}`}
+                  title={`Module ${id}${completed ? `${(score * 100).toFixed(0)}%` : ''}`}
                 />
               );
             })
@@ -310,7 +283,7 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
       </div>
 
       {/* Timeline Progress */}
-      <div className={`mb-4 px-[24px] ${isMobile ? 'scale-90' : ''}`}>
+      <div className={`mb-9 px-[66px] ${isMobile ? 'scale-90' : ''}`}>
         <div className="w-full bg-gray-200 rounded-full h-1.5 relative">
           <div
             className="bg-lilac-500 h-1.5 rounded-full"
@@ -323,61 +296,68 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
         </div>
       </div>
 
+      {/* Separator Line */}
+      <div className="mb-4 border-t border-gray-700"></div>
+
       {/* Modules List */}
       <div className="flex-1 bg-black text-white flex flex-col min-h-0">
-        <h3 className="text-xs font-semibold text-white mb-2 ml-3">Modules</h3>
-        <div className="flex-1 overflow-y-auto overflow-x-hidden max-w-full custom-scrollbar pr-1">
-          <div className="space-y-1">
-            {updatedModuleItems.map((module) => {
-              const isSelectable = isModuleSelectable(module.id);
-              const isActive = currentModuleId === module.id;
+        {/* outer wrapper: layout + inset for left-shift */}
+        <div className="custom-scrollbar-outer flex-1 flex flex-col min-h-0 pr-1">
+          {/* inner: the single scrollable element (only this has overflow-y) */}
+          <div className="custom-scrollbar-inner flex-1 min-h-0">
+            <div className="mt-1 space-y-[3px] pl-5 pr-2">
+              {updatedModuleItems.map((module) => {
+                const isSelectable = isModuleSelectable(module.id);
+                const isActive = currentModuleId === module.id;
 
-              return (
-                <div
-                  key={module.id}
-                  className={`p-2 mx-3 rounded-[6px] text-xs transition-colors w-[calc(100%-24px)] box-border
-                    ${module.id <= 9 ? 'bg-lilac-charcoal-f' : module.id <= 25 ? 'bg-lilac-charcoal-i' : 'bg-lilac-charcoal-a'}
-                    ${isSelectable ? 'cursor-pointer hover:ring-2 hover:ring-lilac-300' : 'cursor-not-allowed'}
-                  `}
-                  onClick={() => isSelectable && handleModuleClick(module.id, module.name)}
-                  title={!isSelectable ? 
-                    `Not available for ${userLevel} level` : 
-                    `Select ${module.name}`}
-                >
-                  <div className="flex items-center min-w-0">
-                    {/* Module Icon */}
-                    <div className="w-8 h-8 mr-2 flex-shrink-0 bg-[#dfd5db] rounded-[3px] p-[4px] flex items-center justify-center">
-                      {imageErrors.has(module.id) ? (
-                        <div className="w-4 h-4 bg-indigo-100 rounded flex items-center justify-center">
-                          <span className="text-[10px] font-medium text-indigo-600">{module.id}</span>
+                return (
+                  <div
+                    key={module.id}
+                    className={`rounded text-xs transition-colors box-border
+                      ${module.id <= 9 ? 'bg-lilac-charcoal-f' : module.id <= 25 ? 'bg-lilac-charcoal-i' : 'bg-lilac-charcoal-a'}
+                      ${isSelectable ? 'cursor-pointer hover:ring-2 hover:ring-lilac-300' : 'cursor-not-allowed'}
+                    `}
+                    onClick={() => isSelectable && handleModuleClick(module.id, module.name)}
+                    title={!isSelectable ? 
+                      `Not available for ${userLevel} level` : 
+                      `Select ${module.name}`}
+                  >
+                    <div className="flex items-center min-w-0">
+                      {/* Module Icon */}
+                      <div className="w-12 h-12 mr-2 flex-shrink-0 bg-[#dfd5db] rounded-[3px] p-[4px] flex items-center justify-center">
+                        {imageErrors.has(module.id) ? (
+                          <div className="w-4 h-4 bg-indigo-100 rounded flex items-center justify-center">
+                            <span className="text-[10px] font-medium text-indigo-600">{module.id}</span>
+                          </div>
+                        ) : (
+                          <Image
+                            src={`/module-infographics/${module.id}.png`}
+                            alt={`Module ${module.id} icon`}
+                            width={34}
+                            height={34}
+                            className="w-full h-full object-contain"
+                            onError={handleImageError(module.id)}
+                          />
+                        )}
+                      </div>
+                      {/* Module Name */}
+                      <div className="font-medium flex-1 text-base text-white overflow-hidden text-ellipsis whitespace-nowrap">
+                        {module.name}
+                      </div>
+                      {module.completed && (
+                        <div className="text-[10px] text-gray-300 mt-1 ml-8">
+                          {(module.score * 100).toFixed(0)}%
                         </div>
-                      ) : (
-                        <Image
-                          src={`/module-infographics/${module.id}.png`}
-                          alt={`Module ${module.id} icon`}
-                          width={24}
-                          height={24}
-                          className="w-full h-full object-contain"
-                          onError={handleImageError(module.id)}
-                        />
                       )}
                     </div>
-                    {/* Module Name */}
-                    <div className="font-medium flex-1 text-xs text-white overflow-hidden text-ellipsis whitespace-nowrap">
-                      {module.name}
-                    </div>
                   </div>
-                  {module.completed && (
-                    <div className="text-[10px] text-gray-300 mt-1 ml-8">
-                      Score: {(module.score * 100).toFixed(0)}%
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
+
     </div>
   );
 }
