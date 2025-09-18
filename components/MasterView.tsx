@@ -8,7 +8,7 @@ import { modules, getModuleById } from '@/data/modules';
 import { useScenariosProgressLocalStore } from '@/store/useScenariosProgressLocalStore';
 import type { ScenariosProgressState } from '@/store/useScenariosProgressLocalStore';
 import { getScenarioUniqueId } from '@/data/scenarios';
-import { getScenariosByModuleId } from '@/data/scenarios'; // Add this import
+import { getScenariosByModuleId } from '@/data/scenarios';
 
 // View data for the MasterView UI components
 const masterViewData = {
@@ -124,10 +124,11 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
   const [spiralTiles, setSpiralTiles] = useState<{id: number, row: number, col: number}[]>([]);
   const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
   const [debugSelectedModule, setDebugSelectedModule] = useState<number | null>(null);
+  const [hoverModule, setHoverModule] = useState<number | null>(null);
   
   const currentModuleId = useScenariosProgressLocalStore(state => state.currentModuleId);
   const setCurrentModule = useScenariosProgressLocalStore(state => state.setCurrentModule);
-  const userLevel = useScenariosProgressLocalStore(state => state.userLevel || 'Foundation');
+  const userLevel = 'Advanced';
   const ratings = useScenariosProgressLocalStore(state => state.ratings);
 
   useEffect(() => {
@@ -142,9 +143,13 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
   };
 
   const isModuleSelectable = (moduleId: number): boolean => {
-    if (userLevel === 'Foundation' && moduleId > 9) return false;
-    if (userLevel === 'Intermediate' && moduleId > 26) return false;
+    // Since userLevel is hard-coded to 'Advanced', all modules are selectable
     return true;
+    
+    // Uncomment below and comment out the line above when userLevel is not hard-coded:
+    // if (userLevel === 'Foundation' && moduleId > 9) return false;
+    // if (userLevel === 'Intermediate' && moduleId > 26) return false;
+    // return true;
   };
 
   const handleModuleClick = (moduleId: number, moduleName: string) => {
@@ -217,9 +222,9 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
             </span>
           </div>
           <div>
-            <span className="text-gray-600">Completed Modules:</span>
+            <span className="text-gray-600">Hover Module:</span>
             <span className="font-semibold ml-2">
-              {updatedModuleItems.filter(m => m.completed).length} of {updatedModuleItems.length}
+              {hoverModule || 'None'}
             </span>
           </div>
         </div>
@@ -252,6 +257,8 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
               if (!tile) return null;
 
               const { id, completed, score } = tile;
+              const module = getModuleById(id);
+              const moduleName = module ? module.name : `Module ${id}`;
 
               // Determine level-based background class
               let bgClass = '';
@@ -267,14 +274,17 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
                 ? `rgba(200, 160, 255, ${score})`
                 : undefined;
 
+              // Removed indigo border for completed modules - was: ${completed ? 'border border-indigo-600' : bgClass}
               return (
                 <div
                   key={`${rowIndex}-${colIndex}`}
-                  className={`w-8 h-8 rounded-[4px] ${completed ? 'border border-indigo-600' : bgClass}`}
+                  className={`w-8 h-8 rounded-[4px] ${bgClass} ${hoverModule === id ? 'border-2 border-lilac-500' : ''}`}
                   style={{
                     backgroundColor: dynamicBg,
                   }}
-                  title={`Module ${id}${completed ? `${(score * 100).toFixed(0)}%` : ''}`}
+                  title={`${moduleName}${completed ? ` - ${(score * 100).toFixed(0)}%` : ''}`}
+                  onMouseEnter={() => setHoverModule(id)}
+                  onMouseLeave={() => setHoverModule(null)}
                 />
               );
             })
@@ -301,59 +311,55 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
 
       {/* Modules List */}
       <div className="flex-1 bg-black text-white flex flex-col min-h-0">
-        {/* outer wrapper: layout + inset for left-shift */}
-        <div className="custom-scrollbar-outer flex-1 flex flex-col min-h-0 pr-1">
-          {/* inner: the single scrollable element (only this has overflow-y) */}
-          <div className="custom-scrollbar-inner flex-1 min-h-0">
-            <div className="mt-1 space-y-[3px] pl-5 pr-2">
-              {updatedModuleItems.map((module) => {
-                const isSelectable = isModuleSelectable(module.id);
-                const isActive = currentModuleId === module.id;
+        {/* Scrollable container with left-shifted scrollbar */}
+        <div className="custom-scrollbar-container flex-1 min-h-0 overflow-y-auto overflow-x-hidden pl-5 pr-2">
+          <div className="mt-1 space-y-[3px] pr-3">
+            {updatedModuleItems.map((module) => {
+              const isSelectable = isModuleSelectable(module.id);
+              const isActive = currentModuleId === module.id;
 
-                return (
-                  <div
-                    key={module.id}
-                    className={`rounded text-xs transition-colors box-border
-                      ${module.id <= 9 ? 'bg-lilac-charcoal-f' : module.id <= 25 ? 'bg-lilac-charcoal-i' : 'bg-lilac-charcoal-a'}
-                      ${isSelectable ? 'cursor-pointer hover:ring-2 hover:ring-lilac-300' : 'cursor-not-allowed'}
-                    `}
-                    onClick={() => isSelectable && handleModuleClick(module.id, module.name)}
-                    title={!isSelectable ? 
-                      `Not available for ${userLevel} level` : 
-                      `Select ${module.name}`}
-                  >
-                    <div className="flex items-center min-w-0">
-                      {/* Module Icon */}
-                      <div className="w-12 h-12 mr-2 flex-shrink-0 bg-[#dfd5db] rounded-[3px] p-[4px] flex items-center justify-center">
-                        {imageErrors.has(module.id) ? (
-                          <div className="w-4 h-4 bg-indigo-100 rounded flex items-center justify-center">
-                            <span className="text-[10px] font-medium text-indigo-600">{module.id}</span>
-                          </div>
-                        ) : (
-                          <Image
-                            src={`/module-infographics/${module.id}.png`}
-                            alt={`Module ${module.id} icon`}
-                            width={34}
-                            height={34}
-                            className="w-full h-full object-contain"
-                            onError={handleImageError(module.id)}
-                          />
-                        )}
-                      </div>
-                      {/* Module Name */}
-                      <div className="font-medium flex-1 text-base text-white overflow-hidden text-ellipsis whitespace-nowrap">
-                        {module.name}
-                      </div>
-                      {module.completed && (
-                        <div className="text-[10px] text-gray-300 mt-1 ml-8">
-                          {(module.score * 100).toFixed(0)}%
+              return (
+                <div
+                  key={module.id}
+                  className={`rounded text-xs transition-colors box-border bg-lilac-charcoal-f
+                    ${isSelectable ? 'cursor-pointer hover:bg-lilac-charcoal-i' : 'cursor-not-allowed'}
+                  `}
+                  onClick={() => isSelectable && handleModuleClick(module.id, module.name)}
+                  title={!isSelectable ? 
+                    `Not available for ${userLevel} level` : 
+                    `Select ${module.name}`}
+                >
+                  <div className="flex items-center min-w-0">
+                    {/* Module Icon */}
+                    <div className="w-12 h-12 mr-2 flex-shrink-0 bg-[#dfd5db] rounded-[3px] p-[4px] flex items-center justify-center">
+                      {imageErrors.has(module.id) ? (
+                        <div className="w-4 h-4 bg-indigo-100 rounded flex items-center justify-center">
+                          <span className="text-[10px] font-medium text-indigo-600">{module.id}</span>
                         </div>
+                      ) : (
+                        <Image
+                          src={`/module-infographics/${module.id}.png`}
+                          alt={`Module ${module.id} icon`}
+                          width={34}
+                          height={34}
+                          className="w-full h-full object-contain"
+                          onError={handleImageError(module.id)}
+                        />
                       )}
                     </div>
+                    {/* Module Name */}
+                    <div className="font-medium flex-1 text-base text-white overflow-hidden text-ellipsis whitespace-nowrap">
+                      {module.name}
+                    </div>
+                    {module.completed && (
+                      <div className="text-[10px] text-gray-300 mt-1 ml-8">
+                        {(module.score * 100).toFixed(0)}%
+                      </div>
+                    )}
                   </div>
-                );
-              })}
-            </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

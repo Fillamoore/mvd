@@ -171,46 +171,36 @@ html {
   overflow-y: scroll;
 }
 
-/* --------------------------------------------------------------------
-   Left-shifted custom scrollbar (5px inset)
-   -------------------------------------------------------------------- */
-
-/* Outer wrapper: creates 5px inset */
-.custom-scrollbar-outer {
-  position: relative;
-  min-height: 0;
-  padding-right: 5px;
-}
-
-/* Inner scrollable element: the real scrolling container */
-.custom-scrollbar-inner {
-  box-sizing: content-box;
-  width: calc(100% + 5px);
-  margin-right: -5px;
-  min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  /* Firefox */
+/* Custom scrollbar container with 5px left shift */
+.custom-scrollbar-container {
+  box-sizing: border-box;
   scrollbar-width: thin;
   scrollbar-color: #3f3f46 #171717;
+  padding-right: 5px; /* Creates space for the scrollbar to be shifted left */
 }
 
 /* WebKit (Chrome, Edge, Safari) */
-.custom-scrollbar-inner::-webkit-scrollbar {
+.custom-scrollbar-container::-webkit-scrollbar {
   width: 8px;
+  margin-right: 5px; /* This shifts the scrollbar track left */
 }
 
-.custom-scrollbar-inner::-webkit-scrollbar-track {
-  background: #171717; /* dark track */
+.custom-scrollbar-container::-webkit-scrollbar-track {
+  background: #171717;
+  margin-right: 5px; /* Additional margin to ensure it's shifted */
 }
 
-.custom-scrollbar-inner::-webkit-scrollbar-thumb {
-  background-color: #3f3f46; /* dark gray thumb */
+.custom-scrollbar-container::-webkit-scrollbar-thumb {
+  background-color: #3f3f46;
   border-radius: 4px;
+  margin-right: 5px; /* This shifts the scrollbar thumb left */
 }
 
-/* Legacy placeholder so old .custom-scrollbar class doesn't break */
-.custom-scrollbar {
-  min-height: 0;
+/* Firefox fallback */
+@supports (scrollbar-width: thin) {
+  .custom-scrollbar-container {
+    scrollbar-color: #3f3f46 #171717;
+    scrollbar-width: thin;
+  }
 }
+

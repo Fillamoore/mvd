@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      animation: {
+        'pulse-slow': 'pulse 4s infinite',
+      },
       colors: {
         // Custom lilac color palette
         'lilac': {

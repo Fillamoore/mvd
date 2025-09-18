@@ -1,30 +1,75 @@
 'use client';
 
-import { useScenariosProgressLocalStore } from '../store/useScenariosProgressLocalStore';
+import { useState, useEffect } from 'react';
+import { useLocalStore } from '../store/useLocalStore'; 
 
 interface RatingBoxProps {
-  scenarioId: string;
+  moduleId: number;
+  scenarioId: number;
   responseId: string;
   readonly?: boolean;
   borderColor?: string;
 }
 
 export default function RatingBox({ 
-  scenarioId,
+  moduleId,
+  scenarioId, 
   responseId, 
   readonly = false, 
   borderColor = "border-lilac-300"
 }: RatingBoxProps) {
-  // Get the rating value from the store
-  const ratingValue = useScenariosProgressLocalStore((state) => 
-    state.ratings[scenarioId]?.[responseId]?.value ?? null
-  );
-  const cycleRating = useScenariosProgressLocalStore((state) => state.cycleRating);
+  const { ratings, setRating } = useLocalStore();
+  
+  const scenarioKey = `${moduleId}-${scenarioId}`;
+  const ratingValue = ratings[scenarioKey]?.[responseId]?.value ?? null;
+  
+  // LOCAL state for cycling direction - not persisted in store
+  const [isIncreasing, setIsIncreasing] = useState<boolean>(true);
+  const [previousValue, setPreviousValue] = useState<number | null>(null);
+
+  // Determine direction when value changes
+  useEffect(() => {
+    if (ratingValue !== null && previousValue !== null && ratingValue !== previousValue) {
+      setIsIncreasing(ratingValue > previousValue);
+    }
+    setPreviousValue(ratingValue);
+  }, [ratingValue, previousValue]);
 
   const handleClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent event from bubbling to parent card
+    e.stopPropagation();
     if (!readonly) {
-      cycleRating(scenarioId, responseId);
+      let newValue: number | null;
+      let newIsIncreasing: boolean = isIncreasing;
+
+      // Restore the original cycling logic with direction
+      if (ratingValue === null) {
+        newValue = 1;
+        newIsIncreasing = true;
+      } else {
+        if (isIncreasing) {
+          if (ratingValue < 5) {
+            newValue = ratingValue + 1;
+            newIsIncreasing = true;
+          } else {
+            newValue = 4;
+            newIsIncreasing = false;
+          }
+        } else {
+          if (ratingValue > 1) {
+            newValue = ratingValue - 1;
+            newIsIncreasing = false;
+          } else {
+            newValue = 2;
+            newIsIncreasing = true;
+          }
+        }
+      }
+
+      // Update local direction state
+      setIsIncreasing(newIsIncreasing);
+      
+      // Update store with new value
+      setRating(moduleId, scenarioId, responseId, newValue);
     }
   };
 
@@ -55,7 +100,7 @@ export default function RatingBox({
       title={readonly ? 'Rating completed' : 'Click to cycle rating'}
     >
       <span className="text-xl select-none">
-        {ratingValue || ''}
+        {ratingValue !== null ? ratingValue : ''}
       </span>
     </div>
   );
