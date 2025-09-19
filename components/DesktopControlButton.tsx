@@ -55,11 +55,9 @@ export default function DesktopControlButton({
         onClick={handleClick}
         className={`
           w-8 h-8 flex items-center justify-center  // 32x32px
-          bg-lilac-200 rounded-md                   // lilac-200 background, slightly rounded
+          bg-lilac-200 rounded                   // lilac-200 background, slightly rounded
           border border-lilac-charcoal-f            // lilac-charcoal-f border
-          shadow-lg
           transition-all duration-300 transform hover:scale-110
-          focus:outline-none focus:ring-2 focus:ring-lilac-300 focus:ring-opacity-50
           ${!isRevealed ? 'animate-pulse-slow' : ''}  // Much slower pulse for reveal
         `}
         aria-label={isRevealed ? 'Next scenario' : 'Reveal expert ratings'}

@@ -126,7 +126,7 @@ export default function ScenarioCard({
                 onClick={() => handleResponseClick(response.id)}
               >
                 {/* The main text content with right padding to prevent overlap */}
-                <p className="response-text pl-1 flex-1 mr-2 leading-tight select-none text-gray-800 pr-[28px]">{response.text}</p>
+                <p className="response-text pl-1 pt-[4px] flex-1 mr-2 leading-tight select-none text-gray-800 pr-[28px]">{response.text}</p>
                 <div 
                   className="flex-shrink-0 absolute bottom-1 right-1"
                   onClick={(e) => {
