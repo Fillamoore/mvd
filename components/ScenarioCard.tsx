@@ -151,7 +151,7 @@ export default function ScenarioCard({
                   className={`expert-rationale-container overflow-hidden transition-all duration-500 ease-out ${
                     animateReveal ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
                   }`}
-                  style={{ marginTop: '4px' }}
+                  style={{ marginTop: '2px' }}
                 >
                   <div className="expert-rationale bg-lilac-400 rounded p-2 flex relative">
                     
@@ -189,7 +189,7 @@ export default function ScenarioCard({
                     <div className="flex-shrink-0 absolute top-2 right-2">
                       <div className={`
                         w-6 h-6 flex items-center justify-center 
-                        border-1 border-gray-500 rounded font-bold text-base
+                        border-1 border-gray-400 rounded font-bold text-base
                         ${getRatingClass(expertResponse.expertRating)}
                       `}>
                         {expertResponse.expertRating}
@@ -206,8 +206,8 @@ export default function ScenarioCard({
           <div className={`score-container mt-6 flex justify-end transition-all duration-500 delay-1000 ${
             animateReveal ? 'opacity-100' : 'opacity-0'
           }`}>
-            <div className={`score-box border border-gray-500 rounded-lg px-4 py-3 text-center ${getScoreClass(score)}`}>
-              <div className="text-2xl font-bold">{score}%</div>
+            <div className="score-box border border-gray-400 rounded px-1 py-1 text-center bg-gray-200">
+              <div className="text-sm">{score}%</div>
             </div>
           </div>
         )}

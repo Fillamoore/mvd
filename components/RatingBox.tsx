@@ -90,7 +90,7 @@ export default function RatingBox({
       onClick={handleClick}
       className={`
         w-6 h-6 flex items-center justify-center 
-        border-1 rounded font-bold
+        border-1 border-gray-400 rounded font-bold
         transition-colors duration-200 ease-in-out
         ${getBackgroundColor(ratingValue)}
         ${borderColor}
