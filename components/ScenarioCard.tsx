@@ -110,7 +110,7 @@ export default function ScenarioCard({
   return (
     <div className="scenario-card">
       <div className="prompt-card bg-lilac-400 rounded p-2 mb-6 text-left max-w-[60%]">
-        <h3 className="text-sm leading-tight text-black">{prompt}</h3>
+        <h3 className="text-sm leading-tight select-none text-black">{prompt}</h3>
       </div>
       
       <div className="responses-container space-y-4 ml-auto max-w-[60%]">
@@ -122,13 +122,13 @@ export default function ScenarioCard({
               
               {/* == RESPONSE CARD: RatingBox is BOTTOM-RIGHT == */}
               <div 
-                className="response-card text-sm bg-gray-50 rounded p-2 cursor-pointer transition-all duration-200 hover:shadow-md flex relative min-h-[36px]"
+                className="response-card text-sm bg-gray-50 rounded p-1 cursor-pointer transition-all duration-200 hover:shadow-md flex relative min-h-[32px]"
                 onClick={() => handleResponseClick(response.id)}
               >
                 {/* The main text content with right padding to prevent overlap */}
-                <p className="flex-1 mr-2 leading-tight text-gray-800 pr-[48px]">{response.text}</p>
+                <p className="response-text pl-1 flex-1 mr-2 leading-tight select-none text-gray-800 pr-[28px]">{response.text}</p>
                 <div 
-                  className="flex-shrink-0 absolute bottom-2 right-2"
+                  className="flex-shrink-0 absolute bottom-1 right-1"
                   onClick={(e) => {
                     e.stopPropagation();
                     if (!readonly && !isRevealed) {
@@ -136,12 +136,14 @@ export default function ScenarioCard({
                     }
                   }}
                 >
+                  
                   <RatingBox 
                     moduleId={moduleId}
                     scenarioId={scenarioId}
                     responseId={response.id}
                     readonly={readonly || isRevealed}
                   />
+                
                 </div>
               </div>
 
@@ -156,8 +158,8 @@ export default function ScenarioCard({
                   <div className="expert-rationale bg-lilac-400 rounded p-2 flex relative">
                     
                     {/* Main content with right padding */}
-                    <div className="flex-1 mr-2 pr-[48px]">
-                      <p className="leading-tight text-sm mb-3">{expertResponse.expertRationale}</p>
+                    <div className="flex-1 mr-2 pr-[28px]">
+                      <p className="leading-tight select-none text-sm">{expertResponse.expertRationale}</p>
                       
                       {expertResponse.expertMedia && (
                         <div className="mt-3">
@@ -186,7 +188,7 @@ export default function ScenarioCard({
                     </div>
 
                     {/* Expert's rating (positioned top-right) */}
-                    <div className="flex-shrink-0 absolute top-2 right-2">
+                    <div className="flex-shrink-0 absolute top-1 right-1">
                       <div className={`
                         w-6 h-6 flex items-center justify-center 
                         border-1 border-gray-400 rounded font-bold text-base
