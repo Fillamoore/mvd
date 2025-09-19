@@ -7,7 +7,7 @@ import { generateCorrectClockwiseSpiralOrder } from '@/utils/spiral';
 
 const GRID_SIZE = 7;
 const TOTAL_TILES = 49;
-const ANIMATION_INTERVAL = 70;
+const ANIMATION_INTERVAL = 50;
 
 // Corrected: The onComplete prop is removed from the function signature.
 export default function SplashScreen() { 

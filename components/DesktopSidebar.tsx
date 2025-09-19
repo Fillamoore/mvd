@@ -15,8 +15,6 @@ export default function DesktopSidebar() {
   };
 
   return (
-    <aside className="desktop-sidebar h-full flex flex-col">
-      <MasterView isMobile={false} onModuleSelect={handleModuleSelect} />
-    </aside>
+    <MasterView isMobile={false} onModuleSelect={handleModuleSelect} />
   );
 }

@@ -89,8 +89,8 @@ export default function RatingBox({
     <div 
       onClick={handleClick}
       className={`
-        w-8 h-8 flex items-center justify-center 
-        border-2 rounded-md font-bold
+        w-6 h-6 flex items-center justify-center 
+        border-1 rounded font-bold
         transition-colors duration-200 ease-in-out
         ${getBackgroundColor(ratingValue)}
         ${borderColor}
@@ -99,7 +99,7 @@ export default function RatingBox({
       `}
       title={readonly ? 'Rating completed' : 'Click to cycle rating'}
     >
-      <span className="text-xl select-none">
+      <span className="text-base select-none">
         {ratingValue !== null ? ratingValue : ''}
       </span>
     </div>

@@ -89,9 +89,9 @@ export default function ScenarioPlayer() {
   }
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="scenarios-player-pane h-full flex flex-col">
       {/* Module Header */}
-      <div className="scenarios-area-header p-0.5 bg-black text-white flex justify-between items-center">
+      <div className="scenarios-area-header p-2 bg-black text-white flex justify-between items-center">
         <div className="flex items-center gap-2">
           <div style={{ backgroundColor: '#dfd5dbff', borderRadius: '3px', padding: '4px' }}>
             <Image
@@ -122,7 +122,8 @@ export default function ScenarioPlayer() {
       </div>
 
       {/* Scenario Content */}
-      <div className="flex-1 overflow-auto p-6">
+
+      <div className="scenarios-container bg-[url('/scenarios-canvas.jpg')] bg-cover bg-center w-full flex-1 overflow-auto p-6">
         <ScenarioCard
           moduleId={moduleId}
           scenarioId={currentScenario.id}

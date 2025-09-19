@@ -69,12 +69,6 @@ a {
   overflow: hidden;
 }
 
-/* Expert rationale boxes */
-.expert-rationale {
-  height: auto;
-  min-height: 60px;
-}
-
 /* Updated concertina animation */
 @keyframes concertinaExpandFull {
   from {

@@ -29,10 +29,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
           {/* Desktop layout */}
           <div className="hidden md:flex flex-col h-screen">
             <div className="flex flex-1 overflow-hidden">
-              <aside className="layout w-96 flex-shrink-0 border-r border-gray-200 overflow-auto">
+              <aside className="desktop-sidebar-wrapper w-96">
                 <DesktopSidebar />
               </aside>
-              <main className="flex-1 overflow-auto bg-gray-50">
+              <main className="desktop-scenarios-panel-wrapper border-l-1 border-gray-600 flex-1 overflow-auto">
                 {children}
               </main>
             </div>

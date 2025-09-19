@@ -199,7 +199,7 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
   }));
 
   return (
-    <div className={`${isMobile ? 'h-full flex flex-col' : 'h-full flex flex-col'} bg-black ${isMobile ? '' : 'border-r border-gray-200'} overflow-x-hidden`}>
+    <div className='master-view-container h-full flex flex-col bg-black'>
 
       {/*
       
@@ -245,7 +245,7 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
       */}
 
       {/* Header */}
-      <div className="pt-4 pb-4 text-base font-bold text-center text-lilac-300">
+      <div className="py-4 text-base font-bold text-center text-lilac-300">
         {userLevel}
       </div>
 
@@ -293,7 +293,7 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
       </div>
 
       {/* Timeline Progress */}
-      <div className={`mb-9 px-[66px] ${isMobile ? 'scale-90' : ''}`}>
+      <div className={`mb-7 px-[66px] ${isMobile ? 'scale-90' : ''}`}>
         <div className="w-full bg-gray-200 rounded-full h-1.5 relative">
           <div
             className="bg-lilac-500 h-1.5 rounded-full"
@@ -307,13 +307,13 @@ export default function MasterView({ isMobile = false, onModuleSelect }: MasterV
       </div>
 
       {/* Separator Line */}
-      <div className="mb-4 border-t border-gray-700"></div>
+      <div className="mb-1 border-t border-gray-600"></div>
 
       {/* Modules List */}
-      <div className="flex-1 bg-black text-white flex flex-col min-h-0">
+      <div className="modules-list-container px-3 pt-3 flex-1 bg-black text-white flex flex-col min-h-0">
         {/* Scrollable container with left-shifted scrollbar */}
-        <div className="custom-scrollbar-container flex-1 min-h-0 overflow-y-auto overflow-x-hidden pl-5 pr-2">
-          <div className="mt-1 space-y-[3px] pr-3">
+        <div className="custom-scrollbar-container flex-1 min-h-0 overflow-y-auto overflow-x-hidden pl-1 ">
+          <div className="mt-1 space-y-[3px] ">
             {updatedModuleItems.map((module) => {
               const isSelectable = isModuleSelectable(module.id);
               const isActive = currentModuleId === module.id;
