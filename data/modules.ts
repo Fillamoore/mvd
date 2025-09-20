@@ -60,8 +60,8 @@ export const modules: Module[] = [
   { id: 46, name: 'Coaching juniors',             tier: 'advanced', description: 'Developing others through feedback, delegation and guidance.' },
   { id: 47, name: 'Handling conflict',            tier: 'advanced', description: 'Resolving disputes constructively while preserving relationships.' },
   { id: 48, name: 'Managing up',                  tier: 'advanced', description: 'Aligning senior stakeholders and setting realistic expectations.' },
-  { id: 49, name: 'Networking for influence',     tier: 'advanced', description: 'Building strategic connections that open opportunities.' },
-  { id: 50, name: 'Thought leadership',           tier: 'advanced', description: 'Crafting and sharing ideas that shape the agenda.' }
+  { id: 49, name: 'Networking for influence',     tier: 'advanced', description: 'Building strategic connections that open opportunities.' }
+  //{ id: 50, name: 'Thought leadership',           tier: 'advanced', description: 'Crafting and sharing ideas that shape the agenda.' }
 ];
 
 export const getModuleById = (id: number) => {

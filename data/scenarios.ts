@@ -1,36 +1,31 @@
-// data/scenarios.ts
-
-export interface ExpertMedia {
-  url: string;
+// /data/scenarios.ts
+export type ExpertMedia = {
+  type: 'image';
+  url: string; // Updated from 'src'
   caption?: string;
-  altText: string;
-}
+  altText: string; // Updated from 'alt'
+};
 
-export interface Resource {
-  type: 'article' | 'video' | 'intranet' | 'policy';
+export type Resource = {
   title: string;
   url: string;
-  description: string;
-}
+};
 
-export interface ScenarioResponse {
+export type ScenarioResponse = {
   id: string;
   text: string;
   expertRationale: string;
   expertRating: number;
-  expertMedia?: {
-    url: string;
-    caption: string;
-    altText: string;
-  };
-}
+  expertMedia?: ExpertMedia;
+  resources?: Resource[];
+};
 
-export interface Scenario {
+export type Scenario = {
   id: number;
   moduleId: number;
   prompt: string;
   responses: ScenarioResponse[];
-}
+};
 
 export const scenarios: Scenario[] = [
   // MODULE 1: Growth mindset (5 scenarios)
@@ -45,6 +40,8 @@ export const scenarios: Scenario[] = [
         expertRationale: "This is a good start as it addresses the security concern directly with factual information about cloud provider capabilities. Major providers like AWS, Azure, and GCP invest billions in security and offer more robust protection than most companies can achieve on-premise.",
         expertRating: 4,
         expertMedia: {
+          // You must add this property now!
+          type: "image", 
           url: "/expert-media/cloud-security-insight.png",
           caption: "Cloud Shared Responsibility Model",
           altText: "Diagram showing how cloud security is a shared responsibility between provider and customer"
@@ -6433,9 +6430,9 @@ export const getScenarioById = (moduleId: number, scenarioId: number) => {
   return scenarios.find(scenario => scenario.moduleId === moduleId && scenario.id === scenarioId);
 };
 
-export const getScenariosByModuleId = (moduleId: number) => {
+export function getScenariosByModuleId(moduleId: number): Scenario[] {
   return scenarios.filter(scenario => scenario.moduleId === moduleId);
-};
+}
 
 export const getScenarioCountByModuleId = (moduleId: number) => {
   return getScenariosByModuleId(moduleId).length;
@@ -6446,3 +6443,4 @@ export const getRandomScenarioFromModule = (moduleId: number) => {
   if (moduleScenarios.length === 0) return null;
   return moduleScenarios[Math.floor(Math.random() * moduleScenarios.length)];
 };
+

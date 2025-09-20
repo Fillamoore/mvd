@@ -1,15 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import ScenarioCard from '../../components/ScenarioCard';
-// REMOVED: ScenarioFooter import
-import { getScenariosByModuleId } from '../../data/scenarios';
-import { getModuleById } from '../../data/modules';
-import { useLocalStore } from '../../store/useLocalStore';
+import ScenarioCard from '@/components/ScenarioCard';
+import StoreTest from '@/components/StoreTest'; // Add this import
+import { getScenariosByModuleId } from '@/data/scenarios';
+import { getModuleById } from '@/data/modules';
+import { useLocalStore } from '@/store/useLocalStore';
 import Image from 'next/image';
-// ADD: Import the new desktop control button
-import DesktopControlButton from '../../components/DesktopControlButton';
+import DesktopControlButton from '@/components/DesktopControlButton';
+import { useShallow } from 'zustand/react/shallow';
 
 export default function ScenarioPlayer() {
   const searchParams = useSearchParams();
@@ -23,61 +23,92 @@ export default function ScenarioPlayer() {
   }
 
   const moduleScenarios = getScenariosByModuleId(moduleId);
-  const currentScenario = moduleScenarios[currentScenarioIndex];
+  const currentScenarioData = useMemo(() => moduleScenarios[currentScenarioIndex], [moduleScenarios, currentScenarioIndex]);
 
-  // Use the new store
-  const { ratings, revealedScenarios, setRevealed, setCurrentScenarioIndex: setCurrentScenarioIndexStore, recordPerformanceEvent } = useLocalStore();
+  // Get store state
+  const { currentScenario, recordPerformanceEvent, revealScenario, setCurrentScenarioStore, clearCurrentScenario } = useLocalStore(useShallow((state) => {
+    const moduleData = state.pickUpAndPutDown[moduleId.toString()];
+    const currentScenario = moduleData?.currentScenario || null;
+    
+    return {
+      currentScenario,
+      recordPerformanceEvent: state.recordPerformanceEvent,
+      revealScenario: state.revealScenario,
+      setCurrentScenarioStore: state.setCurrentScenario,
+      clearCurrentScenario: state.clearCurrentScenario,
+    };
+  }));
 
-  // Generate the scenario key for store lookup
-  const scenarioKey = currentScenario ? `${moduleId}-${currentScenario.id}` : '';
-  const scenarioRatings = ratings[scenarioKey] || {};
-  const isRevealed = revealedScenarios[scenarioKey] || false;
+  // Set current scenario when scenario index or module changes
+  useEffect(() => {
+    
+    console.log('⚡ ScenarioPlayer: useEffect triggered -', {
+      moduleId,
+      currentScenarioIndex,
+      currentScenarioDataId: currentScenarioData?.id,
+      storeScenarioId: currentScenario?.scenarioId
+    });
 
-  // VALIDATION: ALL RATINGS MUST BE COMPLETE FOR REVEAL
-  const allRatingsComplete = currentScenario && 
+    if (currentScenarioData) {
+      console.log('🎯 Setting scenario in store:', currentScenarioData.id);
+      setCurrentScenarioStore(moduleId, currentScenarioData.id);
+    }
+  }, [moduleId, currentScenarioIndex, currentScenarioData, setCurrentScenarioStore]);
+
+  const isRevealed = currentScenario?.isRevealed || false;
+  const userRatings = currentScenario?.userRatings || {};
+
+  const allRatingsComplete = currentScenarioData && 
     ['A', 'B', 'C'].every(responseId => {
-      const rating = scenarioRatings[responseId]?.value;
+      const rating = userRatings[responseId];
       return rating !== null && rating !== undefined && rating > 0;
     });
 
   const handleReveal = () => {
-    if (allRatingsComplete && currentScenario) {
-      // Update the global state to mark this scenario as revealed
-      setRevealed(moduleId, currentScenario.id, true);
+    if (allRatingsComplete && currentScenarioData) {
+      revealScenario(moduleId);
       
-      // RECORD PERFORMANCE EVENT
-      const userRatings: { [key: string]: number | null } = {};
-      Object.entries(scenarioRatings).forEach(([responseId, ratingValue]) => {
-        userRatings[responseId] = ratingValue.value;
+      const userRatingsMap: { [key: string]: number | null } = userRatings;
+      const expertRatingsMap: { [key: string]: number } = {};
+      currentScenarioData.responses.forEach(response => {
+        if (response.expertRating) {
+          expertRatingsMap[response.id] = response.expertRating;
+        }
       });
 
-      const expertRatings: { [key: string]: number } = {};
-      currentScenario.responses.forEach((response: any) => {
-        expertRatings[response.id] = response.expertRating;
-      });
-
-      // Call the store action to persist the event
-      recordPerformanceEvent(moduleId, currentScenario.id, userRatings, expertRatings);
+      recordPerformanceEvent(moduleId, currentScenarioData.id, userRatingsMap, expertRatingsMap);
     }
   };
 
   const handleNextScenario = () => {
     if (currentScenarioIndex < moduleScenarios.length - 1) {
-      setCurrentScenarioIndex(prev => prev + 1);
-      setCurrentScenarioIndexStore(currentScenarioIndex + 1);
+      console.log('➡️ NEXT clicked - Current state:', {
+        currentIndex: currentScenarioIndex,
+        nextIndex: currentScenarioIndex + 1,
+        nextScenarioId: moduleScenarios[currentScenarioIndex + 1].id,
+        currentStoreScenario: currentScenario // Log what's currently in store
+      });
+      
+      // Clear current scenario
+      console.log('🧹 Clearing current scenario...');
+      clearCurrentScenario(moduleId);
+      
+      // Small delay to ensure store update propagates
+      setTimeout(() => {
+        console.log('📈 Setting new scenario index...');
+        setCurrentScenarioIndex(prev => prev + 1);
+      }, 50);
     } else {
-      // Optionally handle end of module
-      console.log('End of module reached');
+      console.log('🏁 End of module reached');
     }
   };
 
   const handleModuleChange = (newModuleId: number) => {
     router.push(`/scenario-player?module=${newModuleId}`);
     setCurrentScenarioIndex(0);
-    setCurrentScenarioIndexStore(0);
   };
 
-  if (!currentScenario) {
+  if (!currentScenarioData) {
     return (
       <div className="h-full flex items-center justify-center">
         <div className="text-center">
@@ -90,7 +121,6 @@ export default function ScenarioPlayer() {
 
   return (
     <div className="scenarios-player-pane h-full flex flex-col">
-      {/* Module Header */}
       <div className="scenarios-area-header p-2 border-b-1 border-gray-600 bg-black text-white flex justify-between items-center">
         <div className="flex items-center gap-2">
           <div style={{ backgroundColor: '#dfd5dbff', borderRadius: '3px', padding: '4px' }}>
@@ -121,20 +151,16 @@ export default function ScenarioPlayer() {
         </div>
       </div>
 
-      {/* Scenario Content */}
-
       <div className="scenarios-container bg-[url('/scenarios-canvas.jpg')] bg-cover bg-center w-full flex-1 overflow-auto py-6 px-[200px]">
         <ScenarioCard
           moduleId={moduleId}
-          scenarioId={currentScenario.id}
-          prompt={currentScenario.prompt}
-          responses={currentScenario.responses.map(r => ({ id: r.id, text: r.text }))}
-          expertRationales={isRevealed ? currentScenario.responses : undefined}
-          isRevealed={isRevealed}
+          scenarioId={currentScenarioData.id}
+          prompt={currentScenarioData.prompt}
+          responses={currentScenarioData.responses.map(r => ({ id: r.id, text: r.text }))}
+          expertRationales={isRevealed ? currentScenarioData.responses : undefined}
         />
       </div>
 
-      {/* REPLACED: Desktop Control Button instead of Footer */}
       <DesktopControlButton
         onReveal={handleReveal}
         onNext={handleNextScenario}

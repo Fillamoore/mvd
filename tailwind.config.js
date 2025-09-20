@@ -23,6 +23,9 @@ module.exports = {
         'lilac-charcoal-f': '#1a1a1a',     // Foundation: near-black, minimal lilac
         'lilac-charcoal-i': '#2b1f33',     // Intermediate: deeper lilac infusion
         'lilac-charcoal-a': '#3a2644',     // Advanced: rich lilac-charcoal blend
+        'lilac-master-hover-2': '#8764a8',
+        'lilac-master-hover-3': '#a992be',
+        'lilac-master-hover-4': '#bfa9da',
       },
       borderWidth: {
         '1': '1px', // Add this line for a 1px border

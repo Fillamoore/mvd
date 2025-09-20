@@ -1,157 +1,199 @@
+// store/useLocalStore.ts
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import { devtools } from 'zustand/middleware';
+import { immer } from 'zustand/middleware/immer';
 
-// Simple interface for storing rating values
-interface RatingValue {
-  value: number | null;
-}
-
-// Helper function to create consistent storage keys
-const getScenarioKey = (moduleId: number, scenarioId: number) => `${moduleId}-${scenarioId}`;
-
-// Data that resets when user wants to start fresh
-const defaultUserProgressState = {
-  ratings: {
-    'default': {
-      A: { value: null },
-      B: { value: null },
-      C: { value: null },
-    },
-  },
-  revealedScenarios: {},
-  currentModuleId: 1,
-  currentScenarioIndex: 0,
-  userLevel: 'Foundation' as const,
-};
-
-// Analytics data that persists across resets
-const defaultAnalyticsState = {
-  performanceEvents: [],
-};
-
-export interface LocalStoreState {
-  // User progress state
-  ratings: {
-    [key: string]: {
-      [responseId: string]: RatingValue;
-    };
-  };
-  revealedScenarios: {
-    [key: string]: boolean;
-  };
-  currentModuleId: number;
-  currentScenarioIndex: number;
-  userLevel: 'Foundation' | 'Intermediate' | 'Advanced';
-  
-  // Analytics state
-  performanceEvents: Array<{
-    moduleId: number;
+// 1. Core Data Structures
+interface PickUpAndPutDownState {
+  completedScenarios: {
     scenarioId: number;
     userRatings: { [responseId: string]: number | null };
     expertRatings: { [responseId: string]: number };
-    timestamp: string;
     score: number;
-  }>;
-  
-  // Basic CRUD operations
-  setRating: (moduleId: number, scenarioId: number, responseId: string, value: number | null) => void;
-  resetAllProgress: () => void;
-  
-  setRevealed: (moduleId: number, scenarioId: number, isRevealed: boolean) => void;
-  recordPerformanceEvent: (
-    moduleId: number, 
-    scenarioId: number,
-    userRatings: { [responseId: string]: number | null },
-    expertRatings: { [responseId: string]: number }
-  ) => void;
-  clearPerformanceEvents: () => void;
-  
-  setCurrentModule: (moduleId: number) => void;
-  setCurrentScenarioIndex: (index: number) => void;
-  setUserLevel: (level: 'Foundation' | 'Intermediate' | 'Advanced') => void;
+    timestamp: string;
+  }[];
+  currentScenario: {
+    scenarioId: number;
+    userRatings: { [responseID: string]: number | null };
+    isRevealed: boolean;
+  } | null;
 }
 
-export const useLocalStore = create<LocalStoreState>()(
-  persist(
-    (set, get) => ({
-      ...defaultUserProgressState,
-      ...defaultAnalyticsState,
+export interface PickUpAndPutDownStore {
+  lastModuleVisited: string | null;
+  pickUpAndPutDown: {
+    [moduleId: string]: PickUpAndPutDownState;
+  };
 
-      // Simple value setter
-      setRating: (moduleId, scenarioId, responseId, value) =>
-        set((state) => {
-          const key = getScenarioKey(moduleId, scenarioId);
-          return {
-            ratings: {
-              ...state.ratings,
-              [key]: {
-                ...(state.ratings[key] || {}),
-                [responseId]: { value },
-              },
-            },
-          };
-        }),
+  setCurrentModule: (moduleId: number) => void;
+  setCurrentScenario: (moduleId: number, scenarioId: number) => void;
+  rateScenario: (moduleId: number, scenarioId: number, responseId: string, rating: number | null) => void;
+  revealScenario: (moduleId: number) => void;
+  recordPerformanceEvent: (
+    moduleId: number,
+    scenarioId: number,
+    userRatings: { [key: string]: number | null },
+    expertRatings: { [key: string]: number },
+  ) => void;
+  clearCurrentScenario: (moduleId: number) => void;
+}
 
-      resetAllProgress: () => set({
-        ...defaultUserProgressState,
-      }),
-      
-      setRevealed: (moduleId, scenarioId, isRevealed) =>
-        set((state) => {
-          const key = getScenarioKey(moduleId, scenarioId);
-          return {
-            revealedScenarios: {
-              ...state.revealedScenarios,
-              [key]: isRevealed,
-            },
-          };
-        }),
-      
-      recordPerformanceEvent: (moduleId, scenarioId, userRatings, expertRatings) =>
-        set((state) => {
-          const diffs: number[] = [];
-          Object.keys(userRatings).forEach((key) => {
-            const userRating = userRatings[key];
-            const expertRating = expertRatings[key];
-            if (userRating !== null && expertRating !== undefined) {
-              diffs.push(Math.abs(userRating - expertRating));
+// 2. Simplified Zustand Store Implementation
+export const useLocalStore = create<PickUpAndPutDownStore>()(
+  devtools(
+    persist(
+      immer((set, get) => ({
+        // Initial State
+        lastModuleVisited: null,
+        pickUpAndPutDown: {},
+
+        setCurrentModule: (moduleId: number) => {
+          set((state) => {
+            state.lastModuleVisited = moduleId.toString();
+          });
+        },
+
+        setCurrentScenario: (moduleId: number, scenarioId: number) => {
+          set((state) => {
+            const moduleKey = moduleId.toString();
+            
+            if (!state.pickUpAndPutDown[moduleKey]) {
+              state.pickUpAndPutDown[moduleKey] = {
+                completedScenarios: [],
+                currentScenario: null,
+              };
+            }
+            
+            const currentScenario = state.pickUpAndPutDown[moduleKey].currentScenario;
+            
+            // Set the scenario - trust that this is what we want current
+            state.pickUpAndPutDown[moduleKey].currentScenario = {
+              scenarioId,
+              userRatings: currentScenario?.userRatings || {},
+              isRevealed: currentScenario?.isRevealed || false,
+            };
+          });
+        },
+
+        rateScenario: (moduleId: number, scenarioId: number, responseId: string, rating: number | null) => {
+          set((state) => {
+            const moduleKey = moduleId.toString();
+            const scenario = state.pickUpAndPutDown[moduleKey]?.currentScenario;
+            
+            // SIMPLIFIED: Just update the rating, no scenario ID checks
+            if (scenario) {
+              scenario.userRatings[responseId] = rating;
             }
           });
-          
-          const averageDifference = diffs.reduce((a, b) => a + b, 0) / diffs.length;
-          const score = Math.round(100 - (averageDifference / 4) * 100);
+        },
 
-          const newEvent = {
-            moduleId,
-            scenarioId,
-            userRatings,
-            expertRatings,
-            score,
-            timestamp: new Date().toISOString(),
+        revealScenario: (moduleId: number) => {
+          set((state) => {
+            const moduleKey = moduleId.toString();
+            const scenario = state.pickUpAndPutDown[moduleKey]?.currentScenario;
+            
+            if (scenario) {
+              scenario.isRevealed = true;
+            }
+          });
+        },
+
+        recordPerformanceEvent: (
+          moduleId: number,
+          scenarioId: number,
+          userRatings: { [key: string]: number | null },
+          expertRatings: { [key: string]: number }
+        ) => {
+          set((state) => {
+            const moduleKey = moduleId.toString();
+            const moduleData = state.pickUpAndPutDown[moduleKey];
+
+            if (!moduleData) return;
+
+            let totalDifference = 0;
+            let ratedCount = 0;
+
+            Object.keys(userRatings).forEach((responseId) => {
+              const userRating = userRatings[responseId];
+              const expertRating = expertRatings[responseId];
+
+              if (userRating !== null && userRating !== undefined && expertRating !== null && expertRating !== undefined) {
+                totalDifference += Math.abs(userRating - expertRating);
+                ratedCount++;
+              }
+            });
+
+            const averageDifference = ratedCount > 0 ? totalDifference / ratedCount : 0;
+            const score = Math.round(100 - (averageDifference / 4) * 100);
+
+            const newPerformanceEvent = {
+              scenarioId,
+              userRatings,
+              expertRatings,
+              score,
+              timestamp: new Date().toISOString(),
+            };
+
+            moduleData.completedScenarios.push(newPerformanceEvent);
+          });
+        },
+
+        clearCurrentScenario: (moduleId: number) => {
+          set((state) => {
+            const moduleKey = moduleId.toString();
+            const moduleData = state.pickUpAndPutDown[moduleKey];
+            
+            if (moduleData) {
+              moduleData.currentScenario = null;
+            }
+          });
+        },
+      })),
+      {
+        name: 'pick-up-and-put-down-storage',
+        version: 1,
+        storage: createJSONStorage(() => localStorage),
+        onRehydrateStorage: () => {
+          return (state, error) => {
+            if (error) {
+              console.error('Rehydration failed:', error);
+            }
           };
-
-          return {
-            performanceEvents: [...state.performanceEvents, newEvent],
-          };
-        }),
-
-      clearPerformanceEvents: () => set({ performanceEvents: [] }),
-      
-      setCurrentModule: (moduleId) =>
-        set({ 
-          currentModuleId: moduleId,
-          currentScenarioIndex: 0
-        }),
-      
-      setCurrentScenarioIndex: (index) =>
-        set({ currentScenarioIndex: index }),
-
-      setUserLevel: (level) =>
-        set({ userLevel: level }),
-    }),
-    {
-      name: 'local-store',
-      storage: createJSONStorage(() => localStorage),
-    }
+        },
+      }
+    ),
+    { name: 'PickUpAndPutDownStore' }
   )
 );
+
+// === SIMPLIFIED DEBUG UTILITIES ===
+export const storeDebug = {
+  checkStorage: () => {
+    try {
+      const stored = localStorage.getItem('pick-up-and-put-down-storage');
+      return stored ? JSON.parse(stored) : null;
+    } catch (error) {
+      console.error('Error reading localStorage:', error);
+      return null;
+    }
+  },
+
+  clearAll: () => {
+    try {
+      localStorage.removeItem('pick-up-and-put-down-storage');
+      useLocalStore.setState({
+        lastModuleVisited: null,
+        pickUpAndPutDown: {}
+      });
+      console.log('Cleared store and storage');
+    } catch (error) {
+      console.error('Clear error:', error);
+    }
+  },
+};
+
+// Make available globally for console debugging
+if (typeof window !== 'undefined') {
+  (window as any).debugStore = storeDebug;
+}

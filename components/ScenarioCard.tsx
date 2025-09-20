@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import RatingBox from './RatingBox';
 import ExpertMedia from './ExpertMedia';
-import { useLocalStore } from '../store/useLocalStore';
+import { useLocalStore } from '@/store/useLocalStore';
 import type { ExpertMedia as ExpertMediaType, Resource } from '@/data/scenarios';
+import { useShallow } from 'zustand/react/shallow';
 
 interface ScenarioCardProps {
   scenarioId: number;
@@ -15,7 +16,7 @@ interface ScenarioCardProps {
     text: string;
   }>;
   expertRationales?: Array<{
-    id:string;
+    id: string;
     text: string;
     expertRationale: string;
     expertRating: number;
@@ -23,8 +24,10 @@ interface ScenarioCardProps {
     resources?: Resource[];
   }>;
   readonly?: boolean;
-  isRevealed?: boolean;
 }
+
+// Create stable empty objects to avoid re-renders
+const EMPTY_USER_RATINGS: { [key: string]: number | null } = {};
 
 export default function ScenarioCard({ 
   scenarioId, 
@@ -33,22 +36,32 @@ export default function ScenarioCard({
   responses, 
   expertRationales, 
   readonly = false,
-  isRevealed = false
 }: ScenarioCardProps) {
-  const { ratings } = useLocalStore();
-  
-  const scenarioKey = `${moduleId}-${scenarioId}`;
-  const scenarioRatings = ratings[scenarioKey] || {};
-  
-  // Use a single boolean to control the simultaneous animation
+  const [isHydrated, setIsHydrated] = useState(false);
   const [animateReveal, setAnimateReveal] = useState<boolean>(false);
-
-  const calculateScore = () => {
+  
+  // ALL HOOKS MUST BE CALLED AT TOP LEVEL - NO CONDITIONAL HOOKS
+  const { userRatings, isRevealed } = useLocalStore(useShallow((state) => {
+    const currentScenario = state.pickUpAndPutDown[moduleId.toString()]?.currentScenario;
+    return {
+      userRatings: (currentScenario?.userRatings || EMPTY_USER_RATINGS) as { [key: string]: number | null },
+      isRevealed: currentScenario?.isRevealed || false,
+    };
+  }));
+  
+  const scenarioExists = !!useLocalStore(state => 
+    state.pickUpAndPutDown[moduleId.toString()]?.currentScenario
+  );
+  
+  const rateScenario = useLocalStore(state => state.rateScenario);
+  
+  // useMemo must be called unconditionally at top level
+  const calculateScore = useMemo(() => {
     if (!expertRationales) return 0;
     let totalDifference = 0;
     let ratedResponses = 0;
     responses.forEach(response => {
-      const userRating = scenarioRatings[response.id]?.value;
+      const userRating = userRatings[response.id];
       const expertResponse = expertRationales.find(r => r.id === response.id);
       if (userRating !== null && userRating !== undefined && expertResponse) {
         totalDifference += Math.abs(userRating - expertResponse.expertRating);
@@ -58,33 +71,65 @@ export default function ScenarioCard({
     if (ratedResponses === 0) return 0;
     const averageDifference = totalDifference / ratedResponses;
     return Math.round(100 - (averageDifference / 4) * 100);
-  };
+  }, [userRatings, expertRationales, responses]);
 
-  const score = isRevealed ? calculateScore() : 0;
+  const score = isRevealed ? calculateScore : 0;
+
+  // Check if store is hydrated
+  useEffect(() => {
+    const unsubscribe = useLocalStore.persist.onFinishHydration(() => {
+      setIsHydrated(true);
+    });
+    
+    if (useLocalStore.persist.hasHydrated()) {
+      setIsHydrated(true);
+    }
+    
+    return unsubscribe;
+  }, []);
+
+  // Initialize scenario if it doesn't exist
+  useEffect(() => {
+    if (!scenarioExists && isHydrated) {
+      const { setCurrentScenario } = useLocalStore.getState();
+      setCurrentScenario(moduleId, scenarioId);
+    }
+  }, [scenarioExists, moduleId, scenarioId, isHydrated]);
 
   useEffect(() => {
-    // If revealed, start the animation after a small delay to ensure all elements are rendered
     if (isRevealed) {
       const timer = setTimeout(() => {
         setAnimateReveal(true);
-      }, 50); // A short delay for proper rendering
+      }, 0);
       return () => clearTimeout(timer);
     } else {
       setAnimateReveal(false);
     }
   }, [isRevealed]);
-
+  
+  // Don't render content until hydrated
+  if (!isHydrated) {
+    return (
+      <div className="scenario-card">
+        <div className="prompt-card bg-lilac-400 rounded p-2 mb-6 text-left max-w-[60%]">
+          <h3 className="text-sm leading-tight select-none text-black">{prompt}</h3>
+        </div>
+        <div className="text-center py-8 text-gray-500">Loading scenario...</div>
+      </div>
+    );
+  }
+  
   const handleResponseClick = (responseId: string) => {
     if (!readonly && !isRevealed) {
-      const currentValue = scenarioRatings[responseId]?.value ?? null;
+      const currentValue = userRatings[responseId] ?? null;
       let newValue: number | null;
       if (currentValue === null) {
         newValue = 1;
       } else {
         newValue = currentValue < 5 ? currentValue + 1 : currentValue - 1;
       }
-      const { setRating } = useLocalStore.getState();
-      setRating(moduleId, scenarioId, responseId, newValue);
+      
+      rateScenario(moduleId, scenarioId, responseId, newValue);
     }
   };
 
@@ -114,18 +159,16 @@ export default function ScenarioCard({
       </div>
       
       <div className="responses-container space-y-4 ml-auto max-w-[60%]">
-        {responses.map((response, index) => {
+        {responses.map((response) => {
           const expertResponse = expertRationales?.find(r => r.id === response.id);
           
           return (
             <div key={response.id} className="response-pair-container">
               
-              {/* == RESPONSE CARD: RatingBox is BOTTOM-RIGHT == */}
               <div 
                 className="response-card text-sm bg-gray-50 rounded p-1 cursor-pointer transition-all duration-200 hover:shadow-md flex relative min-h-[32px]"
                 onClick={() => handleResponseClick(response.id)}
               >
-                {/* The main text content with right padding to prevent overlap */}
                 <p className="response-text pl-1 pt-[4px] flex-1 mr-2 leading-tight select-none text-gray-800 pr-[28px]">{response.text}</p>
                 <div 
                   className="flex-shrink-0 absolute bottom-1 right-1"
@@ -147,7 +190,6 @@ export default function ScenarioCard({
                 </div>
               </div>
 
-              {/* == EXPERT RATIONALE CARD: Expert Rating is TOP-RIGHT == */}
               {isRevealed && expertResponse && (
                 <div 
                   className={`expert-rationale-container overflow-hidden transition-all duration-500 ease-out ${
@@ -157,7 +199,6 @@ export default function ScenarioCard({
                 >
                   <div className="expert-rationale bg-lilac-400 rounded p-2 flex relative">
                     
-                    {/* Main content with right padding */}
                     <div className="flex-1 mr-2 pr-[28px]">
                       <p className="leading-tight select-none text-sm">{expertResponse.expertRationale}</p>
                       
@@ -187,7 +228,6 @@ export default function ScenarioCard({
                       )}
                     </div>
 
-                    {/* Expert's rating (positioned top-right) */}
                     <div className="flex-shrink-0 absolute top-1 right-1">
                       <div className={`
                         w-6 h-6 flex items-center justify-center 

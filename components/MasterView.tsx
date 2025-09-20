@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { modules } from '@/data/modules';
+import { useLocalStore } from '@/store/useLocalStore';
+import { useRouter } from 'next/navigation';
 
 // View data for the MasterView UI components
 const masterViewData = {
@@ -81,43 +83,39 @@ interface MasterViewProps {
   isMobile?: boolean;
 }
 
-// Calculate user's actual module score from store ratings, now with a check for spoofed scores.
-const getTileScore = (moduleId: number, spoofScores: Record<number, number>): number => {
-  // Check if the spoof score exists for this module
-  if (spoofScores[moduleId]) {
-    return spoofScores[moduleId];
-  }
-  // Fallback to the original logic
-  return masterViewData.moduleItems.find(m => m.id === moduleId)?.score || 0;
-};
-
 export default function MasterView({ isMobile = false }: MasterViewProps) {
   const [isClient, setIsClient] = useState(false);
   const [spiralTiles, setSpiralTiles] = useState<{id: number, row: number, col: number}[]>([]);
   const [hoverModule, setHoverModule] = useState<number | null>(null);
   
-  const spoofScores = {
-    1: 0.75,
-    2: 0.50,
-    3: 0.85,
-    4: 0.62,
-    5: 0.91,
-    6: 0.44,
-    7: 0.78,
-    8: 0.55,
-    9: 0.89,
-    10: 0.31,
-    11: 0.77,
-    12: 0.68,
-    13: 0.95,
-    14: 0.42,
-    15: 0.83,
-  };
+  // Get an instance of the router
+  const router = useRouter();
 
+  const lastModuleVisited = useLocalStore((state) => state.lastModuleVisited);
+  const pickUpAndPutDown = useLocalStore((state) => state.pickUpAndPutDown);
+  const setCurrentModule = useLocalStore((state) => state.setCurrentModule);
+  const currentModuleId = lastModuleVisited ? parseInt(lastModuleVisited, 10) : 1;
+  
+  const getTileScore = (moduleId: number): number => {
+    const moduleData = pickUpAndPutDown[moduleId.toString()];
+    
+    if (moduleData && moduleData.completedScenarios.length > 0) {
+      const totalScore = moduleData.completedScenarios.reduce((sum, scenario) => sum + scenario.score, 0);
+      const averageScore = totalScore / moduleData.completedScenarios.length;
+      return averageScore; // This is now 0-100 (percentage)
+    }
+    
+    return 0; // 0% if no completed scenarios
+  };
+  
   useEffect(() => {
     setIsClient(true);
     setSpiralTiles(generateCorrectClockwiseSpiralOrder(7));
   }, []);
+
+  useEffect(() => {
+    console.log('Current selected module ID has changed to:', currentModuleId);
+  }, [currentModuleId]);
 
   const timelinePosition = 35;
 
@@ -133,7 +131,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
   
   spiralTiles.forEach(({id, row, col}) => {
     if (row >= 0 && row < 7 && col >= 0 && col < 7) {
-      const moduleScore = getTileScore(id, spoofScores);
+      const moduleScore = getTileScore(id);
       const hasProgress = moduleScore > 0;
       
       grid[row][col] = {
@@ -143,6 +141,12 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
       };
     }
   });
+  
+  // This new function handles both state update and navigation
+  const handleModuleClick = (moduleId: number) => {
+    setCurrentModule(moduleId);
+    router.push(`/scenario-player?module=${moduleId}`);
+  };
 
   return (
     <div className='master-view-container h-full flex flex-col bg-black'>
@@ -172,7 +176,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
               }
 
               const dynamicBg = completed
-                ? `rgba(200, 160, 255, ${score})`
+                ? `rgba(200, 160, 255, ${score/100})`
                 : undefined;
 
               return (
@@ -182,9 +186,12 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
                   style={{
                     backgroundColor: dynamicBg,
                   }}
-                  title={module ? module.name : `Module ${id}`}
+                  title={`${module ? module.name : `Module ${id}`}${completed ? ` - ${score.toFixed(0)}%` : ''}`}
                   onMouseEnter={() => setHoverModule(id)}
                   onMouseLeave={() => setHoverModule(null)}
+                  onClick={() => {
+                    handleModuleClick(id);
+                  }}
                 />
               );
             })
@@ -214,38 +221,47 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
         {/* Scrollable container with left-shifted scrollbar */}
         <div className="custom-scrollbar-container flex-1 min-h-0 overflow-y-auto overflow-x-hidden pl-1 ">
           <div className="mt-1 space-y-[3px] ">
-            {masterViewData.moduleItems.map((module) => (
-              <div
-                key={module.id}
-                className="list-item p-1 rounded text-xs transition-colors box-border bg-lilac-charcoal-f hover:bg-lilac-charcoal-i"
-              >
-                <div className="flex items-center min-w-0">
-                  {/* Module Icon */}
-                  <div className="w-10 h-10 mr-2 flex-shrink-0 bg-[#dfd5db] rounded-[3px] p-[4px] flex items-center justify-center">
-                    <Image
-                      src={`/module-infographics/${module.id}.png`}
-                      alt={`Module ${module.id} icon`}
-                      width={34}
-                      height={34}
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
-                  {/* Module Name */}
-                  <div className="font-medium flex-1 select-none text-base text-white overflow-hidden text-ellipsis whitespace-nowrap">
-                    {module.name}
-                  </div>
-                  {module.completed && (
-                    <div className="text-[10px] text-gray-300 mt-1 ml-8">
-                      {(module.score * 100).toFixed(0)}%
+            {masterViewData.moduleItems.map((module) => {
+              const isCurrentModule = module.id === currentModuleId;
+              const bgColorClass = isCurrentModule
+                ? 'bg-lilac-master-hover-2 hover:bg-lilac-master-hover-3'
+                : 'bg-lilac-charcoal-f hover:bg-lilac-charcoal-i';
+
+              return (
+                <div
+                  key={module.id}
+                  className={`list-item p-1 rounded text-xs transition-colors box-border ${bgColorClass}`}
+                  onClick={() => {
+                    handleModuleClick(module.id);
+                  }}
+                >
+                  <div className="flex items-center min-w-0">
+                    {/* Module Icon */}
+                    <div className="w-10 h-10 mr-2 flex-shrink-0 bg-[#dfd5db] rounded-[3px] p-[4px] flex items-center justify-center">
+                      <Image
+                        src={`/module-infographics/${module.id}.png`}
+                        alt={`Module ${module.id} icon`}
+                        width={34}
+                        height={34}
+                        className="w-full h-full object-contain"
+                      />
                     </div>
-                  )}
+                    {/* Module Name */}
+                    <div className="font-medium flex-1 select-none text-base text-white overflow-hidden text-ellipsis whitespace-nowrap">
+                      {module.name}
+                    </div>
+                    {module.completed && (
+                      <div className="text-[10px] text-gray-300 mt-1 ml-8">
+                        {(module.score).toFixed(0)}%
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
-
     </div>
   );
 }
