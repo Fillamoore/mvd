@@ -1,3 +1,4 @@
+// components/DesktopControlButton.tsx - KEEP THIS EXACT CODE
 'use client';
 
 import { useEffect } from 'react';

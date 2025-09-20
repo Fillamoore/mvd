@@ -3,7 +3,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import ScenarioCard from '@/components/ScenarioCard';
-import StoreTest from '@/components/StoreTest'; // Add this import
 import { getScenariosByModuleId } from '@/data/scenarios';
 import { getModuleById } from '@/data/modules';
 import { useLocalStore } from '@/store/useLocalStore';
@@ -41,16 +40,7 @@ export default function ScenarioPlayer() {
 
   // Set current scenario when scenario index or module changes
   useEffect(() => {
-    
-    console.log('⚡ ScenarioPlayer: useEffect triggered -', {
-      moduleId,
-      currentScenarioIndex,
-      currentScenarioDataId: currentScenarioData?.id,
-      storeScenarioId: currentScenario?.scenarioId
-    });
-
     if (currentScenarioData) {
-      console.log('🎯 Setting scenario in store:', currentScenarioData.id);
       setCurrentScenarioStore(moduleId, currentScenarioData.id);
     }
   }, [moduleId, currentScenarioIndex, currentScenarioData, setCurrentScenarioStore]);
@@ -81,26 +71,12 @@ export default function ScenarioPlayer() {
   };
 
   const handleNextScenario = () => {
-    if (currentScenarioIndex < moduleScenarios.length - 1) {
-      console.log('➡️ NEXT clicked - Current state:', {
-        currentIndex: currentScenarioIndex,
-        nextIndex: currentScenarioIndex + 1,
-        nextScenarioId: moduleScenarios[currentScenarioIndex + 1].id,
-        currentStoreScenario: currentScenario // Log what's currently in store
-      });
-      
-      // Clear current scenario
-      console.log('🧹 Clearing current scenario...');
-      clearCurrentScenario(moduleId);
-      
-      // Small delay to ensure store update propagates
-      setTimeout(() => {
-        console.log('📈 Setting new scenario index...');
-        setCurrentScenarioIndex(prev => prev + 1);
-      }, 50);
-    } else {
-      console.log('🏁 End of module reached');
+    if (currentScenarioIndex >= moduleScenarios.length - 1) {
+      return;
     }
+    
+    clearCurrentScenario(moduleId);
+    setCurrentScenarioIndex(prev => prev + 1);
   };
 
   const handleModuleChange = (newModuleId: number) => {
@@ -161,11 +137,13 @@ export default function ScenarioPlayer() {
         />
       </div>
 
+      {/* Always render - let DesktopControlButton handle visibility */}
       <DesktopControlButton
         onReveal={handleReveal}
         onNext={handleNextScenario}
         allRated={allRatingsComplete}
         isRevealed={isRevealed}
+        isLastScenario={currentScenarioIndex === moduleScenarios.length - 1}
       />
     </div>
   );
