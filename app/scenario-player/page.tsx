@@ -84,35 +84,28 @@ export default function ScenarioPlayer() {
     setCurrentScenarioIndex(0);
   };
 
-  if (!currentScenarioData) {
-    return (
-      <div className="h-full flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-xl font-semibold text-gray-900">No scenarios found</h2>
-          <p className="text-gray-600 mt-2">This module does not have any scenarios yet.</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="scenarios-player-pane h-full flex flex-col">
-      <div className="scenarios-area-header p-2 border-b-1 border-gray-600 bg-black text-white flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <div style={{ backgroundColor: '#dfd5dbff', borderRadius: '3px', padding: '4px' }}>
+    <div className="scenarios-player-pane border-1 rounded-[10px] border-gray-700 h-full flex flex-col">
+
+      
+      
+      <div className="scenarios-area-header border-b-1 p-1 border-gray-600 bg-black overflow-hidden overflow-auto text-white flex justify-between items-center">
+      
+        <div className="icon-container p-1 flex items-center gap-2">
+          <div style={{ backgroundColor: '#dfd5dbff', borderRadius: '3px', padding: '5px' }}>
             <Image
               src={`/module-infographics/${String(currentModule.id)}.png`}
               alt={`Module ${currentModule.id} icon`} 
-              width={40}
-              height={40}
-              className="w-9 h-9 object-contain"
+              width={28}
+              height={28}
+              //className="w-8 h-8 object-contain"
             />
           </div>
           <h1 className="ml-1 text-base font-bold text-lilac-300">{currentModule.name}</h1>
         </div>
-        
+
         <div className="flex items-center gap-2">
-          <div className="inline-flex items-center justify-center text-sm text-lilac-300 border-2 border-lilac-300 rounded-md px-1.5 py-1 min-w-[2.5rem]">
+          <div className="inline-flex items-center justify-center text-sm text-lilac-300 border-2 border-lilac-300 rounded-[10px] px-1.5 py-1 min-w-[2.5rem]">
             {currentScenarioIndex + 1}/{moduleScenarios.length}
           </div>
           <div className="bg-black rounded-md p-1">
@@ -125,9 +118,15 @@ export default function ScenarioPlayer() {
             />
           </div>
         </div>
+      
+        
+
       </div>
 
-      <div className="scenarios-container bg-[url('/scenarios-canvas.jpg')] bg-cover bg-center w-full flex-1 overflow-auto py-6 px-[200px]">
+      
+
+      <div className="scenarios-container bg-[url('/scenarios-canvas.jpg')] bg-cover bg-center w-full flex-1 rounded-b-[10px] overflow-hidden py-6 px-[200px]">
+      
         <ScenarioCard
           moduleId={moduleId}
           scenarioId={currentScenarioData.id}
@@ -135,6 +134,8 @@ export default function ScenarioPlayer() {
           responses={currentScenarioData.responses.map(r => ({ id: r.id, text: r.text }))}
           expertRationales={isRevealed ? currentScenarioData.responses : undefined}
         />
+
+
       </div>
 
       {/* Always render - let DesktopControlButton handle visibility */}
@@ -143,7 +144,6 @@ export default function ScenarioPlayer() {
         onNext={handleNextScenario}
         allRated={allRatingsComplete}
         isRevealed={isRevealed}
-        isLastScenario={currentScenarioIndex === moduleScenarios.length - 1}
       />
     </div>
   );

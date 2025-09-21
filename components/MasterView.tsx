@@ -149,15 +149,23 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
   };
 
   return (
-    <div className='master-view-container h-full flex flex-col bg-black'>
-
-      {/* Header */}
-      <div className="py-4 text-base font-bold text-center text-lilac-300">
-        Advanced
+    <div className='master-view-container p-5 h-full flex flex-col bg-black'>
+      
+      <div className="logo flex justify-center items-center gap-2">
+        <img
+          src="/aalogo.png"
+          alt="Advisory Accelerator Icon"
+          width={132}
+          height={42}
+        />
       </div>
 
+      {/* Separator Line 
+      <div className="mt-2 header-bottom-seperator h-[10px] border-t-1 border-gray-600 w-all"></div>
+      */}
+
       {/* 7x7 Grid Visualization */}
-      <div className={`mb-6 flex justify-center ${isMobile ? 'scale-90' : ''}`}>
+      <div className={`mt-6 mb-6 flex justify-center ${isMobile ? 'scale-90' : ''}`}>
         <div className="grid grid-cols-7 gap-1 w-fit">
           {grid.map((row, rowIndex) => 
             row.map((tile, colIndex) => {
@@ -182,7 +190,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
               return (
                 <div
                   key={`${rowIndex}-${colIndex}`}
-                  className={`w-8 h-8 rounded-[4px] ${bgClass} ${hoverModule === id ? 'border-2 border-lilac-500' : ''}`}
+                  className={`w-9 h-9 rounded-[4px] ${bgClass} ${hoverModule === id ? 'border-2 border-lilac-500' : ''}`}
                   style={{
                     backgroundColor: dynamicBg,
                   }}
@@ -200,7 +208,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
       </div>
 
       {/* Timeline Progress */}
-      <div className={`mb-7 px-[66px] ${isMobile ? 'scale-90' : ''}`}>
+      <div className={`mb-4 px-[32px] ${isMobile ? 'scale-90' : ''}`}>
         <div className="w-full bg-gray-200 rounded-full h-1.5 relative">
           <div
             className="bg-lilac-500 h-1.5 rounded-full"
@@ -213,14 +221,15 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
         </div>
       </div>
 
-      {/* Separator Line */}
+      {/* Separator Line 
       <div className="mb-1 border-t border-gray-600"></div>
+      */}
 
       {/* Modules List */}
-      <div className="modules-list-container px-3 pt-3 flex-1 bg-black text-white flex flex-col min-h-0">
+      <div className="modules-list-container pt-3 pb-4 pl-7 pr-7 flex-1 bg-black text-white flex flex-col min-h-0">
         {/* Scrollable container with left-shifted scrollbar */}
         <div className="custom-scrollbar-container flex-1 min-h-0 overflow-y-auto overflow-x-hidden pl-1 ">
-          <div className="mt-1 space-y-[3px] ">
+          <div className="mt-1 space-y-[2px] ">
             {masterViewData.moduleItems.map((module) => {
               const isCurrentModule = module.id === currentModuleId;
               const bgColorClass = isCurrentModule
@@ -237,7 +246,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
                 >
                   <div className="flex items-center min-w-0">
                     {/* Module Icon */}
-                    <div className="w-10 h-10 mr-2 flex-shrink-0 bg-[#dfd5db] rounded-[3px] p-[4px] flex items-center justify-center">
+                    <div className="w-8 h-8 mr-2 flex-shrink-0 bg-[#dfd5db] rounded-[3px] select-none p-[3px] flex items-center justify-center">
                       <Image
                         src={`/module-infographics/${module.id}.png`}
                         alt={`Module ${module.id} icon`}
@@ -247,7 +256,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
                       />
                     </div>
                     {/* Module Name */}
-                    <div className="font-medium flex-1 select-none text-base text-white overflow-hidden text-ellipsis whitespace-nowrap">
+                    <div className="flex-1 select-none text-xs text-white overflow-hidden text-ellipsis whitespace-nowrap">
                       {module.name}
                     </div>
                     {module.completed && (

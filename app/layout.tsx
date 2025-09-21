@@ -28,11 +28,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
           {/* Desktop layout */}
           <div className="hidden md:flex flex-col h-screen">
-            <div className="flex flex-1 overflow-hidden">
+            <div className="p-5 flex shadow-inner space-x-5 overflow-auto overflow-hidden bg-[url('/screen-background.jpg')] bg-cover bg-center">
               <aside className="desktop-sidebar-wrapper w-96">
                 <DesktopSidebar />
               </aside>
-              <main className="desktop-scenarios-panel-wrapper border-l-1 border-gray-600 flex-1 overflow-auto">
+              <main className="desktop-scenarios-panel-wrapper flex-1 overflow-auto">
                 {children}
               </main>
             </div>
@@ -40,7 +40,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
           {/* Mobile layout */}
           <div className="md:hidden flex flex-col h-screen">
-            <main className="flex-1 overflow-auto bg-gray-50">
+            <main className="flex-1 overflow-auto overflow-hidden bg-gray-50">
               {children}
             </main>
           </div>

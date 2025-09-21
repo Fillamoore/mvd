@@ -2,19 +2,14 @@
 'use client';
 
 import MasterView from './MasterView';
-import { useScenariosProgressLocalStore } from '@/store/useScenariosProgressLocalStore'; 
 
 export default function DesktopSidebar() {
-  const setCurrentModule = useScenariosProgressLocalStore(state => state.setCurrentModule);
-
-  const handleModuleSelect = (moduleId: number) => {
-    console.log(`[DESKTOP] Module ${moduleId} selected, updating store...`);
-    setCurrentModule(moduleId);
-    
-    // Additional logic to reset ScenarioPlayer will go here
-  };
 
   return (
-    <MasterView isMobile={false} onModuleSelect={handleModuleSelect} />
+    
+    <div className="border-2 rounded-[10px] bg-gray-100 border-gray-800 h-full overflow-auto overflow-hidden">
+      <MasterView/>
+    </div>
+
   );
 }
