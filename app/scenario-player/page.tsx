@@ -9,6 +9,8 @@ import { useLocalStore } from '@/store/useLocalStore';
 import Image from 'next/image';
 import DesktopControlButton from '@/components/DesktopControlButton';
 import { useShallow } from 'zustand/react/shallow';
+import VerticalProgressBar from '@/components/VerticalProgressBar';
+import { ModuleTile } from '@/components/ModuleTile';
 
 export default function ScenarioPlayer() {
   const searchParams = useSearchParams();
@@ -25,18 +27,39 @@ export default function ScenarioPlayer() {
   const currentScenarioData = useMemo(() => moduleScenarios[currentScenarioIndex], [moduleScenarios, currentScenarioIndex]);
 
   // Get store state
-  const { currentScenario, recordPerformanceEvent, revealScenario, setCurrentScenarioStore, clearCurrentScenario } = useLocalStore(useShallow((state) => {
-    const moduleData = state.pickUpAndPutDown[moduleId.toString()];
-    const currentScenario = moduleData?.currentScenario || null;
-    
-    return {
-      currentScenario,
-      recordPerformanceEvent: state.recordPerformanceEvent,
-      revealScenario: state.revealScenario,
-      setCurrentScenarioStore: state.setCurrentScenario,
-      clearCurrentScenario: state.clearCurrentScenario,
-    };
-  }));
+  const { 
+  currentScenario,
+  recordPerformanceEvent,
+  revealScenario,
+  setCurrentScenarioStore,
+  clearCurrentScenario,
+  pickUpAndPutDown, // <--- Add this line
+} = useLocalStore(useShallow((state) => {
+  const moduleData = state.pickUpAndPutDown[moduleId.toString()];
+  
+  return {
+    // We now get the current scenario from the store state
+    currentScenario: moduleData?.currentScenario || null, 
+    recordPerformanceEvent: state.recordPerformanceEvent,
+    revealScenario: state.revealScenario,
+    setCurrentScenarioStore: state.setCurrentScenario,
+    clearCurrentScenario: state.clearCurrentScenario,
+    // We return the entire pickUpAndPutDown object here
+    pickUpAndPutDown: state.pickUpAndPutDown,
+  };
+}));
+
+const getTileScore = (): number => {
+  const moduleData = pickUpAndPutDown[moduleId.toString()];
+  
+  if (moduleData && moduleData.completedScenarios.length > 0) {
+    const totalScore = moduleData.completedScenarios.reduce((sum, scenario) => sum + scenario.score, 0);
+    const averageScore = totalScore / moduleData.completedScenarios.length;
+    return averageScore;
+  }
+  
+  return 0;
+};
 
   // Set current scenario when scenario index or module changes
   useEffect(() => {
@@ -105,17 +128,12 @@ export default function ScenarioPlayer() {
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="inline-flex items-center justify-center text-sm text-lilac-300 border-2 border-lilac-300 rounded-[10px] px-1.5 py-1 min-w-[2.5rem]">
-            {currentScenarioIndex + 1}/{moduleScenarios.length}
-          </div>
-          <div className="bg-black rounded-md p-1">
-            <Image
-              src={`/more-icon.png`}
-              alt='Menu'
-              width={42}
-              height={42}
-              className="w-6 h-6 object-contain"
-            />
+          <VerticalProgressBar
+            current={currentScenarioIndex}
+            total={moduleScenarios.length}
+          />
+          <div className="p-1">
+            <ModuleTile moduleId={moduleId} score={getTileScore()} />
           </div>
         </div>
       
