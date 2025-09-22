@@ -236,26 +236,26 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
         {/* Scrollable container with left-shifted scrollbar */}
         <div className="custom-scrollbar-container flex-1 min-h-0 overflow-y-auto overflow-x-hidden pl-1 ">
           <div className="mt-1 space-y-[2px] ">
-            {masterViewData.moduleItems.map((module) => {
-              const isCurrentModule = module.id === currentModuleId;
+            {masterViewData.moduleItems.map((moduleItem) => {
+              const isCurrentModule = moduleItem.id === currentModuleId;
               const bgColorClass = isCurrentModule
                 ? 'bg-lilac-master-hover-2 hover:bg-lilac-master-hover-3'
                 : 'bg-lilac-charcoal-f hover:bg-lilac-charcoal-i';
 
               return (
                 <div
-                  key={module.id}
+                  key={moduleItem.id}
                   className={`list-item p-1 rounded text-xs transition-colors box-border ${bgColorClass}`}
                   onClick={() => {
-                    handleModuleClick(module.id);
+                    handleModuleClick(moduleItem.id);
                   }}
                 >
                   <div className="flex items-center min-w-0">
                     {/* Module Icon */}
                     <div className="w-8 h-8 mr-2 flex-shrink-0 bg-[#dfd5db] rounded-[3px] select-none p-[3px] flex items-center justify-center">
                       <Image
-                        src={`/module-infographics/${module.id}.png`}
-                        alt={`Module ${module.id} icon`}
+                        src={`/module-infographics/${moduleItem.id}.png`}
+                        alt={`Module ${moduleItem.id} icon`}
                         width={34}
                         height={34}
                         className="w-full h-full object-contain"
@@ -263,11 +263,11 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
                     </div>
                     {/* Module Name */}
                     <div className="flex-1 select-none text-xs text-white overflow-hidden text-ellipsis whitespace-nowrap">
-                      {module.name}
+                      {moduleItem.name}
                     </div>
-                    {module.completed && (
+                    {moduleItem.completed && (
                       <div className="text-[10px] text-gray-300 mt-1 ml-8">
-                        {(module.score).toFixed(0)}%
+                        {(moduleItem.score).toFixed(0)}%
                       </div>
                     )}
                   </div>
