@@ -10,7 +10,7 @@ const VerticalProgressBar: React.FC<VerticalProgressBarProps> = ({ current, tota
   const progressPercentage = total > 0 ? (current / total) * 100 : 0;
   
   return (
-    <div className="relative w-1.5 h-9 bg-gray-500 rounded-sm">
+    <div className="relative w-1.5 h-9 bg-gray-700 rounded-sm">
       <div 
         className="absolute bottom-0 w-full bg-lilac-300 rounded-[4px] transition-all duration-300 ease-in-out"
         style={{ height: `${progressPercentage}%` }}
