@@ -15,7 +15,11 @@ import { ModuleTile } from '@/components/ModuleTile';
 export default function ScenarioPlayer() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const moduleId = parseInt(searchParams.get('module') || '1');
+
+  // Get module ID from store first, fall back to URL params
+  const lastModuleVisited = useLocalStore((state) => state.lastModuleVisited);
+  const moduleId = lastModuleVisited ? parseInt(lastModuleVisited, 10) : parseInt(searchParams.get('module') || '1');
+  
   const [currentScenarioIndex, setCurrentScenarioIndex] = useState(0);
 
   const currentModule = getModuleById(moduleId);
@@ -128,13 +132,14 @@ const getTileScore = (): number => {
         </div>
 
         <div className="flex items-center gap-2">
+
+          <div className="p-1">
+            <ModuleTile moduleId={moduleId} score={getTileScore()} />
+          </div>     
           <VerticalProgressBar
             current={currentScenarioIndex}
             total={moduleScenarios.length}
           />
-          <div className="p-1">
-            <ModuleTile moduleId={moduleId} score={getTileScore()} />
-          </div>
         </div>
       
         

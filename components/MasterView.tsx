@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { modules } from '@/data/modules';
 import { useLocalStore } from '@/store/useLocalStore';
-import { useRouter } from 'next/navigation';
 
 // View data for the MasterView UI components
 const masterViewData = {
@@ -87,9 +86,6 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
   const [isClient, setIsClient] = useState(false);
   const [spiralTiles, setSpiralTiles] = useState<{id: number, row: number, col: number}[]>([]);
   const [hoverModule, setHoverModule] = useState<number | null>(null);
-  
-  // Get an instance of the router
-  const router = useRouter();
 
   const lastModuleVisited = useLocalStore((state) => state.lastModuleVisited);
   const pickUpAndPutDown = useLocalStore((state) => state.pickUpAndPutDown);
@@ -145,7 +141,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
   // This new function handles both state update and navigation
   const handleModuleClick = (moduleId: number) => {
     setCurrentModule(moduleId);
-    router.push(`/scenario-player?module=${moduleId}`);
+    //router.push(`/scenario-player?module=${moduleId}`);
   };
 
   return (
@@ -173,6 +169,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
 
               const { id, completed, score } = tile;
               const module = masterViewData.moduleItems.find(m => m.id === id);
+              const isCurrentModule = id === currentModuleId;
 
               let bgClass = '';
               if (id <= 9) {
@@ -186,11 +183,20 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
               const dynamicBg = completed
                 ? `rgba(200, 160, 255, ${score/100})`
                 : undefined;
+              
+                // Determine border classes
+              let borderClass = '';
+              if (isCurrentModule) {
+                borderClass = 'border-2 border-gray-300';
+              } 
+              if (hoverModule === id) {
+                borderClass = 'border-2 border-gray-400';
+              }
 
               return (
                 <div
                   key={`${rowIndex}-${colIndex}`}
-                  className={`w-9 h-9 rounded-[4px] ${bgClass} ${hoverModule === id ? 'border-2 border-lilac-500' : ''}`}
+                  className={`w-9 h-9 rounded-[4px] ${bgClass} ${borderClass}`}
                   style={{
                     backgroundColor: dynamicBg,
                   }}

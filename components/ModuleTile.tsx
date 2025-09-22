@@ -24,7 +24,7 @@ export const ModuleTile = ({ moduleId, score = 0 }: ModuleTileProps) => {
 
   return (
     <div
-      className={`w-9 h-9 rounded-[4px] ${bgClass}`}
+      className={`w-9 h-9 rounded-[4px] border-2 border-gray-500 ${bgClass}`}
       style={{
         backgroundColor: dynamicBg,
       }}
