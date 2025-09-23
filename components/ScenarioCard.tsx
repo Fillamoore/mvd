@@ -188,7 +188,7 @@ export default function ScenarioCard({
       <div className="scenario-card flex justify-center items-center h-screen">
         <div className="text-center p-8 bg-green-100 rounded-lg shadow-lg">
           <h2 className="text-3xl font-bold text-green-800">🎉 Congratulations! 🎉</h2>
-          <p className="mt-4 text-xl text-green-700">You've completed this module.</p>
+          <p className="mt-4 text-xl text-green-700">You have completed this module.</p>
         </div>
       </div>
     );
