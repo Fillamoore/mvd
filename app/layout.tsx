@@ -4,7 +4,7 @@ import './globals.css';
 import { useState, useEffect } from 'react';
 import SplashScreen from '../components/SplashScreen';
 import DesktopLayout from '../components/DesktopLayout';
-import ScenarioPlayer from '../components/ScenarioPlayer';
+import MobileLayout from '../components/MobileLayout';
 
 export default function RootLayout() {
   const [showApp, setShowApp] = useState(false);
@@ -30,15 +30,8 @@ export default function RootLayout() {
           relative w-full h-full z-50 transition-opacity duration-1000 ease-in-out
           ${showApp ? 'opacity-100' : 'opacity-0'}
         `}>
-          {/* Desktop layout */}
           <DesktopLayout />
-
-          {/* Mobile layout */}
-          <div className="md:hidden flex flex-col h-screen">
-            <main className="flex-1 overflow-auto overflow-hidden bg-gray-50">
-              <ScenarioPlayer />
-            </main>
-          </div>
+          <MobileLayout />
         </div>
       </body>
     </html>
