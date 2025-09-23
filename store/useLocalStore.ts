@@ -28,6 +28,11 @@ export interface PickUpAndPutDownStore {
 
   setCurrentModule: (moduleId: number) => void;
   setCurrentScenario: (moduleId: number, scenarioId: number) => void;
+  getCurrentScenario: (moduleId: number) => {
+    scenarioId: number;
+    userRatings: { [responseID: string]: number | null };
+    isRevealed: boolean;
+  } | null;
   rateScenario: (moduleId: number, scenarioId: number, responseId: string, rating: number | null) => void;
   revealScenario: (moduleId: number) => void;
   recordPerformanceEvent: (
@@ -74,6 +79,13 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
               isRevealed: currentScenario?.isRevealed || false,
             };
           });
+        },
+
+        // NEW FUNCTION: Get current scenario for any module
+        getCurrentScenario: (moduleId: number) => {
+          const state = get();
+          const moduleKey = moduleId.toString();
+          return state.pickUpAndPutDown[moduleKey]?.currentScenario || null;
         },
 
         rateScenario: (moduleId: number, scenarioId: number, responseId: string, rating: number | null) => {
@@ -166,6 +178,8 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
     { name: 'PickUpAndPutDownStore' }
   )
 );
+
+// ... rest of store code remains the same
 
 // === SIMPLIFIED DEBUG UTILITIES ===
 export const storeDebug = {

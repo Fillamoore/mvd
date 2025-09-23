@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import ScenarioCard from '@/components/ScenarioCard';
 import { getScenariosByModuleId } from '@/data/scenarios';
 import { getModuleById } from '@/data/modules';
@@ -13,14 +12,9 @@ import VerticalProgressBar from '@/components/VerticalProgressBar';
 import { ModuleTile } from '@/components/ModuleTile';
 
 export default function ScenarioPlayer() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-
   const lastModuleVisited = useLocalStore((state) => state.lastModuleVisited);
-  const moduleId = lastModuleVisited ? parseInt(lastModuleVisited, 10) : parseInt(searchParams.get('module') || '1');
+  const moduleId = lastModuleVisited ? parseInt(lastModuleVisited, 10) : 1;
 
-  const [currentScenarioIndex, setCurrentScenarioIndex] = useState(0);
-  const [prevModuleId, setPrevModuleId] = useState(moduleId);
   const [isFadingOut, setIsFadingOut] = useState(false);
   const [isFadingIn, setIsFadingIn] = useState(true);
 
@@ -30,10 +24,10 @@ export default function ScenarioPlayer() {
   }
 
   const moduleScenarios = getScenariosByModuleId(moduleId);
-  const currentScenarioData = useMemo(() => moduleScenarios[currentScenarioIndex], [moduleScenarios, currentScenarioIndex]);
-
+  
   const {
     currentScenario,
+    getCurrentScenario,
     recordPerformanceEvent,
     revealScenario,
     setCurrentScenarioStore,
@@ -43,6 +37,7 @@ export default function ScenarioPlayer() {
     const moduleData = state.pickUpAndPutDown[moduleId.toString()];
     return {
       currentScenario: moduleData?.currentScenario || null,
+      getCurrentScenario: state.getCurrentScenario,
       recordPerformanceEvent: state.recordPerformanceEvent,
       revealScenario: state.revealScenario,
       setCurrentScenarioStore: state.setCurrentScenario,
@@ -50,6 +45,10 @@ export default function ScenarioPlayer() {
       pickUpAndPutDown: state.pickUpAndPutDown,
     };
   }));
+
+  // Calculate current scenario index directly from the stored scenario ID
+  const currentScenarioIndex = currentScenario ? currentScenario.scenarioId - 1 : 0;
+  const currentScenarioData = moduleScenarios[currentScenarioIndex];
 
   const getTileScore = (): number => {
     const moduleData = pickUpAndPutDown[moduleId.toString()];
@@ -60,23 +59,35 @@ export default function ScenarioPlayer() {
     return 0;
   };
 
+  {/*}  
+  // Handle module changes with fade animation
   useEffect(() => {
-    if (moduleId !== prevModuleId) {
-      setIsFadingOut(true);
-      setTimeout(() => {
-        setPrevModuleId(moduleId);
-        setCurrentScenarioIndex(0);
-        setIsFadingOut(false);
-        setIsFadingIn(true);
-      }, 300);
-    }
-  }, [moduleId, prevModuleId]);
+    setIsFadingOut(true);
+    const timer = setTimeout(() => {
+      // Get fresh data for the current module
+      const storedCurrentScenario = getCurrentScenario(moduleId);
+      
+      // Initialize first scenario if needed
+      if (!storedCurrentScenario && moduleScenarios.length > 0) {
+        setCurrentScenarioStore(moduleId, moduleScenarios[0].id);
+      }
+      
+      setIsFadingOut(false);
+      setIsFadingIn(true);
+    }, 300);
 
+    return () => clearTimeout(timer);
+  }, [moduleId, getCurrentScenario, setCurrentScenarioStore, moduleScenarios]);
+  */}
+
+  {/*}
+  // Ensure current scenario is synchronized with data
   useEffect(() => {
-    if (currentScenarioData) {
+    if (currentScenarioData && (!currentScenario || currentScenario.scenarioId !== currentScenarioData.id)) {
       setCurrentScenarioStore(moduleId, currentScenarioData.id);
     }
-  }, [moduleId, currentScenarioIndex, currentScenarioData, setCurrentScenarioStore]);
+  }, [moduleId, currentScenarioData, currentScenario, setCurrentScenarioStore]);
+  */}
 
   const isRevealed = currentScenario?.isRevealed || false;
   const userRatings = currentScenario?.userRatings || {};
@@ -102,14 +113,13 @@ export default function ScenarioPlayer() {
   };
 
   const handleNextScenario = () => {
-    if (currentScenarioIndex >= moduleScenarios.length - 1) return;
     clearCurrentScenario(moduleId);
-    setCurrentScenarioIndex(prev => prev + 1);
-  };
-
-  const handleModuleChange = (newModuleId: number) => {
-    router.push(`/scenario-player?module=${newModuleId}`);
-    setCurrentScenarioIndex(0);
+    const nextScenarioIndex = currentScenarioIndex + 1;
+    if (nextScenarioIndex >= moduleScenarios.length) return;
+    
+    // Set the next scenario in the store using the sequential ID
+    const nextScenarioId = moduleScenarios[nextScenarioIndex].id;
+    setCurrentScenarioStore(moduleId, nextScenarioId);
   };
 
   return (

@@ -55,7 +55,7 @@ export default function DesktopControlButton({
       <button
         onClick={handleClick}
         className={`
-          w-8 h-8 flex items-center justify-center  // 32x32px
+          w-8 h-8 flex items-center justify-center select-none // 32x32px
           bg-lilac-200 rounded                   // lilac-200 background, slightly rounded
           border border-lilac-charcoal-f            // lilac-charcoal-f border
           transition-all duration-300 transform hover:scale-110
