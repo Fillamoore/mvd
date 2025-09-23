@@ -168,7 +168,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
               if (!tile) return null;
 
               const { id, completed, score } = tile;
-              const module = masterViewData.moduleItems.find(m => m.id === id);
+              const thisModule = masterViewData.moduleItems.find(m => m.id === id);
               const isCurrentModule = id === currentModuleId;
 
               let bgClass = '';
@@ -200,7 +200,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
                   style={{
                     backgroundColor: dynamicBg,
                   }}
-                  title={`${module ? module.name : `Module ${id}`}${completed ? ` - ${score.toFixed(0)}%` : ''}`}
+                  title={`${thisModule ? thisModule.name : `Module ${id}`}${completed ? ` - ${score.toFixed(0)}%` : ''}`}
                   onMouseEnter={() => setHoverModule(id)}
                   onMouseLeave={() => setHoverModule(null)}
                   onClick={() => {
