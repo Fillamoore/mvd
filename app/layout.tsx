@@ -1,51 +1,45 @@
-// app/layout.tsx - UPDATED (Server Component)
-import type { Metadata } from 'next';
+'use client';
+
 import './globals.css';
-import { ReactNode } from 'react';
-import DesktopSidebar from '../components/DesktopSidebar';
-import DesktopMenu from '../components/DesktopMenu';
-import ClientLayoutWrapper from './ClientLayoutWrapper'; // New client component
+import { useState, useEffect } from 'react';
+import SplashScreen from '../components/SplashScreen';
+import DesktopLayout from '../components/DesktopLayout';
+import ScenarioPlayer from '../components/ScenarioPlayer';
 
-export const metadata: Metadata = {
-  title: 'Advisory Accelerator',
-  description: 'Enabling advisory-led working at pace and scale',
-};
+export default function RootLayout() {
+  const [showApp, setShowApp] = useState(false);
 
-export const viewport = {
-  width: 'device-width',
-  initialScale: 1,
-};
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowApp(true);
+    }, 6800); // Match SplashScreen animation duration
 
-interface RootLayoutProps {
-  children: ReactNode;
-}
+    return () => clearTimeout(timer);
+  }, []);
 
-export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html>
-      <body className="flex flex-col h-screen">
-        <ClientLayoutWrapper>
+      <body className="h-screen w-screen overflow-hidden">
+        {/* SplashScreen always visible */}
+        <div className="fixed inset-0 z-40">
+          <SplashScreen />
+        </div>
 
+        {/* App content fades in */}
+        <div className={`
+          relative w-full h-full z-50 transition-opacity duration-1000 ease-in-out
+          ${showApp ? 'opacity-100' : 'opacity-0'}
+        `}>
           {/* Desktop layout */}
-          <div className="hidden md:flex flex-col h-screen">
-            <div className="p-5 flex shadow-inner space-x-5 overflow-auto overflow-hidden bg-[url('/screen-background.jpg')] bg-cover bg-center">
-              <aside className="desktop-sidebar-wrapper w-96">
-                <DesktopSidebar />
-              </aside>
-              <main className="desktop-scenarios-panel-wrapper flex-1 overflow-auto">
-                {children}
-              </main>
-            </div>
-          </div>
+          <DesktopLayout />
 
           {/* Mobile layout */}
           <div className="md:hidden flex flex-col h-screen">
             <main className="flex-1 overflow-auto overflow-hidden bg-gray-50">
-              {children}
+              <ScenarioPlayer />
             </main>
           </div>
-
-        </ClientLayoutWrapper>
+        </div>
       </body>
     </html>
   );
