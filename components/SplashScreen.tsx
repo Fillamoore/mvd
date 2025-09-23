@@ -190,6 +190,7 @@ export default function SplashScreen() {
           width={440}
           height={140}
           priority
+          style={{ width: 'auto', height: 'auto' }}    
         />
         <div className="mt-2 flex flex-col items-center min-h-[360px]">
           {renderGrid()}
