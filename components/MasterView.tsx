@@ -10,9 +10,9 @@ const masterViewData = {
   showOverallScore: true,
   overallScore: '2.1',
   progress: 0.25,
-  moduleItems: modules.map(module => ({
-    id: module.id,
-    name: module.name,
+  moduleItems: modules.map(thisModule => ({
+    id: thisModule.id,
+    name: thisModule.name,
     completed: false,
     score: 0
   }))
