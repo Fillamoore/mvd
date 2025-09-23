@@ -131,7 +131,7 @@ export default function ScenarioPlayer() {
 
       <div
         key={moduleId} // Add key to force re-render on module change
-        className={`scenarios-container bg-[url('/scenarios-canvas.jpg')] bg-cover bg-center w-full flex-1 rounded-b-[10px] overflow-hidden py-6 px-[200px] transition-opacity duration-300`}
+        className="scenarios-container bg-[url('/scenarios-canvas.jpg')] bg-cover bg-center w-full flex-1 rounded-b-[10px] overflow-y-auto py-6 px-[200px] transition-opacity duration-300"
       >
         {currentScenarioData ? (
           <ScenarioCard
