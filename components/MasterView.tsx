@@ -4,34 +4,23 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { modules } from '@/data/modules';
 import { useLocalStore } from '@/store/useLocalStore';
+import { useShallow } from 'zustand/react/shallow';
 
-// View data for the MasterView UI components
-const masterViewData = {
-  showOverallScore: true,
-  overallScore: '2.1',
-  progress: 0.25,
-  moduleItems: modules.map(thisModule => ({
-    id: thisModule.id,
-    name: thisModule.name,
-    completed: false,
-    score: 0
-  }))
-};
-
+// Re-using the spiral function that you had
 const generateCorrectClockwiseSpiralOrder = (size: number) => {
   const result = [];
   const grid = Array(size).fill(0).map(() => Array(size).fill(0));
-  
+
   const center = Math.floor(size / 2);
   let row = center;
   let col = center;
   let id = 1;
-  
+
   result.push({id, row, col});
   grid[row][col] = id;
-  
+
   let step = 1;
-  
+
   while (id < size * size) {
     // Right
     for (let i = 0; i < step; i++) {
@@ -41,7 +30,7 @@ const generateCorrectClockwiseSpiralOrder = (size: number) => {
       grid[row][col] = id;
     }
     if (id >= size * size) break;
-    
+
     // Down
     for (let i = 0; i < step; i++) {
       id++; if (id > size * size) break;
@@ -50,9 +39,9 @@ const generateCorrectClockwiseSpiralOrder = (size: number) => {
       grid[row][col] = id;
     }
     if (id >= size * size) break;
-    
+
     step++;
-    
+
     // Left
     for (let i = 0; i < step; i++) {
       id++; if (id > size * size) break;
@@ -61,7 +50,7 @@ const generateCorrectClockwiseSpiralOrder = (size: number) => {
       grid[row][col] = id;
     }
     if (id >= size * size) break;
-    
+
     // Up
     for (let i = 0; i < step; i++) {
       id++; if (id > size * size) break;
@@ -70,10 +59,10 @@ const generateCorrectClockwiseSpiralOrder = (size: number) => {
       grid[row][col] = id;
     }
     if (id >= size * size) break;
-    
+
     step++;
   }
-  
+
   return result;
 };
 
@@ -87,10 +76,13 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
   const [spiralTiles, setSpiralTiles] = useState<{id: number, row: number, col: number}[]>([]);
   const [hoverModule, setHoverModule] = useState<number | null>(null);
 
-  const lastModuleVisited = useLocalStore((state) => state.lastModuleVisited);
-  const pickUpAndPutDown = useLocalStore((state) => state.pickUpAndPutDown);
-  const setCurrentModule = useLocalStore((state) => state.setCurrentModule);
-  const currentModuleId = lastModuleVisited ? parseInt(lastModuleVisited, 10) : 1;
+  const { currentModule, pickUpAndPutDown, setCurrentModule } = useLocalStore(useShallow(state => ({
+    currentModule: state.currentModule,
+    pickUpAndPutDown: state.pickUpAndPutDown,
+    setCurrentModule: state.setCurrentModule,
+  })));
+  
+  const currentModuleId = currentModule ? parseInt(currentModule, 10) : 1;
   
   const getTileScore = (moduleId: number): number => {
     const moduleData = pickUpAndPutDown[moduleId.toString()];
@@ -98,11 +90,23 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
     if (moduleData && moduleData.completedScenarios.length > 0) {
       const totalScore = moduleData.completedScenarios.reduce((sum, scenario) => sum + scenario.score, 0);
       const averageScore = totalScore / moduleData.completedScenarios.length;
-      return averageScore; // This is now 0-100 (percentage)
+      return averageScore;
     }
     
-    return 0; // 0% if no completed scenarios
+    return 0;
   };
+  
+  // Dynamically generate module data for the list
+  const renderedModuleItems = modules.map(thisModule => {
+    const score = getTileScore(thisModule.id);
+    const completed = score > 0;
+    return {
+      id: thisModule.id,
+      name: thisModule.name,
+      completed,
+      score
+    };
+  });
   
   useEffect(() => {
     setIsClient(true);
@@ -156,19 +160,14 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
         />
       </div>
 
-      {/* Separator Line 
-      <div className="mt-2 header-bottom-seperator h-[10px] border-t-1 border-gray-600 w-all"></div>
-      */}
-
-      {/* 7x7 Grid Visualization */}
       <div className={`mt-6 mb-6 flex justify-center ${isMobile ? 'scale-90' : ''}`}>
         <div className="grid grid-cols-7 gap-1 w-fit">
-          {grid.map((row, rowIndex) => 
+          {grid.map((row, rowIndex) => (
             row.map((tile, colIndex) => {
               if (!tile) return null;
 
               const { id, completed, score } = tile;
-              const thisModule = masterViewData.moduleItems.find(m => m.id === id);
+              const thisModule = modules.find(m => m.id === id);
               const isCurrentModule = id === currentModuleId;
 
               let bgClass = '';
@@ -184,7 +183,6 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
                 ? `rgba(200, 160, 255, ${score/100})`
                 : undefined;
               
-                // Determine border classes
               let borderClass = '';
               if (isCurrentModule) {
                 borderClass = 'border-2 border-gray-300';
@@ -209,11 +207,10 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
                 />
               );
             })
-          )}
+          ))}
         </div>
       </div>
 
-      {/* Timeline Progress */}
       <div className={`mb-4 px-[32px] ${isMobile ? 'scale-90' : ''}`}>
         <div className="w-full bg-gray-200 rounded-full h-1.5 relative">
           <div
@@ -227,16 +224,10 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
         </div>
       </div>
 
-      {/* Separator Line 
-      <div className="mb-1 border-t border-gray-600"></div>
-      */}
-
-      {/* Modules List */}
       <div className="modules-list-container pt-3 pb-4 pl-7 pr-7 flex-1 bg-black text-white flex flex-col min-h-0">
-        {/* Scrollable container with left-shifted scrollbar */}
         <div className="custom-scrollbar-container flex-1 min-h-0 overflow-y-auto overflow-x-hidden pl-1 ">
           <div className="mt-1 space-y-[2px] ">
-            {masterViewData.moduleItems.map((moduleItem) => {
+            {renderedModuleItems.map((moduleItem) => {
               const isCurrentModule = moduleItem.id === currentModuleId;
               const bgColorClass = isCurrentModule
                 ? 'bg-lilac-master-hover-2 hover:bg-lilac-master-hover-3'
@@ -251,17 +242,14 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
                   }}
                 >
                   <div className="flex items-center min-w-0">
-                    {/* Module Icon */}
                     <div className="w-8 h-8 mr-2 flex-shrink-0 bg-[#dfd5db] rounded-[3px] select-none p-[3px] flex items-center justify-center">
                       <Image
                         src={`/module-infographics/${moduleItem.id}.png`}
                         alt={`Module ${moduleItem.id} icon`}
                         width={34}
                         height={34}
-                        className="w-full h-full object-contain"
                       />
                     </div>
-                    {/* Module Name */}
                     <div className="flex-1 select-none text-xs text-white overflow-hidden text-ellipsis whitespace-nowrap">
                       {moduleItem.name}
                     </div>

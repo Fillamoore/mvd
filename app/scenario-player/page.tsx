@@ -12,42 +12,41 @@ import VerticalProgressBar from '@/components/VerticalProgressBar';
 import { ModuleTile } from '@/components/ModuleTile';
 
 export default function ScenarioPlayer() {
-  const lastModuleVisited = useLocalStore((state) => state.lastModuleVisited);
-  const moduleId = lastModuleVisited ? parseInt(lastModuleVisited, 10) : 1;
-
-  const [isFadingOut, setIsFadingOut] = useState(false);
-  const [isFadingIn, setIsFadingIn] = useState(true);
-
-  const currentModule = getModuleById(moduleId);
-  if (!currentModule) {
-    throw new Error(`Module with ID ${moduleId} not found in modules.ts`);
-  }
-
-  const moduleScenarios = getScenariosByModuleId(moduleId);
-  
   const {
-    currentScenario,
+    currentModule,
     getCurrentScenario,
     recordPerformanceEvent,
     revealScenario,
     setCurrentScenarioStore,
     clearCurrentScenario,
     pickUpAndPutDown,
-  } = useLocalStore(useShallow((state) => {
-    const moduleData = state.pickUpAndPutDown[moduleId.toString()];
-    return {
-      currentScenario: moduleData?.currentScenario || null,
-      getCurrentScenario: state.getCurrentScenario,
-      recordPerformanceEvent: state.recordPerformanceEvent,
-      revealScenario: state.revealScenario,
-      setCurrentScenarioStore: state.setCurrentScenario,
-      clearCurrentScenario: state.clearCurrentScenario,
-      pickUpAndPutDown: state.pickUpAndPutDown,
-    };
-  }));
+  } = useLocalStore(useShallow((state) => ({
+    currentModule: state.currentModule,
+    getCurrentScenario: state.getCurrentScenario,
+    recordPerformanceEvent: state.recordPerformanceEvent,
+    revealScenario: state.revealScenario,
+    setCurrentScenarioStore: state.setCurrentScenario,
+    clearCurrentScenario: state.clearCurrentScenario,
+    pickUpAndPutDown: state.pickUpAndPutDown,
+  })));
 
+  const moduleId = currentModule ? parseInt(currentModule, 10) : 1;
+
+  // The fade state variables are no longer needed, they caused the loop.
+  // The 'key' prop on the container will handle re-render.
+
+  const currentModuleData = getModuleById(moduleId);
+  if (!currentModuleData) {
+    throw new Error(`Module with ID ${moduleId} not found in modules.ts`);
+  }
+
+  const moduleScenarios = getScenariosByModuleId(moduleId);
+  
+  // Get the current scenario from the store for the current module ID
+  const storedCurrentScenario = getCurrentScenario(moduleId);
+  
   // Calculate current scenario index directly from the stored scenario ID
-  const currentScenarioIndex = currentScenario ? currentScenario.scenarioId - 1 : 0;
+  const currentScenarioIndex = storedCurrentScenario ? storedCurrentScenario.scenarioId - 1 : 0;
   const currentScenarioData = moduleScenarios[currentScenarioIndex];
 
   const getTileScore = (): number => {
@@ -58,39 +57,17 @@ export default function ScenarioPlayer() {
     }
     return 0;
   };
-
-  {/*}  
-  // Handle module changes with fade animation
+  
+  // A much simpler and safer useEffect to prevent the infinite loop.
+  // This will only run when the moduleId changes and a scenario isn't already set.
   useEffect(() => {
-    setIsFadingOut(true);
-    const timer = setTimeout(() => {
-      // Get fresh data for the current module
-      const storedCurrentScenario = getCurrentScenario(moduleId);
-      
-      // Initialize first scenario if needed
-      if (!storedCurrentScenario && moduleScenarios.length > 0) {
-        setCurrentScenarioStore(moduleId, moduleScenarios[0].id);
-      }
-      
-      setIsFadingOut(false);
-      setIsFadingIn(true);
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [moduleId, getCurrentScenario, setCurrentScenarioStore, moduleScenarios]);
-  */}
-
-  {/*}
-  // Ensure current scenario is synchronized with data
-  useEffect(() => {
-    if (currentScenarioData && (!currentScenario || currentScenario.scenarioId !== currentScenarioData.id)) {
-      setCurrentScenarioStore(moduleId, currentScenarioData.id);
+    if (!storedCurrentScenario && moduleScenarios.length > 0) {
+      setCurrentScenarioStore(moduleId, moduleScenarios[0].id);
     }
-  }, [moduleId, currentScenarioData, currentScenario, setCurrentScenarioStore]);
-  */}
+  }, [moduleId, storedCurrentScenario, moduleScenarios, setCurrentScenarioStore]);
 
-  const isRevealed = currentScenario?.isRevealed || false;
-  const userRatings = currentScenario?.userRatings || {};
+  const isRevealed = storedCurrentScenario?.isRevealed || false;
+  const userRatings = storedCurrentScenario?.userRatings || {};
 
   const allRatingsComplete = currentScenarioData &&
     ['A', 'B', 'C'].every(responseId => {
@@ -129,13 +106,13 @@ export default function ScenarioPlayer() {
         <div className="icon-container p-1 flex items-center gap-2">
           <div style={{ backgroundColor: '#dfd5dbff', borderRadius: '3px', padding: '5px' }}>
             <Image
-              src={`/module-infographics/${String(currentModule.id)}.png`}
-              alt={`Module ${currentModule.id} icon`}
+              src={`/module-infographics/${String(currentModuleData.id)}.png`}
+              alt={`Module ${currentModuleData.id} icon`}
               width={28}
               height={28}
             />
           </div>
-          <h1 className="ml-1 text-base font-bold text-lilac-300">{currentModule.name}</h1>
+          <h1 className="ml-1 text-base font-bold text-lilac-300">{currentModuleData.name}</h1>
         </div>
         
         <div className="mr-[6px]">
@@ -146,27 +123,28 @@ export default function ScenarioPlayer() {
             <VerticalProgressBar
               current={currentScenarioIndex}
               total={moduleScenarios.length}
-            />            
+            />          
           </div>          
         </div>
       
       </div>
 
-      <div className="scenarios-container bg-[url('/scenarios-canvas.jpg')] bg-cover bg-center w-full flex-1 rounded-b-[10px] overflow-hidden py-6 px-[200px]">
-        <div
-          className={`transition-opacity duration-300 ${
-            isFadingOut ? 'opacity-0' : isFadingIn ? 'opacity-100' : ''
-          }`}
-          onTransitionEnd={() => setIsFadingIn(false)}
-        >
+      <div
+        key={moduleId} // Add key to force re-render on module change
+        className={`scenarios-container bg-[url('/scenarios-canvas.jpg')] bg-cover bg-center w-full flex-1 rounded-b-[10px] overflow-hidden py-6 px-[200px] transition-opacity duration-300`}
+      >
+        {currentScenarioData ? (
           <ScenarioCard
             moduleId={moduleId}
             scenarioId={currentScenarioData.id}
             prompt={currentScenarioData.prompt}
             responses={currentScenarioData.responses.map(r => ({ id: r.id, text: r.text }))}
             expertRationales={isRevealed ? currentScenarioData.responses : undefined}
+            totalScenarios={moduleScenarios.length}
           />
-        </div>
+        ) : (
+          <div className="flex justify-center items-center h-full text-white text-lg">No scenarios available for this module.</div>
+        )}
       </div>
 
       <DesktopControlButton

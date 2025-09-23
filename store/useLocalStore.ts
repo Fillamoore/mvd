@@ -1,31 +1,38 @@
-// store/useLocalStore.ts
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
 // 1. Core Data Structures
+interface CompletedScenario {
+  scenarioId: number;
+  userRatings: { [responseId: string]: number | null };
+  expertRatings: { [responseId: string]: number };
+  score: number;
+  timestamp: string;
+  dateCompleted?: string;
+}
+
 interface PickUpAndPutDownState {
-  completedScenarios: {
-    scenarioId: number;
-    userRatings: { [responseId: string]: number | null };
-    expertRatings: { [responseId: string]: number };
-    score: number;
-    timestamp: string;
-  }[];
+  completedScenarios: CompletedScenario[];
   currentScenario: {
     scenarioId: number;
     userRatings: { [responseID: string]: number | null };
+    userRatingDirections: { [responseID: string]: boolean };
     isRevealed: boolean;
+    dateStarted?: string;
+    dateCompleted?: string;
   } | null;
 }
 
+// The main store interface
 export interface PickUpAndPutDownStore {
-  lastModuleVisited: string | null;
+  currentModule: string | null;
   pickUpAndPutDown: {
     [moduleId: string]: PickUpAndPutDownState;
   };
-
+  
+  // Actions
   setCurrentModule: (moduleId: number) => void;
   setCurrentScenario: (moduleId: number, scenarioId: number) => void;
   getCurrentScenario: (moduleId: number) => {
@@ -33,7 +40,7 @@ export interface PickUpAndPutDownStore {
     userRatings: { [responseID: string]: number | null };
     isRevealed: boolean;
   } | null;
-  rateScenario: (moduleId: number, scenarioId: number, responseId: string, rating: number | null) => void;
+  rateScenario: (moduleId: number, scenarioId: number, responseId: string, rating: number | null, direction: boolean) => void;
   revealScenario: (moduleId: number) => void;
   recordPerformanceEvent: (
     moduleId: number,
@@ -42,20 +49,21 @@ export interface PickUpAndPutDownStore {
     expertRatings: { [key: string]: number },
   ) => void;
   clearCurrentScenario: (moduleId: number) => void;
+  advanceToNextScenario: (moduleId: number, expertRationales: any) => void;
 }
 
-// 2. Simplified Zustand Store Implementation
 export const useLocalStore = create<PickUpAndPutDownStore>()(
   devtools(
     persist(
       immer((set, get) => ({
         // Initial State
-        lastModuleVisited: null,
+        currentModule: null,
         pickUpAndPutDown: {},
 
+        // Actions
         setCurrentModule: (moduleId: number) => {
           set((state) => {
-            state.lastModuleVisited = moduleId.toString();
+            state.currentModule = moduleId.toString();
           });
         },
 
@@ -70,32 +78,31 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
               };
             }
             
-            const currentScenario = state.pickUpAndPutDown[moduleKey].currentScenario;
-            
-            // Set the scenario - trust that this is what we want current
             state.pickUpAndPutDown[moduleKey].currentScenario = {
               scenarioId,
-              userRatings: currentScenario?.userRatings || {},
-              isRevealed: currentScenario?.isRevealed || false,
+              userRatings: {}, // <-- Correct: Always reset user ratings
+              userRatingDirections: {}, // <-- Correct: Always reset user directions
+              isRevealed: false, // <-- Correct: Always set to false for a new scenario
+              dateStarted: new Date().toISOString(),
+              dateCompleted: undefined,
             };
           });
         },
 
-        // NEW FUNCTION: Get current scenario for any module
         getCurrentScenario: (moduleId: number) => {
           const state = get();
           const moduleKey = moduleId.toString();
           return state.pickUpAndPutDown[moduleKey]?.currentScenario || null;
         },
 
-        rateScenario: (moduleId: number, scenarioId: number, responseId: string, rating: number | null) => {
+        rateScenario: (moduleId: number, scenarioId: number, responseId: string, rating: number | null, direction: boolean) => {
           set((state) => {
             const moduleKey = moduleId.toString();
             const scenario = state.pickUpAndPutDown[moduleKey]?.currentScenario;
             
-            // SIMPLIFIED: Just update the rating, no scenario ID checks
             if (scenario) {
               scenario.userRatings[responseId] = rating;
+              scenario.userRatingDirections[responseId] = direction;
             }
           });
         },
@@ -161,6 +168,60 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
             }
           });
         },
+
+        advanceToNextScenario: (moduleId: number, expertRationales: any) => {
+          set((state) => {
+            const moduleKey = moduleId.toString();
+            const moduleData = state.pickUpAndPutDown[moduleKey];
+            const currentScenario = moduleData?.currentScenario;
+            
+            if (moduleData && currentScenario && currentScenario.isRevealed) {
+              const userRatings = currentScenario.userRatings;
+              const expertRatings: { [key: string]: number } = {};
+              expertRationales.forEach((exp: any) => {
+                expertRatings[exp.id] = exp.expertRating;
+              });
+
+              let totalDifference = 0;
+              let ratedCount = 0;
+              Object.keys(userRatings).forEach((responseId) => {
+                const userRating = userRatings[responseId];
+                const expertRating = expertRatings[responseId];
+                if (userRating !== null && userRating !== undefined && expertRating !== null && expertRating !== undefined) {
+                  totalDifference += Math.abs(userRating - expertRating);
+                  ratedCount++;
+                }
+              });
+              const averageDifference = ratedCount > 0 ? totalDifference / ratedCount : 0;
+              const score = Math.round(100 - (averageDifference / 4) * 100);
+
+              const completedScenario = {
+                scenarioId: currentScenario.scenarioId,
+                userRatings: currentScenario.userRatings,
+                expertRatings,
+                score,
+                timestamp: new Date().toISOString(),
+                dateCompleted: new Date().toISOString(),
+              };
+
+              moduleData.completedScenarios.push(completedScenario);
+
+              const nextScenarioId = currentScenario.scenarioId + 1;
+              moduleData.currentScenario = {
+                scenarioId: nextScenarioId,
+                userRatings: {},
+                userRatingDirections: {
+                  'A': true,
+                  'B': true,
+                  'C': true,
+                },
+                isRevealed: false,
+                dateStarted: new Date().toISOString(),
+                dateCompleted: undefined,
+              };
+            }
+          });
+        },
       })),
       {
         name: 'pick-up-and-put-down-storage',
@@ -178,36 +239,3 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
     { name: 'PickUpAndPutDownStore' }
   )
 );
-
-// ... rest of store code remains the same
-
-// === SIMPLIFIED DEBUG UTILITIES ===
-export const storeDebug = {
-  checkStorage: () => {
-    try {
-      const stored = localStorage.getItem('pick-up-and-put-down-storage');
-      return stored ? JSON.parse(stored) : null;
-    } catch (error) {
-      console.error('Error reading localStorage:', error);
-      return null;
-    }
-  },
-
-  clearAll: () => {
-    try {
-      localStorage.removeItem('pick-up-and-put-down-storage');
-      useLocalStore.setState({
-        lastModuleVisited: null,
-        pickUpAndPutDown: {}
-      });
-      console.log('Cleared store and storage');
-    } catch (error) {
-      console.error('Clear error:', error);
-    }
-  },
-};
-
-// Make available globally for console debugging
-if (typeof window !== 'undefined') {
-  (window as any).debugStore = storeDebug;
-}
