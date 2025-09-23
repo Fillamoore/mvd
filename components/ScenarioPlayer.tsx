@@ -30,36 +30,22 @@ export default function ScenarioPlayer() {
     pickUpAndPutDown: state.pickUpAndPutDown,
   })));
 
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
   const moduleId = currentModule ? parseInt(currentModule, 10) : 1;
-
-  // The fade state variables are no longer needed, they caused the loop.
-  // The 'key' prop on the container will handle re-render.
-
   const currentModuleData = getModuleById(moduleId);
   if (!currentModuleData) {
     throw new Error(`Module with ID ${moduleId} not found in modules.ts`);
   }
 
   const moduleScenarios = getScenariosByModuleId(moduleId);
-  
-  // Get the current scenario from the store for the current module ID
   const storedCurrentScenario = getCurrentScenario(moduleId);
-  
-  // Calculate current scenario index directly from the stored scenario ID
   const currentScenarioIndex = storedCurrentScenario ? storedCurrentScenario.scenarioId - 1 : 0;
   const currentScenarioData = moduleScenarios[currentScenarioIndex];
 
-  const getTileScore = (): number => {
-    const moduleData = pickUpAndPutDown[moduleId.toString()];
-    if (moduleData && moduleData.completedScenarios.length > 0) {
-      const totalScore = moduleData.completedScenarios.reduce((sum, scenario) => sum + scenario.score, 0);
-      return totalScore / moduleData.completedScenarios.length;
-    }
-    return 0;
-  };
-  
-  // A much simpler and safer useEffect to prevent the infinite loop.
-  // This will only run when the moduleId changes and a scenario isn't already set.
   useEffect(() => {
     if (!storedCurrentScenario && moduleScenarios.length > 0) {
       setCurrentScenarioStore(moduleId, moduleScenarios[0].id);
@@ -74,6 +60,15 @@ export default function ScenarioPlayer() {
       const rating = userRatings[responseId];
       return rating !== null && rating !== undefined && rating > 0;
     });
+
+  const getTileScore = (): number => {
+    const moduleData = pickUpAndPutDown[moduleId.toString()];
+    if (moduleData && moduleData.completedScenarios.length > 0) {
+      const totalScore = moduleData.completedScenarios.reduce((sum, scenario) => sum + scenario.score, 0);
+      return totalScore / moduleData.completedScenarios.length;
+    }
+    return 0;
+  };
 
   const handleReveal = () => {
     if (allRatingsComplete && currentScenarioData) {
@@ -93,8 +88,6 @@ export default function ScenarioPlayer() {
     clearCurrentScenario(moduleId);
     const nextScenarioIndex = currentScenarioIndex + 1;
     if (nextScenarioIndex >= moduleScenarios.length) return;
-    
-    // Set the next scenario in the store using the sequential ID
     const nextScenarioId = moduleScenarios[nextScenarioIndex].id;
     setCurrentScenarioStore(moduleId, nextScenarioId);
   };
@@ -102,7 +95,6 @@ export default function ScenarioPlayer() {
   return (
     <div className="scenarios-player-pane border-1 rounded-[10px] border-gray-700 h-full flex flex-col">
       <div className="scenarios-area-header border-b-1 p-1 border-gray-600 bg-black overflow-auto overflow-hidden text-white flex justify-between items-center">
-        
         <div className="icon-container p-1 flex items-center gap-2">
           <div style={{ backgroundColor: '#dfd5dbff', borderRadius: '3px', padding: '5px' }}>
             <Image
@@ -114,26 +106,24 @@ export default function ScenarioPlayer() {
           </div>
           <h1 className="ml-1 text-base font-bold text-lilac-300">{currentModuleData.name}</h1>
         </div>
-        
         <div className="mr-[6px]">
           <div className="flex items-center gap-[2px]">
             <div className="p-1">
               <ModuleTile moduleId={moduleId} score={getTileScore()} />
-             </div>
+            </div>
             <VerticalProgressBar
               current={currentScenarioIndex}
               total={moduleScenarios.length}
-            />          
-          </div>          
+            />
+          </div>
         </div>
-      
       </div>
 
       <div
-        key={moduleId} // Add key to force re-render on module change
+        key={moduleId}
         className="scenarios-container bg-[url('/scenarios-canvas.jpg')] bg-cover bg-center w-full flex-1 rounded-b-[10px] overflow-y-auto py-6 px-[200px] transition-opacity duration-300"
       >
-        {currentScenarioData ? (
+        {hydrated && currentScenarioData ? (
           <ScenarioCard
             moduleId={moduleId}
             scenarioId={currentScenarioData.id}
@@ -143,7 +133,9 @@ export default function ScenarioPlayer() {
             totalScenarios={moduleScenarios.length}
           />
         ) : (
-          <div className="flex justify-center items-center h-full text-white text-lg">No scenarios available for this module.</div>
+          <div className="flex justify-center items-center h-full text-white text-lg">
+            {hydrated ? 'No scenarios available for this module.' : 'Loading...'}
+          </div>
         )}
       </div>
 

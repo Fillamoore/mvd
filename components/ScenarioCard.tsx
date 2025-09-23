@@ -41,6 +41,7 @@ export default function ScenarioCard({
   expertRationales,
   readonly = false,
 }: ScenarioCardProps) {
+
   const [isHydrated, setIsHydrated] = useState(false);
   const [isModuleComplete, setIsModuleComplete] = useState(false);
 
