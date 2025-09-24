@@ -244,3 +244,46 @@ html {
     scrollbar-width: thin;
   }
 }
+
+/* ENHANCED CONCERTINA ANIMATION */
+@keyframes rationaleSlideDown {
+  0% {
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    max-height: 500px;
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.expert-rationale-container.revealed {
+  animation: rationaleSlideDown 0.6s ease-out forwards;
+}
+
+/* Individual rationale fade-in with stagger */
+.expert-rationale {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.4s ease-out;
+}
+
+.expert-rationale-container.revealed .expert-rationale {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger the individual rationales */
+.response-pair-container:nth-child(1) .expert-rationale-container.revealed .expert-rationale {
+  transition-delay: 0.1s;
+}
+
+.response-pair-container:nth-child(2) .expert-rationale-container.revealed .expert-rationale {
+  transition-delay: 0.2s;
+}
+
+.response-pair-container:nth-child(3) .expert-rationale-container.revealed .expert-rationale {
+  transition-delay: 0.3s;
+}

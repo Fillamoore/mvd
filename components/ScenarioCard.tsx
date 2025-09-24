@@ -269,9 +269,7 @@ export default function ScenarioCard({
 
                 {isRevealed && expertResponse && (
                   <div
-                    className={`expert-rationale-container overflow-hidden transition-all duration-500 ease-out ${
-                      isRevealed ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
-                    }`}
+                    className={`expert-rationale-container ${isRevealed ? 'revealed' : ''}`}
                     style={{ marginTop: '2px' }}
                   >
                     <div className="expert-rationale bg-lilac-400 rounded p-2 flex relative">
@@ -311,6 +309,8 @@ export default function ScenarioCard({
                     </div>
                   </div>
                 )}
+
+
               </div>
             );
           })}
