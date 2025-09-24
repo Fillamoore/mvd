@@ -1,4 +1,4 @@
-// components/MobileMasterViewMenu.tsx - MOBILE BACK ICON
+// components/MobileMasterViewMenu.tsx - TRANSPARENT BACKGROUND
 'use client';
 
 import { useRouter } from 'next/navigation';
@@ -14,10 +14,10 @@ export default function MobileMasterViewMenu() {
   return (
     <footer className="bg-black border-t border-gray-700 p-3 safe-area-padding-bottom">
       <div className="flex justify-start items-center">
-        {/* Mobile Back Icon */}
+        {/* Mobile Back Icon - TRANSPARENT */}
         <button
           onClick={handleBackClick}
-          className="flex items-center justify-center p-3 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors"
+          className="flex items-center justify-center p-3 rounded-lg bg-transparent hover:bg-gray-800 transition-colors"
           title="Back to Scenarios"
         >
           <Image
@@ -25,7 +25,7 @@ export default function MobileMasterViewMenu() {
             alt="Back to Scenarios"
             width={24}
             height={24}
-            className="w-6 h-6"
+            className="w-6 h-6" // Should be white icon
           />
         </button>
       </div>

@@ -1,4 +1,4 @@
-// components/MobileScenariosPlayerFooter.tsx - BLACK BACKGROUND WITH ICONS
+// components/MobileScenariosPlayerFooter.tsx - TRANSPARENT BUTTONS
 'use client';
 
 import { useRouter } from 'next/navigation';
@@ -23,63 +23,58 @@ export default function MobileScenariosPlayerFooter({
   const showNextButton = isRevealed;
 
   const handleModulesClick = () => {
-    // DIRECT navigation without splash screen
     router.push('/mobile-master', { scroll: false });
-  };
-
-  const handleNextClick = () => {
-    onNextScenario();
   };
 
   return (
     <footer className="bg-black border-t border-gray-700 p-3 safe-area-padding-bottom">
       <div className="flex justify-between items-center">
-        {/* Master View Icon */}
+        {/* Mobile Master View Icon - WHITE ON TRANSPARENT */}
         <button
           onClick={handleModulesClick}
-          className="flex items-center justify-center p-3 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors"
+          className="flex items-center justify-center p-3 rounded-lg bg-transparent hover:bg-gray-800 transition-colors"
           title="Master View"
         >
           <Image
-            src="/master-icon.png"
+            src="/mobile-master-icon.png"
             alt="Master View"
             width={24}
             height={24}
-            className="w-6 h-6"
+            className="w-6 h-6" // Should be white icon
           />
         </button>
 
         <div className="flex gap-3">
-          {/* Reveal Icon */}
+          {/* Mobile Reveal Icon - TRANSPARENT */}
           {showRevealButton && (
             <button
               onClick={onReveal}
-              className="flex items-center justify-center p-3 rounded-lg bg-blue-600 hover:bg-blue-500 transition-colors"
+              className="flex items-center justify-center p-3 rounded-lg bg-transparent hover:bg-gray-800 transition-colors"
               title="Reveal Expert Ratings"
             >
               <Image
-                src="/reveal-icon.png"
+                src="/mobile-reveal-icon.png"
                 alt="Reveal"
                 width={24}
                 height={24}
-                className="w-6 h-6"
+                className="w-6 h-6" // Should be white icon
               />
             </button>
           )}
 
-          {/* Next Scenario Icon */}
+          {/* Mobile Next Scenario Icon - TRANSPARENT */}
           {showNextButton && (
             <button
-              onClick={handleNextClick}
-              className="flex items-center justify-center p-3 rounded-lg bg-green-600 hover:bg-green-500 transition-colors"
+              onClick={onNextScenario}
+              className="flex items-center justify-center p-3 rounded-lg bg-transparent hover:bg-gray-800 transition-colors"
               title="Next Scenario"
             >
               <Image
-                src="/next-icon.png"
+                src="/mobile-next-icon.png"
                 alt="Next"
                 width={24}
                 height={24}
-                className="w-6 h-6"
+                className="w-6 h-6" // Should be white icon
               />
             </button>
           )}
