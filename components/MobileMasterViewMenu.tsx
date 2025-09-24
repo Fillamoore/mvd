@@ -1,37 +1,32 @@
-// components/MobileMasterViewMenu.tsx - FIX DOUBLE-TAP
+// components/MobileMasterViewMenu.tsx - MOBILE BACK ICON
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useLocalStore } from '@/store/useLocalStore';
+import Image from 'next/image';
 
 export default function MobileMasterViewMenu() {
   const router = useRouter();
-  const { currentModule } = useLocalStore();
-  const moduleId = currentModule ? parseInt(currentModule, 10) : 1;
 
-  const handleStartScenarios = () => {
+  const handleBackClick = () => {
     router.push('/scenario-player');
-    // Force immediate navigation
-    setTimeout(() => {
-      window.location.href = '/scenario-player';
-    }, 100);
   };
 
   return (
-    <footer className="bg-white border-t border-gray-200 p-3 safe-area-padding-bottom">
-      <div className="flex justify-between items-center">
-        {/* Current Module Info */}
-        <div className="text-sm">
-          <span className="font-medium text-gray-700">Module {moduleId}</span>
-        </div>
-
-        {/* Start Scenarios Button - FIXED NAVIGATION */}
+    <footer className="bg-black border-t border-gray-700 p-3 safe-area-padding-bottom">
+      <div className="flex justify-start items-center">
+        {/* Mobile Back Icon */}
         <button
-          onClick={handleStartScenarios}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded active:bg-blue-700"
+          onClick={handleBackClick}
+          className="flex items-center justify-center p-3 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors"
+          title="Back to Scenarios"
         >
-          Start Scenarios
-          <span className="text-lg">→</span>
+          <Image
+            src="/mobile-back-icon.png"
+            alt="Back to Scenarios"
+            width={24}
+            height={24}
+            className="w-6 h-6"
+          />
         </button>
       </div>
     </footer>
