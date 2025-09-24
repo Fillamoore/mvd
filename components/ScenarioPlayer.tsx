@@ -1,4 +1,4 @@
-// components/ScenarioPlayer.tsx - WITH MOBILE DETECTION
+// components/ScenarioPlayer.tsx - NO ROUNDED CORNERS ON MOBILE
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -26,12 +26,11 @@ export default function ScenarioPlayer() {
   })));
 
   const [hydrated, setHydrated] = useState(false);
-  const [isMobile, setIsMobile] = useState(false); // ADDED: Mobile detection
+  const [isMobile, setIsMobile] = useState(false);
   
   useEffect(() => {
     setHydrated(true);
     
-    // ADDED: Mobile detection
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
@@ -88,12 +87,15 @@ export default function ScenarioPlayer() {
     return 0;
   };
 
-  // ADDED: Mobile-specific padding
+  // CONDITIONAL STYLING
+  const containerBorderRadius = isMobile ? 'rounded-none' : 'rounded-[10px]';
+  const headerBorderRadius = isMobile ? 'rounded-none' : 'rounded-t-[10px]';
   const containerPadding = isMobile ? 'py-4 px-4' : 'py-6 px-[200px]';
 
   return (
-    <div className="scenarios-player-pane border-1 rounded-[10px] border-gray-700 h-full flex flex-col">
-      <div className="scenarios-area-header border-b-1 p-1 border-gray-600 bg-black overflow-auto overflow-hidden text-white flex justify-between items-center">
+    <div className={`scenarios-player-pane border-1 border-gray-700 h-full flex flex-col ${containerBorderRadius}`}>
+      {/* Header - no rounded corners on mobile */}
+      <div className={`scenarios-area-header border-b-1 p-1 border-gray-600 bg-black overflow-auto overflow-hidden text-white flex justify-between items-center ${headerBorderRadius}`}>
         <div className="icon-container p-1 flex items-center gap-2">
           <div style={{ backgroundColor: '#dfd5dbff', borderRadius: '3px', padding: '5px' }}>
             <Image
@@ -118,9 +120,10 @@ export default function ScenarioPlayer() {
         </div>
       </div>
 
+      {/* Content area - no rounded corners on mobile */}
       <div
         key={moduleId}
-        className={`scenarios-container bg-[url('/scenarios-canvas.jpg')] bg-cover bg-center w-full flex-1 rounded-b-[10px] overflow-y-auto ${containerPadding} transition-opacity duration-300`}
+        className={`scenarios-container bg-[url('/scenarios-canvas.jpg')] bg-cover bg-center w-full flex-1 overflow-y-auto ${containerPadding} rounded-none`}
       >
         {hydrated && currentScenarioData ? (
           <div key={`scenario-${currentScenarioData.id}`} className="scenario-fade-in">
@@ -140,7 +143,7 @@ export default function ScenarioPlayer() {
         )}
       </div>
       
-      {/* ONLY SHOW ON DESKTOP */}
+      {/* Only show on desktop */}
       {!isMobile && <DesktopControlButton />}
     </div>
   );

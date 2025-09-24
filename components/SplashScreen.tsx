@@ -124,7 +124,7 @@ export default function SplashScreen() {
     });
 
     // RESPONSIVE SIZING
-    const tileSize = isMobile ? 'w-11 h-11' : 'w-14 h-14';
+    const tileSize = isMobile ? 'w-12 h-12' : 'w-14 h-14';
     const gridGap = isMobile ? 'gap-1' : 'gap-2';
 
     return (
@@ -196,8 +196,8 @@ export default function SplashScreen() {
         <Image
           src="/aalogo.png"
           alt="App Logo"
-          width={isMobile ? 290 : 440}
-          height={isMobile ? 95 : 140}
+          width={isMobile ? 270 : 440}
+          height={isMobile ? 85 : 140}
           priority
           style={{ width: 'auto', height: 'auto' }}    
         />
