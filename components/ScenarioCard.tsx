@@ -1,9 +1,9 @@
+// components/ScenarioCard.tsx - COMPLETE UPDATED VERSION
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import RatingBox from './RatingBox';
 import ExpertMedia from './ExpertMedia';
-import DesktopControlButton from './DesktopControlButton';
 import { useLocalStore } from '@/store/useLocalStore';
 import type { ExpertMedia as ExpertMediaType, Resource } from '@/data/scenarios';
 import { useShallow } from 'zustand/react/shallow';
@@ -28,7 +28,6 @@ interface ScenarioCardProps {
   readonly?: boolean;
 }
 
-// Create stable empty objects to avoid re-renders
 const EMPTY_USER_RATINGS: { [key: string]: number | null } = {};
 const EMPTY_RATING_DIRECTIONS: { [key: string]: boolean } = {};
 
@@ -45,24 +44,32 @@ export default function ScenarioCard({
   const [isHydrated, setIsHydrated] = useState(false);
   const [isModuleComplete, setIsModuleComplete] = useState(false);
 
-  const { userRatings, userRatingDirections, isRevealed } = useLocalStore(useShallow((state) => {
+  // Get store state and actions
+  const { 
+    userRatings, 
+    userRatingDirections, 
+    isRevealed,
+    currentScenario,
+    shouldComplete // ADDED: Completion trigger flag
+  } = useLocalStore(useShallow((state) => {
     const currentScenario = state.pickUpAndPutDown[moduleId.toString()]?.currentScenario;
     return {
       userRatings: (currentScenario?.userRatings || EMPTY_USER_RATINGS) as { [key: string]: number | null },
       userRatingDirections: (currentScenario?.userRatingDirections || EMPTY_RATING_DIRECTIONS) as { [key: string]: boolean },
       isRevealed: currentScenario?.isRevealed || false,
+      currentScenario: currentScenario,
+      shouldComplete: currentScenario?.shouldComplete || false // ADDED
     };
   }));
 
-  const scenarioExists = !!useLocalStore(state =>
-    state.pickUpAndPutDown[moduleId.toString()]?.currentScenario
-  );
+  const { 
+    rateScenario, 
+    revealScenario, 
+    setExpertRatings, // This should be available here
+    completeCurrentScenario,
+    setNextScenario 
+  } = useLocalStore();
 
-  const rateScenario = useLocalStore(state => state.rateScenario);
-  const revealScenario = useLocalStore(state => state.revealScenario);
-  const advanceToNextScenario = useLocalStore(state => state.advanceToNextScenario);
-
-  // Check if this is the last scenario
   const isLastScenario = scenarioId === totalScenarios;
 
   const allRated = useMemo(() => {
@@ -88,6 +95,48 @@ export default function ScenarioCard({
 
   const score = isRevealed ? calculateScore : 0;
 
+  // ADDED: Handle scenario completion with useCallback to avoid recreating on every render
+  const handleScenarioCompletion = useCallback(() => {
+    if (!currentScenario || !expertRationales) return;
+
+    // Calculate expert ratings map
+    const expertRatingsMap: { [key: string]: number } = {};
+    expertRationales.forEach(response => {
+      expertRatingsMap[response.id] = response.expertRating;
+    });
+
+    // Create completed scenario record
+    const completedScenario = {
+      scenarioId: currentScenario.scenarioId,
+      userRatings: { ...currentScenario.userRatings },
+      expertRatings: expertRatingsMap,
+      score: calculateScore,
+      timestamp: new Date().toISOString(),
+      dateStarted: currentScenario.dateStarted,
+      dateCompleted: new Date().toISOString(),
+    };
+
+    // Save completion to store
+    completeCurrentScenario(completedScenario);
+
+    // Determine next scenario
+    if (isLastScenario) {
+      setIsModuleComplete(true);
+      // Module completion logic can be added here
+    } else {
+      const nextScenarioId = scenarioId + 1;
+      setNextScenario(nextScenarioId);
+    }
+  }, [currentScenario, expertRationales, calculateScore, isLastScenario, scenarioId, completeCurrentScenario, setNextScenario]);
+
+  // ADDED: Effect to handle completion when triggered by DesktopControlButton
+  useEffect(() => {
+    if (shouldComplete && currentScenario && isRevealed) {
+      console.log('Scenario completion triggered');
+      handleScenarioCompletion();
+    }
+  }, [shouldComplete, currentScenario, isRevealed, handleScenarioCompletion]);
+
   useEffect(() => {
     const unsubscribe = useLocalStore.persist.onFinishHydration(() => {
       setIsHydrated(true);
@@ -100,23 +149,16 @@ export default function ScenarioCard({
     return unsubscribe;
   }, []);
 
+  // In ScenarioCard.tsx - SET EXPERT RATINGS WHEN SCENARIO LOADS
   useEffect(() => {
-    if (isHydrated) { // Removed the 'scenarioExists' check
-      const { setCurrentScenario } = useLocalStore.getState();
-      setCurrentScenario(moduleId, scenarioId);
+    if (isHydrated && expertRationales) {
+      const expertRatingsMap: { [key: string]: number } = {};
+      expertRationales.forEach(response => {
+        expertRatingsMap[response.id] = response.expertRating;
+      });
+      setExpertRatings(moduleId, scenarioId, expertRatingsMap);
     }
-  }, [moduleId, scenarioId, isHydrated]); // Ensure the effect runs when these change
-
-  if (!isHydrated) {
-    return (
-      <div className="scenario-card">
-        <div className="prompt-card bg-lilac-400 rounded p-2 mb-6 text-left max-w-[60%]">
-          <h3 className="text-sm leading-tight select-none text-black">{prompt}</h3>
-        </div>
-        <div className="text-center py-8 text-gray-500">Loading scenario...</div>
-      </div>
-    );
-  }
+  }, [isHydrated, expertRationales, moduleId, scenarioId, setExpertRatings]);
 
   const handleResponseClick = (responseId: string) => {
     if (!readonly && !isRevealed) {
@@ -152,19 +194,6 @@ export default function ScenarioCard({
     revealScenario(moduleId);
   };
 
-  const onNext = () => {
-    if (isLastScenario) {
-      if (expertRationales) {
-        advanceToNextScenario(moduleId, expertRationales);
-        setIsModuleComplete(true);
-      }
-    } else {
-      if (expertRationales) {
-        advanceToNextScenario(moduleId, expertRationales);
-      }
-    }
-  };
-
   const getRatingClass = (rating: number): string => {
     switch (rating) {
       case 1: return 'bg-red-100 text-red-700';
@@ -186,7 +215,7 @@ export default function ScenarioCard({
 
   if (isModuleComplete) {
     return (
-      <div className="scenario-card flex justify-center items-center h-screen">
+      <div className="scenario-card scenario-fade-in flex justify-center items-center h-screen">
         <div className="text-center p-8 bg-green-100 rounded-lg shadow-lg">
           <h2 className="text-3xl font-bold text-green-800">🎉 Congratulations! 🎉</h2>
           <p className="mt-4 text-xl text-green-700">You have completed this module.</p>
@@ -195,9 +224,20 @@ export default function ScenarioCard({
     );
   }
 
+  if (!isHydrated) {
+    return (
+      <div className="scenario-card scenario-fade-in">
+        <div className="prompt-card bg-lilac-400 rounded p-2 mb-6 text-left max-w-[60%]">
+          <h3 className="text-sm leading-tight select-none text-black">{prompt}</h3>
+        </div>
+        <div className="text-center py-8 text-gray-500">Loading scenario...</div>
+      </div>
+    );
+  }
+
   return (
     <>
-      <div className="scenario-card">
+      <div className="scenario-card scenario-fade-in">
         <div className="prompt-card bg-lilac-400 rounded p-2 mb-6 text-left max-w-[60%]">
           <h3 className="text-sm leading-tight select-none text-black">{prompt}</h3>
         </div>
@@ -223,11 +263,7 @@ export default function ScenarioCard({
                       }
                     }}
                   >
-                    
-                    <RatingBox
-                      ratingValue={userRatings[response.id]}
-                    />
-                  
+                    <RatingBox responseId={response.id} type="user" />
                   </div>
                 </div>
 
@@ -270,13 +306,7 @@ export default function ScenarioCard({
                       </div>
 
                       <div className="flex-shrink-0 absolute top-1 right-1">
-                        <div className={`
-                          w-6 h-6 flex items-center justify-center
-                          border-1 border-gray-400 rounded font-bold text-base
-                          ${getRatingClass(expertResponse.expertRating)}
-                        `}>
-                          {expertResponse.expertRating}
-                        </div>
+                        <RatingBox responseId={response.id} type="expert" />
                       </div>
                     </div>
                   </div>
@@ -296,13 +326,6 @@ export default function ScenarioCard({
           )}
         </div>
       </div>
-      
-      <DesktopControlButton
-        onReveal={onReveal}
-        onNext={onNext}
-        allRated={allRated}
-        isRevealed={isRevealed}
-      />
     </>
   );
 }

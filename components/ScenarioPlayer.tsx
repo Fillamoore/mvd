@@ -1,3 +1,4 @@
+// components/ScenarioPlayer.tsx - FIXED ANIMATIONS
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -6,31 +7,26 @@ import { getScenariosByModuleId } from '@/data/scenarios';
 import { getModuleById } from '@/data/modules';
 import { useLocalStore } from '@/store/useLocalStore';
 import Image from 'next/image';
-import DesktopControlButton from '@/components/DesktopControlButton';
 import { useShallow } from 'zustand/react/shallow';
 import VerticalProgressBar from '@/components/VerticalProgressBar';
 import { ModuleTile } from '@/components/ModuleTile';
+import DesktopControlButton from '@/components/DesktopControlButton';
 
 export default function ScenarioPlayer() {
   const {
     currentModule,
-    getCurrentScenario,
-    recordPerformanceEvent,
-    revealScenario,
-    setCurrentScenarioStore,
-    clearCurrentScenario,
     pickUpAndPutDown,
+    setCurrentScenario,
+    setExpertRatings,
   } = useLocalStore(useShallow((state) => ({
     currentModule: state.currentModule,
-    getCurrentScenario: state.getCurrentScenario,
-    recordPerformanceEvent: state.recordPerformanceEvent,
-    revealScenario: state.revealScenario,
-    setCurrentScenarioStore: state.setCurrentScenario,
-    clearCurrentScenario: state.clearCurrentScenario,
     pickUpAndPutDown: state.pickUpAndPutDown,
+    setCurrentScenario: state.setCurrentScenario,
+    setExpertRatings: state.setExpertRatings,
   })));
 
   const [hydrated, setHydrated] = useState(false);
+  const [previousScenarioId, setPreviousScenarioId] = useState<number | null>(null); // Track previous scenario
   useEffect(() => {
     setHydrated(true);
   }, []);
@@ -42,24 +38,36 @@ export default function ScenarioPlayer() {
   }
 
   const moduleScenarios = getScenariosByModuleId(moduleId);
-  const storedCurrentScenario = getCurrentScenario(moduleId);
+  
+  const storedCurrentScenario = currentModule 
+    ? pickUpAndPutDown[currentModule]?.currentScenario 
+    : null;
+  
   const currentScenarioIndex = storedCurrentScenario ? storedCurrentScenario.scenarioId - 1 : 0;
   const currentScenarioData = moduleScenarios[currentScenarioIndex];
 
+  // Track scenario changes for animation
   useEffect(() => {
-    if (!storedCurrentScenario && moduleScenarios.length > 0) {
-      setCurrentScenarioStore(moduleId, moduleScenarios[0].id);
+    if (currentScenarioData) {
+      setPreviousScenarioId(currentScenarioData.id);
     }
-  }, [moduleId, storedCurrentScenario, moduleScenarios, setCurrentScenarioStore]);
+  }, [currentScenarioData]);
+
+  useEffect(() => {
+    if (hydrated && currentScenarioData && !storedCurrentScenario) {
+      setCurrentScenario(moduleId, currentScenarioData.id);
+      
+      const expertRatingsMap: { [key: string]: number } = {};
+      currentScenarioData.responses.forEach(response => {
+        if (response.expertRating) {
+          expertRatingsMap[response.id] = response.expertRating;
+        }
+      });
+      setExpertRatings(moduleId, currentScenarioData.id, expertRatingsMap);
+    }
+  }, [hydrated, storedCurrentScenario, currentScenarioData, moduleId, setCurrentScenario, setExpertRatings]);
 
   const isRevealed = storedCurrentScenario?.isRevealed || false;
-  const userRatings = storedCurrentScenario?.userRatings || {};
-
-  const allRatingsComplete = currentScenarioData &&
-    ['A', 'B', 'C'].every(responseId => {
-      const rating = userRatings[responseId];
-      return rating !== null && rating !== undefined && rating > 0;
-    });
 
   const getTileScore = (): number => {
     const moduleData = pickUpAndPutDown[moduleId.toString()];
@@ -68,28 +76,6 @@ export default function ScenarioPlayer() {
       return totalScore / moduleData.completedScenarios.length;
     }
     return 0;
-  };
-
-  const handleReveal = () => {
-    if (allRatingsComplete && currentScenarioData) {
-      revealScenario(moduleId);
-      const userRatingsMap: { [key: string]: number | null } = userRatings;
-      const expertRatingsMap: { [key: string]: number } = {};
-      currentScenarioData.responses.forEach(response => {
-        if (response.expertRating) {
-          expertRatingsMap[response.id] = response.expertRating;
-        }
-      });
-      recordPerformanceEvent(moduleId, currentScenarioData.id, userRatingsMap, expertRatingsMap);
-    }
-  };
-
-  const handleNextScenario = () => {
-    clearCurrentScenario(moduleId);
-    const nextScenarioIndex = currentScenarioIndex + 1;
-    if (nextScenarioIndex >= moduleScenarios.length) return;
-    const nextScenarioId = moduleScenarios[nextScenarioIndex].id;
-    setCurrentScenarioStore(moduleId, nextScenarioId);
   };
 
   return (
@@ -119,32 +105,27 @@ export default function ScenarioPlayer() {
         </div>
       </div>
 
-      <div
-        key={moduleId}
-        className="scenarios-container bg-[url('/scenarios-canvas.jpg')] bg-cover bg-center w-full flex-1 rounded-b-[10px] overflow-y-auto py-6 px-[200px] transition-opacity duration-300"
-      >
+      {/* CONTAINER REMAINS STATIC - NO ANIMATION */}
+      <div className="scenarios-container bg-[url('/scenarios-canvas.jpg')] bg-cover bg-center w-full flex-1 rounded-b-[10px] overflow-y-auto py-6 px-[200px]">
         {hydrated && currentScenarioData ? (
-          <ScenarioCard
-            moduleId={moduleId}
-            scenarioId={currentScenarioData.id}
-            prompt={currentScenarioData.prompt}
-            responses={currentScenarioData.responses.map(r => ({ id: r.id, text: r.text }))}
-            expertRationales={isRevealed ? currentScenarioData.responses : undefined}
-            totalScenarios={moduleScenarios.length}
-          />
+          <div key={`scenario-${currentScenarioData.id}`} className="scenario-fade-in">
+            <ScenarioCard
+              moduleId={moduleId}
+              scenarioId={currentScenarioData.id}
+              prompt={currentScenarioData.prompt}
+              responses={currentScenarioData.responses.map(r => ({ id: r.id, text: r.text }))}
+              expertRationales={isRevealed ? currentScenarioData.responses : undefined}
+              totalScenarios={moduleScenarios.length}
+            />
+          </div>
         ) : (
           <div className="flex justify-center items-center h-full text-white text-lg">
             {hydrated ? 'No scenarios available for this module.' : 'Loading...'}
           </div>
         )}
       </div>
-
-      <DesktopControlButton
-        onReveal={handleReveal}
-        onNext={handleNextScenario}
-        allRated={allRatingsComplete}
-        isRevealed={isRevealed}
-      />
+      
+      <DesktopControlButton />
     </div>
   );
 }

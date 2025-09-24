@@ -1,16 +1,18 @@
+// store/useLocalStore.ts - COMPLETE UPDATED VERSION
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
-// 1. Core Data Structures
+// Core Data Structures
 interface CompletedScenario {
   scenarioId: number;
   userRatings: { [responseId: string]: number | null };
-  expertRatings: { [responseId: string]: number };
+  expertRatings: { [responseId: string]: number | null };
   score: number;
   timestamp: string;
-  dateCompleted?: string;
+  dateStarted: string;
+  dateCompleted: string;
 }
 
 interface PickUpAndPutDownState {
@@ -18,14 +20,15 @@ interface PickUpAndPutDownState {
   currentScenario: {
     scenarioId: number;
     userRatings: { [responseID: string]: number | null };
+    expertRatings: { [responseID: string]: number | null };
     userRatingDirections: { [responseID: string]: boolean };
     isRevealed: boolean;
-    dateStarted?: string;
+    dateStarted: string;
     dateCompleted?: string;
+    shouldComplete?: boolean; // ADDED: Completion trigger flag
   } | null;
 }
 
-// The main store interface
 export interface PickUpAndPutDownStore {
   currentModule: string | null;
   pickUpAndPutDown: {
@@ -35,21 +38,13 @@ export interface PickUpAndPutDownStore {
   // Actions
   setCurrentModule: (moduleId: number) => void;
   setCurrentScenario: (moduleId: number, scenarioId: number) => void;
-  getCurrentScenario: (moduleId: number) => {
-    scenarioId: number;
-    userRatings: { [responseID: string]: number | null };
-    isRevealed: boolean;
-  } | null;
+  setExpertRatings: (moduleId: number, scenarioId: number, ratings: { [responseId: string]: number }) => void;
   rateScenario: (moduleId: number, scenarioId: number, responseId: string, rating: number | null, direction: boolean) => void;
   revealScenario: (moduleId: number) => void;
-  recordPerformanceEvent: (
-    moduleId: number,
-    scenarioId: number,
-    userRatings: { [key: string]: number | null },
-    expertRatings: { [key: string]: number },
-  ) => void;
   clearCurrentScenario: (moduleId: number) => void;
-  advanceToNextScenario: (moduleId: number, expertRationales: any) => void;
+  completeCurrentScenario: (completedScenario: CompletedScenario) => void;
+  setNextScenario: (scenarioId: number) => void;
+  triggerScenarioCompletion: () => void; // ADDED: Completion trigger action
 }
 
 export const useLocalStore = create<PickUpAndPutDownStore>()(
@@ -80,19 +75,26 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
             
             state.pickUpAndPutDown[moduleKey].currentScenario = {
               scenarioId,
-              userRatings: {}, // <-- Correct: Always reset user ratings
-              userRatingDirections: {}, // <-- Correct: Always reset user directions
-              isRevealed: false, // <-- Correct: Always set to false for a new scenario
+              userRatings: {},
+              expertRatings: {},
+              userRatingDirections: { 'A': true, 'B': true, 'C': true },
+              isRevealed: false,
               dateStarted: new Date().toISOString(),
               dateCompleted: undefined,
+              shouldComplete: false, // ADDED: Initialize as false
             };
           });
         },
 
-        getCurrentScenario: (moduleId: number) => {
-          const state = get();
-          const moduleKey = moduleId.toString();
-          return state.pickUpAndPutDown[moduleKey]?.currentScenario || null;
+        setExpertRatings: (moduleId: number, scenarioId: number, ratings: { [responseId: string]: number }) => {
+          set((state) => {
+            const moduleKey = moduleId.toString();
+            const scenario = state.pickUpAndPutDown[moduleKey]?.currentScenario;
+            
+            if (scenario && scenario.scenarioId === scenarioId) {
+              scenario.expertRatings = ratings;
+            }
+          });
         },
 
         rateScenario: (moduleId: number, scenarioId: number, responseId: string, rating: number | null, direction: boolean) => {
@@ -118,46 +120,6 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
           });
         },
 
-        recordPerformanceEvent: (
-          moduleId: number,
-          scenarioId: number,
-          userRatings: { [key: string]: number | null },
-          expertRatings: { [key: string]: number }
-        ) => {
-          set((state) => {
-            const moduleKey = moduleId.toString();
-            const moduleData = state.pickUpAndPutDown[moduleKey];
-
-            if (!moduleData) return;
-
-            let totalDifference = 0;
-            let ratedCount = 0;
-
-            Object.keys(userRatings).forEach((responseId) => {
-              const userRating = userRatings[responseId];
-              const expertRating = expertRatings[responseId];
-
-              if (userRating !== null && userRating !== undefined && expertRating !== null && expertRating !== undefined) {
-                totalDifference += Math.abs(userRating - expertRating);
-                ratedCount++;
-              }
-            });
-
-            const averageDifference = ratedCount > 0 ? totalDifference / ratedCount : 0;
-            const score = Math.round(100 - (averageDifference / 4) * 100);
-
-            const newPerformanceEvent = {
-              scenarioId,
-              userRatings,
-              expertRatings,
-              score,
-              timestamp: new Date().toISOString(),
-            };
-
-            moduleData.completedScenarios.push(newPerformanceEvent);
-          });
-        },
-
         clearCurrentScenario: (moduleId: number) => {
           set((state) => {
             const moduleKey = moduleId.toString();
@@ -169,56 +131,47 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
           });
         },
 
-        advanceToNextScenario: (moduleId: number, expertRationales: any) => {
+        completeCurrentScenario: (completedScenario: CompletedScenario) => {
           set((state) => {
-            const moduleKey = moduleId.toString();
+            if (!state.currentModule) return;
+            const moduleKey = state.currentModule;
             const moduleData = state.pickUpAndPutDown[moduleKey];
-            const currentScenario = moduleData?.currentScenario;
             
-            if (moduleData && currentScenario && currentScenario.isRevealed) {
-              const userRatings = currentScenario.userRatings;
-              const expertRatings: { [key: string]: number } = {};
-              expertRationales.forEach((exp: any) => {
-                expertRatings[exp.id] = exp.expertRating;
-              });
-
-              let totalDifference = 0;
-              let ratedCount = 0;
-              Object.keys(userRatings).forEach((responseId) => {
-                const userRating = userRatings[responseId];
-                const expertRating = expertRatings[responseId];
-                if (userRating !== null && userRating !== undefined && expertRating !== null && expertRating !== undefined) {
-                  totalDifference += Math.abs(userRating - expertRating);
-                  ratedCount++;
-                }
-              });
-              const averageDifference = ratedCount > 0 ? totalDifference / ratedCount : 0;
-              const score = Math.round(100 - (averageDifference / 4) * 100);
-
-              const completedScenario = {
-                scenarioId: currentScenario.scenarioId,
-                userRatings: currentScenario.userRatings,
-                expertRatings,
-                score,
-                timestamp: new Date().toISOString(),
-                dateCompleted: new Date().toISOString(),
-              };
-
+            if (moduleData) {
               moduleData.completedScenarios.push(completedScenario);
+            }
+          });
+        },
 
-              const nextScenarioId = currentScenario.scenarioId + 1;
+        setNextScenario: (scenarioId: number) => {
+          set((state) => {
+            if (!state.currentModule) return;
+            const moduleKey = state.currentModule;
+            const moduleData = state.pickUpAndPutDown[moduleKey];
+            
+            if (moduleData) {
               moduleData.currentScenario = {
-                scenarioId: nextScenarioId,
+                scenarioId,
                 userRatings: {},
-                userRatingDirections: {
-                  'A': true,
-                  'B': true,
-                  'C': true,
-                },
+                expertRatings: {},
+                userRatingDirections: { 'A': true, 'B': true, 'C': true },
                 isRevealed: false,
                 dateStarted: new Date().toISOString(),
                 dateCompleted: undefined,
+                shouldComplete: false, // ADDED: Reset for new scenario
               };
+            }
+          });
+        },
+
+        // ADDED: Completion trigger action
+        triggerScenarioCompletion: () => {
+          set((state) => {
+            if (!state.currentModule) return;
+            const moduleKey = state.currentModule;
+            const scenario = state.pickUpAndPutDown[moduleKey]?.currentScenario;
+            if (scenario) {
+              scenario.shouldComplete = true;
             }
           });
         },

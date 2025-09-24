@@ -1,13 +1,27 @@
+// components/RatingBox.tsx - UNIFIED VERSION
 'use client';
 
+import { useLocalStore } from '@/store/useLocalStore';
+
 interface RatingBoxProps {
-  ratingValue: number | null | undefined;
+  responseId: string;
+  type: 'user' | 'expert'; // Now handles both types
 }
 
-export default function RatingBox({
-  ratingValue,
-}: RatingBoxProps) {
-  
+export default function RatingBox({ responseId, type }: RatingBoxProps) {
+  // Each RatingBox subscribes ONLY to its specific rating data
+  const ratingValue = useLocalStore(state => {
+    if (!state.currentModule) return null;
+    
+    const currentScenario = state.pickUpAndPutDown[state.currentModule]?.currentScenario;
+    if (!currentScenario) return null;
+    
+    // Return the appropriate rating based on type
+    return type === 'user' 
+      ? currentScenario.userRatings?.[responseId] ?? null
+      : currentScenario.expertRatings?.[responseId] ?? null;
+  });
+
   const getBackgroundColor = (rating: number | null | undefined) => {
     if (rating === null || rating === undefined) return 'bg-gray-100 text-gray-400';
     switch (rating) {
@@ -20,6 +34,13 @@ export default function RatingBox({
     }
   };
 
+  const getTitle = () => {
+    if (ratingValue === null || ratingValue === undefined) {
+      return type === 'user' ? 'Not rated' : 'Expert rating';
+    }
+    return type === 'user' ? 'Your rating' : 'Expert rating';
+  };
+
   return (
     <div
       className={`
@@ -30,7 +51,7 @@ export default function RatingBox({
         shadow-none outline-none ring-0
         cursor-default opacity-90
       `}
-      title={'Rating completed'}
+      title={getTitle()}
     >
       <span className="text-base select-none">
         {ratingValue !== null && ratingValue !== undefined ? ratingValue : ''}

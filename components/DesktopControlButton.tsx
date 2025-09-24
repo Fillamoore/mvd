@@ -1,75 +1,77 @@
-// components/DesktopControlButton.tsx - KEEP THIS EXACT CODE
+// components/DesktopControlButton.tsx - COMPLETE VERSION
 'use client';
 
 import { useEffect } from 'react';
 import Image from 'next/image';
+import { useLocalStore } from '@/store/useLocalStore';
 
-interface DesktopControlButtonProps {
-  onReveal: () => void;
-  onNext: () => void;
-  allRated: boolean;
-  isRevealed: boolean;
-}
+export default function DesktopControlButton() {
+  const { 
+    currentModule, 
+    pickUpAndPutDown, 
+    revealScenario,
+    triggerScenarioCompletion // ADD THIS
+  } = useLocalStore();
+  
+  // Read directly from store
+  const currentScenario = pickUpAndPutDown[currentModule!]?.currentScenario;
+  const userRatings = currentScenario?.userRatings || {};
+  
+  // Button visibility logic
+  const allRated = ['A', 'B', 'C'].every(id => userRatings[id] != null);
+  const isRevealed = currentScenario?.isRevealed || false;
+  const isVisible = (allRated && !isRevealed) || isRevealed;
 
-export default function DesktopControlButton({
-  onReveal,
-  onNext,
-  allRated,
-  isRevealed
-}: DesktopControlButtonProps) {
-  // Handle keyboard shortcut (Enter key)
+  // Handle Enter key
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
-      if (event.key === 'Enter' && allRated) {
+      if (event.key === 'Enter' && isVisible && currentModule) {
         event.preventDefault();
-        if (!isRevealed) {
-          onReveal();
-        } else {
-          onNext();
-        }
+        handleButtonClick();
       }
     };
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [allRated, isRevealed, onReveal, onNext]);
+  }, [isVisible, currentModule]);
 
-  // Only show the button if all ratings are complete OR we're revealed
-  const isButtonVisible = (allRated && !isRevealed) || isRevealed;
-  const buttonIcon = isRevealed ? '/next-icon.png' : '/reveal-icon.png';
-
-  const handleClick = () => {
-    if (isRevealed) {
-      onNext();
-    } else if (allRated) {
-      onReveal();
+  const handleButtonClick = () => {
+    if (!currentModule) return;
+    
+    if (!isRevealed) {
+      revealScenario(parseInt(currentModule));
+    } else {
+      // USE THE TRIGGER ACTION WE ADDED TO THE STORE
+      triggerScenarioCompletion();
     }
   };
 
-  if (!isButtonVisible) {
+  if (!currentScenario || !isVisible) {
     return null;
   }
+
+  const buttonIcon = isRevealed ? '/next-icon.png' : '/reveal-icon.png';
+  const buttonLabel = isRevealed ? 'Next scenario' : 'Reveal expert ratings';
 
   return (
     <div className="fixed bottom-9 right-9 z-50">
       <button
-        onClick={handleClick}
+        onClick={handleButtonClick}
         className={`
-          w-8 h-8 flex items-center justify-center select-none // 32x32px
-          bg-lilac-200 rounded                   // lilac-200 background, slightly rounded
-          border border-lilac-charcoal-f            // lilac-charcoal-f border
+          w-8 h-8 flex items-center justify-center select-none
+          bg-lilac-200 rounded border border-lilac-charcoal-f
           transition-all duration-300 transform hover:scale-110
-          ${!isRevealed ? 'animate-pulse-slow' : ''}  // Much slower pulse for reveal
+          ${!isRevealed ? 'animate-pulse-slow' : ''}
         `}
-        aria-label={isRevealed ? 'Next scenario' : 'Reveal expert ratings'}
-        title={isRevealed ? 'Next scenario' : 'Reveal expert ratings'}
+        aria-label={buttonLabel}
+        title={buttonLabel}
       >
         <Image
           src={buttonIcon}
           alt={isRevealed ? 'Next' : 'Reveal'}
           width={20}
           height={20}
-          className="w-5 h-5 object-contain"  // Slightly smaller icon for 32x32 button
+          className="w-5 h-5 object-contain"
         />
       </button>
     </div>
