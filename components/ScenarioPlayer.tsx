@@ -1,4 +1,4 @@
-// components/ScenarioPlayer.tsx - FIXED ANIMATIONS
+// components/ScenarioPlayer.tsx - WITH MOBILE DETECTION
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -26,9 +26,19 @@ export default function ScenarioPlayer() {
   })));
 
   const [hydrated, setHydrated] = useState(false);
-  const [previousScenarioId, setPreviousScenarioId] = useState<number | null>(null); // Track previous scenario
+  const [isMobile, setIsMobile] = useState(false); // ADDED: Mobile detection
+  
   useEffect(() => {
     setHydrated(true);
+    
+    // ADDED: Mobile detection
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   const moduleId = currentModule ? parseInt(currentModule, 10) : 1;
@@ -46,31 +56,28 @@ export default function ScenarioPlayer() {
   const currentScenarioIndex = storedCurrentScenario ? storedCurrentScenario.scenarioId - 1 : 0;
   const currentScenarioData = moduleScenarios[currentScenarioIndex];
 
-  // Track scenario changes for animation
   useEffect(() => {
-    if (currentScenarioData) {
-      setPreviousScenarioId(currentScenarioData.id);
-    }
-  }, [currentScenarioData]);
-
-  useEffect(() => {
-    if (hydrated && currentScenarioData) {
-      // Only initialize if we don't have a scenario or if the IDs don't match
-      if (!storedCurrentScenario || storedCurrentScenario.scenarioId !== currentScenarioData.id) {
-        setCurrentScenario(moduleId, currentScenarioData.id);
-        
-        const expertRatingsMap: { [key: string]: number } = {};
-        currentScenarioData.responses.forEach(response => {
-          if (response.expertRating) {
-            expertRatingsMap[response.id] = response.expertRating;
-          }
-        });
-        setExpertRatings(moduleId, currentScenarioData.id, expertRatingsMap);
-      }
+    if (hydrated && currentScenarioData && !storedCurrentScenario) {
+      setCurrentScenario(moduleId, currentScenarioData.id);
+      
+      const expertRatingsMap: { [key: string]: number } = {};
+      currentScenarioData.responses.forEach(response => {
+        if (response.expertRating) {
+          expertRatingsMap[response.id] = response.expertRating;
+        }
+      });
+      setExpertRatings(moduleId, currentScenarioData.id, expertRatingsMap);
     }
   }, [hydrated, storedCurrentScenario, currentScenarioData, moduleId, setCurrentScenario, setExpertRatings]);
 
   const isRevealed = storedCurrentScenario?.isRevealed || false;
+  const userRatings = storedCurrentScenario?.userRatings || {};
+
+  const allRatingsComplete = currentScenarioData &&
+    ['A', 'B', 'C'].every(responseId => {
+      const rating = userRatings[responseId];
+      return rating !== null && rating !== undefined && rating > 0;
+    });
 
   const getTileScore = (): number => {
     const moduleData = pickUpAndPutDown[moduleId.toString()];
@@ -80,6 +87,9 @@ export default function ScenarioPlayer() {
     }
     return 0;
   };
+
+  // ADDED: Mobile-specific padding
+  const containerPadding = isMobile ? 'py-4 px-4' : 'py-6 px-[200px]';
 
   return (
     <div className="scenarios-player-pane border-1 rounded-[10px] border-gray-700 h-full flex flex-col">
@@ -108,8 +118,10 @@ export default function ScenarioPlayer() {
         </div>
       </div>
 
-      {/* CONTAINER REMAINS STATIC - NO ANIMATION */}
-      <div className="scenarios-container bg-[url('/scenarios-canvas.jpg')] bg-cover bg-center w-full flex-1 rounded-b-[10px] overflow-y-auto py-6 px-[200px]">
+      <div
+        key={moduleId}
+        className={`scenarios-container bg-[url('/scenarios-canvas.jpg')] bg-cover bg-center w-full flex-1 rounded-b-[10px] overflow-y-auto ${containerPadding} transition-opacity duration-300`}
+      >
         {hydrated && currentScenarioData ? (
           <div key={`scenario-${currentScenarioData.id}`} className="scenario-fade-in">
             <ScenarioCard
@@ -128,7 +140,8 @@ export default function ScenarioPlayer() {
         )}
       </div>
       
-      <DesktopControlButton />
+      {/* ONLY SHOW ON DESKTOP */}
+      {!isMobile && <DesktopControlButton />}
     </div>
   );
 }

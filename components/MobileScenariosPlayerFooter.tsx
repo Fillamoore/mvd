@@ -1,4 +1,4 @@
-// components/MobileScenariosPlayerFooter.tsx - SIMPLIFIED
+// components/MobileScenariosPlayerFooter.tsx - SIMPLIFIED VERSION
 'use client';
 
 import Link from 'next/link';
@@ -7,9 +7,6 @@ import Image from 'next/image';
 interface MobileScenariosPlayerFooterProps {
   onReveal: () => void;
   onNextScenario: () => void;
-  currentModuleId: number;
-  currentScenarioIndex: number;
-  totalScenarios: number;
   allRated: boolean;
   isRevealed: boolean;
 }
@@ -17,37 +14,23 @@ interface MobileScenariosPlayerFooterProps {
 export default function MobileScenariosPlayerFooter({
   onReveal,
   onNextScenario,
-  currentModuleId,
-  currentScenarioIndex,
-  totalScenarios,
   allRated,
   isRevealed
 }: MobileScenariosPlayerFooterProps) {
 
-  const canGoNextScenario = currentScenarioIndex < totalScenarios - 1;
   const showRevealButton = allRated && !isRevealed;
-  const showNextButton = isRevealed && canGoNextScenario;
+  const showNextButton = isRevealed;
 
   return (
     <footer className="bg-white border-t border-gray-200 p-3 safe-area-padding-bottom">
-      {/* Module and Scenario Info */}
-      <div className="flex justify-between items-center mb-3">
-        <span className="text-sm font-medium text-gray-700">
-          Module {currentModuleId}
-        </span>
-        <span className="text-sm text-gray-600">
-          {currentScenarioIndex + 1} / {totalScenarios}
-        </span>
-      </div>
-
-      {/* Action Buttons */}
+      {/* Action Buttons Only */}
       <div className="flex justify-between items-center">
-        {/* Master Screen Link */}
+        {/* Master Screen Link - Fixed navigation */}
         <Link
-          href="/mobile-master"
+          href="/"  // This should navigate to your master view
           className="flex items-center px-4 py-2 text-sm text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded"
         >
-          ← Master View
+          ← Modules
         </Link>
 
         {/* Action Buttons Group */}
@@ -56,15 +39,16 @@ export default function MobileScenariosPlayerFooter({
           {showRevealButton && (
             <button
               onClick={onReveal}
-              className="p-2 rounded bg-blue-500 hover:bg-blue-600 text-white"
+              className="flex items-center gap-2 px-4 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium"
             >
               <Image
                 src="/reveal-icon.png"
-                alt="Reveal Expert Rationales"
-                width={20}
-                height={20}
-                className="w-5 h-5"
+                alt="Reveal"
+                width={16}
+                height={16}
+                className="w-4 h-4"
               />
+              Reveal
             </button>
           )}
 
@@ -72,9 +56,10 @@ export default function MobileScenariosPlayerFooter({
           {showNextButton && (
             <button
               onClick={onNextScenario}
-              className="px-4 py-2 rounded bg-green-500 hover:bg-green-600 text-white"
+              className="flex items-center gap-2 px-4 py-2 rounded bg-green-500 hover:bg-green-600 text-white text-sm font-medium"
             >
               Next
+              <span className="text-lg">→</span>
             </button>
           )}
         </div>
