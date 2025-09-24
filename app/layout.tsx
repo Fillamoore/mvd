@@ -1,13 +1,13 @@
-// app/layout.tsx - ENSURE MOBILE ROUTES WORK
+// app/layout.tsx - PREVENT SPLASHSCREEN ON NAVIGATION
 'use client';
 
 import './globals.css';
 import { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation'; // ADD THIS IMPORT
+import { usePathname } from 'next/navigation';
 import SplashScreen from '../components/SplashScreen';
 import DesktopLayout from '../components/DesktopLayout';
 import MobileLayout from '../components/MobileLayout';
-import MobileMasterView from '../components/MobileMasterView'; // ADD THIS IMPORT
+import MobileMasterView from '../components/MobileMasterView';
 
 export default function RootLayout({
   children,
@@ -16,7 +16,8 @@ export default function RootLayout({
 }) {
   const [showApp, setShowApp] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const pathname = usePathname(); // ADD THIS
+  const [showSplash, setShowSplash] = useState(true); // Control splash visibility
+  const pathname = usePathname();
 
   useEffect(() => {
     const checkMobile = () => {
@@ -26,17 +27,27 @@ export default function RootLayout({
     checkMobile();
     window.addEventListener('resize', checkMobile);
     
-    const timer = setTimeout(() => {
+    // Only show splash on initial load, not on navigation
+    const hasSeenSplash = sessionStorage.getItem('hasSeenSplash');
+    
+    if (!hasSeenSplash) {
+      const timer = setTimeout(() => {
+        setShowApp(true);
+        setShowSplash(false);
+        sessionStorage.setItem('hasSeenSplash', 'true');
+      }, 6800);
+      
+      return () => clearTimeout(timer);
+    } else {
       setShowApp(true);
-    }, 6800);
+      setShowSplash(false);
+    }
 
     return () => {
-      clearTimeout(timer);
       window.removeEventListener('resize', checkMobile);
     };
   }, []);
 
-  // Determine what to render based on route and device
   const renderContent = () => {
     if (isMobile) {
       if (pathname === '/mobile-master') {
@@ -52,9 +63,12 @@ export default function RootLayout({
   return (
     <html>
       <body className="h-screen w-screen overflow-hidden">
-        <div className="fixed inset-0 z-40">
-          <SplashScreen />
-        </div>
+        {/* Only show SplashScreen on initial load */}
+        {showSplash && (
+          <div className="fixed inset-0 z-40">
+            <SplashScreen />
+          </div>
+        )}
 
         <div className={`relative w-full h-full z-50 transition-opacity duration-1000 ease-in-out ${showApp ? 'opacity-100' : 'opacity-0'}`}>
           {renderContent()}

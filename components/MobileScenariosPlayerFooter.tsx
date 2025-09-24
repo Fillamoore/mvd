@@ -1,4 +1,4 @@
-// components/MobileScenariosPlayerFooter.tsx - UPDATED NAVIGATION
+// components/MobileScenariosPlayerFooter.tsx - BLACK BACKGROUND WITH ICONS
 'use client';
 
 import { useRouter } from 'next/navigation';
@@ -23,44 +23,64 @@ export default function MobileScenariosPlayerFooter({
   const showNextButton = isRevealed;
 
   const handleModulesClick = () => {
-    router.push('/mobile-master'); // Navigate to mobile master view
+    // DIRECT navigation without splash screen
+    router.push('/mobile-master', { scroll: false });
+  };
+
+  const handleNextClick = () => {
+    onNextScenario();
   };
 
   return (
-    <footer className="bg-white border-t border-gray-200 p-3 safe-area-padding-bottom">
+    <footer className="bg-black border-t border-gray-700 p-3 safe-area-padding-bottom">
       <div className="flex justify-between items-center">
-        {/* Modules Button */}
+        {/* Master View Icon */}
         <button
           onClick={handleModulesClick}
-          className="flex items-center px-4 py-2 text-sm text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded"
+          className="flex items-center justify-center p-3 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors"
+          title="Master View"
         >
-          ← Modules
+          <Image
+            src="/master-icon.png"
+            alt="Master View"
+            width={24}
+            height={24}
+            className="w-6 h-6"
+          />
         </button>
 
-        <div className="flex gap-2">
+        <div className="flex gap-3">
+          {/* Reveal Icon */}
           {showRevealButton && (
             <button
               onClick={onReveal}
-              className="flex items-center gap-2 px-4 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium"
+              className="flex items-center justify-center p-3 rounded-lg bg-blue-600 hover:bg-blue-500 transition-colors"
+              title="Reveal Expert Ratings"
             >
               <Image
                 src="/reveal-icon.png"
                 alt="Reveal"
-                width={16}
-                height={16}
-                className="w-4 h-4"
+                width={24}
+                height={24}
+                className="w-6 h-6"
               />
-              Reveal
             </button>
           )}
 
+          {/* Next Scenario Icon */}
           {showNextButton && (
             <button
-              onClick={onNextScenario}
-              className="flex items-center gap-2 px-4 py-2 rounded bg-green-500 hover:bg-green-600 text-white text-sm font-medium"
+              onClick={handleNextClick}
+              className="flex items-center justify-center p-3 rounded-lg bg-green-600 hover:bg-green-500 transition-colors"
+              title="Next Scenario"
             >
-              Next
-              <span className="text-lg">→</span>
+              <Image
+                src="/next-icon.png"
+                alt="Next"
+                width={24}
+                height={24}
+                className="w-6 h-6"
+              />
             </button>
           )}
         </div>
