@@ -1,4 +1,4 @@
-// components/MobileScenariosPlayerFooter.tsx
+// components/MobileScenariosPlayerFooter.tsx - SIMPLIFIED
 'use client';
 
 import Link from 'next/link';
@@ -12,7 +12,6 @@ interface MobileScenariosPlayerFooterProps {
   totalScenarios: number;
   allRated: boolean;
   isRevealed: boolean;
-  onModuleChange?: (moduleId: number) => void;
 }
 
 export default function MobileScenariosPlayerFooter({
@@ -26,68 +25,59 @@ export default function MobileScenariosPlayerFooter({
 }: MobileScenariosPlayerFooterProps) {
 
   const canGoNextScenario = currentScenarioIndex < totalScenarios - 1;
+  const showRevealButton = allRated && !isRevealed;
+  const showNextButton = isRevealed && canGoNextScenario;
 
   return (
-    <footer className="bg-white border-t border-gray-200 p-3">
-      {/* Top Row: Module Navigation */}
-      <div className="flex justify-between items-center mb-4">
-
-        {/* Current Module Info */}
+    <footer className="bg-white border-t border-gray-200 p-3 safe-area-padding-bottom">
+      {/* Module and Scenario Info */}
+      <div className="flex justify-between items-center mb-3">
         <span className="text-sm font-medium text-gray-700">
           Module {currentModuleId}
         </span>
-
-      </div>
-
-      {/* Middle Row: Scenario Navigation and Reveal */}
-      <div className="flex justify-between items-center mb-4">
-
-        {/* Scenario Progress */}
         <span className="text-sm text-gray-600">
           {currentScenarioIndex + 1} / {totalScenarios}
         </span>
-
-        {/* Next Scenario */}
-        <button 
-          onClick={onNextScenario}
-          disabled={!canGoNextScenario}
-          className={`px-3 py-2 rounded ${
-            canGoNextScenario 
-              ? 'bg-gray-200 hover:bg-gray-300' 
-              : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-          }`}
-        >
-          〉
-        </button>
-
-        {/* Reveal */}
-        <button
-          onClick={onReveal}
-          disabled={!allRated || isRevealed}
-          className={`p-2 rounded ml-2 ${
-            allRated && !isRevealed
-              ? 'bg-blue-200 hover:bg-blue-300'
-              : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-          }`}
-        >
-          <Image
-            src="/reveal-icon.png"
-            alt="Reveal Expert Rationales"
-            width={20}
-            height={20}
-            className="w-5 h-5"
-          />
-        </button>
       </div>
 
-      {/* Bottom Row: Master Screen Navigation */}
-      <div className="flex justify-center items-center pt-2 border-t border-gray-100">
+      {/* Action Buttons */}
+      <div className="flex justify-between items-center">
+        {/* Master Screen Link */}
         <Link
           href="/mobile-master"
           className="flex items-center px-4 py-2 text-sm text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded"
         >
-          ←
+          ← Master View
         </Link>
+
+        {/* Action Buttons Group */}
+        <div className="flex gap-2">
+          {/* Reveal Button */}
+          {showRevealButton && (
+            <button
+              onClick={onReveal}
+              className="p-2 rounded bg-blue-500 hover:bg-blue-600 text-white"
+            >
+              <Image
+                src="/reveal-icon.png"
+                alt="Reveal Expert Rationales"
+                width={20}
+                height={20}
+                className="w-5 h-5"
+              />
+            </button>
+          )}
+
+          {/* Next Scenario Button */}
+          {showNextButton && (
+            <button
+              onClick={onNextScenario}
+              className="px-4 py-2 rounded bg-green-500 hover:bg-green-600 text-white"
+            >
+              Next
+            </button>
+          )}
+        </div>
       </div>
     </footer>
   );
