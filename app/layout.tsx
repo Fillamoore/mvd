@@ -1,3 +1,4 @@
+// app/layout.tsx - FIXED MOBILE RENDERING
 'use client';
 
 import './globals.css';
@@ -8,13 +9,28 @@ import MobileLayout from '../components/MobileLayout';
 
 export default function RootLayout() {
   const [showApp, setShowApp] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768); // Tailwind md breakpoint
+    };
+
+    // Check initially
+    checkMobile();
+
+    // Listen for resize
+    window.addEventListener('resize', checkMobile);
+    
+    // Show app after splash
     const timer = setTimeout(() => {
       setShowApp(true);
-    }, 6800); // Match SplashScreen animation duration
+    }, 6800);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', checkMobile);
+    };
   }, []);
 
   return (
@@ -25,13 +41,9 @@ export default function RootLayout() {
           <SplashScreen />
         </div>
 
-        {/* App content fades in */}
-        <div className={`
-          relative w-full h-full z-50 transition-opacity duration-1000 ease-in-out
-          ${showApp ? 'opacity-100' : 'opacity-0'}
-        `}>
-          <DesktopLayout />
-          <MobileLayout />
+        {/* Conditionally render the appropriate layout */}
+        <div className={`relative w-full h-full z-50 transition-opacity duration-1000 ease-in-out ${showApp ? 'opacity-100' : 'opacity-0'}`}>
+          {isMobile ? <MobileLayout /> : <DesktopLayout />}
         </div>
       </body>
     </html>
