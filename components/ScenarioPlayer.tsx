@@ -54,16 +54,19 @@ export default function ScenarioPlayer() {
   }, [currentScenarioData]);
 
   useEffect(() => {
-    if (hydrated && currentScenarioData && !storedCurrentScenario) {
-      setCurrentScenario(moduleId, currentScenarioData.id);
-      
-      const expertRatingsMap: { [key: string]: number } = {};
-      currentScenarioData.responses.forEach(response => {
-        if (response.expertRating) {
-          expertRatingsMap[response.id] = response.expertRating;
-        }
-      });
-      setExpertRatings(moduleId, currentScenarioData.id, expertRatingsMap);
+    if (hydrated && currentScenarioData) {
+      // Only initialize if we don't have a scenario or if the IDs don't match
+      if (!storedCurrentScenario || storedCurrentScenario.scenarioId !== currentScenarioData.id) {
+        setCurrentScenario(moduleId, currentScenarioData.id);
+        
+        const expertRatingsMap: { [key: string]: number } = {};
+        currentScenarioData.responses.forEach(response => {
+          if (response.expertRating) {
+            expertRatingsMap[response.id] = response.expertRating;
+          }
+        });
+        setExpertRatings(moduleId, currentScenarioData.id, expertRatingsMap);
+      }
     }
   }, [hydrated, storedCurrentScenario, currentScenarioData, moduleId, setCurrentScenario, setExpertRatings]);
 

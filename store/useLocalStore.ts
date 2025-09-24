@@ -1,4 +1,4 @@
-// store/useLocalStore.ts - COMPLETE UPDATED VERSION
+// store/useLocalStore.ts - COMPLETE WITH PROPER INITIAL STATE
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { devtools } from 'zustand/middleware';
@@ -25,7 +25,7 @@ interface PickUpAndPutDownState {
     isRevealed: boolean;
     dateStarted: string;
     dateCompleted?: string;
-    shouldComplete?: boolean; // ADDED: Completion trigger flag
+    shouldComplete?: boolean;
   } | null;
 }
 
@@ -44,21 +44,53 @@ export interface PickUpAndPutDownStore {
   clearCurrentScenario: (moduleId: number) => void;
   completeCurrentScenario: (completedScenario: CompletedScenario) => void;
   setNextScenario: (scenarioId: number) => void;
-  triggerScenarioCompletion: () => void; // ADDED: Completion trigger action
+  triggerScenarioCompletion: () => void;
 }
 
 export const useLocalStore = create<PickUpAndPutDownStore>()(
   devtools(
     persist(
       immer((set, get) => ({
-        // Initial State
-        currentModule: null,
-        pickUpAndPutDown: {},
+        // PROPER INITIAL STATE - Always have module 1, scenario 1
+        currentModule: "1",
+        pickUpAndPutDown: {
+          "1": {
+            completedScenarios: [],
+            currentScenario: {
+              scenarioId: 1,
+              userRatings: {},
+              expertRatings: {},
+              userRatingDirections: { 'A': true, 'B': true, 'C': true },
+              isRevealed: false,
+              dateStarted: new Date().toISOString(),
+              dateCompleted: undefined,
+              shouldComplete: false,
+            },
+          },
+        },
 
         // Actions
         setCurrentModule: (moduleId: number) => {
           set((state) => {
             state.currentModule = moduleId.toString();
+            
+            // Ensure the module exists in the structure
+            const moduleKey = moduleId.toString();
+            if (!state.pickUpAndPutDown[moduleKey]) {
+              state.pickUpAndPutDown[moduleKey] = {
+                completedScenarios: [],
+                currentScenario: {
+                  scenarioId: 1,
+                  userRatings: {},
+                  expertRatings: {},
+                  userRatingDirections: { 'A': true, 'B': true, 'C': true },
+                  isRevealed: false,
+                  dateStarted: new Date().toISOString(),
+                  dateCompleted: undefined,
+                  shouldComplete: false,
+                },
+              };
+            }
           });
         },
 
@@ -81,7 +113,7 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
               isRevealed: false,
               dateStarted: new Date().toISOString(),
               dateCompleted: undefined,
-              shouldComplete: false, // ADDED: Initialize as false
+              shouldComplete: false,
             };
           });
         },
@@ -158,13 +190,12 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
                 isRevealed: false,
                 dateStarted: new Date().toISOString(),
                 dateCompleted: undefined,
-                shouldComplete: false, // ADDED: Reset for new scenario
+                shouldComplete: false,
               };
             }
           });
         },
 
-        // ADDED: Completion trigger action
         triggerScenarioCompletion: () => {
           set((state) => {
             if (!state.currentModule) return;
@@ -184,6 +215,28 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
           return (state, error) => {
             if (error) {
               console.error('Rehydration failed:', error);
+            } else if (state) {
+              // Ensure valid state after rehydration (especially when localStorage is empty)
+              if (!state.currentModule) {
+                state.currentModule = "1";
+              }
+              if (!state.pickUpAndPutDown || !state.pickUpAndPutDown["1"]) {
+                state.pickUpAndPutDown = {
+                  "1": {
+                    completedScenarios: [],
+                    currentScenario: {
+                      scenarioId: 1,
+                      userRatings: {},
+                      expertRatings: {},
+                      userRatingDirections: { 'A': true, 'B': true, 'C': true },
+                      isRevealed: false,
+                      dateStarted: new Date().toISOString(),
+                      dateCompleted: undefined,
+                      shouldComplete: false,
+                    },
+                  },
+                };
+              }
             }
           };
         },
