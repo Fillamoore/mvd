@@ -124,8 +124,8 @@ export default function SplashScreen() {
     });
 
     // RESPONSIVE SIZING
-    const tileSize = isMobile ? 'w-10 h-10' : 'w-14 h-14';
-    const gridGap = isMobile ? 'gap-1' : 'gap-2';
+    const tileSize = isMobile ? 'w-11 h-11' : 'w-14 h-14';
+    const gridGap = isMobile ? 'gap-2' : 'gap-2';
 
     return (
       <div className={`grid grid-cols-7 ${gridGap} mx-auto mt-2`}>
