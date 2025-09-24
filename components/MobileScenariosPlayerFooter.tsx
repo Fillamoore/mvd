@@ -1,7 +1,7 @@
-// components/MobileScenariosPlayerFooter.tsx - SIMPLIFIED VERSION
+// components/MobileScenariosPlayerFooter.tsx - UPDATED NAVIGATION
 'use client';
 
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
 interface MobileScenariosPlayerFooterProps {
@@ -17,25 +17,27 @@ export default function MobileScenariosPlayerFooter({
   allRated,
   isRevealed
 }: MobileScenariosPlayerFooterProps) {
+  const router = useRouter();
 
   const showRevealButton = allRated && !isRevealed;
   const showNextButton = isRevealed;
 
+  const handleModulesClick = () => {
+    router.push('/mobile-master'); // Navigate to mobile master view
+  };
+
   return (
     <footer className="bg-white border-t border-gray-200 p-3 safe-area-padding-bottom">
-      {/* Action Buttons Only */}
       <div className="flex justify-between items-center">
-        {/* Master Screen Link - Fixed navigation */}
-        <Link
-          href="/"  // This should navigate to your master view
+        {/* Modules Button */}
+        <button
+          onClick={handleModulesClick}
           className="flex items-center px-4 py-2 text-sm text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded"
         >
           ← Modules
-        </Link>
+        </button>
 
-        {/* Action Buttons Group */}
         <div className="flex gap-2">
-          {/* Reveal Button */}
           {showRevealButton && (
             <button
               onClick={onReveal}
@@ -52,7 +54,6 @@ export default function MobileScenariosPlayerFooter({
             </button>
           )}
 
-          {/* Next Scenario Button */}
           {showNextButton && (
             <button
               onClick={onNextScenario}
