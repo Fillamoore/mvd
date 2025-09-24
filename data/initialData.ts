@@ -9,6 +9,7 @@ export const initialData: Partial<PickUpAndPutDownStore> = {
       currentScenario: {
         scenarioId: 1,
         userRatings: {},
+        expertRatings: {}, // ADD THIS LINE
         userRatingDirections: {
           'A': true,
           'B': true,
