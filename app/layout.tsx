@@ -1,85 +1,77 @@
-// components/MobileScenariosPlayerFooter.tsx - MOBILE-SPECIFIC ICONS
+// app/layout.tsx - FIXED EXPORT
 'use client';
 
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
+import './globals.css';
+import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+import SplashScreen from '../components/SplashScreen';
+import DesktopLayout from '../components/DesktopLayout';
+import MobileLayout from '../components/MobileLayout';
+import MobileMasterView from '../components/MobileMasterView';
 
-interface MobileScenariosPlayerFooterProps {
-  onReveal: () => void;
-  onNextScenario: () => void;
-  allRated: boolean;
-  isRevealed: boolean;
-}
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const [showApp, setShowApp] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
+  const pathname = usePathname();
 
-export default function MobileScenariosPlayerFooter({
-  onReveal,
-  onNextScenario,
-  allRated,
-  isRevealed
-}: MobileScenariosPlayerFooterProps) {
-  const router = useRouter();
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
 
-  const showRevealButton = allRated && !isRevealed;
-  const showNextButton = isRevealed;
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    const hasSeenSplash = sessionStorage.getItem('hasSeenSplash');
+    
+    if (!hasSeenSplash) {
+      const timer = setTimeout(() => {
+        setShowApp(true);
+        setShowSplash(false);
+        sessionStorage.setItem('hasSeenSplash', 'true');
+      }, 6800);
+      
+      return () => clearTimeout(timer);
+    } else {
+      setShowApp(true);
+      setShowSplash(false);
+    }
 
-  const handleModulesClick = () => {
-    router.push('/mobile-master', { scroll: false });
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
+
+  const renderContent = () => {
+    if (isMobile) {
+      if (pathname === '/mobile-master') {
+        return <MobileMasterView />;
+      } else {
+        return <MobileLayout />;
+      }
+    } else {
+      return <DesktopLayout />;
+    }
   };
 
   return (
-    <footer className="bg-black border-t border-gray-700 p-3 safe-area-padding-bottom">
-      <div className="flex justify-between items-center">
-        {/* Mobile Master View Icon */}
-        <button
-          onClick={handleModulesClick}
-          className="flex items-center justify-center p-3 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors"
-          title="Master View"
-        >
-          <Image
-            src="/mobile-master-icon.png"
-            alt="Master View"
-            width={24}
-            height={24}
-            className="w-6 h-6"
-          />
-        </button>
+    <html>
+      <body className="h-screen w-screen overflow-hidden">
+        {showSplash && (
+          <div className="fixed inset-0 z-40">
+            <SplashScreen />
+          </div>
+        )}
 
-        <div className="flex gap-3">
-          {/* Mobile Reveal Icon */}
-          {showRevealButton && (
-            <button
-              onClick={onReveal}
-              className="flex items-center justify-center p-3 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors"
-              title="Reveal Expert Ratings"
-            >
-              <Image
-                src="/mobile-reveal-icon.png"
-                alt="Reveal"
-                width={24}
-                height={24}
-                className="w-6 h-6"
-              />
-            </button>
-          )}
-
-          {/* Mobile Next Scenario Icon */}
-          {showNextButton && (
-            <button
-              onClick={onNextScenario}
-              className="flex items-center justify-center p-3 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors"
-              title="Next Scenario"
-            >
-              <Image
-                src="/mobile-next-icon.png"
-                alt="Next"
-                width={24}
-                height={24}
-                className="w-6 h-6"
-              />
-            </button>
-          )}
+        <div className={`relative w-full h-full z-50 transition-opacity duration-1000 ease-in-out ${showApp ? 'opacity-100' : 'opacity-0'}`}>
+          {renderContent()}
         </div>
-      </div>
-    </footer>
+      </body>
+    </html>
   );
 }

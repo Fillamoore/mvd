@@ -72,12 +72,6 @@ export default function ScenarioPlayer() {
   const isRevealed = storedCurrentScenario?.isRevealed || false;
   const userRatings = storedCurrentScenario?.userRatings || {};
 
-  const allRatingsComplete = currentScenarioData &&
-    ['A', 'B', 'C'].every(responseId => {
-      const rating = userRatings[responseId];
-      return rating !== null && rating !== undefined && rating > 0;
-    });
-
   const getTileScore = (): number => {
     const moduleData = pickUpAndPutDown[moduleId.toString()];
     if (moduleData && moduleData.completedScenarios.length > 0) {

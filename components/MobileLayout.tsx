@@ -16,7 +16,6 @@ export default function MobileLayout() {
   }, []);
 
   const moduleId = currentModule ? parseInt(currentModule, 10) : 1;
-  const moduleScenarios = getScenariosByModuleId(moduleId);
   const storedCurrentScenario = currentModule ? pickUpAndPutDown[currentModule]?.currentScenario : null;
   
   const userRatings = storedCurrentScenario?.userRatings || {};

@@ -72,10 +72,6 @@ export default function ScenarioCard({
 
   const isLastScenario = scenarioId === totalScenarios;
 
-  const allRated = useMemo(() => {
-    return responses.every(response => userRatings[response.id] !== null && userRatings[response.id] !== undefined);
-  }, [responses, userRatings]);
-
   const calculateScore = useMemo(() => {
     if (!expertRationales) return 0;
     let totalDifference = 0;
@@ -188,29 +184,6 @@ export default function ScenarioCard({
       
       rateScenario(moduleId, scenarioId, responseId, newValue, newDirection);
     }
-  };
-
-  const onReveal = () => {
-    revealScenario(moduleId);
-  };
-
-  const getRatingClass = (rating: number): string => {
-    switch (rating) {
-      case 1: return 'bg-red-100 text-red-700';
-      case 2: return 'bg-orange-100 text-orange-700';
-      case 3: return 'bg-yellow-100 text-yellow-700';
-      case 4: return 'bg-green-100 text-green-700';
-      case 5: return 'bg-green-200 text-green-800';
-      default: return 'bg-gray-100 text-gray-400';
-    }
-  };
-
-  const getScoreClass = (score: number): string => {
-    if (score >= 90) return 'bg-green-100 text-green-800';
-    if (score >= 75) return 'bg-green-50 text-green-700';
-    if (score >= 60) return 'bg-yellow-100 text-yellow-800';
-    if (score >= 40) return 'bg-orange-100 text-orange-800';
-    return 'bg-red-100 text-red-800';
   };
 
   if (isModuleComplete) {
