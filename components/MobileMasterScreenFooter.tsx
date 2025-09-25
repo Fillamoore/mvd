@@ -9,8 +9,8 @@ export default function MobileMasterScreenFooter() {
   const pathname = usePathname();
 
   return (
-    <footer className="bg-black border-t border-gray-700 px-3 py-2"> {/* Changed to black bg, reduced padding */}
-      <div className="flex justify-around items-center h-10"> {/* Reduced height to h-10 (40px) and centered vertically */}
+    <footer className="bg-black border-t border-gray-500 px-3 pb-2"> 
+      <div className="flex justify-around items-center h-10"> 
         {/* Master View Icon - ACTIVE */}
         <Link
           href="/mobile-master"
