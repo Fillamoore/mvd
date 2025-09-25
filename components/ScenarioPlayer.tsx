@@ -1,4 +1,4 @@
-// components/ScenarioPlayer.tsx - NO ROUNDED CORNERS ON MOBILE
+// components/ScenarioPlayer.tsx - FIXED DESKTOP ROUNDED CORNERS
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -81,14 +81,15 @@ export default function ScenarioPlayer() {
     return 0;
   };
 
-  // CONDITIONAL STYLING
+  // FIXED: Conditional border radius for desktop
   const containerBorderRadius = isMobile ? 'rounded-none' : 'rounded-[10px]';
   const headerBorderRadius = isMobile ? 'rounded-none' : 'rounded-t-[10px]';
+  const contentBorderRadius = isMobile ? 'rounded-none' : 'rounded-b-[10px]'; // ADDED: Bottom rounded corners for desktop
   const containerPadding = isMobile ? 'py-4 px-4' : 'py-6 px-[200px]';
 
   return (
     <div className={`scenarios-player-pane border-1 border-gray-700 h-full flex flex-col ${containerBorderRadius}`}>
-      {/* Header - no rounded corners on mobile */}
+      {/* Header - conditional rounded top corners */}
       <div className={`scenarios-area-header border-b-1 p-1 border-gray-600 bg-black overflow-auto overflow-hidden text-white flex justify-between items-center ${headerBorderRadius}`}>
         <div className="icon-container p-1 flex items-center gap-2">
           <div style={{ backgroundColor: '#dfd5dbff', borderRadius: '3px', padding: '5px' }}>
@@ -114,10 +115,10 @@ export default function ScenarioPlayer() {
         </div>
       </div>
 
-      {/* Content area - no rounded corners on mobile */}
+      {/* Content area - FIXED: conditional rounded bottom corners for desktop */}
       <div
         key={moduleId}
-        className={`scenarios-container bg-[url('/scenarios-canvas.jpg')] bg-cover bg-center w-full flex-1 overflow-y-auto ${containerPadding} rounded-none`}
+        className={`scenarios-container bg-[url('/scenarios-canvas.jpg')] bg-cover bg-center w-full flex-1 overflow-y-auto ${containerPadding} ${contentBorderRadius}`}
       >
         {hydrated && currentScenarioData ? (
           <div key={`scenario-${currentScenarioData.id}`} className="scenario-fade-in">
