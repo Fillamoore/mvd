@@ -1,4 +1,4 @@
-// app/layout.tsx - COMPLETE WITH PWA FIXES
+// app/layout.tsx - WITH FLASH FIX
 'use client';
 
 import './globals.css';
@@ -55,27 +55,9 @@ export default function RootLayout({
     <html>
       <head>
         <link rel="manifest" href="/manifest.json" />
-        {/*
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="Advisory Accelerator" />
-        <meta name="theme-color" content="#000000" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
-        <style dangerouslySetInnerHTML={{__html: `
-          body { 
-            margin: 0; 
-            padding: 0;
-            height: 100vh;
-            overflow: hidden;
-          }
-          html { 
-            height: 100%; 
-            overflow: hidden;
-          }
-        `}} />
-        */}
       </head>
-      <body className="h-screen w-screen overflow-hidden pb-[env(safe-area-inset-bottom)]">
+      {/* ADD bg-black TO body CLASSNAME */}
+      <body className="h-screen w-screen overflow-hidden pb-[env(safe-area-inset-bottom)] bg-black">
         {showSplash && (
           <div className="fixed inset-0 z-40">
             <SplashScreen />
