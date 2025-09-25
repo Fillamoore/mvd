@@ -53,6 +53,9 @@ export default function RootLayout({
 
   return (
     <html>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+      </head>
       <body className="h-screen w-screen overflow-hidden">
         {showSplash && (
           <div className="fixed inset-0 z-40">

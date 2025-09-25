@@ -288,7 +288,8 @@ html {
   transition-delay: 0.3s;
 }
 
-/* Disable tap highlights globally */
+{/*
+
 button {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -297,6 +298,7 @@ button {
   border: none;
   outline: none;
 }
+*/}
 
 /* Specifically for mobile Safari */
 @supports (-webkit-touch-callout: none) {
