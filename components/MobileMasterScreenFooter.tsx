@@ -22,7 +22,7 @@ export default function MobileMasterScreenFooter() {
             alt="Scenario Player"
             width={24}
             height={24}
-            className="object-contain bg-transparent"
+            className="border border-red-500 object-contain bg-transparent"
           />
         </Link>
 
