@@ -15,6 +15,7 @@ export default function MobileMasterScreenFooter() {
         <Link
           href="/mobile-master"
           className="flex items-center justify-center p-2 rounded-lg text-white active:bg-transparent"
+          style={{ WebkitTapHighlightColor: 'transparent' }} 
         >
           <Image
             src="/master-icon.png"
