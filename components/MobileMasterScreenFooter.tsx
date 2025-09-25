@@ -9,7 +9,7 @@ export default function MobileMasterScreenFooter() {
   const pathname = usePathname();
 
   return (
-    <footer className="bg-white border-t border-gray-200 p-3">
+    <footer className="bg-white border-t border-gray-200 px-3 pb-3">
       <div className="flex justify-around items-center">
         {/* Master View Icon - ACTIVE */}
         <Link
