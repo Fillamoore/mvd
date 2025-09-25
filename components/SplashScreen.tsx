@@ -9,7 +9,11 @@ const GRID_SIZE = 7;
 const TOTAL_TILES = 49;
 const ANIMATION_INTERVAL = 50;
 
-export default function SplashScreen() { 
+interface SplashScreenProps {
+  onComplete?: () => void;
+}
+
+export default function SplashScreen({ onComplete }: SplashScreenProps) { 
   const [phase, setPhase] = useState<'logo' | 'grid' | 'animating' | 'done'>('logo');
   const [visibleTiles, setVisibleTiles] = useState(TOTAL_TILES);
   const [spiralOrder, setSpiralOrder] = useState<{ id: number; row: number; col: number }[]>([]);
@@ -71,7 +75,7 @@ export default function SplashScreen() {
       case 'done':
         setTimeout(() => {
           if (isMountedRef.current) {
-            // No action needed
+            onComplete?.();
           }
         }, 2000);
         break;
@@ -80,7 +84,7 @@ export default function SplashScreen() {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [phase]);
+  }, [phase, onComplete]);
 
   useEffect(() => {
     if (visibleTiles === TOTAL_TILES && phase === 'animating') {
