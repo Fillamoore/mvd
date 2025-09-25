@@ -7,6 +7,7 @@ import Image from 'next/image';
 
 export default function MobileMasterScreenFooter() {
   const pathname = usePathname();
+          {/*} style={{ WebkitTapHighlightColor: 'transparent' }} */}
 
   return (
     <footer className="bg-black border-t border-gray-700 px-3 py-2">
@@ -15,7 +16,6 @@ export default function MobileMasterScreenFooter() {
         <Link
           href="/mobile-master"
           className="flex items-center justify-center p-2 rounded-lg text-white active:bg-transparent"
-          style={{ WebkitTapHighlightColor: 'transparent' }} 
         >
           <Image
             src="/master-icon.png"
