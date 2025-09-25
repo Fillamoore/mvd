@@ -1,4 +1,4 @@
-// components/MobileLayout.tsx - CLEAN VERSION
+// components/MobileLayout.tsx - FIXED
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -33,9 +33,9 @@ export default function MobileLayout() {
 
   if (!hydrated) {
     return (
-      <div className="flex flex-col h-screen">
-        <main className="flex-1 overflow-auto bg-gray-50">
-          <div className="flex justify-center items-center h-full">Loading...</div>
+      <div className="flex flex-col h-screen bg-black">  // ← FIXED
+        <main className="flex-1 overflow-auto bg-black">  // ← FIXED
+          <div className="flex justify-center items-center h-full text-lilac-300">Loading...</div>
         </main>
       </div>
     );
