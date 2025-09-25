@@ -32,7 +32,8 @@ export default function MobileScenariosPlayerFooter({
         {/* Mobile Master View Icon - WHITE ON TRANSPARENT */}
         <button
           onClick={handleModulesClick}
-          className="flex items-center justify-center p-3 rounded-lg bg-transparent hover:bg-gray-800 transition-colors"
+          className="flex items-center justify-center p-3 rounded-lg bg-transparent hover:bg-gray-800 active:bg-transparent transition-colors"
+          style={{ WebkitTapHighlightColor: 'transparent' }}
           title="Master View"
         >
           <Image
@@ -49,7 +50,8 @@ export default function MobileScenariosPlayerFooter({
           {showRevealButton && (
             <button
               onClick={onReveal}
-              className="flex items-center justify-center p-3 rounded-lg bg-transparent hover:bg-gray-800 transition-colors"
+              className="flex items-center justify-center p-3 rounded-lg bg-transparent hover:bg-gray-800 active:bg-transparent transition-colors"
+              style={{ WebkitTapHighlightColor: 'transparent' }}
               title="Reveal Expert Ratings"
             >
               <Image
@@ -66,7 +68,8 @@ export default function MobileScenariosPlayerFooter({
           {showNextButton && (
             <button
               onClick={onNextScenario}
-              className="flex items-center justify-center p-3 rounded-lg bg-transparent hover:bg-gray-800 transition-colors"
+              className="flex items-center justify-center p-3 rounded-lg bg-transparent hover:bg-gray-800 active:bg-transparent transition-colors"
+              style={{ WebkitTapHighlightColor: 'transparent' }}
               title="Next Scenario"
             >
               <Image

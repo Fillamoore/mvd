@@ -9,12 +9,13 @@ export default function MobileMasterScreenFooter() {
   const pathname = usePathname();
 
   return (
-    <footer className="bg-black border-t border-gray-500 px-3 pb-2"> 
-      <div className="flex justify-around items-center h-10"> 
+    <footer className="bg-black border-t border-gray-700 px-3 py-2">
+      <div className="flex justify-around items-center h-10">
         {/* Master View Icon - ACTIVE */}
         <Link
           href="/mobile-master"
-          className="flex items-center justify-center p-2 rounded-lg text-white" 
+          className="flex items-center justify-center p-2 rounded-lg text-white active:bg-transparent"
+          style={{ WebkitTapHighlightColor: 'transparent' }} 
         >
           <Image
             src="/master-icon.png"
@@ -28,7 +29,8 @@ export default function MobileMasterScreenFooter() {
         {/* Scenario Player Icon - INACTIVE */}
         <Link
           href="/scenario-player?module=1"
-          className="flex items-center justify-center p-2 rounded-lg text-gray-400 hover:text-white"
+          className="flex items-center justify-center p-2 rounded-lg text-gray-400 hover:text-white active:bg-transparent" 
+          style={{ WebkitTapHighlightColor: 'transparent' }} 
         >
           <div className="w-6 h-6 rounded flex items-center justify-center overflow-hidden">
             <Image
@@ -44,7 +46,8 @@ export default function MobileMasterScreenFooter() {
         {/* Settings Icon */}
         <Link
           href="/settings"
-          className="flex items-center justify-center p-2 rounded-lg text-gray-400 hover:text-white" 
+          className="flex items-center justify-center p-2 rounded-lg text-gray-400 hover:text-white active:bg-transparent" 
+          style={{ WebkitTapHighlightColor: 'transparent' }} 
         >
           <Image
             src="/settings-icon.png"
