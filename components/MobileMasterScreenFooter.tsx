@@ -15,7 +15,7 @@ export default function MobileMasterScreenFooter() {
         {/* Master View Icon - ACTIVE */}
         <Link
           href="/scenario-player"
-          className="flex items-center justify-center p-2 rounded-lg bg-transparent transition-colors"
+          className="flex items-center justify-center p-3 rounded-lg bg-transparent transition-colors select-none"
           title="scenarios screen"
         >
           <Image
