@@ -7,7 +7,7 @@ import { useLocalStore } from '@/store/useLocalStore';
 import { useShallow } from 'zustand/react/shallow';
 
 // Re-using the spiral function that you had
-const generateCorrectClockwiseSpiralOrder = (size: number) => {
+const generateCorrectClockwiseSpiralOrder = (size) => {
   const result = [];
   const grid = Array(size).fill(0).map(() => Array(size).fill(0));
 
@@ -160,7 +160,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
         />
       </div>
 
-      <div className={`mt-6 mb-6 flex justify-center ${isMobile ? 'scale-90' : ''}`}>
+      <div className={`mt-6 mb-6 flex justify-center ${isMobile ? 'scale-90' : ''} ${isMobile ? 'px-2' : ''}`}>
         <div className="grid grid-cols-7 gap-1 w-fit">
           {grid.map((row, rowIndex) => (
             row.map((tile, colIndex) => {
@@ -211,7 +211,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
         </div>
       </div>
 
-      <div className={`mb-4 px-[32px] ${isMobile ? 'scale-90' : ''}`}>
+      <div className={`mb-4 ${isMobile ? 'px-2' : 'px-[32px]'} ${isMobile ? 'scale-90' : ''}`}>
         <div className="w-full bg-gray-200 rounded-full h-1.5 relative">
           <div
             className="bg-lilac-500 h-1.5 rounded-full"
@@ -224,7 +224,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
         </div>
       </div>
 
-      <div className="modules-list-container pt-3 pb-4 pl-7 pr-7 flex-1 bg-black text-white flex flex-col min-h-0">
+      <div className={`modules-list-container pt-3 pb-4 flex-1 bg-black text-white flex flex-col min-h-0 ${isMobile ? 'pl-2 pr-2' : 'pl-7 pr-7'}`}>
         <div className="custom-scrollbar-container flex-1 min-h-0 overflow-y-auto overflow-x-hidden pl-1 ">
           <div className="mt-1 space-y-[2px] ">
             {renderedModuleItems.map((moduleItem) => {
