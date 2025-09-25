@@ -289,13 +289,13 @@ html {
 }
 
 /* Disable tap highlights globally */
-button, a, [role="button"] {
-  -webkit-tap-highlight-color: transparent;
-  tap-highlight-color: transparent;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: transparent;
+  border: none;
+  outline: none;
 }
 
 /* Specifically for mobile Safari */
