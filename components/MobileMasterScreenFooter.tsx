@@ -11,7 +11,7 @@ export default function MobileMasterScreenFooter() {
 
   return (
     <footer className="bg-black border-t border-gray-700 px-3 py-2">
-      <div className="flex justify-around items-center h-10">
+      <div className="flex justify-between items-center h-10">
         {/* Master View Icon - ACTIVE */}
         <Link
           href="/scenario-player"
