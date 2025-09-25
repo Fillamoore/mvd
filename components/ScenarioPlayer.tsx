@@ -118,7 +118,7 @@ export default function ScenarioPlayer() {
       {/* Content area - FIXED: conditional rounded bottom corners for desktop */}
       <div
         key={moduleId}
-        className={`scenarios-container bg-[url('/scenarios-canvas.jpg')] bg-cover bg-center w-full flex-1 overflow-y-auto ${containerPadding} ${contentBorderRadius}`}
+        className={`scenarios-container bg-black bg-[url('/scenarios-canvas.jpg')] bg-cover bg-center w-full flex-1 overflow-y-auto ${containerPadding} ${contentBorderRadius}`}
       >
         {hydrated && currentScenarioData ? (
           <div key={`scenario-${currentScenarioData.id}`} className="scenario-fade-in">

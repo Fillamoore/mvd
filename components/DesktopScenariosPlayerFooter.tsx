@@ -29,7 +29,7 @@ export default function DesktopScenariosPlayerFooter({
 
   return (
 
-    <div className="bg-white border-t border-gray-200 p-4 flex justify-between items-center">
+    <div className="bg-black border-t border-gray-200 p-4 flex justify-between items-center">
 
       {/* Left: Module Navigation */}
       <div className="flex items-center space-x-2">
