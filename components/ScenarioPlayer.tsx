@@ -1,4 +1,4 @@
-// components/ScenarioPlayer.tsx - FIXED DESKTOP ROUNDED CORNERS
+// components/ScenarioPlayer.tsx - FIXED WHITE FLASH
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -132,7 +132,7 @@ export default function ScenarioPlayer() {
             />
           </div>
         ) : (
-          <div className="flex justify-center items-center h-full text-white text-lg">
+          <div className="flex justify-center items-center h-full text-lilac-300 text-lg">
             {hydrated ? 'No scenarios available for this module.' : 'Loading...'}
           </div>
         )}
