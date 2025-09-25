@@ -17,7 +17,7 @@ export default function MobileMasterViewMenu() {
         {/* Mobile Back Icon - TRANSPARENT */}
         <button
           onClick={handleBackClick}
-          className="flex items-center justify-center p-3 rounded-lg bg-transparent hover:bg-gray-800 transition-colors"
+          className="flex items-center justify-center p-3 rounded-lg bg-transparent transition-colors"
           title="Back to Scenarios"
         >
           <Image
