@@ -14,7 +14,7 @@ export default function MobileMasterScreenFooter() {
 
         <Link
           href='/scenario-player'
-          className="border border-red-500 flex items-center justify-center p-3 rounded-lg bg-transparent transition-colors select-none"
+          className="bg-red-500 flex items-center justify-center p-3 rounded-lg bg-transparent transition-colors select-none"
           title="Scenario Player"
         >
           <Image
