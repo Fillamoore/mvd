@@ -159,7 +159,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
         />
       </div>
 
-      <div className={`mt-6 mb-6 flex justify-center ${isMobile ? 'scale-90' : ''} ${isMobile ? 'px-2' : ''}`}>
+      <div className={`mt-6 mb-6 flex justify-center ${isMobile ? 'scale-95' : ''} ${isMobile ? 'px-2' : ''}`}>
         <div className="grid grid-cols-7 gap-1 w-fit">
           {grid.map((row, rowIndex) => (
             row.map((tile, colIndex) => {
