@@ -33,8 +33,8 @@ export default function MobileLayout() {
 
   if (!hydrated) {
     return (
-      <div className="flex flex-col h-screen bg-black">  // ← FIXED
-        <main className="flex-1 overflow-auto bg-black">  // ← FIXED
+      <div className="flex flex-col h-screen bg-black">  
+        <main className="flex-1 overflow-auto bg-black">  
           <div className="flex justify-center items-center h-full text-lilac-300">Loading...</div>
         </main>
       </div>
