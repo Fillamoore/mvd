@@ -3,34 +3,31 @@
 
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function MobileMasterScreenFooter() {
   const pathname = usePathname();
 
-  const navigateTo = (path: string) => {
-    window.location.href = path;
-  };
-
   return (
     <footer className="bg-black border-t border-gray-700 px-3 py-2">
       <div className="flex justify-around items-center h-10">
-        {/* Master View Icon */}
-        <div
-          onClick={() => navigateTo('/mobile-master')}
+
+        {/* Scenario Player Icon */}
+        <Link
+          href='/scenario-player'
           className="flex items-center justify-center p-2 rounded-lg bg-transparent text-white cursor-pointer"
-          style={{ WebkitTapHighlightColor: 'transparent' }}
-          title="Master View"
+          title="Scenario Player"
         >
           <Image
-            src="/master-icon.png"
-            alt="Master Screen"
+            src="/mobile-back-icon.png"
+            alt="Scenario Player"
             width={24}
             height={24}
             className="object-contain"
           />
-        </div>
+        </Link>
 
-        {/* Scenario Player Icon */}
+{/*
         <div
           onClick={() => navigateTo('/mobile-master')}
           className="flex items-center justify-center p-2 rounded-lg bg-transparent text-gray-400 cursor-pointer"
@@ -47,7 +44,6 @@ export default function MobileMasterScreenFooter() {
           </div>
         </div>
 
-        {/* Settings Icon */}
         <div
           onClick={() => navigateTo('/settings')}
           className="flex items-center justify-center p-2 rounded-lg bg-transparent text-gray-400 cursor-pointer"
@@ -61,6 +57,7 @@ export default function MobileMasterScreenFooter() {
             className="object-contain"
           />
         </div>
+*/}     
       </div>
     </footer>
   );
