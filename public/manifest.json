@@ -1,8 +1,8 @@
 {
-  "name": "Advisory Accelerator v2",
-  "short_name": "AA MVD v2",
+  "name": "Advisory Accelerator",
+  "short_name": "AA MVD",
   "description": "Enabling advisory-led working at pace and scale",
-  "start_url": "/?v=2",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
