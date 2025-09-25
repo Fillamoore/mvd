@@ -16,9 +16,10 @@ export default function MobileMasterScreenFooter() {
         <Link
           href="/scenario-player"
           className="flex items-center justify-center p-2 rounded-lg bg-transparent transition-colors"
+          title="scenarios screen"
         >
           <Image
-            src="/master-icon.png"
+            src="/mobile-master-icon.png"
             alt="Master Screen"
             width={24}
             height={24}
