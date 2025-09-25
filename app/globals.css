@@ -288,21 +288,12 @@ html {
   transition-delay: 0.3s;
 }
 
-/* In your globals.css */
-button:active, 
-button:focus, 
-a:active, 
-a:focus {
-  background-color: transparent !important;
-  -webkit-tap-highlight-color: transparent !important;
-  tap-highlight-color: transparent !important;
+/* Nuclear option - force black everywhere */
+html, body, #__next {
+  background: #000000 !important;
 }
 
-/* Specifically for iOS Safari */
-@supports (-webkit-touch-callout: none) {
-  button {
-    -webkit-tap-highlight-color: transparent !important;
-    -webkit-user-select: none !important;
-    -webkit-touch-callout: none !important;
-  }
+/* Ensure no white flashes during transitions */
+* {
+  background: #000000 !important;
 }
