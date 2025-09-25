@@ -27,7 +27,7 @@ export default function MobileScenariosPlayerFooter({
         {/* Mobile Master View Icon - NOW A LINK */}
         <Link
           href="/mobile-master"
-          className="flex items-center justify-center p-3 rounded-lg bg-transparent hover:bg-gray-800 transition-colors"
+          className="flex items-center justify-center p-3 rounded-lg bg-transparent transition-colors"
           title="Master View"
           style={{ WebkitTapHighlightColor: 'transparent' }} 
         >
@@ -47,7 +47,7 @@ export default function MobileScenariosPlayerFooter({
               onClick={onReveal}
               role="button"
               tabIndex={0}
-              className="flex items-center justify-center p-3 rounded-lg bg-transparent transition-colors cursor-pointer"
+              className="flex items-center justify-center p-3 rounded-lg bg-transparent transition-colors"
               title="Reveal Expert Ratings"
             >
               <Image
