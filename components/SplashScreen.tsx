@@ -198,12 +198,11 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     <div className={`fixed inset-0 flex flex-col items-center ${isMobile ? 'justify-start pt-10' : 'justify-center'} h-screen bg-black text-white z-50`}> 
       <div className={`flex flex-col items-center ${isMobile ? 'scale-75' : 'scale-[0.8]'} ${phase === 'logo' ? 'opacity-0 pointer-events-none' : 'opacity-100 transition-opacity duration-500'}`}>
         <Image
-          src="/aalogo.png"
+          src="/aijai-logo.png"
           alt="App Logo"
-          width={isMobile ? 360 : 440}
-          height={isMobile ? 125 : 140}
+          width={isMobile ? 240 : 290}
+          height={isMobile ? 140 : 169}
           priority
-          //style={{ width: 'auto', height: 'auto' }}    
         />
         <div className={`mt-2 flex flex-col items-center ${isMobile ? 'min-h-[200px]' : 'min-h-[360px]'}`}>
           {renderGrid()}
