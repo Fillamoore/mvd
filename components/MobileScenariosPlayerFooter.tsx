@@ -29,7 +29,6 @@ export default function MobileScenariosPlayerFooter({
           href="/mobile-master"
           className="flex items-center justify-center p-3 rounded-lg bg-transparent transition-colors"
           title="Master View"
-          style={{ WebkitTapHighlightColor: 'transparent' }} 
         >
           <Image
             src="/mobile-master-icon.png"
