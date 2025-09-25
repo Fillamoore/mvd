@@ -24,7 +24,7 @@ export default function MobileScenariosPlayerFooter({
   return (
     <footer className="bg-black border-t border-gray-700 p-3 safe-area-padding-bottom">
       <div className="flex justify-between items-center">
-        {/* Mobile Master View Icon - NOW A LINK */}
+
         <Link
           href="/mobile-master"
           className="flex items-center justify-center p-3 rounded-lg bg-transparent transition-colors select-none"
@@ -36,6 +36,8 @@ export default function MobileScenariosPlayerFooter({
             width={24}
             height={24}
             className="w-6 h-6"
+            priority={true} // Preload important images
+            loading="eager" // Load immediately
           />
         </Link>
 
@@ -55,6 +57,8 @@ export default function MobileScenariosPlayerFooter({
                 width={24}
                 height={24}
                 className="w-6 h-6"
+                priority={true} // Preload important images
+                loading="eager" // Load immediately
               />
             </div>
           )}
@@ -74,6 +78,8 @@ export default function MobileScenariosPlayerFooter({
                 width={24}
                 height={24}
                 className="w-6 h-6"
+                priority={true} // Preload important images
+                loading="eager" // Load immediately
               />
             </div>
           )}
