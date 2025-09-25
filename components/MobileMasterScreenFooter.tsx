@@ -15,7 +15,7 @@ export default function MobileMasterScreenFooter() {
         {/* Master View Icon - ACTIVE */}
         <Link
           href="/mobile-master"
-          className="flex items-center justify-center p-2 rounded-lg text-white bg-transparent"
+          className="flex items-center justify-center p-2 rounded-lg text-white bg-transparent transition-colors"
         >
           <Image
             src="/master-icon.png"
