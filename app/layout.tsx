@@ -1,4 +1,4 @@
-// app/layout.tsx - SIMPLE TRANSITION FIX
+// app/layout.tsx - DELAY FIX
 'use client';
 
 import './globals.css';
@@ -17,12 +17,15 @@ export default function RootLayout({
   const [showApp, setShowApp] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [showSplash, setShowSplash] = useState(true);
-  const [key, setKey] = useState(0); // Add this line
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const pathname = usePathname();
 
-  // Force re-render on route change
   useEffect(() => {
-    setKey(prev => prev + 1); // Change key when route changes
+    // Show transition overlay during route changes
+    setIsTransitioning(true);
+    const timer = setTimeout(() => setIsTransitioning(false), 50); // Tiny delay
+    
+    return () => clearTimeout(timer);
   }, [pathname]);
 
   useEffect(() => {
@@ -62,16 +65,17 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className="h-screen w-screen overflow-hidden pb-[env(safe-area-inset-bottom)] bg-black">
-        {showSplash && (
-          <div className="fixed inset-0 z-40">
-            <SplashScreen />
-          </div>
-        )}
-
-        {/* ADD key PROP TO FORCE CLEAN TRANSITION */}
-        <div key={key} className={`relative w-full h-full z-50 transition-opacity duration-1000 ease-in-out ${showApp ? 'opacity-100' : 'opacity-0'}`}>
+        {showSplash && <SplashScreen />}
+        
+        {/* Hide content during tiny transition */}
+        <div style={{ display: isTransitioning ? 'none' : 'block' }} className={`relative w-full h-full z-50 ${showApp ? 'opacity-100' : 'opacity-0'}`}>
           {renderContent()}
         </div>
+        
+        {/* Optional: Show black screen during transition */}
+        {isTransitioning && (
+          <div className="fixed inset-0 bg-black z-40"></div>
+        )}
       </body>
     </html>
   );
