@@ -14,6 +14,15 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+
+  useEffect(() => {
+    // Add a unique identifier to force new PWA detection
+    if (typeof window !== 'undefined' && !sessionStorage.getItem('appVersion')) {
+      sessionStorage.setItem('appVersion', '2.0');
+      window.location.href = window.location.href + '?v=2';
+    }
+  }, []);
+
   const [showApp, setShowApp] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [showSplash, setShowSplash] = useState(true);
