@@ -14,9 +14,10 @@ export default function MobileMasterScreenFooter() {
 
         <Link
           href='/scenario-player'
-          className="w-6 h-6 bg-red-500 flex items-center justify-center p-3 rounded-lg bg-transparent transition-colors select-none"
+          className="w-10 h-10 bg-red-500 flex items-center justify-center p-3 rounded-lg bg-transparent transition-colors select-none"
           title="Scenario Player"
         >
+          {/*
           <Image
             src="/mobile-back-icon.png"
             alt="Scenario Player"
@@ -24,6 +25,11 @@ export default function MobileMasterScreenFooter() {
             height={24}
             className="object-contain bg-transparent"
           />
+          */}
+           
+          <div className="w-6 h-6 bg-blue-500">
+          </div>
+          
         </Link>
 
 {/*
