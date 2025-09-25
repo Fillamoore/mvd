@@ -19,7 +19,7 @@ export default function MobileMasterScreenFooter() {
           title="scenarios screen"
         >
           <Image
-            src="/mobile-master-icon.png"
+            src="/mobile-back-icon.png"
             alt="Master Screen"
             width={24}
             height={24}
