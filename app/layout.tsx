@@ -1,4 +1,4 @@
-// app/layout.tsx - FIXED VERSION
+// app/layout.tsx - COMPLETE WITH PWA FIXES
 'use client';
 
 import './globals.css';
@@ -14,15 +14,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-
-  useEffect(() => {
-    // Add a unique identifier to force new PWA detection
-    if (typeof window !== 'undefined' && !sessionStorage.getItem('appVersion')) {
-      sessionStorage.setItem('appVersion', '2.0');
-      window.location.href = window.location.href + '?v=2';
-    }
-  }, []);
-
   const [showApp, setShowApp] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [showSplash, setShowSplash] = useState(true);
@@ -46,7 +37,7 @@ export default function RootLayout({
       clearTimeout(timer);
       window.removeEventListener('resize', checkMobile);
     };
-  }, []); // Empty dependency array = runs on every mount
+  }, []);
 
   const renderContent = () => {
     if (isMobile) {
@@ -63,9 +54,28 @@ export default function RootLayout({
   return (
     <html>
       <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="Advisory Accelerator" />
+        <meta name="theme-color" content="#000000" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+        
+        {/* Nuclear option styles */}
+        <style dangerouslySetInnerHTML={{__html: `
+          body { 
+            margin: 0; 
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+          }
+          html { 
+            height: 100%; 
+            overflow: hidden;
+          }
+        `}} />
       </head>
-      <body className="h-screen w-screen overflow-hidden">
+      <body className="h-screen w-screen overflow-hidden pb-[env(safe-area-inset-bottom)]">
         {showSplash && (
           <div className="fixed inset-0 z-40">
             <SplashScreen />
