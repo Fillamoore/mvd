@@ -26,7 +26,7 @@ export default function MobileMasterScreenFooter() {
           />
         </Link>
 
-        {/* Scenario Player Icon - INACTIVE */}
+        {/* 
         <Link
           href="/scenario-player?module=1"
           className="flex items-center justify-center p-2 rounded-lg text-gray-400 hover:text-white active:bg-transparent" 
@@ -43,7 +43,7 @@ export default function MobileMasterScreenFooter() {
           </div>
         </Link>
 
-        {/* Settings Icon */}
+        
         <Link
           href="/settings"
           className="flex items-center justify-center p-2 rounded-lg text-gray-400 hover:text-white active:bg-transparent" 
@@ -57,6 +57,7 @@ export default function MobileMasterScreenFooter() {
             className="object-contain"
           />         
         </Link>
+        */}
       </div>
     </footer>
   );
