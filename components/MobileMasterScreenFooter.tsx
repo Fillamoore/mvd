@@ -13,8 +13,9 @@ export default function MobileMasterScreenFooter() {
     <footer className="bg-black border-t border-gray-700 p-3">
       <div className="flex justify-between items-center h-10">
         {/* Master View Icon - ACTIVE */}
-        <Link
-          href="/scenario-player"
+        <div
+          {/*href="/scenario-player" */}
+          onClick={() => window.location.href = '/scenario-player'}
           className="flex items-center justify-center p-3 rounded-lg bg-transparent transition-colors select-none"
           title="scenarios screen"
         >
@@ -25,7 +26,7 @@ export default function MobileMasterScreenFooter() {
             height={24}
             className="w6 h6"
           />
-        </Link>
+        </div>
 
         {/* 
         <Link
