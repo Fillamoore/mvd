@@ -1,4 +1,4 @@
-// app/layout.tsx - SIMPLEST APPROACH
+// app/layout.tsx - DEBUG VERSION
 'use client';
 
 import './globals.css';
@@ -18,7 +18,11 @@ export default function RootLayout({
   const [showSplash, setShowSplash] = useState(true);
   const pathname = usePathname();
 
+  console.log('Layout rendering - showSplash:', showSplash, 'pathname:', pathname);
+
   useEffect(() => {
+    console.log('Layout useEffect running - this should happen on every refresh');
+    
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
@@ -26,16 +30,21 @@ export default function RootLayout({
     checkMobile();
     window.addEventListener('resize', checkMobile);
 
-    // ALWAYS show splash for 6.8 seconds on every load
+    // Force show splash on every load
+    setShowSplash(true);
+    console.log('Splash screen should be visible now');
+
     const timer = setTimeout(() => {
+      console.log('Hiding splash screen after timeout');
       setShowSplash(false);
     }, 6800);
     
     return () => {
+      console.log('Layout cleanup');
       clearTimeout(timer);
       window.removeEventListener('resize', checkMobile);
     };
-  }, []); // Empty dependency array = runs on every mount
+  }, [pathname]); // Added pathname to dependencies
 
   const renderContent = () => {
     if (isMobile) {
@@ -52,8 +61,21 @@ export default function RootLayout({
   return (
     <html>
       <body className="h-screen w-screen overflow-hidden">
-        {showSplash && <SplashScreen />}
-        {!showSplash && renderContent()}
+        {showSplash ? (
+          <>
+            <div style={{position: 'absolute', top: 10, left: 10, background: 'red', color: 'white', padding: 10, zIndex: 1000}}>
+              DEBUG: Splash Visible
+            </div>
+            <SplashScreen />
+          </>
+        ) : (
+          <>
+            <div style={{position: 'absolute', top: 10, left: 10, background: 'green', color: 'white', padding: 10, zIndex: 1000}}>
+              DEBUG: Content Visible
+            </div>
+            {renderContent()}
+          </>
+        )}
       </body>
     </html>
   );
