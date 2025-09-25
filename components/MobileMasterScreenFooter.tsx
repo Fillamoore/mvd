@@ -9,26 +9,26 @@ export default function MobileMasterScreenFooter() {
   const pathname = usePathname();
 
   return (
-    <footer className="bg-white border-t border-gray-200 px-3 pb-3">
-      <div className="flex justify-around items-center">
+    <footer className="bg-black border-t border-gray-700 px-3 py-2"> {/* Changed to black bg, reduced padding */}
+      <div className="flex justify-around items-center h-10"> {/* Reduced height to h-10 (40px) and centered vertically */}
         {/* Master View Icon - ACTIVE */}
         <Link
           href="/mobile-master"
-          className="flex flex-col items-center p-2 rounded-lg text-indigo-600 bg-indigo-50"
+          className="flex items-center justify-center p-2 rounded-lg text-white" 
         >
           <Image
             src="/master-icon.png"
             alt="Master Screen"
             width={24}
             height={24}
-            className="w-full h-full object-contain"
+            className="object-contain"
           />
         </Link>
 
         {/* Scenario Player Icon - INACTIVE */}
         <Link
           href="/scenario-player?module=1"
-          className="flex flex-col items-center p-2 rounded-lg text-gray-600 hover:text-indigo-600"
+          className="flex items-center justify-center p-2 rounded-lg text-gray-400 hover:text-white"
         >
           <div className="w-6 h-6 rounded flex items-center justify-center overflow-hidden">
             <Image
@@ -36,7 +36,7 @@ export default function MobileMasterScreenFooter() {
               alt="Scenario Player"
               width={24}
               height={24}
-              className="w-full h-full object-contain"
+              className="object-contain"
             />
           </div>
         </Link>
@@ -44,14 +44,14 @@ export default function MobileMasterScreenFooter() {
         {/* Settings Icon */}
         <Link
           href="/settings"
-          className="flex flex-col items-center p-2 rounded-lg text-gray-600 hover:text-indigo-600"
+          className="flex items-center justify-center p-2 rounded-lg text-gray-400 hover:text-white" 
         >
           <Image
             src="/settings-icon.png"
             alt="Settings"
             width={24}
             height={24}
-            className="w-full h-full object-contain"
+            className="object-contain"
           />         
         </Link>
       </div>
