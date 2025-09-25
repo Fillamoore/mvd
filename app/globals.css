@@ -288,7 +288,13 @@ html {
   transition-delay: 0.3s;
 }
 
-/* Nuclear option - force black everywhere */
-html, body, #__next {
+/* In globals.css - SMART nuclear option */
+html, body, #__next, .bg-black {
   background: #000000 !important;
+}
+
+/* But preserve specific elements that should have different backgrounds */
+.bg-gray-50, .bg-white, .bg-lilac-charcoal-f, .bg-lilac-charcoal-i, .bg-lilac-charcoal-a,
+[class*="bg-"]:not(.bg-black) {
+  background: inherit !important;
 }
