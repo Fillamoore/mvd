@@ -9,8 +9,8 @@ export default function MobileMasterScreenFooter() {
   const pathname = usePathname();
 
   return (
-    <footer className="bg-black border-t border-gray-700 px-3 py-2">
-      <div className="flex justify-around items-center h-10">
+    <footer className="bg-black border-t border-gray-700 p-3 safe-area-padding-bottom">
+      <div className="flex justify-around items-center">
 
         {/* Scenario Player Icon */}
         <Link
