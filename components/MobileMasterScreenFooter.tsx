@@ -10,12 +10,11 @@ export default function MobileMasterScreenFooter() {
 
   return (
     <footer className="bg-black border-t border-gray-700 p-3 safe-area-padding-bottom">
-      <div className="flex justify-around items-center">
+      <div className="flex justify-between items-center">
 
-        {/* Scenario Player Icon */}
         <Link
           href='/scenario-player'
-          className="flex items-center justify-center p-2 rounded-lg bg-transparent text-white cursor-pointer"
+          className="flex items-center justify-center p-3 rounded-lg bg-transparent transition-colours select-none"
           title="Scenario Player"
         >
           <Image
