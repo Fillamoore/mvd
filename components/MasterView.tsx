@@ -7,8 +7,7 @@ import { useLocalStore } from '@/store/useLocalStore';
 import { useShallow } from 'zustand/react/shallow';
 
 // Re-using the spiral function that you had
-const generateCorrectClockwiseSpiralOrder = (size) => {
-  const result = [];
+const generateCorrectClockwiseSpiralOrder = (size: number) => {  const result = [];
   const grid = Array(size).fill(0).map(() => Array(size).fill(0));
 
   const center = Math.floor(size / 2);
