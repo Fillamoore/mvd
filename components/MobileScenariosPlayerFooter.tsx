@@ -1,7 +1,7 @@
-// components/MobileScenariosPlayerFooter.tsx - TRANSPARENT BUTTONS
+// components/MobileScenariosPlayerFooter.tsx - LINK VERSION
 'use client';
 
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Image from 'next/image';
 
 interface MobileScenariosPlayerFooterProps {
@@ -17,23 +17,17 @@ export default function MobileScenariosPlayerFooter({
   allRated,
   isRevealed
 }: MobileScenariosPlayerFooterProps) {
-  const router = useRouter();
 
   const showRevealButton = allRated && !isRevealed;
   const showNextButton = isRevealed;
 
-  const handleModulesClick = () => {
-    router.push('/mobile-master', { scroll: false });
-  };
-
   return (
-    <footer className="bg-black border-t border-gray-700 p-3 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] safe-area-padding-bottom">
+    <footer className="bg-black border-t border-gray-700 p-3 safe-area-padding-bottom">
       <div className="flex justify-between items-center">
-        {/* Mobile Master View Icon - WHITE ON TRANSPARENT */}
-        <button
-          onClick={handleModulesClick}
-          className="flex items-center justify-center p-3 rounded-lg bg-transparent hover:bg-gray-800 active:bg-transparent transition-colors"
-          style={{ WebkitTapHighlightColor: 'transparent' }}
+        {/* Mobile Master View Icon - NOW A LINK */}
+        <Link
+          href="/mobile-master"
+          className="flex items-center justify-center p-3 rounded-lg bg-transparent hover:bg-gray-800 transition-colors"
           title="Master View"
         >
           <Image
@@ -41,17 +35,18 @@ export default function MobileScenariosPlayerFooter({
             alt="Master View"
             width={24}
             height={24}
-            className="w-6 h-6" // Should be white icon
+            className="w-6 h-6"
           />
-        </button>
+        </Link>
 
         <div className="flex gap-3">
-          {/* Mobile Reveal Icon - TRANSPARENT */}
+          {/* Mobile Reveal Icon - ACTION BUTTON (can't be Link) */}
           {showRevealButton && (
-            <button
+            <div
               onClick={onReveal}
-              className="flex items-center justify-center p-3 rounded-lg bg-transparent hover:bg-gray-800 active:bg-transparent transition-colors"
-              style={{ WebkitTapHighlightColor: 'transparent' }}
+              role="button"
+              tabIndex={0}
+              className="flex items-center justify-center p-3 rounded-lg bg-transparent transition-colors cursor-pointer"
               title="Reveal Expert Ratings"
             >
               <Image
@@ -59,17 +54,18 @@ export default function MobileScenariosPlayerFooter({
                 alt="Reveal"
                 width={24}
                 height={24}
-                className="w-6 h-6" // Should be white icon
+                className="w-6 h-6"
               />
-            </button>
+            </div>
           )}
 
-          {/* Mobile Next Scenario Icon - TRANSPARENT */}
+          {/* Mobile Next Scenario Icon - ACTION BUTTON (can't be Link) */}
           {showNextButton && (
-            <button
+            <div
               onClick={onNextScenario}
-              className="flex items-center justify-center p-3 rounded-lg bg-transparent hover:bg-gray-800 active:bg-transparent transition-colors"
-              style={{ WebkitTapHighlightColor: 'transparent' }}
+              role="button"
+              tabIndex={0}
+              className="flex items-center justify-center p-3 rounded-lg bg-transparent transition-colors cursor-pointer"
               title="Next Scenario"
             >
               <Image
@@ -77,9 +73,9 @@ export default function MobileScenariosPlayerFooter({
                 alt="Next"
                 width={24}
                 height={24}
-                className="w-6 h-6" // Should be white icon
+                className="w-6 h-6"
               />
-            </button>
+            </div>
           )}
         </div>
       </div>
