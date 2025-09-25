@@ -1,4 +1,4 @@
-// app/layout.tsx - WITH FLASH FIX
+// app/layout.tsx - SIMPLE TRANSITION FIX
 'use client';
 
 import './globals.css';
@@ -17,7 +17,13 @@ export default function RootLayout({
   const [showApp, setShowApp] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [showSplash, setShowSplash] = useState(true);
+  const [key, setKey] = useState(0); // Add this line
   const pathname = usePathname();
+
+  // Force re-render on route change
+  useEffect(() => {
+    setKey(prev => prev + 1); // Change key when route changes
+  }, [pathname]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -27,7 +33,6 @@ export default function RootLayout({
     checkMobile();
     window.addEventListener('resize', checkMobile);
     
-    // ALWAYS show splash screen on every load
     const timer = setTimeout(() => {
       setShowApp(true);
       setShowSplash(false);
@@ -56,7 +61,6 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href="/manifest.json" />
       </head>
-      {/* ADD bg-black TO body CLASSNAME */}
       <body className="h-screen w-screen overflow-hidden pb-[env(safe-area-inset-bottom)] bg-black">
         {showSplash && (
           <div className="fixed inset-0 z-40">
@@ -64,7 +68,8 @@ export default function RootLayout({
           </div>
         )}
 
-        <div className={`relative w-full h-full z-50 transition-opacity duration-1000 ease-in-out ${showApp ? 'opacity-100' : 'opacity-0'}`}>
+        {/* ADD key PROP TO FORCE CLEAN TRANSITION */}
+        <div key={key} className={`relative w-full h-full z-50 transition-opacity duration-1000 ease-in-out ${showApp ? 'opacity-100' : 'opacity-0'}`}>
           {renderContent()}
         </div>
       </body>
