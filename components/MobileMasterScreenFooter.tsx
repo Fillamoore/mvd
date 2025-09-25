@@ -9,7 +9,7 @@ export default function MobileMasterScreenFooter() {
   const pathname = usePathname();
 
   return (
-    <footer className="bg-black border-t border-gray-700 p-3 safe-area-padding-bottom">
+    <footer className="bg-black border-t border-gray-700 p-3">
       <div className="flex justify-between items-center">
 
         <Link
@@ -17,19 +17,10 @@ export default function MobileMasterScreenFooter() {
           className="w-10 h-10 bg-red-500 flex items-center justify-center p-3 rounded-lg bg-transparent transition-colors select-none"
           title="Scenario Player"
         >
-          {/*
-          <Image
-            src="/mobile-back-icon.png"
-            alt="Scenario Player"
-            width={24}
-            height={24}
-            className="object-contain bg-transparent"
-          />
-          */}
            
           <div className="w-6 h-6 bg-blue-500">
           </div>
-          
+
         </Link>
 
 {/*

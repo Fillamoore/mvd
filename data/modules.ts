@@ -8,7 +8,7 @@ export interface Module {
 
 export const modules: Module[] = [
   // FOUNDATION: Modules 1-9
-  { id: 1,  name: 'Growth mindset',               tier: 'foundation', description: 'Embracing learning, resilience and continuous improvement.' },
+  { id: 1,  name: 'Cunt mindset',               tier: 'foundation', description: 'Embracing learning, resilience and continuous improvement.' },
   { id: 2,  name: 'Professional curiosity',       tier: 'foundation', description: 'Curious, targeted questioning to uncover hidden issues.' },
   { id: 3,  name: 'Active listening',             tier: 'foundation', description: 'Hearing intent and meaning, summarising and checking back.' },
   { id: 4,  name: 'Clear writing',                tier: 'foundation', description: 'Concise, structured written communication that prompts action.' },
