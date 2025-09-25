@@ -300,9 +300,10 @@ button {
 }
 */}
 
-/* Specifically for mobile Safari */
+{/*
 @supports (-webkit-touch-callout: none) {
   button, a {
     -webkit-tap-highlight-color: transparent;
   }
 }
+*/}
