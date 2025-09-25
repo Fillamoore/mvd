@@ -176,7 +176,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
 
   const renderProgressBar = () => {
     const isFinalDot = animatedTiles.has(TOTAL_TILES - 1);
-    const barWidth = isMobile ? 'max-w-xs' : 'max-w-xs md:max-w-md';
+    const barWidth = isMobile ? 'max-w-[350px]' : 'max-w-xs md:max-w-md';
 
     return (
       <div className={`w-full ${barWidth} h-1.5 bg-gray-800 rounded-full relative mt-6`}>
