@@ -10,7 +10,7 @@ export default function MobileMasterScreenFooter() {
           {/*} style={{ WebkitTapHighlightColor: 'transparent' }} */}
 
   return (
-    <footer className="bg-black border-t border-gray-700 px-3 py-2">
+    <footer className="bg-black border-t border-gray-700 p-3">
       <div className="flex justify-between items-center h-10">
         {/* Master View Icon - ACTIVE */}
         <Link
