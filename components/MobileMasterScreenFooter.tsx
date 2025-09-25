@@ -14,7 +14,7 @@ export default function MobileMasterScreenFooter() {
       <div className="flex justify-around items-center h-10">
         {/* Master View Icon - ACTIVE */}
         <Link
-          href="/mobile-master"
+          href="/scenario-player"
           className="flex items-center justify-center p-2 rounded-lg text-white bg-transparent transition-colors"
         >
           <Image
