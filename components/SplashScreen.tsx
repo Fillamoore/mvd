@@ -200,8 +200,8 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
         <Image
           src="/aalogo.png"
           alt="App Logo"
-          width={isMobile ? 350 : 440}
-          height={isMobile ? 120 : 140}
+          width={isMobile ? 360 : 440}
+          height={isMobile ? 125 : 140}
           priority
           //style={{ width: 'auto', height: 'auto' }}    
         />
