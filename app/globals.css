@@ -292,8 +292,3 @@ html {
 html, body, #__next {
   background: #000000 !important;
 }
-
-/* Ensure no white flashes during transitions */
-* {
-  background: #000000 !important;
-}
