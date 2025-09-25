@@ -203,7 +203,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
           width={isMobile ? 270 : 440}
           height={isMobile ? 85 : 140}
           priority
-          style={{ width: 'auto', height: 'auto' }}    
+          //style={{ width: 'auto', height: 'auto' }}    
         />
         <div className={`mt-2 flex flex-col items-center ${isMobile ? 'min-h-[200px]' : 'min-h-[360px]'}`}>
           {renderGrid()}

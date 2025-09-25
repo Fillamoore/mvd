@@ -1,4 +1,4 @@
-// app/layout.tsx - FIXED EXPORT
+// app/layout.tsx - FIXED VERSION
 'use client';
 
 import './globals.css';
@@ -27,25 +27,17 @@ export default function RootLayout({
     checkMobile();
     window.addEventListener('resize', checkMobile);
     
-    const hasSeenSplash = sessionStorage.getItem('hasSeenSplash');
-    
-    if (!hasSeenSplash) {
-      const timer = setTimeout(() => {
-        setShowApp(true);
-        setShowSplash(false);
-        sessionStorage.setItem('hasSeenSplash', 'true');
-      }, 6800);
-      
-      return () => clearTimeout(timer);
-    } else {
+    // ALWAYS show splash screen on every load
+    const timer = setTimeout(() => {
       setShowApp(true);
       setShowSplash(false);
-    }
-
+    }, 6800);
+    
     return () => {
+      clearTimeout(timer);
       window.removeEventListener('resize', checkMobile);
     };
-  }, []);
+  }, []); // Empty dependency array = runs on every mount
 
   const renderContent = () => {
     if (isMobile) {
