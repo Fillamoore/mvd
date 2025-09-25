@@ -120,7 +120,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
 
   if (!isClient) {
     return (
-      <div className={`flex flex-col h-full bg-white ${!isMobile && 'border-r border-gray-200'} p-4`}>
+      <div className={`flex flex-col h-full bg-black ${!isMobile && 'border-r border-gray-200'} p-4`}>
         <div className="text-sm text-gray-500">Loading grid...</div>
       </div>
     );
