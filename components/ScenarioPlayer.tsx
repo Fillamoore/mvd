@@ -1,4 +1,4 @@
-// components/ScenarioPlayer.tsx - FIXED WHITE FLASH
+// components/ScenarioPlayer.tsx - FIXED WHITE FLASH v2
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -27,9 +27,12 @@ export default function ScenarioPlayer() {
 
   const [hydrated, setHydrated] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
   
   useEffect(() => {
     setHydrated(true);
+    // Add a tiny delay to ensure everything is settled
+    const timer = setTimeout(() => setIsInitialized(true), 50);
     
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -37,7 +40,10 @@ export default function ScenarioPlayer() {
     
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', checkMobile);
+    };
   }, []);
 
   const moduleId = currentModule ? parseInt(currentModule, 10) : 1;
@@ -84,8 +90,18 @@ export default function ScenarioPlayer() {
   // FIXED: Conditional border radius for desktop
   const containerBorderRadius = isMobile ? 'rounded-none' : 'rounded-[10px]';
   const headerBorderRadius = isMobile ? 'rounded-none' : 'rounded-t-[10px]';
-  const contentBorderRadius = isMobile ? 'rounded-none' : 'rounded-b-[10px]'; // ADDED: Bottom rounded corners for desktop
+  const contentBorderRadius = isMobile ? 'rounded-none' : 'rounded-b-[10px]';
   const containerPadding = isMobile ? 'py-4 px-4' : 'py-6 px-[200px]';
+
+  // FIX: Don't render anything until fully initialized to prevent flash
+  if (!isInitialized) {
+    return (
+      <div className="scenarios-player-pane border-1 border-gray-700 h-full flex flex-col bg-black">
+        <div className="scenarios-area-header border-b-1 p-1 border-gray-600 bg-black" />
+        <div className={`scenarios-container bg-black w-full flex-1 ${containerPadding}`} />
+      </div>
+    );
+  }
 
   return (
     <div className={`scenarios-player-pane border-1 border-gray-700 h-full flex flex-col ${containerBorderRadius}`}>
