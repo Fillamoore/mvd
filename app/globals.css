@@ -288,7 +288,7 @@ html {
   transition-delay: 0.3s;
 }
 
-{/*
+
 
 button {
   -webkit-appearance: none;
@@ -298,12 +298,11 @@ button {
   border: none;
   outline: none;
 }
-*/}
 
-{/*
+
 @supports (-webkit-touch-callout: none) {
   button, a {
     -webkit-tap-highlight-color: transparent;
   }
 }
-*/}
+
