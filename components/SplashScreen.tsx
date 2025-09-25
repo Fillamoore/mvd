@@ -195,7 +195,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
   };
 
   return (
-    <div className={`fixed inset-0 flex flex-col items-center ${isMobile ? 'justify-start pt-7' : 'justify-center'} h-screen bg-black text-white z-50`}> 
+    <div className={`fixed inset-0 flex flex-col items-center ${isMobile ? 'justify-start pt-10' : 'justify-center'} h-screen bg-black text-white z-50`}> 
       <div className={`flex flex-col items-center ${isMobile ? 'scale-75' : 'scale-[0.8]'} ${phase === 'logo' ? 'opacity-0 pointer-events-none' : 'opacity-100 transition-opacity duration-500'}`}>
         <Image
           src="/aalogo.png"
