@@ -27,7 +27,7 @@ export default function MobileScenariosPlayerFooter({
   };
 
   return (
-    <footer className="bg-black border-t border-gray-700 p-3 safe-area-padding-bottom">
+    <footer className="bg-black border-t border-gray-700 p-3 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] safe-area-padding-bottom">
       <div className="flex justify-between items-center">
         {/* Mobile Master View Icon - WHITE ON TRANSPARENT */}
         <button
