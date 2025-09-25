@@ -22,7 +22,7 @@ export default function MobileMasterScreenFooter() {
             alt="Master Screen"
             width={24}
             height={24}
-            className="object-contain"
+            className="w6 h6"
           />
         </Link>
 
