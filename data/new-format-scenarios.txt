@@ -1,0 +1,203 @@
+# **Advisory Scenarios (1–5)**
+
+---
+
+## **Scenario 1 — Analytical vs Advisory Thinking**
+
+You’ve just completed a thorough data analysis for a client in the construction sector, showing delays are mainly due to slow approval processes and supply bottlenecks. In tomorrow’s steering meeting, you’re expected to present your findings. The senior client sponsor has limited patience for technical detail and is under pressure from their COO to “just fix it.” Your Manager has hinted that the presentation is a test of your ability to move from analysis to advisory mode.
+
+### **Response A (≈55 words)**
+
+Prepare a comprehensive walkthrough of the analysis, showing each step of the causal chain that led to the conclusions. Demonstrate transparency by highlighting the robustness of methods, then close with the two main findings. Keep the recommendation for the end to avoid jumping to conclusions without evidence.
+
+**Expert Rating: 2/5**
+**Rationale:**
+This is defensible but risks losing the room. It emphasises analysis over action, which satisfies technical transparency but frustrates time-poor executives. The consultant looks thorough but not advisory-minded. Impact is muted because the recommendation comes too late and feels like an afterthought.
+
+---
+
+### **Response B (≈57 words)**
+
+Open with one sentence: “Two things cause your delays — bottlenecked approvals and unreliable supply.” Immediately follow with three options to address them, briefly outlining trade-offs in speed, cost, and risk. Keep the analysis in the appendix for backup, ready if challenged. Signal readiness to workshop implications right after the meeting.
+
+**Expert Rating: 5/5**
+**Rationale:**
+This is the strongest advisory move: it leads with clarity, frames trade-offs, and offers paths forward. It shows ownership of the insight and orients the conversation toward decisions. The analysis is still available for scrutiny but is not the star. Executives feel heard and guided, not burdened.
+
+---
+
+### **Response C (≈54 words)**
+
+Summarise findings in a short narrative: “We’ve traced delays through approvals and suppliers — the two choke points. Here’s a simple timeline showing where weeks are lost.” Suggest piloting a fast-track approval lane for one project and a new supplier reliability check. Offer to refine the approach further with the COO’s team.
+
+**Expert Rating: 4/5**
+**Rationale:**
+This option blends analysis with action. The narrative and visualisation humanise the data, and the pilot recommendation is concrete yet contained. It may underplay broader trade-offs, which weakens the advisory stance compared with a structured options framing, but it creates immediate relevance and buy-in.
+
+**Summary:**
+A is too heavy on analysis; B puts recommendations front and centre, with clear options; C finds a middle ground, weaving story with action. B wins because it shows an advisory mindset under time pressure.
+
+**Key Takeaway:**
+*Lead with the “so what” — analysis earns trust, but advice earns decisions.*
+
+---
+
+## **Scenario 2 — Stakeholder Communication**
+
+You’re midway through presenting a diagnostic on supply chain costs. A COO interrupts: “Enough data, what are you recommending?” The room is tense — your Manager is watching how you handle the moment. Your slides are full of process flows and cost drivers, but you’ve not yet landed the recommendation section.
+
+### **Response A (≈55 words)**
+
+Present a very short, one-slide executive summary now that states the top 2 findings, then offer a 10-minute technical appendix walkthrough for anyone who wants detail. Propose a follow-up deep-dive session with the COO and their team to translate the analysis into operational steps if the group wants to proceed.
+
+**Expert Rating: 3/5**
+**Rationale:**
+This is a defensible, consultant-minded move — it preserves rigour while prioritising the exec audience. It signals respect for the COO’s time and keeps technical backup available. The risk: it can feel like hedging if the executive wants a clear recommendation now. Better than raw detail, but less bold than a direct pivot to action.
+
+---
+
+### **Response B (≈55 words)**
+
+Acknowledge the frustration and pivot immediately to implications: state a crisp headline recommendation (one sentence), name the top three business impacts (e.g., cost save, lead time improvement, risk reduction), and suggest two next steps the COO can decide on now. Offer to send the full analytical appendix to anyone who wants the numbers afterwards.
+
+**Expert Rating: 5/5**
+**Rationale:**
+This is a textbook advisory response: it validates the stakeholder, converts analysis into decision-relevant language, and gives clear options to move forward. It signals command of the material and prioritises what the executive needs to act. By offering backup later, it preserves credibility and satisfies technical audiences.
+
+---
+
+### **Response C (≈53 words)**
+
+Make a brief, measured pushback: thank the COO for the candour, explain that the analysis is intended to show causal drivers rather than immediate fixes, and propose a short “options workshop” later that afternoon to co-create pragmatic pilot interventions with the COO and key operators. Stress readiness to tighten the recommendations for their priorities.
+
+**Expert Rating: 4/5**
+**Rationale:**
+This is a collaborative, slightly more assertive choice that turns friction into co-creation. It protects analytical integrity while quickly aligning around action. The risk is that it uses more calendar time and may feel like deferral if the COO wanted an immediate decision. Still, it’s a strong, relationship-building move.
+
+**Summary:**
+Three credible consultant moves: A keeps rigour with optional detail, B converts insight into immediate decisions, C invites joint problem-solving. B is the cleanest route to influence in the moment, while A and C are defensible alternatives depending on personalities and political context.
+
+**Key Takeaway:**
+*Give executives the decision they need now — keep the analysis as backup, not the headline.*
+
+---
+
+## **Scenario 3 — Client Expectations & Pressure**
+
+Your project is mid-flight. The client’s Project Sponsor emails urgently: “The CEO wants to see draft recommendations by Monday.” Your full analysis isn’t due for another two weeks. Your team hasn’t validated all the data. Your Manager looks at you: “What do we tell them?”
+
+### **Response A (≈56 words)**
+
+Agree to provide a draft for Monday, but narrow the scope: deliver a targeted “decision pack” covering the three issues most likely to be raised by the CEO (with clear assumptions and caveats), and promise the full, substantiated recommendations in two weeks. Internally, reallocate effort to create the pack and flag any parts that will be materially incomplete.
+
+**Expert Rating: 3/5**
+**Rationale:**
+This is pragmatic and client-facing: it demonstrates responsiveness while protecting depth. The danger is overcommitment — if internal capacity is misjudged, the “decision pack” can still look thin. It’s a reasonable compromise when the CEO needs visibility, but requires honest internal alignment to pull off well.
+
+---
+
+### **Response B (≈54 words)**
+
+Offer a high-level outline Monday morning that maps the emerging thesis, three headline recommendations, and their expected business impact, and request a short briefing with the CEO to walk through the logic. Commit to delivering the fully vetted recommendations on the original schedule once the analysis is complete.
+
+**Expert Rating: 5/5**
+**Rationale:**
+This reframes the ask into something useful and realistic: the CEO gets direction and the team preserves time to complete rigorous work. It buys time without appearing evasive and gives the client a platform to steer priorities. It’s the best trade-off between pace and quality.
+
+---
+
+### **Response C (≈53 words)**
+
+Acknowledge the request and promise whatever is available by Monday, but label it explicitly as “working hypotheses and evidence gaps” with a clear caveat. Alongside it, propose a list of remaining validation tasks and a follow-up calendar slot to discuss the final recommendations.
+
+**Expert Rating: 4/5**
+**Rationale:**
+This is honest and transparent: it meets the client half-way and signals where the work still needs validation. The downside is that executives sometimes penalise “work-in-progress” even when labelled; clarity and a tight structure for what will arrive are essential to prevent reputational damage.
+
+**Summary:**
+All three options aim to preserve client trust while protecting quality. B (a topline outline + CEO briefing) most cleanly balances immediacy and substance; A and C are credible variants that depend on internal bandwidth and how the CEO typically reacts to drafts.
+
+**Key Takeaway:**
+*Give the CEO a directionally clear, tightly scoped update — don’t deliver a raw, unstructured draft.*
+
+---
+
+## **Scenario 4 — Scoping & Scope Creep**
+
+Mid-project, the client’s Sponsor casually asks: “Can you add a competitor benchmark while you’re at it?” Your Partner had warned last week to watch scope creep closely — margins are already thin. The Sponsor sounds like it’s a small ask, but you know it’s not.
+
+### **Response A (≈56 words)**
+
+Accept the benchmarking request in principle but limit its ambition: propose a “rapid scan” that benchmarks three direct competitors on two high-impact metrics, deliverable in one week, and clarify that any deeper work (e.g., product-level or channel-level benchmarking) will be treated as a separate, chargeable workstream.
+
+**Expert Rating: 3/5**
+**Rationale:**
+This is pragmatic and client-friendly: it secures goodwill while constraining effort. However, “rapid scans” can metastasise into larger asks if results raise further questions. Unless the team strictly enforces the scope and communicates costs/trade-offs, this concession risks creeping into ongoing unpaid work.
+
+---
+
+### **Response B (≈55 words)**
+
+Thank the sponsor, explain current commitments, and present two options: (1) include a focused benchmarking slice within the existing budget by trading off a lower-impact deliverable, or (2) scope a short, paid add-on that delivers a comprehensive benchmark. Provide estimated effort and proposed timelines for both, and ask the sponsor to choose.
+
+**Expert Rating: 5/5**
+**Rationale:**
+This reframes the ask into a clear commercial decision and puts ownership back with the sponsor. It protects margins and timelines while signalling partnership. By quantifying effort and presenting trade-offs, the team looks disciplined and client-oriented simultaneously — a neat advisory move.
+
+---
+
+### **Response C (≈56 words)**
+
+Decline the request on the spot, citing the agreed scope and partner guidance about margin protection, but offer to include a short executive summary of competitor activity (no new data collection) based on existing public sources, and propose a priced proposal if the sponsor wants a fuller analysis.
+
+**Expert Rating: 4/5**
+**Rationale:**
+This is firm and commercially defensible, and the free summary softens the refusal. It risks sounding inflexible if delivered brusquely, but paired with an attractive paid option, it can preserve the relationship and reinforce the expectation that additional work requires formal agreement.
+
+**Summary:**
+All three options are sensible consultant plays. A edges toward accommodating while risking scope drift; B is the disciplined advisory approach that treats scope change as a decision; C is the firm commercial response softened by a low-effort value gesture.
+
+**Key Takeaway:**
+*Treat every “just add” as a decision — offer clear options with costs and trade-offs.*
+
+---
+
+## **Scenario 5 — Project & Time Management**
+
+You’re running a workstream that’s two weeks behind schedule because of missing client data and delayed stakeholder interviews. The Manager asks you to present a status update tomorrow. They’ll want clarity on risks and what you need from them.
+
+### **Response A (≈55 words)**
+
+In tomorrow’s update, present the completed outputs honestly, then explain the blockers (missing dataset, delayed interviews) as factual constraints. Offer a concrete recovery plan with milestones: substitute data sources to test hypotheses, a revised interview schedule with alternate stakeholders, and a contingency timeline showing impact on deliverables if the blockers persist.
+
+**Expert Rating: 3/5**
+**Rationale:**
+This is pragmatic and responsible: it avoids dramatics and shows initiative. The limitation is that it asks the Manager to accept remedial work without explicitly requesting support — if the problems need client or partner intervention, this approach can under-communicate escalation requirements. Still, it’s more credible than hiding issues.
+
+---
+
+### **Response B (≈56 words)**
+
+Be direct about the delays, outline immediate remedial actions, and ask for two specific forms of support: (1) permission to reallocate internal resources for a fast push, or (2) partner help to press the client contact for the missing dataset. Include a brief risk matrix and a proposed new milestone plan.
+
+**Expert Rating: 5/5**
+**Rationale:**
+This shows ownership and good judgement: problems are surfaced with clear means to resolve them, and the request for targeted help is framed as a lever rather than an abdication. Managers value this mix of honesty plus a menu of practicable fixes.
+
+---
+
+### **Response C (≈54 words)**
+
+Escalate immediately to the Partner with a concise brief: list the blockers, the potential client impact, and two suggested options (temporary scope reduction or Partner-led escalation). Make clear that escalation is asked only if the Manager endorses it, and propose a short call to align before any outreach to the client.
+
+**Expert Rating: 4/5**
+**Rationale:**
+This appropriately recognises when higher-level intervention might be needed and provides structured options. The risk is it can appear as bypassing or lack of confidence if done without Manager alignment. The proposed alignment call mitigates that risk — overall a defensible escalation strategy when stakes are high.
+
+**Summary:**
+Each option shows credible judgement: A is responsible but self-contained; B combines transparency with a clear request for targeted support; C uses escalation thoughtfully but only with alignment. B gives Managers the best sightline and choices to preserve momentum.
+
+**Key Takeaway:**
+*Raise problems with a plan — and ask for the specific help you need, not a blanket rescue.*
+
+---

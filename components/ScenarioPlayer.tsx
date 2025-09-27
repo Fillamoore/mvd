@@ -1,9 +1,9 @@
-// components/ScenarioPlayer.tsx - FIXED WHITE FLASH v2
+// components/ScenarioPlayer.tsx 
 'use client';
 
 import { useState, useEffect } from 'react';
 import ScenarioCard from '@/components/ScenarioCard';
-import { getScenariosByModuleId } from '@/data/scenarios';
+import { getScenariosByModuleId } from '@/data/new-format-scenarios';
 import { getModuleById } from '@/data/modules';
 import { useLocalStore } from '@/store/useLocalStore';
 import Image from 'next/image';
@@ -61,6 +61,8 @@ export default function ScenarioPlayer() {
   const currentScenarioIndex = storedCurrentScenario ? storedCurrentScenario.scenarioId - 1 : 0;
   const currentScenarioData = moduleScenarios[currentScenarioIndex];
 
+  console.log("The whole scenario:",currentScenarioData)
+
   useEffect(() => {
     if (hydrated && currentScenarioData && !storedCurrentScenario) {
       setCurrentScenario(moduleId, currentScenarioData.id);
@@ -103,11 +105,14 @@ export default function ScenarioPlayer() {
     );
   }
 
+  //console.log("extras:",currentScenarioData.overall, currentScenarioData.takeAway);
+
   return (
     <div className={`scenarios-player-pane border-1 border-gray-700 h-full flex flex-col ${containerBorderRadius}`}>
+
       {/* Header - conditional rounded top corners */}
       <div className={`scenarios-area-header border-b-1 p-1 border-gray-600 bg-black overflow-auto overflow-hidden text-white flex justify-between items-center ${headerBorderRadius}`}>
-        <div className="icon-container p-1 flex items-center gap-2">
+        <div className="icon-container p-1 flex items-center gap-2 select-none">
           <div style={{ backgroundColor: '#dfd5dbff', borderRadius: '3px', padding: '5px' }}>
             <Image
               src={`/module-infographics/${String(currentModuleData.id)}.png`}
@@ -116,7 +121,7 @@ export default function ScenarioPlayer() {
               height={28}
             />
           </div>
-          <h1 className="ml-1 text-base font-bold text-lilac-300">{currentModuleData.name}</h1>
+          <h1 className="ml-1 text-base font-bold text-lilac-300 select-none">{currentModuleData.name}</h1>
         </div>
         <div className="mr-[6px]">
           <div className="flex items-center gap-[2px]">
@@ -130,6 +135,7 @@ export default function ScenarioPlayer() {
           </div>
         </div>
       </div>
+
 
       {/* Content area - FIXED: conditional rounded bottom corners for desktop */}
       <div
@@ -145,6 +151,8 @@ export default function ScenarioPlayer() {
               responses={currentScenarioData.responses.map(r => ({ id: r.id, text: r.text }))}
               expertRationales={isRevealed ? currentScenarioData.responses : undefined}
               totalScenarios={moduleScenarios.length}
+              overall={currentScenarioData.overall}
+              takeAway={currentScenarioData.takeAway}
             />
           </div>
         ) : (

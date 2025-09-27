@@ -25,6 +25,8 @@ export type Scenario = {
   moduleId: number;
   prompt: string;
   responses: ScenarioResponse[];
+  overall?: string;
+  takeAway?: string; 
 };
 
 export const scenarios: Scenario[] = [
@@ -677,24 +679,24 @@ export const scenarios: Scenario[] = [
   {
     id: 1, // Scenario 1 of Module 6
     moduleId: 6,
-    prompt: "A colleague seems stressed and overwhelmed with their workload. What's your first step?",
+    prompt: "I’d been in the firm for a couple of years and my business unit was on a mission to dramatically increase margins. Supply chain optimisation was one area of expertise where we felt we had strong capabilities and client need. I asked around and a meet with R - one of the supply chain ‘gurus’ - was suggested. Over a coffee he seemed more interested in cracking jokes than ‘getting down to business’. From my pov it was a waste of time.",
     responses: [
       {
         id: "A",
-        text: "Tell them to manage their stress better and to 'just get it done.'",
-        expertRationale: "This is an unsympathetic and unhelpful response. It disregards their feelings and offers no constructive support.",
+        text: "Log the meeting down as ‘one to forget’. Some people you’re just not going to get on with. Find another supply chain specialist to pal up with.",
+        expertRationale: "For sure, you can’t gel with everyone. But what if he was the only ‘guru’ available?",
         expertRating: 1
       },
       {
         id: "B",
-        text: "Check in with them privately, express empathy, and ask how you can help.",
-        expertRationale: "This is a highly emotionally intelligent response. It shows you recognize their feelings and are willing to offer support, which builds trust and a positive team environment.",
+        text: "Look again at the market opportunity and see how it might be addressed. Ask around about R’s capabilities and ways of working.",
+        expertRationale: "Much better. Your vibes aren’t the measure of success here. Qualifying opportunity and capability is.",
         expertRating: 5
       },
       {
         id: "C",
-        text: "Assume it's not your problem and focus on your own work.",
-        expertRationale: "This is a self-focused approach that ignores the well-being of a teammate. It can lead to feelings of isolation and a lack of psychological safety on the team.",
+        text: "After taking a bit of time to review your notes and reflect on things, move on. If this is the best we’ve got, we’re probably kidding ourselves.",
+        expertRationale: "Reflection almost always worthwhile, especially when things don’t go according to plan. What what did I actually qualify in the conversation? Not much. What could I have done better here? (vs why did he annoy me so much!)",
         expertRating: 1
       }
     ]
@@ -1184,37 +1186,39 @@ export const scenarios: Scenario[] = [
     ]
   },
 
-  // ---
-  // MODULE 10: Leadership and Influence (5 scenarios)
+
+  // ** NEW NUMBERING ** MODULE 10: Leadership and Influence (5 scenarios)
   {
-    id: 1, // Scenario 1 of Module 10
+    id: 1, // Scenario 1 of Module 6
     moduleId: 10,
-    prompt: "A project team is lacking direction and motivation. How do you provide leadership?",
+    prompt: "You've been in the firm for a couple of years and your business unit is on a mission to dramatically increase margins. Supply chain optimisation is one area of expertise there's strong capabilities and client need. A meet with one of the supply chain ‘gurus’ is suggested. Over a coffee he seems more interested in cracking jokes than ‘getting down to business’. From your pov it is a waste of time.",
     responses: [
       {
         id: "A",
-        text: "Step back and let the team figure it out on their own.",
-        expertRationale: "This is a passive approach that abdicates leadership responsibility. It can lead to project failure and a demoralized team.",
+        text: "Log the meeting down as ‘one to forget’. Some people you’re just not going to get on with. Find another supply chain specialist to pal up with.",
+        expertRationale: "For sure, you can’t gel with everyone. But what if he's the only ‘guru’ available?",
         expertRating: 1
       },
       {
         id: "B",
-        text: "Clearly articulate the project's vision, set clear goals, and empower the team with the autonomy to achieve them.",
-        expertRationale: "This is a strong leadership approach. A clear vision provides purpose, and empowering the team builds trust and a sense of ownership.",
+        text: "Look again at the market opportunity and see how it might be addressed. Ask around about R’s capabilities and persona.",
+        expertRationale: "Much better. Your vibes aren’t the measure of success here. Qualifying opportunity and capability is.",
         expertRating: 5
       },
       {
         id: "C",
-        text: "Micromanage every task to ensure nothing goes wrong.",
-        expertRationale: "This approach stifles creativity and can lead to resentment and a lack of trust. It doesn't empower the team to grow and take initiative.",
-        expertRating: 1
+        text: "After taking a bit of time to review your notes and reflect on things, move on. If this is the best we’ve got, we’re probably kidding ourselves.",
+        expertRationale: "Reflection almost always worthwhile, especially when things don’t go according to plan. But what was actually qualified in the conversation? Not much. What could have been done better here?",
+        expertRating: 2
       }
-    ]
+    ],
+    overall: "A few months later a tantalising supply chain opportunity did present itself so I took a deep breath and reengaged R. We (well mostly he) developed a ground-breaking proposition saving the client £xxm a year, and we became really good professional and personal pals. He’s a joker for sure – but also a first rate consultant. I’d dismissed him initially because he wouldn’t play to my preferred ‘get down to business’ style.",
+    takeAway: "First impressions are sometime wrong and may say more about one’s personal style prejudices or mood than anything about them!"
   },
   {
     id: 2, // Scenario 2 of Module 10
     moduleId: 10,
-    prompt: "A junior team member proposes an idea you know has been tried and failed before. How do you handle their suggestion respectfully?",
+    prompt: "B junior team member proposes an idea you know has been tried and failed before. How do you handle their suggestion respectfully?",
     responses: [
       {
         id: "A",
@@ -6420,27 +6424,9 @@ export const scenarios: Scenario[] = [
   }
 ];
 
-// Helper function to get unique scenario identifier
-export const getScenarioUniqueId = (moduleId: number, scenarioId: number): string => {
-  return `${moduleId}.${scenarioId}`;
-};
-
-// UPDATE helper functions to work with moduleId + scenarioId
-export const getScenarioById = (moduleId: number, scenarioId: number) => {
-  return scenarios.find(scenario => scenario.moduleId === moduleId && scenario.id === scenarioId);
-};
-
 export function getScenariosByModuleId(moduleId: number): Scenario[] {
   return scenarios.filter(scenario => scenario.moduleId === moduleId);
 }
 
-export const getScenarioCountByModuleId = (moduleId: number) => {
-  return getScenariosByModuleId(moduleId).length;
-};
 
-export const getRandomScenarioFromModule = (moduleId: number) => {
-  const moduleScenarios = getScenariosByModuleId(moduleId);
-  if (moduleScenarios.length === 0) return null;
-  return moduleScenarios[Math.floor(Math.random() * moduleScenarios.length)];
-};
 

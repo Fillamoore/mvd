@@ -305,8 +305,8 @@ export default function ScenarioCard({
                     <div className="text-sm">{score}%</div>
                   </div>
                 </div> 
-              <div className="overall-box rounded bg-lilac-500 p-3 text-sm leading-snug">{overall}</div>  
-              <div className="takeaway-box rounded bg-lilac-100 p-3 text-sm leading-snug shadow-sm mt-2">{takeAway}</div>               
+              <div className="overall-box border border-white">{overall}</div>  
+              <div className="takeaway-box border border-white">{takeAway}</div>               
             </div>
           )}
         </div>

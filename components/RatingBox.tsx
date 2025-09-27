@@ -34,24 +34,17 @@ export default function RatingBox({ responseId, type }: RatingBoxProps) {
     }
   };
 
-  const getTitle = () => {
-    if (ratingValue === null || ratingValue === undefined) {
-      return type === 'user' ? 'Not rated' : 'Expert rating';
-    }
-    return type === 'user' ? 'Your rating' : 'Expert rating';
-  };
-
   return (
     <div
-      className={`
-        w-6 h-6 flex items-center justify-center
-        border-1 border-gray-400 rounded font-bold
-        transition-colors duration-200 ease-in-out
-        ${getBackgroundColor(ratingValue)}
-        shadow-none outline-none ring-0
-        cursor-default opacity-90
-      `}
-      title={getTitle()}
+className={`
+      w-6 h-6 flex items-center justify-center
+      border-1 border-gray-300 rounded font-bold
+      transition-colors duration-200 ease-in-out
+      ${getBackgroundColor(ratingValue)}
+      shadow-none outline-none ring-0
+      ${type === 'user' ? 'cursor-pointer' : 'cursor-default'}
+      opacity-90
+    `}
     >
       <span className="text-base select-none">
         {ratingValue !== null && ratingValue !== undefined ? ratingValue : ''}
