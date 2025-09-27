@@ -215,11 +215,12 @@ export default function ScenarioCard({
   return (
     <>
       <div className="scenario-card scenario-fade-in">
-        <div className="prompt-card bg-lilac-400 rounded p-2 mb-6 text-left max-w-[60%]">
+
+        <div className="prompt-card bg-lilac-400 rounded p-2 mb-6 text-left w-[90%] md:max-w-[60%]">
           <h3 className="text-sm leading-tight select-none text-black">{prompt}</h3>
         </div>
         
-          <div className="responses-container space-y-4 ml-auto w-[90%] md:max-w-[60%]">
+        <div className="responses-container space-y-4 ml-auto w-[90%] md:max-w-[60%]">
                     
           {responses.map((response) => {
 
