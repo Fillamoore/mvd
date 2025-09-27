@@ -219,7 +219,7 @@ export default function ScenarioCard({
           <h3 className="text-sm leading-tight select-none text-black">{prompt}</h3>
         </div>
         
-        <div className="responses-container space-y-4 ml-auto max-w-[60%]">
+          <div className="responses-container space-y-4 ml-auto w-[90%] md:max-w-[60%]">
                     
           {responses.map((response) => {
 
