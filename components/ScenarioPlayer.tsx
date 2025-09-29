@@ -61,8 +61,6 @@ export default function ScenarioPlayer() {
   const currentScenarioIndex = storedCurrentScenario ? storedCurrentScenario.scenarioId - 1 : 0;
   const currentScenarioData = moduleScenarios[currentScenarioIndex];
 
-  console.log("The whole scenario:",currentScenarioData)
-
   useEffect(() => {
     if (hydrated && currentScenarioData && !storedCurrentScenario) {
       setCurrentScenario(moduleId, currentScenarioData.id);
@@ -104,8 +102,6 @@ export default function ScenarioPlayer() {
       </div>
     );
   }
-
-  //console.log("extras:",currentScenarioData.overall, currentScenarioData.takeAway);
 
   return (
     <div className={`scenarios-player-pane border-1 border-gray-700 h-full flex flex-col ${containerBorderRadius}`}>
