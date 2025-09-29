@@ -95,6 +95,16 @@ export default function ScenarioCard({
 
   const score = isRevealed ? calculateScore : 0;
 
+  function getVaryWidth(textLength: number) {
+    const vary = textLength % 40;
+    const mobileOffset = Math.floor((vary / 40) * 15); // 0–15%
+    const desktopOffset = Math.floor((vary / 40) * 15); // 0–10%
+    return {
+      mobile: 75 + mobileOffset, // 75–90%
+      desktop: 60 + desktopOffset // 50–60%
+    };
+  } 
+
   // ADDED: Handle scenario completion with useCallback to avoid recreating on every render
   const handleScenarioCompletion = useCallback(() => {
     if (!currentScenario || !expertRationales) return;
@@ -132,7 +142,6 @@ export default function ScenarioCard({
   // ADDED: Effect to handle completion when triggered by DesktopControlButton
   useEffect(() => {
     if (shouldComplete && currentScenario && isRevealed) {
-      console.log('Scenario completion triggered');
       handleScenarioCompletion();
     }
   }, [shouldComplete, currentScenario, isRevealed, handleScenarioCompletion]);
@@ -212,38 +221,46 @@ export default function ScenarioCard({
     );
   }
 
+  const { mobile, desktop } = getVaryWidth(prompt.length);
+
   return (
     <>
       <div className="scenario-card scenario-fade-in">
 
-        <div className="prompt-card bg-lilac-400 rounded p-2 mb-6 text-left w-[90%] md:max-w-[60%]">
+        <div
+          className="prompt-card bg-lilac-400 rounded p-2 mb-4"
+          style={{ width: `${mobile}%`, maxWidth: `${desktop}%` }}      
+        >
           <h3 className="text-sm leading-tight select-none text-black">{prompt}</h3>
         </div>
         
-        <div className="responses-container select-none space-y-4 ml-auto w-[90%] md:max-w-[60%]">
+        <div className="responses-container select-none space-y-4">
                     
           {responses.map((response) => {
 
             const expertResponse = expertRationales?.find(r => r.id === response.id);
+            const { mobile, desktop } = getVaryWidth(response.text.length);
             
             return (
-              <div key={response.id} className="response-pair-container">
+              <div key={response.id} className="response-pair-container ml-auto" style={{ width: `${mobile}%`, maxWidth: `${desktop}%` }}>
                 
                 <div
                   className="response-card text-sm bg-gray-50 rounded p-1 cursor-pointer transition-all duration-200 hover:shadow-md flex relative min-h-[32px]"
                   onClick={() => handleResponseClick(response.id)}
                 >
-                  <p className="response-text pl-1 pt-[4px] flex-1 mr-2 leading-tight select-none text-gray-800 pr-[28px]">{response.text}</p>
-                  <div
-                    className="flex-shrink-0 absolute bottom-1 right-1"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (!readonly && !isRevealed) {
-                        handleResponseClick(response.id);
-                      }
-                    }}
-                  >
-                    <RatingBox responseId={response.id} type="user" />
+                  <div className="pl-1 pt-[4px] leading-tight select-none text-gray-800">
+                    {response.text}
+                    <span
+                      className="float-right ml-2 mt-[2px] mb-[2px] max-h-[24px] overflow-hidden"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (!readonly && !isRevealed) {
+                          handleResponseClick(response.id);
+                        }
+                      }}
+                    >
+                      <RatingBox responseId={response.id} type="user" />
+                    </span>
                   </div>
                 </div>
 
