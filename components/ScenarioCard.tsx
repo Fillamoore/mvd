@@ -220,7 +220,7 @@ export default function ScenarioCard({
           <h3 className="text-sm leading-tight select-none text-black">{prompt}</h3>
         </div>
         
-        <div className="responses-container space-y-4 ml-auto w-[90%] md:max-w-[60%]">
+        <div className="responses-container select-none space-y-4 ml-auto w-[90%] md:max-w-[60%]">
                     
           {responses.map((response) => {
 
@@ -306,8 +306,8 @@ export default function ScenarioCard({
                     <div className="text-sm">{score}%</div>
                   </div>
                 </div> 
-              <div className="overall-box rounded bg-lilac-500 p-3 text-sm leading-snug">{overall}</div>  
-              <div className="takeaway-box rounded bg-lilac-100 p-3 text-sm leading-snug shadow-sm mt-2">{takeAway}</div>               
+              <div className="leading-tight overall-box rounded bg-lilac-500 p-3 select-none text-sm leading-snug">{overall}</div>  
+              <div className="leading-tight takeaway-box rounded bg-lilac-100 p-3 select-none text-sm leading-snug shadow-sm mt-2">{takeAway}</div>               
             </div>
           )}
         </div>
