@@ -112,10 +112,6 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
     setSpiralTiles(generateCorrectClockwiseSpiralOrder(7));
   }, []);
 
-  useEffect(() => {
-    console.log('Current selected module ID has changed to:', currentModuleId);
-  }, [currentModuleId]);
-
   const timelinePosition = 35;
 
   if (!isClient) {
