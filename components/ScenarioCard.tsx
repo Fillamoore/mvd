@@ -320,11 +320,11 @@ export default function ScenarioCard({
             }`}>
               <div className="flex justify-end">
                   <div className="score-box w-fit border border-gray-400 rounded px-1 py-1 bg-gray-200">
-                    <div className="text-sm">{score}%</div>
+                    <div className="text-sm text-gray-800">{score}%</div>
                   </div>
                 </div> 
-              <div className="leading-tight overall-box rounded bg-lilac-500 p-3 select-none text-sm leading-snug">{overall}</div>  
-              <div className="leading-tight takeaway-box rounded bg-lilac-100 p-3 select-none text-sm leading-snug shadow-sm mt-2">{takeAway}</div>               
+              <div className="leading-tight overall-box rounded bg-lilac-500 p-3 select-none text-sm text-gray-800 leading-snug">{overall}</div>  
+              <div className="leading-tight takeaway-box rounded bg-lilac-100 p-3 select-none text-sm text-gray-800 leading-snug shadow-sm mt-2">{takeAway}</div>               
             </div>
           )}
         </div>
