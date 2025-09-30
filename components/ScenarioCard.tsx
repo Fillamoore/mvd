@@ -272,7 +272,7 @@ export default function ScenarioCard({
                     <div className="expert-rationale bg-lilac-400 rounded p-2 flex relative">
                       
                       <div className="flex-1 mr-2 pr-[28px]">
-                        <p className="leading-tight select-none text-sm">{expertResponse.expertRationale}</p>
+                        <p className="leading-tight select-none text-sm text-gray-800">{expertResponse.expertRationale}</p>
                         
                         {expertResponse.expertMedia && (
                           <div className="mt-3">
