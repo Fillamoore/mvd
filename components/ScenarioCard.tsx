@@ -222,7 +222,7 @@ export default function ScenarioCard({
     );
   }
   */}
-    
+
   const { mobile, desktop } = getVaryWidth(prompt.length);
   const isMobile = window.innerWidth < 768; // or use a hook like useMediaQuery
   const promptWidthStyle = {width: `${isMobile ? mobile : desktop}%`};
@@ -253,8 +253,11 @@ export default function ScenarioCard({
 
 
             return (
-              <div key={response.id} className="response-pair-container ml-auto pr-40" style={widthStyle}>
-                
+              <div 
+                key={response.id} 
+                className={`response-pair-container ml-auto ${containerRight}`} 
+                style={widthStyle}
+              >  
                 <div
                   className="response-card text-sm bg-gray-50 rounded p-1 cursor-pointer transition-all duration-200 hover:shadow-md flex relative min-h-[32px]"
                   onClick={() => handleResponseClick(response.id)}
