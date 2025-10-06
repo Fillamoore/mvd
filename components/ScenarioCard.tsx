@@ -234,9 +234,6 @@ export default function ScenarioCard({
           style={promptWidthStyle}
         >
           <h3 className="text-sm leading-tight select-none text-black" >{prompt}</h3>
-          <span className="ml-2 text-xs text-gray-500">
-            Debug: {JSON.stringify(promptWidthStyle)}
-          </span>
         </div>
         
         <div className="responses-container select-none space-y-4">
@@ -260,9 +257,6 @@ export default function ScenarioCard({
                 >
                   <div className="pl-1 pt-[4px] leading-tight select-none text-gray-800">
                     {response.text}
-                    <span className="ml-2 text-xs text-gray-500">
-                      [Debug: {desktop},{mobile}]
-                    </span>
                     <span
                       className="float-right ml-2 mt-[2px] mb-[2px] max-h-[24px] overflow-hidden"
                       onClick={(e) => {
