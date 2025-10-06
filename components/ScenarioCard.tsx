@@ -241,8 +241,14 @@ export default function ScenarioCard({
             const expertResponse = expertRationales?.find(r => r.id === response.id);
             const { mobile, desktop } = getVaryWidth(response.text.length);
             
+            const isMobile = window.innerWidth < 768; // or use a hook like useMediaQuery
+
+            const widthStyle = {
+              width: `${isMobile ? mobile : desktop}%`,
+            };
+
             return (
-              <div key={response.id} className="response-pair-container ml-auto" style={{ width: `${mobile}%`, maxWidth: `${desktop}%` }}>
+              <div key={response.id} className="response-pair-container ml-auto" style={widthStyle}>
                 
                 <div
                   className="response-card text-sm bg-gray-50 rounded p-1 cursor-pointer transition-all duration-200 hover:shadow-md flex relative min-h-[32px]"
@@ -250,6 +256,9 @@ export default function ScenarioCard({
                 >
                   <div className="pl-1 pt-[4px] leading-tight select-none text-gray-800">
                     {response.text}
+                    <span className="ml-2 text-xs text-gray-500">
+                      [Debug: {desktop},{mobile}]
+                    </span>
                     <span
                       className="float-right ml-2 mt-[2px] mb-[2px] max-h-[24px] overflow-hidden"
                       onClick={(e) => {
