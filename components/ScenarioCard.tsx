@@ -226,8 +226,8 @@ export default function ScenarioCard({
   const { mobile, desktop } = getVaryWidth(prompt.length);
   const isMobile = window.innerWidth < 768; // or use a hook like useMediaQuery
   const promptWidthStyle = {width: `${isMobile ? mobile : desktop}%`};
-  const containerRight = isMobile ? 'py-4 px-4' : 'pr-40';
-  const containerLeft = isMobile ? 'py-4 px-4' : 'pl-40';
+  const containerRight = isMobile ? 'py-2 px-2' : 'pr-40';
+  const containerLeft = isMobile ? 'py-2 px-2' : 'pl-40';
 
   return (
     <>
