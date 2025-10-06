@@ -148,8 +148,8 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
       
       <div className="logo flex justify-center items-center gap-2">
         <img
-          src="/aijai-logo.png"
-          alt="aijai logo"
+          src="/qikr-logo.png"
+          alt="qikr logo"
           width={132}
           height={77}
         />

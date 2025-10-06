@@ -198,7 +198,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     <div className={`fixed inset-0 flex flex-col items-center ${isMobile ? 'justify-start pt-10' : 'justify-center'} h-screen bg-black text-white z-50`}> 
       <div className={`flex flex-col items-center ${isMobile ? 'scale-75' : 'scale-[0.8]'} ${phase === 'logo' ? 'opacity-0 pointer-events-none' : 'opacity-100 transition-opacity duration-500'}`}>
         <Image
-          src="/aijai-logo.png"
+          src="/qikr-logo.png"
           alt="App Logo"
           width={isMobile ? 240 : 290}
           height={isMobile ? 140 : 169}
