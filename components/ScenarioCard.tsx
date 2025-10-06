@@ -97,11 +97,11 @@ export default function ScenarioCard({
 
   function getVaryWidth(textLength: number) {
     const vary = textLength % 40;
-    const mobileOffset = Math.floor((vary / 40) * 15); // 0–15%
-    const desktopOffset = Math.floor((vary / 40) * 15); // 0–10%
+    const mobileOffset = Math.floor((vary / 40) * 10); 
+    const desktopOffset = Math.floor((vary / 40) * 10); 
     return {
-      mobile: 75 + mobileOffset, // 75–90%
-      desktop: 60 + desktopOffset // 50–60%
+      mobile: 85 + mobileOffset, // 85–95%
+      desktop: 60 + desktopOffset // 60–70%
     };
   } 
 
