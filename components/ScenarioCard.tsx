@@ -222,16 +222,21 @@ export default function ScenarioCard({
   }
 
   const { mobile, desktop } = getVaryWidth(prompt.length);
-
+  const isMobile = window.innerWidth < 768; // or use a hook like useMediaQuery
+  const promptWidthStyle = {width: `${isMobile ? mobile : desktop}%`};
+  
   return (
     <>
       <div className="scenario-card scenario-fade-in">
 
         <div
-          className="prompt-card bg-lilac-400 rounded p-2 mb-4"
-          style={{ width: `${mobile}%`, maxWidth: `${desktop}%` }}      
+          className="prompt-card bg-lilac-400 rounded p-2 mb-4" 
+          style={promptWidthStyle}
         >
-          <h3 className="text-sm leading-tight select-none text-black">{prompt}</h3>
+          <h3 className="text-sm leading-tight select-none text-black" >{prompt}</h3>
+          <span className="ml-2 text-xs text-gray-500">
+            Debug: {JSON.stringify(promptWidthStyle)}
+          </span>
         </div>
         
         <div className="responses-container select-none space-y-4">
@@ -239,13 +244,12 @@ export default function ScenarioCard({
           {responses.map((response) => {
 
             const expertResponse = expertRationales?.find(r => r.id === response.id);
-            const { mobile, desktop } = getVaryWidth(response.text.length);
             
-            const isMobile = window.innerWidth < 768; // or use a hook like useMediaQuery
-
+            const { mobile, desktop } = getVaryWidth(response.text.length);
             const widthStyle = {
               width: `${isMobile ? mobile : desktop}%`,
-            };
+            };      
+
 
             return (
               <div key={response.id} className="response-pair-container ml-auto" style={widthStyle}>
