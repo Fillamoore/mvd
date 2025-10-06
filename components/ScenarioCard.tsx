@@ -234,7 +234,7 @@ export default function ScenarioCard({
       <div className= {`scenario-card scenario-fade-in ${containerLeft}`}>
 
         <div
-          className="prompt-card bg-lilac-400 rounded p-2 mb-4" 
+          className="prompt-card bg-lilac-400 rounded p-3 mb-4" 
           style={promptWidthStyle}
         >
           <h3 className="text-sm leading-tight select-none text-black" >{prompt}</h3>
