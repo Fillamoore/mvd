@@ -210,6 +210,7 @@ export default function ScenarioCard({
     );
   }
 
+  {/*}
   if (!isHydrated) {
     return (
       <div className="scenario-card scenario-fade-in">
@@ -220,14 +221,17 @@ export default function ScenarioCard({
       </div>
     );
   }
-
+  */}
+    
   const { mobile, desktop } = getVaryWidth(prompt.length);
   const isMobile = window.innerWidth < 768; // or use a hook like useMediaQuery
   const promptWidthStyle = {width: `${isMobile ? mobile : desktop}%`};
-  
+  const containerRight = isMobile ? 'py-4 px-4' : 'pr-40';
+  const containerLeft = isMobile ? 'py-4 px-4' : 'pl-40';
+
   return (
     <>
-      <div className="scenario-card scenario-fade-in">
+      <div className= {`scenario-card scenario-fade-in ${containerLeft}`}>
 
         <div
           className="prompt-card bg-lilac-400 rounded p-2 mb-4" 
@@ -249,7 +253,7 @@ export default function ScenarioCard({
 
 
             return (
-              <div key={response.id} className="response-pair-container ml-auto" style={widthStyle}>
+              <div key={response.id} className="response-pair-container ml-auto pr-40" style={widthStyle}>
                 
                 <div
                   className="response-card text-sm bg-gray-50 rounded p-1 cursor-pointer transition-all duration-200 hover:shadow-md flex relative min-h-[32px]"
@@ -322,7 +326,7 @@ export default function ScenarioCard({
 
 
           {isRevealed && (
-            <div className={`score-container mt-6 flex flex-col justify-end transition-all duration-500 delay-1000 ${
+            <div className={`score-container ${containerRight} mt-6 flex flex-col justify-end transition-all duration-500 delay-1000 ${
               isRevealed ? 'opacity-100' : 'opacity-0'
             }`}>
               <div className="flex justify-end">

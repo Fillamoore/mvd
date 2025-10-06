@@ -91,14 +91,13 @@ export default function ScenarioPlayer() {
   const containerBorderRadius = isMobile ? 'rounded-none' : 'rounded-[10px]';
   const headerBorderRadius = isMobile ? 'rounded-none' : 'rounded-t-[10px]';
   const contentBorderRadius = isMobile ? 'rounded-none' : 'rounded-b-[10px]';
-  const containerPadding = isMobile ? 'py-4 px-4' : 'py-6 px-[200px]';
 
   // FIX: Don't render anything until fully initialized to prevent flash
   if (!isInitialized) {
     return (
       <div className="scenarios-player-pane border-1 border-gray-700 h-full flex flex-col bg-black">
         <div className="scenarios-area-header border-b-1 p-1 border-gray-600 bg-black" />
-        <div className={`scenarios-container bg-black w-full flex-1 ${containerPadding}`} />
+        <div className={`scenarios-container bg-black w-full flex-1`} />
       </div>
     );
   }
@@ -132,14 +131,16 @@ export default function ScenarioPlayer() {
         </div>
       </div>
 
-
-      {/* Content area - FIXED: conditional rounded bottom corners for desktop */}
       <div
         key={moduleId}
-        className={`scenarios-container bg-black bg-[url('/scenarios-canvas.jpg')] bg-cover bg-center w-full flex-1 overflow-y-auto ${containerPadding} ${contentBorderRadius}`}
+        className={`scenarios-container bg-black bg-[url('/scenarios-canvas.jpg')] bg-cover bg-center h-full overflow-y-auto ${contentBorderRadius}`}
       >
         {hydrated && currentScenarioData ? (
-          <div key={`scenario-${currentScenarioData.id}`} className="scenario-fade-in">
+          <div 
+            key={`scenario-${currentScenarioData.id}`} 
+            className="custom-scrollbar-container pt-5 overflow-y-auto h-full" 
+            style={{ scrollbarGutter: 'stable' }}
+          >
             <ScenarioCard
               moduleId={moduleId}
               scenarioId={currentScenarioData.id}
