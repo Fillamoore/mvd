@@ -103,8 +103,8 @@ export default function ScenarioCard({
     const mobileOffset = Math.floor((vary / 40) * 10); 
     const desktopOffset = Math.floor((vary / 40) * 10); 
     return {
-      mobile: 85 + mobileOffset, // 85–95%
-      desktop: 60 + desktopOffset // 60–70%
+      mobile: 95, //  + mobileOffset, // 85–95%
+      desktop: 70, // + desktopOffset // 60–70%
     };
   } 
 
