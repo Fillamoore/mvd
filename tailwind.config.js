@@ -26,6 +26,9 @@ module.exports = {
         'lilac-master-hover-2': '#8764a8',
         'lilac-master-hover-3': '#a992be',
         'lilac-master-hover-4': '#bfa9da',
+        'rating-gold': '#ffd700',
+        'rating-silver': '#c0c0c0',
+        'rating-bronze': '#cd7f32',
       },
       borderWidth: {
         '1': '1px', // Add this line for a 1px border

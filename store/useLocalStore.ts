@@ -7,8 +7,8 @@ import { immer } from 'zustand/middleware/immer';
 // Core Data Structures
 interface CompletedScenario {
   scenarioId: number;
-  userRatings: { [responseId: string]: number | null };
-  expertRatings: { [responseId: string]: number | null };
+  userRankings: { [responseId: string]: number | null };
+  expertRankings: { [responseId: string]: number | null };
   score: number;
   timestamp: string;
   dateStarted: string;
@@ -19,9 +19,9 @@ interface PickUpAndPutDownState {
   completedScenarios: CompletedScenario[];
   currentScenario: {
     scenarioId: number;
-    userRatings: { [responseID: string]: number | null };
-    expertRatings: { [responseID: string]: number | null };
-    userRatingDirections: { [responseID: string]: boolean };
+    userRankings: { [responseID: string]: number | null };
+    expertRankings: { [responseID: string]: number | null };
+    userRankingDirections: { [responseID: string]: boolean };
     isRevealed: boolean;
     dateStarted: string;
     dateCompleted?: string;
@@ -38,8 +38,8 @@ export interface PickUpAndPutDownStore {
   // Actions
   setCurrentModule: (moduleId: number) => void;
   setCurrentScenario: (moduleId: number, scenarioId: number) => void;
-  setExpertRatings: (moduleId: number, scenarioId: number, ratings: { [responseId: string]: number }) => void;
-  rateScenario: (moduleId: number, scenarioId: number, responseId: string, rating: number | null, direction: boolean) => void;
+  setExpertRankings: (moduleId: number, scenarioId: number, rankings: { [responseId: string]: number }) => void;
+  rankScenario: (moduleId: number, scenarioId: number, responseId: string, ranking: number, direction: boolean) => void;
   revealScenario: (moduleId: number) => void;
   clearCurrentScenario: (moduleId: number) => void;
   completeCurrentScenario: (completedScenario: CompletedScenario) => void;
@@ -58,9 +58,9 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
             completedScenarios: [],
             currentScenario: {
               scenarioId: 1,
-              userRatings: {},
-              expertRatings: {},
-              userRatingDirections: { 'A': true, 'B': true, 'C': true },
+              userRankings: {},
+              expertRankings: {},
+              userRankingDirections: { 'A': true, 'B': true, 'C': true },
               isRevealed: false,
               dateStarted: new Date().toISOString(),
               dateCompleted: undefined,
@@ -81,9 +81,9 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
                 completedScenarios: [],
                 currentScenario: {
                   scenarioId: 1,
-                  userRatings: {},
-                  expertRatings: {},
-                  userRatingDirections: { 'A': true, 'B': true, 'C': true },
+                  userRankings: {},
+                  expertRankings: {},
+                  userRankingDirections: { 'A': true, 'B': true, 'C': true },
                   isRevealed: false,
                   dateStarted: new Date().toISOString(),
                   dateCompleted: undefined,
@@ -107,9 +107,9 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
             
             state.pickUpAndPutDown[moduleKey].currentScenario = {
               scenarioId,
-              userRatings: {},
-              expertRatings: {},
-              userRatingDirections: { 'A': true, 'B': true, 'C': true },
+              userRankings: {},
+              expertRankings: {},
+              userRankingDirections: { 'A': true, 'B': true, 'C': true },
               isRevealed: false,
               dateStarted: new Date().toISOString(),
               dateCompleted: undefined,
@@ -118,25 +118,25 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
           });
         },
 
-        setExpertRatings: (moduleId: number, scenarioId: number, ratings: { [responseId: string]: number }) => {
+        setExpertRankings: (moduleId: number, scenarioId: number, rankings: { [responseId: string]: number }) => {
           set((state) => {
             const moduleKey = moduleId.toString();
             const scenario = state.pickUpAndPutDown[moduleKey]?.currentScenario;
             
             if (scenario && scenario.scenarioId === scenarioId) {
-              scenario.expertRatings = ratings;
+              scenario.expertRankings = rankings;
             }
           });
         },
 
-        rateScenario: (moduleId: number, scenarioId: number, responseId: string, rating: number | null, direction: boolean) => {
+        rankScenario: (moduleId: number, scenarioId: number, responseId: string, ranking: number, direction: boolean) => {
           set((state) => {
             const moduleKey = moduleId.toString();
             const scenario = state.pickUpAndPutDown[moduleKey]?.currentScenario;
             
             if (scenario) {
-              scenario.userRatings[responseId] = rating;
-              scenario.userRatingDirections[responseId] = direction;
+              scenario.userRankings[responseId] = ranking;
+              scenario.userRankingDirections[responseId] = direction;
             }
           });
         },
@@ -184,9 +184,9 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
             if (moduleData) {
               moduleData.currentScenario = {
                 scenarioId,
-                userRatings: {},
-                expertRatings: {},
-                userRatingDirections: { 'A': true, 'B': true, 'C': true },
+                userRankings: {},
+                expertRankings: {},
+                userRankingDirections: { 'A': true, 'B': true, 'C': true },
                 isRevealed: false,
                 dateStarted: new Date().toISOString(),
                 dateCompleted: undefined,
@@ -226,9 +226,9 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
                     completedScenarios: [],
                     currentScenario: {
                       scenarioId: 1,
-                      userRatings: {},
-                      expertRatings: {},
-                      userRatingDirections: { 'A': true, 'B': true, 'C': true },
+                      userRankings: {},
+                      expertRankings: {},
+                      userRankingDirections: { 'A': true, 'B': true, 'C': true },
                       isRevealed: false,
                       dateStarted: new Date().toISOString(),
                       dateCompleted: undefined,

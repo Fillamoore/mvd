@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import ScenarioCard from '@/components/ScenarioCard';
-import { getScenariosByModuleId } from '@/data/new-format-scenarios';
+import { getScenariosByModuleId } from '@/data/scenarios';
 import { getModuleById } from '@/data/modules';
 import { useLocalStore } from '@/store/useLocalStore';
 import Image from 'next/image';
@@ -17,12 +17,12 @@ export default function ScenarioPlayer() {
     currentModule,
     pickUpAndPutDown,
     setCurrentScenario,
-    setExpertRatings,
+    setExpertRankings,
   } = useLocalStore(useShallow((state) => ({
     currentModule: state.currentModule,
     pickUpAndPutDown: state.pickUpAndPutDown,
     setCurrentScenario: state.setCurrentScenario,
-    setExpertRatings: state.setExpertRatings,
+    setExpertRankings: state.setExpertRankings,
   })));
 
   const [hydrated, setHydrated] = useState(false);
@@ -65,18 +65,18 @@ export default function ScenarioPlayer() {
     if (hydrated && currentScenarioData && !storedCurrentScenario) {
       setCurrentScenario(moduleId, currentScenarioData.id);
       
-      const expertRatingsMap: { [key: string]: number } = {};
+      const expertRankingsMap: { [key: string]: number } = {};
       currentScenarioData.responses.forEach(response => {
-        if (response.expertRating) {
-          expertRatingsMap[response.id] = response.expertRating;
+        if (response.expertRanking) {
+          expertRankingsMap[response.id] = response.expertRanking;
         }
       });
-      setExpertRatings(moduleId, currentScenarioData.id, expertRatingsMap);
+      setExpertRankings(moduleId, currentScenarioData.id, expertRankingsMap);
     }
-  }, [hydrated, storedCurrentScenario, currentScenarioData, moduleId, setCurrentScenario, setExpertRatings]);
+  }, [hydrated, storedCurrentScenario, currentScenarioData, moduleId, setCurrentScenario, setExpertRankings]);
 
   const isRevealed = storedCurrentScenario?.isRevealed || false;
-  const userRatings = storedCurrentScenario?.userRatings || {};
+  const userRankings = storedCurrentScenario?.userRankings || {};
 
   const getTileScore = (): number => {
     const moduleData = pickUpAndPutDown[moduleId.toString()];

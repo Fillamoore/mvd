@@ -15,10 +15,10 @@ export default function DesktopControlButton() {
   
   // Read directly from store
   const currentScenario = pickUpAndPutDown[currentModule!]?.currentScenario;
-  const userRatings = currentScenario?.userRatings || {};
+  const userRankings = currentScenario?.userRankings || {};
   
   // Button visibility logic
-  const allRated = ['A', 'B', 'C'].every(id => userRatings[id] != null);
+  const allRated = ['A', 'B', 'C'].every(id => userRankings[id] != null);
   const isRevealed = currentScenario?.isRevealed || false;
   const isVisible = (allRated && !isRevealed) || isRevealed;
 
@@ -51,7 +51,7 @@ export default function DesktopControlButton() {
   }
 
   const buttonIcon = isRevealed ? '/next-icon.png' : '/reveal-icon.png';
-  const buttonLabel = isRevealed ? 'Next scenario' : 'Reveal expert ratings';
+  const buttonLabel = isRevealed ? 'Next scenario' : 'Reveal expert rankings';
 
   return (
     <div className="fixed bottom-9 right-9 z-50">

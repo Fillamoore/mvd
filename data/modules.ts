@@ -8,10 +8,10 @@ export interface Module {
 
 export const modules: Module[] = [
   // FOUNDATION: Modules 1-9
-  { id: 1,  name: 'Selection',                    tier: 'foundation', description: 'Embracing learning, resilience and continuous improvement.' },
-  { id: 2,  name: 'Professional curiosity',       tier: 'foundation', description: 'Curious, targeted questioning to uncover hidden issues.' },
-  { id: 3,  name: 'Active listening',             tier: 'foundation', description: 'Hearing intent and meaning, summarising and checking back.' },
-  { id: 4,  name: 'Clear writing',                tier: 'foundation', description: 'Concise, structured written communication that prompts action.' },
+  { id: 1,  name: 'Managing Scope',               tier: 'foundation', description: 'Embracing learning, resilience and continuous improvement.' },
+  { id: 2,  name: 'Advisory Presence',            tier: 'foundation', description: 'Curious, targeted questioning to uncover hidden issues.' },
+  { id: 3,  name: 'Strategic Acumen',             tier: 'foundation', description: 'Hearing intent and meaning, summarising and checking back.' },
+  { id: 4,  name: 'Feedback Resilience',          tier: 'foundation', description: 'Concise, structured written communication that prompts action.' },
   { id: 5,  name: 'Structured thinking',          tier: 'foundation', description: 'Breaking problems into logical parts and clear flows.' },
   { id: 6,  name: 'Time management',              tier: 'foundation', description: 'Prioritising tasks and managing energy for consistent delivery.' },
   { id: 7,  name: 'Stakeholder awareness',        tier: 'foundation', description: 'Reading power, interests and influence across the stakeholder map.' },

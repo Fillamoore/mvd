@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import RatingBox from './RatingBox';
+import RankingBox from './RankingBox';
 import ExpertMedia from './ExpertMedia';
 import { useLocalStore } from '@/store/useLocalStore';
 import type { ExpertMedia as ExpertMediaType, Resource } from '@/data/scenarios';
@@ -21,7 +21,7 @@ interface ScenarioCardProps {
     id: string;
     text: string;
     expertRationale: string;
-    expertRating: number;
+    expertRanking: number;
     expertMedia?: ExpertMediaType;
     resources?: Resource[]; 
   }>;
@@ -30,8 +30,8 @@ interface ScenarioCardProps {
   readonly?: boolean;
 }
 
-const EMPTY_USER_RATINGS: { [key: string]: number | null } = {};
-const EMPTY_RATING_DIRECTIONS: { [key: string]: boolean } = {};
+const EMPTY_USER_RANKINGS: { [key: string]: number | null } = {};
+const EMPTY_RANKING_DIRECTIONS: { [key: string]: boolean } = {};
 
 export default function ScenarioCard({
   scenarioId,
@@ -50,16 +50,16 @@ export default function ScenarioCard({
 
   // Get store state and actions
   const { 
-    userRatings, 
-    userRatingDirections, 
+    userRankings, 
+    userRankingDirections, 
     isRevealed,
     currentScenario,
     shouldComplete // ADDED: Completion trigger flag
   } = useLocalStore(useShallow((state) => {
     const currentScenario = state.pickUpAndPutDown[moduleId.toString()]?.currentScenario;
     return {
-      userRatings: (currentScenario?.userRatings || EMPTY_USER_RATINGS) as { [key: string]: number | null },
-      userRatingDirections: (currentScenario?.userRatingDirections || EMPTY_RATING_DIRECTIONS) as { [key: string]: boolean },
+      userRankings: (currentScenario?.userRankings || EMPTY_USER_RANKINGS) as { [key: string]: number | null },
+      userRankingDirections: (currentScenario?.userRankingDirections || EMPTY_RANKING_DIRECTIONS) as { [key: string]: boolean },
       isRevealed: currentScenario?.isRevealed || false,
       currentScenario: currentScenario,
       shouldComplete: currentScenario?.shouldComplete || false // ADDED
@@ -67,9 +67,9 @@ export default function ScenarioCard({
   }));
 
   const { 
-    rateScenario, 
+    rankScenario, 
     revealScenario, 
-    setExpertRatings, // This should be available here
+    setExpertRankings, // This should be available here
     completeCurrentScenario,
     setNextScenario 
   } = useLocalStore();
@@ -81,17 +81,17 @@ export default function ScenarioCard({
     let totalDifference = 0;
     let ratedResponses = 0;
     responses.forEach(response => {
-      const userRating = userRatings[response.id];
+      const userRanking = userRankings[response.id];
       const expertResponse = expertRationales.find(r => r.id === response.id);
-      if (userRating !== null && userRating !== undefined && expertResponse) {
-        totalDifference += Math.abs(userRating - expertResponse.expertRating);
+      if (userRanking !== null && userRanking !== undefined && expertResponse) {
+        totalDifference += Math.abs(userRanking - expertResponse.expertRanking);
         ratedResponses++;
       }
     });
     if (ratedResponses === 0) return 0;
     const averageDifference = totalDifference / ratedResponses;
-    return Math.round(100 - (averageDifference / 4) * 100);
-  }, [userRatings, expertRationales, responses]);
+    return Math.round(100 - (averageDifference / 2) * 100);
+  }, [userRankings, expertRationales, responses]);
 
   const score = isRevealed ? calculateScore : 0;
 
@@ -109,17 +109,17 @@ export default function ScenarioCard({
   const handleScenarioCompletion = useCallback(() => {
     if (!currentScenario || !expertRationales) return;
 
-    // Calculate expert ratings map
-    const expertRatingsMap: { [key: string]: number } = {};
+    // Calculate expert rankings map
+    const expertRankingsMap: { [key: string]: number } = {};
     expertRationales.forEach(response => {
-      expertRatingsMap[response.id] = response.expertRating;
+      expertRankingsMap[response.id] = response.expertRanking;
     });
 
     // Create completed scenario record
     const completedScenario = {
       scenarioId: currentScenario.scenarioId,
-      userRatings: { ...currentScenario.userRatings },
-      expertRatings: expertRatingsMap,
+      userRankings: { ...currentScenario.userRankings },
+      expertRankings: expertRankingsMap,
       score: calculateScore,
       timestamp: new Date().toISOString(),
       dateStarted: currentScenario.dateStarted,
@@ -158,21 +158,21 @@ export default function ScenarioCard({
     return unsubscribe;
   }, []);
 
-  // In ScenarioCard.tsx - SET EXPERT RATINGS WHEN SCENARIO LOADS
+  // In ScenarioCard.tsx - SET EXPERT RANKINGS WHEN SCENARIO LOADS
   useEffect(() => {
     if (isHydrated && expertRationales) {
-      const expertRatingsMap: { [key: string]: number } = {};
+      const expertRankingsMap: { [key: string]: number } = {};
       expertRationales.forEach(response => {
-        expertRatingsMap[response.id] = response.expertRating;
+        expertRankingsMap[response.id] = response.expertRanking;
       });
-      setExpertRatings(moduleId, scenarioId, expertRatingsMap);
+      setExpertRankings(moduleId, scenarioId, expertRankingsMap);
     }
-  }, [isHydrated, expertRationales, moduleId, scenarioId, setExpertRatings]);
+  }, [isHydrated, expertRationales, moduleId, scenarioId, setExpertRankings]);
 
   const handleResponseClick = (responseId: string) => {
     if (!readonly && !isRevealed) {
-      const currentValue = userRatings[responseId] ?? null;
-      const currentDirection = userRatingDirections[responseId] ?? true;
+      const currentValue = userRankings[responseId] ?? null;
+      const currentDirection = userRankingDirections[responseId] ?? true;
       let newValue: number | null;
       let newDirection: boolean = currentDirection;
       
@@ -180,10 +180,10 @@ export default function ScenarioCard({
         newValue = 1;
         newDirection = true;
       } else if (currentDirection) {
-        if (currentValue < 5) {
+        if (currentValue < 3) {
           newValue = currentValue + 1;
         } else {
-          newValue = 4;
+          newValue = 2;
           newDirection = false;
         }
       } else {
@@ -195,7 +195,7 @@ export default function ScenarioCard({
         }
       }
       
-      rateScenario(moduleId, scenarioId, responseId, newValue, newDirection);
+      rankScenario(moduleId, scenarioId, responseId, newValue, newDirection);
     }
   };
 
@@ -262,7 +262,7 @@ export default function ScenarioCard({
                   className="response-card text-sm bg-gray-50 rounded p-1 cursor-pointer transition-all duration-200 hover:shadow-md flex relative min-h-[32px]"
                   onClick={() => handleResponseClick(response.id)}
                 >
-                  <div className="pl-1 pt-[4px] leading-tight select-none text-gray-800">
+                  <div className="pl-1 pt-[4px] leading-tight select-none text-black">
                     {response.text}
                     <span
                       className="float-right ml-2 mt-[2px] mb-[2px] max-h-[24px] overflow-hidden"
@@ -273,7 +273,7 @@ export default function ScenarioCard({
                         }
                       }}
                     >
-                      <RatingBox responseId={response.id} type="user" />
+                      <RankingBox responseId={response.id} type="user" />
                     </span>
                   </div>
                 </div>
@@ -286,7 +286,7 @@ export default function ScenarioCard({
                     <div className="expert-rationale bg-lilac-400 rounded p-2 flex relative">
                       
                       <div className="flex-1 mr-2 pr-[28px]">
-                        <p className="leading-tight select-none text-sm text-gray-800">{expertResponse.expertRationale}</p>
+                        <p className="leading-tight select-none text-sm text-black">{expertResponse.expertRationale}</p>
                         
                         {expertResponse.expertMedia && (
                           <div className="mt-3">
@@ -315,7 +315,7 @@ export default function ScenarioCard({
                       </div>
 
                       <div className="flex-shrink-0 absolute top-1 right-1">
-                        <RatingBox responseId={response.id} type="expert" />
+                        <RankingBox responseId={response.id} type="expert" />
                       </div>
                     </div>
                   </div>
@@ -337,8 +337,8 @@ export default function ScenarioCard({
                     <div className="text-sm text-gray-800">{score}%</div>
                   </div>
                 </div> 
-              <div className="leading-tight overall-box rounded bg-lilac-500 p-3 select-none text-sm text-gray-800 leading-snug">{overall}</div>  
-              <div className="leading-tight takeaway-box rounded bg-lilac-100 p-3 select-none text-sm text-gray-800 leading-snug shadow-sm mt-2">{takeAway}</div>               
+              <div className="leading-tight overall-box rounded bg-lilac-400 p-3 select-none text-sm text-black leading-snug">{overall}</div>  
+              <div className="leading-tight takeaway-box rounded bg-lilac-100 p-3 select-none text-sm text-black leading-snug shadow-sm mt-2 mb-6">{takeAway}</div>               
             </div>
           )}
         </div>

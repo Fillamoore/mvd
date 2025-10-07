@@ -17,8 +17,8 @@ export default function MobileLayout() {
   const moduleId = currentModule ? parseInt(currentModule, 10) : 1;
   const storedCurrentScenario = currentModule ? pickUpAndPutDown[currentModule]?.currentScenario : null;
   
-  const userRatings = storedCurrentScenario?.userRatings || {};
-  const allRated = ['A', 'B', 'C'].every(id => userRatings[id] != null);
+  const userRankings = storedCurrentScenario?.userRankings || {};
+  const allRated = ['A', 'B', 'C'].every(id => userRankings[id] != null);
   const isRevealed = storedCurrentScenario?.isRevealed || false;
 
   const handleReveal = () => {

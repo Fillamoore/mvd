@@ -248,11 +248,13 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
                     <div className="flex-1 select-none text-xs text-white overflow-hidden text-ellipsis whitespace-nowrap">
                       {moduleItem.name}
                     </div>
+                    {/*
                     {moduleItem.completed && (
                       <div className="text-[10px] text-gray-300 mt-1 ml-8">
                         {(moduleItem.score).toFixed(0)}%
                       </div>
                     )}
+                    */}  
                   </div>
                 </div>
               );

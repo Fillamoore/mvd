@@ -49,7 +49,7 @@ export default function MobileScenariosPlayerFooter({
               role="button"
               tabIndex={0}
               className="flex items-center justify-center p-3 rounded-lg bg-transparent transition-colors select-none"
-              title="Reveal Expert Ratings"
+              title="Reveal Expert Rankings"
             >
               <Image
                 src="/mobile-reveal-icon.png"

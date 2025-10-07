@@ -80,11 +80,11 @@ a {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow instead */
 }
 
-.rating-box {
+.ranking-box {
   transition: all 0.2s ease-in-out;
 }
 
-.rating-box:hover {
+.ranking-box:hover {
   /* REMOVED transform: scale(1.05); */
   opacity: 0.9; /* Subtle opacity change instead */
 }
