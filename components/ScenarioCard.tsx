@@ -240,7 +240,7 @@ export default function ScenarioCard({
           className="prompt-card bg-lilac-400 rounded p-3 mb-4" 
           style={promptWidthStyle}
         >
-          <p className = "mb-2 text-base font-bold leading-tight select-none text-black">{title}</p>
+          <p className = "mb-2 text-lg font-semibold leading-tight select-none text-black">{scenarioId}. {title}</p>
           <h3 className="text-sm leading-tight select-none text-black" >{prompt}</h3>
         </div>
         
@@ -270,7 +270,7 @@ export default function ScenarioCard({
                     <div className="flex flex-col pr-8"> 
                         
                         <div className="pb-2 text-base text-bold leading-tight select-none text-black mb-[2px]">
-                            {response.title}
+                            {response.id}: {response.title}
                         </div>
                         
                         <div className="leading-tight select-none text-black">
