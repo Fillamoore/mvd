@@ -1,7 +1,7 @@
 {
-  "name": "Advisory Accelerator",
-  "short_name": "AA MVD",
-  "description": "Enabling advisory-led working at pace and scale",
+  "name": "qikr",
+  "short_name": "qikr",
+  "description": "Knowhow. Faster.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",
