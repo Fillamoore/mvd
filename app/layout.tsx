@@ -63,6 +63,7 @@ export default function RootLayout({
     <html>
       <head>
         <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#000000" />
       </head>
       <body className="h-screen w-screen overflow-hidden pb-[env(safe-area-inset-bottom)] bg-black">
         {showSplash && <SplashScreen />}
