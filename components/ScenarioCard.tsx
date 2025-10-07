@@ -12,9 +12,11 @@ interface ScenarioCardProps {
   scenarioId: number;
   moduleId: number;
   totalScenarios: number;
+  title: string;
   prompt: string;
   responses: Array<{
     id: string;
+    title: string;
     text: string;
   }>;
   expertRationales?: Array<{
@@ -37,6 +39,7 @@ export default function ScenarioCard({
   scenarioId,
   moduleId,
   totalScenarios,
+  title,
   prompt,
   responses,
   expertRationales,
@@ -237,6 +240,7 @@ export default function ScenarioCard({
           className="prompt-card bg-lilac-400 rounded p-3 mb-4" 
           style={promptWidthStyle}
         >
+          <p className = "mb-2 text-base font-bold leading-tight select-none text-black">{title}</p>
           <h3 className="text-sm leading-tight select-none text-black" >{prompt}</h3>
         </div>
         
@@ -259,23 +263,33 @@ export default function ScenarioCard({
                 style={widthStyle}
               >  
                 <div
-                  className="response-card text-sm bg-gray-50 rounded p-1 cursor-pointer transition-all duration-200 hover:shadow-md flex relative min-h-[32px]"
-                  onClick={() => handleResponseClick(response.id)}
+                    className="response-card text-sm bg-gray-50 rounded p-3 cursor-pointer transition-all duration-200 hover:shadow-md relative min-h-[32px] overflow-hidden"
+                    onClick={() => handleResponseClick(response.id)}
                 >
-                  <div className="pl-1 pt-[4px] leading-tight select-none text-black">
-                    {response.text}
-                    <span
-                      className="float-right ml-2 mt-[2px] max-h-[24px] overflow-hidden"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (!readonly && !isRevealed) {
-                          handleResponseClick(response.id);
-                        }
-                      }}
+                    
+                    <div className="flex flex-col pr-8"> 
+                        
+                        <div className="pb-2 text-base text-bold leading-tight select-none text-black mb-[2px]">
+                            {response.title}
+                        </div>
+                        
+                        <div className="leading-tight select-none text-black">
+                            {response.text}
+                        </div>
+                    </div>
+                    
+                    <div
+                        className="absolute bottom-1 right-1 max-h-[24px]"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            if (!readonly && !isRevealed) {
+                                handleResponseClick(response.id);
+                            }
+                        }}
                     >
-                      <RankingBox responseId={response.id} type="user" />
-                    </span>
-                  </div>
+                        <RankingBox responseId={response.id} type="user" />
+                    </div>
+                    
                 </div>
 
                 {isRevealed && expertResponse && (
@@ -332,11 +346,13 @@ export default function ScenarioCard({
             <div className={`score-container ${containerRight} mt-6 flex flex-col justify-end transition-all duration-500 delay-1000 ${
               isRevealed ? 'opacity-100' : 'opacity-0'
             }`}>
+              {/*
               <div className="flex justify-end">
-                  <div className="score-box w-fit border border-gray-400 rounded px-1 py-1 bg-gray-200">
-                    <div className="text-sm text-gray-800">{score}%</div>
-                  </div>
-                </div> 
+                <div className="score-box w-fit border border-gray-400 rounded px-1 py-1 bg-gray-200">
+                  <div className="text-sm text-gray-800">{score}%</div>
+                </div>
+              </div>
+              */} 
               <div className="leading-tight overall-box rounded bg-lilac-400 p-3 select-none text-sm text-black leading-snug">{overall}</div>  
               <div className="leading-tight takeaway-box rounded bg-lilac-100 p-3 select-none text-sm text-black leading-snug shadow-sm mt-2 mb-6">{takeAway}</div>               
             </div>

@@ -144,8 +144,9 @@ export default function ScenarioPlayer() {
             <ScenarioCard
               moduleId={moduleId}
               scenarioId={currentScenarioData.id}
+              title={currentScenarioData.title}
               prompt={currentScenarioData.prompt}
-              responses={currentScenarioData.responses.map(r => ({ id: r.id, text: r.text }))}
+              responses={currentScenarioData.responses.map(r => ({ id: r.id, title: r.title, text: r.text }))}
               expertRationales={isRevealed ? currentScenarioData.responses : undefined}
               totalScenarios={moduleScenarios.length}
               overall={currentScenarioData.overall}
