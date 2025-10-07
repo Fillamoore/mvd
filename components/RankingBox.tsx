@@ -25,9 +25,12 @@ export default function RankingBox({ responseId, type }: RankingBoxProps) {
   const getBackgroundColor = (ranking: number | null | undefined) => {
     if (ranking === null || ranking === undefined) return 'bg-gray-100 text-gray-400';
     switch (ranking) {
-      case 1: return 'bg-rating-gold';
-      case 2: return 'bg-rating-silver';
-      case 3: return 'bg-rating-bronze';
+      case 1: return 'bg-gradient-to-br from-[#FFF3C1] via-[#FFd700] to-[#c9a833]' 
+      //case 1: return 'bg-rating-gold';
+      case 2: return 'bg-gradient-to-br from-[#FFFFFF] via-[#D3D3D3] to-[#A8A8A8]'
+      //bg-rating-silver';
+      case 3: return 'bg-gradient-to-br from-[#FFC280] via-[#CD7F32] to-[#804A00]'
+      // bg-rating-bronze';
       //case 4: return 'bg-green-100 text-green-700';
       //case 5: return 'bg-green-200 text-green-800';
       default: return 'bg-gray-100 text-gray-400';
@@ -37,7 +40,7 @@ export default function RankingBox({ responseId, type }: RankingBoxProps) {
   return (
     <div
 className={`
-      w-4 h-4 flex items-center justify-center
+      w-5 h-5 flex items-center justify-center
       border-1 border-gray-500 rounded font-bold
       transition-colors duration-200 ease-in-out
       ${getBackgroundColor(rankingValue)}

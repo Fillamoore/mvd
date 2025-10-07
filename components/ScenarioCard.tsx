@@ -265,7 +265,7 @@ export default function ScenarioCard({
                   <div className="pl-1 pt-[4px] leading-tight select-none text-black">
                     {response.text}
                     <span
-                      className="float-right ml-2 mt-[2px] mb-[2px] max-h-[24px] overflow-hidden"
+                      className="float-right ml-2 mt-[2px] max-h-[24px] overflow-hidden"
                       onClick={(e) => {
                         e.stopPropagation();
                         if (!readonly && !isRevealed) {
