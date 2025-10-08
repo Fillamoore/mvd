@@ -238,7 +238,7 @@ export default function ScenarioCard({
           style={promptWidthStyle}
         >
           <div className = "pb-2 text-lg font-semibold leading-tight select-none text-gray-800">{scenarioId}. {title}</div>
-          <div className = "mx-[-30px] text-lg font-semibold leading-tight select-none text-gray-700 border-b border-gray-500"></div>
+          <div className = "mx-[-2px] text-lg font-semibold leading-tight select-none text-gray-700 border-b border-gray-500"></div>
           <h3 className="pt-2 text-sm leading-tight select-none text-black" >{prompt}</h3>
         </div>
         
@@ -270,7 +270,7 @@ export default function ScenarioCard({
                         <div className="pb-2 text-base text-bold leading-tight select-none text-black">
                             {response.id}: {response.title}
                         </div>
-                        <div className = "mx-[-30px] text-lg font-semibold leading-tight select-none text-gray-700 border-b border-gray-400"></div>
+                        <div className = "mx-[-2px] text-lg font-semibold leading-tight select-none text-gray-700 border-b border-gray-400"></div>
 
                         <div className="pt-2 leading-tight select-none text-black">
                             {response.text}
