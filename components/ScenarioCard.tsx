@@ -1,4 +1,5 @@
-// components/ScenarioCard.tsx - COMPLETE UPDATED VERSION
+// components/ScenarioCard.tsx
+
 'use client';
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
@@ -57,7 +58,7 @@ export default function ScenarioCard({
     userRankingDirections, 
     isRevealed,
     currentScenario,
-    shouldComplete // ADDED: Completion trigger flag
+    shouldComplete
   } = useLocalStore(useShallow((state) => {
     const currentScenario = state.pickUpAndPutDown[moduleId.toString()]?.currentScenario;
     return {
@@ -65,14 +66,14 @@ export default function ScenarioCard({
       userRankingDirections: (currentScenario?.userRankingDirections || EMPTY_RANKING_DIRECTIONS) as { [key: string]: boolean },
       isRevealed: currentScenario?.isRevealed || false,
       currentScenario: currentScenario,
-      shouldComplete: currentScenario?.shouldComplete || false // ADDED
+      shouldComplete: currentScenario?.shouldComplete || false 
     };
   }));
 
   const { 
     rankScenario, 
     revealScenario, 
-    setExpertRankings, // This should be available here
+    setExpertRankings, 
     completeCurrentScenario,
     setNextScenario 
   } = useLocalStore();
@@ -108,11 +109,8 @@ export default function ScenarioCard({
     };
   } 
 
-  // ADDED: Handle scenario completion with useCallback to avoid recreating on every render
   const handleScenarioCompletion = useCallback(() => {
     if (!currentScenario || !expertRationales) return;
-
-    // Calculate expert rankings map
     const expertRankingsMap: { [key: string]: number } = {};
     expertRationales.forEach(response => {
       expertRankingsMap[response.id] = response.expertRanking;
@@ -142,7 +140,6 @@ export default function ScenarioCard({
     }
   }, [currentScenario, expertRationales, calculateScore, isLastScenario, scenarioId, completeCurrentScenario, setNextScenario]);
 
-  // ADDED: Effect to handle completion when triggered by DesktopControlButton
   useEffect(() => {
     if (shouldComplete && currentScenario && isRevealed) {
       handleScenarioCompletion();
@@ -161,7 +158,6 @@ export default function ScenarioCard({
     return unsubscribe;
   }, []);
 
-  // In ScenarioCard.tsx - SET EXPERT RANKINGS WHEN SCENARIO LOADS
   useEffect(() => {
     if (isHydrated && expertRationales) {
       const expertRankingsMap: { [key: string]: number } = {};
@@ -180,7 +176,7 @@ export default function ScenarioCard({
       let newDirection: boolean = currentDirection;
       
       if (currentValue === null) {
-        newValue = 1;
+        newValue = 3;
         newDirection = true;
       } else if (currentDirection) {
         if (currentValue < 3) {
@@ -227,7 +223,7 @@ export default function ScenarioCard({
   */}
 
   const { mobile, desktop } = getVaryWidth(prompt.length);
-  const isMobile = window.innerWidth < 768; // or use a hook like useMediaQuery
+  const isMobile = window.innerWidth < 768; 
   const promptWidthStyle = {width: `${isMobile ? mobile : desktop}%`};
   const containerRight = isMobile ? 'p-1' : 'pr-40';
   const containerLeft = isMobile ? 'py-1 pl-2 pr-1' : 'pl-40';
@@ -263,13 +259,13 @@ export default function ScenarioCard({
                 className={`response-pair-container ml-auto ${containerRight}`} 
                 style={widthStyle}
               >  
+
                 <div
                     className="response-card text-sm bg-gray-50 rounded p-3 cursor-pointer transition-all duration-200 hover:shadow-md relative min-h-[32px] overflow-hidden"
                     onClick={() => handleResponseClick(response.id)}
                 >
                     
-                    <div className="flex flex-col"> {/* pr-8"> */} 
-                        
+                    <div className="flex flex-col">  
                         <div className="pb-2 text-base text-bold leading-tight select-none text-black mb-[2px]">
                             {response.id}: {response.title}
                         </div>
@@ -279,15 +275,7 @@ export default function ScenarioCard({
                         </div>
                     </div>
                     
-                    <div
-                        className="absolute bottom-1 right-1 max-h-[24px]"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            if (!readonly && !isRevealed) {
-                                handleResponseClick(response.id);
-                            }
-                        }}
-                    >
+                    <div className="absolute bottom-1 right-1 max-h-[24px]">  
                         <RankingBox responseId={response.id} type="user" />
                     </div>
                     
