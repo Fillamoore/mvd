@@ -54,7 +54,7 @@ export default function DesktopControlButton() {
   const buttonLabel = isRevealed ? 'Next scenario' : 'Reveal expert rankings';
 
   return (
-    <div className="fixed bottom-9 right-9 z-50">
+    <div className="fixed bottom-9 right-12 z-50">
       <button
         onClick={handleButtonClick}
         className={`

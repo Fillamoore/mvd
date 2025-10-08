@@ -231,6 +231,7 @@ export default function ScenarioCard({
   const promptWidthStyle = {width: `${isMobile ? mobile : desktop}%`};
   const containerRight = isMobile ? 'p-1' : 'pr-40';
   const containerLeft = isMobile ? 'py-1 pl-2 pr-1' : 'pl-40';
+  const summaryPadding = isMobile ? 'py-1 pl-2 pr-1' : 'px-40';
 
   return (
     <>
@@ -267,7 +268,7 @@ export default function ScenarioCard({
                     onClick={() => handleResponseClick(response.id)}
                 >
                     
-                    <div className="flex flex-col pr-8"> 
+                    <div className="flex flex-col"> {/* pr-8"> */} 
                         
                         <div className="pb-2 text-base text-bold leading-tight select-none text-black mb-[2px]">
                             {response.id}: {response.title}
@@ -343,16 +344,13 @@ export default function ScenarioCard({
 
 
           {isRevealed && (
-            <div className={`score-container ${containerRight} mt-6 flex flex-col justify-end transition-all duration-500 delay-1000 ${
-              isRevealed ? 'opacity-100' : 'opacity-0'
-            }`}>
-              {/*
+            <div className={`score-container ${summaryPadding} mt-6 flex flex-col justify-end transition-all duration-500 delay-1000 ${isRevealed ? 'opacity-100' : 'opacity-0'}`}>
               <div className="flex justify-end">
                 <div className="score-box w-fit border border-gray-400 rounded px-1 py-1 bg-gray-200">
                   <div className="text-sm text-gray-800">{score}%</div>
                 </div>
               </div>
-              */} 
+               
               <div className="leading-tight overall-box rounded bg-lilac-400 p-3 select-none text-sm text-black leading-snug">{overall}</div>  
               <div className="leading-tight takeaway-box rounded bg-lilac-100 p-3 select-none text-sm text-black leading-snug shadow-sm mt-2 mb-6">{takeAway}</div>               
             </div>
