@@ -234,10 +234,11 @@ export default function ScenarioCard({
       <div className= {`scenario-card scenario-fade-in ${containerLeft}`}>
 
         <div
-          className="prompt-card bg-lilac-400 rounded p-3 mb-4" 
+          className="prompt-card bg-lilac-400 rounded py-2 px-3 mb-4" 
           style={promptWidthStyle}
         >
-          <div className = "pb-1 text-lg font-semibold leading-tight select-none text-gray-800 border-b border-gray-400">{scenarioId}. {title}</div>
+          <div className = "pb-2 text-lg font-semibold leading-tight select-none text-gray-800">{scenarioId}. {title}</div>
+          <div className = "mx-[-30px] text-lg font-semibold leading-tight select-none text-gray-700 border-b border-gray-500"></div>
           <h3 className="pt-2 text-sm leading-tight select-none text-black" >{prompt}</h3>
         </div>
         
@@ -266,10 +267,11 @@ export default function ScenarioCard({
                 >
                     
                     <div className="flex flex-col">  
-                        <div className="pb-1 text-base text-bold leading-tight select-none text-black border-b border-gray-400">
+                        <div className="pb-2 text-base text-bold leading-tight select-none text-black">
                             {response.id}: {response.title}
                         </div>
-                        
+                        <div className = "mx-[-30px] text-lg font-semibold leading-tight select-none text-gray-700 border-b border-gray-400"></div>
+
                         <div className="pt-2 leading-tight select-none text-black">
                             {response.text}
                         </div>
