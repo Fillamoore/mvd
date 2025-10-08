@@ -52,11 +52,11 @@ export default function MobileScenariosPlayerFooter({
               title="Reveal Expert Rankings"
             >
               <Image
-                src="/mobile-reveal-icon.png"
+                src="/reveal-icon.png"
                 alt="Reveal"
                 width={24}
                 height={24}
-                className="w-6 h-6"
+                className="w-6 h-6 invert"
                 priority={true} // Preload important images
                 loading="eager" // Load immediately
               />
@@ -73,11 +73,11 @@ export default function MobileScenariosPlayerFooter({
               title="Next Scenario"
             >
               <Image
-                src="/mobile-next-icon.png"
+                src="/next-icon.png"
                 alt="Next"
                 width={24}
                 height={24}
-                className="w-6 h-6"
+                className="w-6 h-6 invert"
                 priority={true} // Preload important images
                 loading="eager" // Load immediately
               />
