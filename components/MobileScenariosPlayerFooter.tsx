@@ -31,11 +31,11 @@ export default function MobileScenariosPlayerFooter({
           title="Master View"
         >
           <Image
-            src="/mobile-master-icon.png"
+            src="/master-icon.png"
             alt="Master View"
             width={24}
             height={24}
-            className="w-6 h-6"
+            className="w-6 h-6 invert"
             priority={true} // Preload important images
             loading="eager" // Load immediately
           />
