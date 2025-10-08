@@ -22,11 +22,11 @@ export default function MobileMasterViewMenu() {
           title="Back to Scenarios"
         >
           <Image
-            src="/mobile-back-icon.png"
+            src="/back-icon.png"
             alt="Back to Scenarios"
             width={24}
             height={24}
-            className="w-6 h-6" 
+            className="w-6 h-6 invert" 
             priority={true} // Preload important images
             loading="eager" // Load immediately
           />
