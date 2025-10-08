@@ -50,10 +50,10 @@
     <div class="max-w-screen-2xl mx-auto p-3">
         <header class="text-center mb-3">
             <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-0">
-                Knowhow Pilot Performance Dashboard
+                qikr PoC Dashboard
             </h1>
             <p class="text-sm text-gray-600">
-                2-Week Scenario-Based Knowledge Capture and Transfer Project Status
+                Scenario-Based Knowhow Capture and Disseminate 
             </p>
         </header>
 
@@ -106,7 +106,7 @@
             
             <!-- Chart 1: Scenario Capture Over Time -->
             <div class="card">
-                <h3 class="text-md font-bold text-gray-700 mb-2 border-b pb-1">Scenario Capture Rate (Daily Progress)</h3>
+                <h3 class="text-md font-bold text-gray-700 mb-2 border-b pb-1">Scenarios Captured</h3>
                 <div class="chart-container">
                     <canvas id="scenarioChart"></canvas>
                     <script>
@@ -128,7 +128,7 @@
                             options: {
                                 responsive: true,
                                 maintainAspectRatio: false,
-                                plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 10, padding: 5 } } },
+                                plugins: { legend: { display: false, position: 'bottom', labels: { boxWidth: 10, padding: 5 } } },
                                 scales: { x: { display: true }, y: { display: true } }
                             }
                         });
@@ -138,7 +138,7 @@
             
             <!-- Chart 2: User Engagement (Daily Submissions) -->
             <div class="card">
-                <h3 class="text-md font-bold text-gray-700 mb-2 border-b pb-1">Total Daily Decision Submissions</h3>
+                <h3 class="text-md font-bold text-gray-700 mb-2 border-b pb-1">Scenarios Completed</h3>
                 <div class="chart-container">
                     <canvas id="engagementChart"></canvas>
                     <script>
@@ -178,7 +178,7 @@
                     <p class="text-xs text-gray-400">Remaining to be vetted: 15</p>
                 </div>
                 <div class="card">
-                    <p class="text-sm font-semibold text-gray-500">Expert Vetting Completion</p>
+                    <p class="text-sm font-semibold text-gray-500">Expert fitting Completion</p>
                     <p class="metric-value text-yellow-600">92<span class="text-xl font-normal">%</span></p>
                     <div class="w-full bg-gray-200 rounded-full h-1.5 mt-1">
                         <div class="bg-yellow-500 h-1.5 rounded-full" style="width: 92%"></div>
@@ -244,7 +244,7 @@
                 </div>
                 <div class="card">
                     <p class="text-sm font-semibold text-gray-500">Senior Expert Time Utilized</p>
-                    <p class="metric-value text-red-600">80<span class="text-xl font-normal"> hrs</span></p>
+                    <p class="metric-value text-green-600">80<span class="text-xl font-normal"> hrs</span></p>
                     <p class="text-xs text-gray-400">Within the allocated 100-hour budget.</p>
                 </div>
                 <div class="card">

@@ -237,8 +237,8 @@ export default function ScenarioCard({
           className="prompt-card bg-lilac-400 rounded p-3 mb-4" 
           style={promptWidthStyle}
         >
-          <p className = "mb-2 text-lg font-semibold leading-tight select-none text-gray-800">{scenarioId}. {title}</p>
-          <h3 className="text-sm leading-tight select-none text-black" >{prompt}</h3>
+          <div className = "pb-1 text-lg font-semibold leading-tight select-none text-gray-800 border-b border-gray-400">{scenarioId}. {title}</div>
+          <h3 className="pt-2 text-sm leading-tight select-none text-black" >{prompt}</h3>
         </div>
         
         <div className="responses-container select-none space-y-4">
@@ -266,11 +266,11 @@ export default function ScenarioCard({
                 >
                     
                     <div className="flex flex-col">  
-                        <div className="pb-2 text-base text-bold leading-tight select-none text-black mb-[2px]">
+                        <div className="pb-1 text-base text-bold leading-tight select-none text-black border-b border-gray-400">
                             {response.id}: {response.title}
                         </div>
                         
-                        <div className="leading-tight select-none text-black">
+                        <div className="pt-2 leading-tight select-none text-black">
                             {response.text}
                         </div>
                     </div>
@@ -286,7 +286,7 @@ export default function ScenarioCard({
                     className={`expert-rationale-container ${isRevealed ? 'revealed' : ''}`}
                     style={{ marginTop: '2px' }}
                   >
-                    <div className="expert-rationale bg-lilac-400 rounded p-2 flex relative">
+                    <div className="expert-rationale bg-lilac-400 rounded p-3 flex relative">
                       
                       <div className="flex-1 mr-2 pr-[28px]">
                         <p className="leading-tight select-none text-sm text-black">{expertResponse.expertRationale}</p>
