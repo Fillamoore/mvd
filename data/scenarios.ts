@@ -6332,7 +6332,3111 @@ export const scenarios: Scenario[] = [
     ],
     overall: "A is the most professional: it accepts the critique of 'old' but strategically re-frames the familiar methodology as a strength for client adoption and risk management. B is too technical, and C is too reactive.",
     takeAway: "When a solution is casually dismissed as 'outdated,' strategically re-frame the familiar framework as a strength for client buy-in, risk reduction, and faster adoption."
-  }
+  },
+
+  {
+    id: 1,
+    moduleId: 5,
+    title: "The Gas Storage Dilemma",
+    prompt: "A large German utility client is on the hook to secure massive winter gas volumes, but the spot prices are running high, like trying to buy tickets to a sold-out concert. Your analysis suggests waiting two weeks might save 8 percent. However, the client's Chief Risk Officer is extremely risk-averse, viewing a failure to fill storage as a political and professional disaster. Your Partner wants a recommendation that sells well.",
+    responses: [
+      {
+        id: "A",
+        title: "Wait and Watch",
+        text: "Advise the client to execute 50 percent of the required purchase now to appease the CRO and secure a baseline. Then, establish an explicit, data-driven trigger price and date for purchasing the remaining 50 percent, linking the decision directly to current volatility metrics. Present this as a smart, phased approach.",
+        expertRationale: "This is a balanced risk-management approach. It acknowledges the political pressure (CRO satisfaction) while preserving optionality to capture the suggested savings. It transforms a binary choice into a systematic decision-making process, which executives appreciate. The phased move feels responsible.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "Buy Now and De-risk",
+        text: "Recommend immediate full purchase, emphasizing the non-negotiable political and regulatory pressure to ensure supply. Frame the 8 percent potential saving as 'speculation' against 'security of supply,' a narrative the CRO can easily champion internally. Suggest a hedging strategy to offset future price drops.",
+        expertRationale: "While safe, this response prioritizes internal politics over cost optimization, which may be perceived as weak advisory. Buying early is the low-risk default. The consultant avoids hard advice and misses an opportunity to help the client capture value, limiting their perceived contribution to basic compliance.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Model the Savings Aggressively",
+        text: "Lead with the 8 percent projected saving, framing it as the 'consultant value' and a 'fiduciary duty' to shareholders. Present the two-week wait as a calculated risk with a high expected return, complete with detailed probabilistic modeling of price outcomes. Offer to personally manage the trade monitoring and execution window.",
+        expertRationale: "This is a bold, high-stakes move that could fail spectacularly. It correctly identifies the value but fails to respect the client's internal risk tolerance or political context. Over-promising on high returns exposes the consultant to the full downside if prices spike, eroding credibility instantly.",
+        expertRanking: 1
+      }
+    ],
+    overall: "The 'best' approach depends entirely on the CRO's true risk appetite. However, option C is too aggressive and ignores the political backdrop. Option A provides a responsible compromise by securing a floor while maintaining a value-capturing window, making it the most professionally defensible advice.",
+    takeAway: "In security-of-supply contexts, always anchor your advice to risk mitigation first, and savings second."
+  },
+  {
+    id: 2,
+    moduleId: 5,
+    title: "The Wind Farm Permitting Drag",
+    prompt: "Your client, a major French developer, is frustrated because the permitting process for their flagship offshore wind project is moving at the speed of bureaucracy through treacle. The bottleneck is a small, regional environmental agency. Your internal team lead suggests escalating the issue directly to the national minister’s office, bypassing the local team completely. This violates an unwritten rule of French administration.",
+    responses: [
+      {
+        id: "A",
+        title: "Bypass with Political Cover",
+        text: "Draft a concise, politically neutral briefing document that highlights the project's strategic national importance and the specific regulatory roadblock. Present it to the Manager, recommending they seek quiet support from the National Trade Association, which can then 'casually' mention the issue to the ministry, creating top-down pressure.",
+        expertRationale: "This is a shrewd, effective move. It escalates without getting the consulting team's fingerprints on the direct transgression. Using the Trade Association leverages existing political conduits and applies the necessary pressure without overtly violating the unwritten rule of local engagement first. This preserves local relationships.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Direct Diplomatic Engagement",
+        text: "Reject the escalation proposal. Instead, organize an informal working lunch for the client's head of regulatory affairs, your Partner, and the head of the regional agency. The goal is to 'humanize' the project, understand their specific, unstated concerns (e.g., resources, technical skills), and offer consulting support to clear the specific file backlog.",
+        expertRationale: "This respects the local process and attempts a relationship fix, a classic consulting move. However, given the project's urgency and scale, a simple lunch might be too slow. It risks exposing the client to further delays while offering too much free work in the hope of goodwill, which may not translate to speed.",
+        expertRanking: 2
+      },
+      {
+        id: "C",
+        title: "Escalate Internally",
+        text: "Follow the team lead's advice and draft the email for direct submission to the ministerial level, arguing that the regional agency's delay constitutes a failure of national policy execution. Insist that the client's executive sends the email, so the political fallout rests entirely on their shoulders, protecting the consulting firm.",
+        expertRationale: "This is overtly aggressive and shows poor partnership behavior. While it shifts the risk, it sacrifices the long-term consulting relationship by pushing the client to break an unwritten rule so visibly. It also generates bad blood with the regional agency, making future projects impossible to permit smoothly.",
+        expertRanking: 3
+      }
+    ],
+    overall: "Escalation is needed, but C is too blunt and B is too slow. A wins by deploying indirect, strategic pressure via an established, neutral channel (the Trade Association). This achieves the political goal without the immediate, visible offence.",
+    takeAway: "When breaching an unwritten rule, use an indirect or 'neutral' vector to apply pressure."
+  },
+  {
+    id: 3,
+    moduleId: 5,
+    title: "Forecasting the Carbon Sink",
+    prompt: "A global investor needs a five-year forecast for the EU Carbon Price (ETS) to greenlight a billion-euro investment in a low-carbon technology. The current market is jittery, like a stressed teenager, due to conflicting signals from the European Parliament and Council negotiations. Your junior analyst's model output is 90 EUR/ton, while three major investment banks are publicly forecasting 75-80 EUR/ton. Your Manager insists you stand by the higher number.",
+    responses: [
+      {
+        id: "A",
+        title: "Compromise the Model",
+        text: "Adjust the model's input parameters (e.g., macro-economic growth or carbon border adjustment mechanism assumptions) to bring the final forecast down to 82 EUR/ton, closer to the market consensus but still justifying a premium. This demonstrates flexibility and prevents the client from feeling you are an outlier. Do not document the specific adjustment.",
+        expertRationale: "This is intellectually dishonest and dangerous. Altering the model output to fit consensus destroys the value of independent analysis and introduces unquantified bias. While it avoids being an outlier, it risks catastrophic reputational damage if the client later finds out the 'fudge factor' or if the price moves drastically.",
+        expertRanking: 3
+      },
+      {
+        id: "B",
+        title: "Present the Range and Rationale",
+        text: "Present the firm's 90 EUR/ton figure as the base case, but explicitly compare it to the 75-80 EUR/ton consensus. Use the core of the presentation to articulate precisely *why* your model differs (e.g., more aggressive phase-out assumptions, stronger political resolve). Frame the difference as 'Our View on Policy Momentum.'",
+        expertRationale: "A strong, defensible position. It preserves intellectual integrity by standing by the model while proactively addressing the conflict with the market. It shows maturity by presenting a range and giving the client the full picture, allowing them to make an informed, risk-adjusted decision. It avoids the bias of consensus chasing.",
+        expertRanking: 2
+      },
+      {
+        id: "C",
+        title: "Validate the Differential",
+        text: "Do an emergency, late-night deep dive on the three investment bank models to find a key underlying difference (e.g., one uses a more bearish recession scenario). If the firm's model is robust, present 90 EUR/ton, but open with the specific, identified weakness in the consensus view, turning the conflicting signal into a competitive advantage.",
+        expertRationale: "This is the 'consultant-as-expert' ideal. By immediately attempting to deconstruct the opposition's logic, the team provides maximum value: not just a number, but a *reason* why that number is different. This builds tremendous trust, demonstrates analytical superiority, and justifies the premium fee. The team owns their view.",
+        expertRanking: 1
+      }
+    ],
+    overall: "Option A sacrifices integrity for convenience. Option B is responsible. Option C is the highest-value move because it doesn't just present a number, it actively validates and defends the number against competitors, effectively turning a risk into a compelling narrative for the client.",
+    takeAway: "Never hide an outlier view; instead, aggressively validate and explain the differential."
+  },
+  {
+    id: 4,
+    moduleId: 5,
+    title: "The National Champion Subsidy",
+    prompt: "Your team is advising a Polish state-owned power generation company on restructuring. Your analysis shows that a recently announced, heavily subsidized scheme for 'national champions' in renewable manufacturing is a dead end due to EU state aid rules; it's a massive legal red flag waiting to happen, like a poorly built dam. The client's CEO, however, is publicly staking their political capital on winning this subsidy for domestic prestige. Your Partner wants to 'soft-pedal' the legal risk.",
+    responses: [
+      {
+        id: "A",
+        title: "The Soft Warning",
+        text: "Create a 'Risk Map' slide that positions 'EU State Aid Challenge' as one of five medium-level risks, alongside supply chain delays and talent shortages. Use a green-yellow-red scale but keep the State Aid box yellow. In the discussion, mention it briefly as a 'regulatory complexity' that requires 'proactive monitoring' without using the word 'illegal.'",
+        expertRationale: "This is overly cautious and potentially unethical. By deliberately downplaying a known, high-consequence legal risk to satisfy the Partner's political agenda, the team is putting the client at massive future financial and legal risk. The client hired you for the truth, not a comfortable lie.",
+        expertRanking: 3
+      },
+      {
+        id: "B",
+        title: "The Factual Disclaimer",
+        text: "Present the analysis clearly, showing the massive value generated by the subsidy, but add a separate, mandatory 'Disclaimer' section titled 'State Aid Risk: Conditions for Compliance.' Detail the specific, quantifiable breaches of EU law and propose a 'Plan B' operating model that the client can pivot to *if* the subsidy is overturned. Do not soft-pedal the probability.",
+        expertRationale: "This is the most responsible, professional, and shrewd consulting choice. It delivers the difficult truth (the legal risk) while also offering a practical solution (Plan B). It protects the firm legally and reputationally while allowing the CEO to proceed with their political play, knowing the downside is managed. It frames the advice as risk mitigation.",
+        expertRanking: 1
+      },
+      {
+        id: "C",
+        title: "Escalate to Legal Council",
+        text: "Immediately pause work on the operating model and inform the Partner that this is an unmanageable risk to the firm. Demand that the Partner requires the client's General Counsel to formally sign off on a memo acknowledging the full State Aid risk before proceeding with the current strategy. Shift the liability entirely to the client's internal legal team.",
+        expertRationale: "While defensible, this is too rigid and relationship-damaging. It shifts the liability but stalls the project, irritating the CEO who is under political pressure. The client expects the consulting team to provide integrated business and risk advice, not simply deferring to Legal and ceasing work entirely.",
+        expertRanking: 2
+      }
+    ],
+    overall: "A is negligent, and C is adversarial. B is the gold standard: deliver the bad news and a plan to mitigate it simultaneously. This respects the client's political reality while upholding the consultant's duty to tell the truth about a high-consequence risk.",
+    takeAway: "Always deliver hard truths with a pre-packaged, actionable Plan B."
+  },
+  {
+    id: 5,
+    moduleId: 5,
+    title: "The Geopolitical Supply Shock",
+    prompt: "Following a sudden geopolitical flare-up, the price of a critical component for a Spanish solar developer's battery storage project has spiked 40 percent overnight, like a jump scare in a movie. The client’s COO is panicked, demanding an immediate strategy that can lock in the old price. Your Manager says the only option is to renegotiate the client contract, shifting the cost to the end consumer, which will damage the client’s public image.",
+    responses: [
+      {
+        id: "A",
+        title: "Seek Alternative Sourcing",
+        text: "Launch an urgent, 48-hour global sourcing sprint to find equivalent components from a politically stable region, focusing on suppliers with pre-existing, long-term inventory contracts. If successful, this negates the need for a price increase. Present the COO with a clear 'Sourcing Sprint Plan' with go/no-go decision points, avoiding the public image hit.",
+        expertRationale: "This is the most value-accretive move. Instead of immediately moving to cost-transfer, it tries to solve the fundamental problem through operational ingenuity, which is what the client truly needs. It shows proactive leadership and protects the client's brand. This is the advisory mindset at its best.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Immediate Price Transfer",
+        text: "Follow the Manager's advice and immediately draft communications for the client to announce a contract revision based on the 'unforeseen force majeure event.' Provide a 'media defense' playbook that blames the geopolitical situation. Stress that a delayed decision will only lead to higher costs later, minimizing the political fallout by acting fast.",
+        expertRationale: "This is a quick, decisive, but low-value strategy. It fixes the financial problem by externalizing the cost and political risk. While pragmatic, it fails the test of consulting ingenuity by immediately resorting to the most obvious and least customer-friendly solution, damaging the client's future sales pipeline.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Staggered Price Increase",
+        text: "Advise the client to absorb half the cost increase internally as a 'goodwill gesture' to consumers, and then implement a smaller, staged price increase over the next three months. This blunts the public relations damage by sharing the burden and avoiding a 40 percent spike announcement, buying time for a long-term sourcing solution.",
+        expertRationale: "This is a sound compromise that manages the emotional client reaction and the political risk. It shows commercial acumen and PR sensitivity. While A is better because it avoids the cost increase entirely, C is a strong second-best choice for minimizing the impact when immediate sourcing is not possible.",
+        expertRanking: 2
+      }
+    ],
+    overall: "Options B and C accept the cost increase as inevitable. A attempts to solve the cost problem through a high-intensity operational response. The consulting value is highest when the team finds a way to circumvent the cost shock entirely, protecting both the client's margins and reputation.",
+    takeAway: "Never accept a cost shock as inevitable until all operational workarounds are exhausted."
+  },
+  {
+    id: 6,
+    moduleId: 5,
+    title: "The Decommissioning Timeline",
+    prompt: "An Italian client must decommission a legacy coal plant by 2028, but the local mayor is aggressively lobbying for an extension until 2030 to protect local employment, which is as politically toxic as handling nuclear waste. Your technical analysis shows the plant's structural integrity makes the 2030 date highly unsafe. Your client sponsor is sympathetic to the local community but terrified of the potential litigation risk.",
+    responses: [
+      {
+        id: "A",
+        title: "Frame as Technical Necessity",
+        text: "Draft a technical memo, co-signed by an independent engineering firm, that focuses solely on the safety risks of extended operation (structural, operational, environmental). Present the 2028 date as a non-negotiable engineering and regulatory obligation, eliminating the political 'choice' aspect from the client's hands. Offer to present this to the Mayor's office personally.",
+        expertRationale: "This attempts to depoliticize a political problem by using an external expert as a shield. While it protects the client, it risks alienating the local stakeholders by presenting a cold, technical ultimatum without an employment solution, potentially leading to social unrest and further delays to the actual shutdown.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "Propose a Just Transition Deal",
+        text: "Acknowledge the community's employment concerns directly. Advise the client to announce the 2028 shutdown date *alongside* a commitment to fund a local 'Energy Transition Skills Centre,' offering retraining for 80 percent of the plant's workforce in renewables and storage roles. This reframes the conversation from 'shutdown' to 'future investment.'",
+        expertRationale: "This is a high-level, strategic political solution. It addresses the Mayor's core emotional and political need (jobs) while securing the client's necessary technical outcome (2028 shutdown). This move demonstrates a mastery of the socio-economic context, turning an emotional standoff into a mutually beneficial investment for the region.",
+        expertRanking: 1
+      },
+      {
+        id: "C",
+        title: "Blame the Regulator",
+        text: "Advise the client to issue a statement that the 2028 deadline is an immutable mandate from the national regulator, placing the blame outside the company's control. Avoid direct engagement with the Mayor, suggesting that they must direct their lobbying efforts to the federal government instead of the client. Keep the firm's role strictly to technical compliance.",
+        expertRationale: "This is a low-courage, risk-avoidant choice. While it protects the client from political heat, it makes the client look passive and uncaring toward its local community. This destroys trust and makes future permitting for new projects in that region highly difficult, showing a failure of long-term stakeholder management.",
+        expertRanking: 3
+      }
+    ],
+    overall: "A is a technical answer to a political problem, and C is a political dodge. B is the superior strategic move because it directly addresses the stakeholder's core concern (employment) while securing the client's primary technical goal (safe closure).",
+    takeAway: "A political problem requires a political (i.e., relational and economic) solution, not a technical one."
+  },
+  {
+    id: 7,
+    moduleId: 5,
+    title: "The Distributed Grid Fiasco",
+    prompt: "A Nordic Transmission System Operator (TSO) client is grappling with a grid that feels like a poorly maintained Christmas tree: highly distributed and unpredictable due to massive rooftop solar uptake. Your project is two weeks behind schedule because the client's legacy IT systems, managed by a notoriously prickly internal team, are refusing to share real-time data needed for your AI-driven network planning model. Your Partner is pressuring you to deliver a model, ready or not.",
+    responses: [
+      {
+        id: "A",
+        title: "Offer a Data 'Bailout'",
+        text: "Contact the prickly IT team lead directly and offer to assign your most senior data engineer to 'embed' with them for three days. Position this not as a data grab, but as a technical resource exchange where your expert helps them with their own backlog of data extraction requests, building trust to get the necessary files as a quid pro quo.",
+        expertRationale: "This is the most effective approach for internal client friction. It employs the 'give-to-get' heuristic, solving the IT team's problem first to unlock your own. It turns a roadblock into a collaborative opportunity, demonstrating empathy and problem-solving beyond the scope of work. It gets the data without creating political enemies.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Formal Escalation Letter",
+        text: "Draft a formal, two-paragraph letter to the TSO's Chief Information Officer (CIO) detailing the data blockage, its impact on the project timeline, and the resulting financial risk to the project budget. Insist that the client sponsor sends the letter, forcing the CIO to break the logjam and protect the project's financial integrity.",
+        expertRationale: "This is a brutal, high-impact escalation move that should be reserved for true emergencies. While it will likely get the data, it destroys the team's relationship with the IT department, creating a lasting negative memory that could sabotage future projects or require a massive relationship repair effort.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Substitute Data & Proceed",
+        text: "Do not engage the IT team further. Instead, substitute the missing real-time data with historical data and industry-standard proxy estimates. Complete the model, noting the data limitation as a high-priority risk in the executive summary, stressing that the model's accuracy is compromised but available 'on time' per the Partner's demand.",
+        expertRationale: "This satisfies the Partner's deadline but exposes the firm to massive liability if the model produces poor results due to proxy data, which is a significant possibility in TSO work. It prioritizes schedule over intellectual honesty and risk, a classic consulting mistake that can lead to reputation damage.",
+        expertRanking: 2
+      }
+    ],
+    overall: "C delivers a risky output, and B destroys relationships. A uses a relationship-driven, technical solution (the 'give-to-get' trade) to solve the problem while enhancing the firm's standing with the internal client teams. This is the shrewdest path to long-term success.",
+    takeAway: "Treat internal client friction as a relationship problem to be solved with resourcefulness, not a technical problem to be solved with escalation."
+  },
+  {
+    id: 8,
+    moduleId: 5,
+    title: "The Investor's Fickle Mandate",
+    prompt: "A large Dutch pension fund hired you to identify green hydrogen investment targets. Halfway through the due diligence, the new ESG Director, who is politically aligned with a different regulatory body, changes the primary screening criterion from 'lowest cost of production' to 'highest potential for immediate local employment,' which is a massive moving of the goalposts. Your Partner is livid and demands you push back hard on this 'emotional' criteria shift.",
+    responses: [
+      {
+        id: "A",
+        title: "The Measured Pushback",
+        text: "Present the analysis based on the *original* mandate (cost), but dedicate a section to the new employment criteria. Show that only one of the original top five targets meets the new criterion. Use a clear visual to show the trade-off: 'Employment vs. Financial Return.' Force the ESG Director to explicitly sign off on the lower financial return in exchange for the political benefit.",
+        expertRationale: "This is a balanced and transparent approach. It honors the original contract while providing the data for the new, political criteria. By quantifying the trade-off, it forces the client to own the decision and its financial consequences, protecting the consulting firm from later blame for the lower returns. Strong accountability management.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "Re-frame the Value Proposition",
+        text: "Do not push back on the criteria shift. Immediately integrate the employment metric into the final model, giving it a 50 percent weighting alongside cost. Advise the Partner that the consulting firm's job is to deliver value based on the client's current priorities, regardless of their source. Re-frame the 'employment dividend' as a crucial 'social license to operate' factor that de-risks the investment, justifying the lower financial return.",
+        expertRationale: "This is the most adaptive and professional response. It recognizes the 'unwritten rule' that the client's priorities, even emotional or political ones, are the true mandate. By quickly adapting and *justifying* the new criteria as a de-risking factor, the team looks flexible, smart, and a true partner to the *current* leadership, winning the ESG Director's favor.",
+        expertRanking: 1
+      },
+      {
+        id: "C",
+        title: "Involve the CEO",
+        text: "Inform the Partner that the ESG Director's unilateral change violates the signed scope of work. Demand a meeting with the CEO and the original project sponsor to clarify the fund's strategy and the project's true mandate. State clearly that the team cannot proceed until the investment's primary objective is formally re-established and contractual terms are revisited.",
+        expertRationale: "This is a high-risk internal political move. While it asserts contractual rights, it makes the consultant look inflexible and bureaucratic, generating unnecessary internal conflict for the client. The Partner will be annoyed that you didn't solve the problem, but instead escalated the internal drama to the top level.",
+        expertRanking: 3
+      }
+    ],
+    overall: "C is adversarial, and A is passive-aggressive. B is the most pragmatic and relationship-focused. The consultant's role is to help the client succeed under their current constraints, not to police the client's internal politics. Embracing the change and justifying it strategically is the best path to continued work.",
+    takeAway: "The client's true mandate is always what the current power structure prioritizes, not what the contract says."
+  },
+  {
+    id: 9,
+    moduleId: 5,
+    title: "The Offshore Grid Congestion",
+    prompt: "An Italian TSO client has an emergency: a new regulation will require them to pay massive congestion fees to offshore wind farms if they cannot connect capacity faster. The problem is a specific 5-kilometre stretch of protected coastal land needed for a new cable, which is guarded like a sleeping dragon by a powerful local environmentalist group and a key opposition politician. Your initial solution is a more expensive, 50-kilometre detour.",
+    responses: [
+      {
+        id: "A",
+        title: "Threaten Public Exposure",
+        text: "Advise the client to use the congestion fee risk as political leverage. Prepare a public-facing document showing that the environmental group's intransigence will cost consumers an extra 100 million EUR in congestion fees over five years. Recommend the client subtly leak this to a friendly newspaper, forcing the politician to choose between the environment and massive consumer costs.",
+        expertRationale: "This is a high-stakes, adversarial tactic that can backfire spectacularly. While effective if managed perfectly, it violates the consultant's 'quiet counsel' role and risks burning relationships with future political stakeholders. It's too aggressive and risks a major PR war that the client may not win.",
+        expertRanking: 3
+      },
+      {
+        id: "B",
+        title: "The Detour as Opportunity",
+        text: "Do not pursue the 5-kilometre route. Fully commit to the 50-kilometre detour. Re-frame the detour to the client as an *opportunity* to connect two smaller, previously stranded renewable projects along the new cable path, thereby turning the extra cost into additional, value-generating grid capacity and winning public approval as a 'connector.'",
+        expertRationale: "This is a low-risk, creative reframing. It solves the core problem (the congestion fine) without engaging in political warfare. By turning the detour into an opportunity for added value, it allows the client to save face and avoids a fight they were unlikely to win against local interests. Pragmatism over confrontation.",
+        expertRanking: 2
+      },
+      {
+        id: "C",
+        title: "Mitigate and Negotiate",
+        text: "Advise the TSO to immediately launch two parallel tracks: 1. Start building the 50km detour (Plan B) to mitigate the fee risk. 2. Simultaneously, launch a specific mitigation plan for the 5km route, offering to fund a massive, visible coastal restoration project for the environmentalists, justifying the necessary trench as a short-term trade-off for long-term grid security.",
+        expertRationale: "This is the most mature and effective solution. It employs the 'two-track' strategy: ensuring the deadline is met (Plan B construction) while actively and creatively attempting to negotiate the optimal path (Plan A mitigation). It acknowledges that money and goodwill can often solve environmental standoffs more effectively than confrontation.",
+        expertRanking: 1
+      }
+    ],
+    overall: "A is too aggressive, and B is too quick to surrender the optimal path. C is the best choice because it employs a critical strategy: de-risk the deadline with a safety option (Plan B) while using strategic negotiation to pursue the best possible outcome (Plan A).",
+    takeAway: "In high-stakes, politically-charged situations, always run a 'mitigate and negotiate' two-track strategy."
+  },
+  {
+    id: 10,
+    moduleId: 5,
+    title: "The Portfolio Rationalization",
+    prompt: "A major UK generator is trying to sell off its aging gas-peaker fleet. Your valuation model shows the assets are worth 15 percent less than the client's internal book value, which is based on an old regulatory regime. The client CFO, who personally signed off on the last valuation, is furious and suggests your model is 'too bearish,' like a cloudy day ruining a parade. Your Partner is hinting that you need to 'find' the missing 15 percent to keep the client happy.",
+    responses: [
+      {
+        id: "A",
+        title: "Re-run the Inputs",
+        text: "Adjust the model's forward assumptions to increase the projected average utilization hours of the peaker plants by 10 percent, arguing that grid volatility will necessitate more peaking power in the future than current consensus suggests. This 'finds' most of the 15 percent gap, aligns with the CFO's book value, and allows the sale process to proceed smoothly.",
+        expertRationale: "This is an intellectual compromise to preserve the relationship. While a justifiable assumption change (since peaking demand is volatile), making it explicitly to match a book value is poor practice. It risks future reputational harm if the underlying assumption is later exposed as being overly optimistic to facilitate a sale.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "Re-frame the Discount",
+        text: "Do not change the valuation. Instead, create a separate slide that re-frames the 15 percent difference as a 'Strategic Marketability Discount' due to new ESG investor pressure and the high cost of future carbon capture retrofits. This honors the valuation while allowing the CFO to blame external factors rather than their internal accounting for the write-down. The difference is real but narratively managed.",
+        expertRationale: "This is the most professional response: it maintains the firm's intellectual integrity by standing by the data while providing a political narrative for the client to save face. It shifts the blame to external, undeniable market forces (ESG, technology), allowing the CFO to accept the truth without admitting internal error. It’s shrewd advisory.",
+        expertRanking: 1
+      },
+      {
+        id: "C",
+        title: "The Partner's Edit",
+        text: "Tell the Partner to provide a signed, written instruction to change the model's key discount rate assumption to match the client's desired output. Present the valuation as the Partner's work and take no personal ownership of the resulting number. Keep a record of the original valuation for internal compliance purposes.",
+        expertRationale: "This is an internal political dodge. While it shields the consultant, it puts the Partner in an awkward position and is overly bureaucratic. The consultant's job is to solve this *for* the Partner and client, not to create a formal liability paper trail that makes everyone look bad. It sacrifices problem-solving for self-preservation.",
+        expertRanking: 3
+      }
+    ],
+    overall: "A is a risky intellectual compromise, and C is an internal political liability dump. B is the optimal response: it keeps the valuation honest while providing a ready-made, commercially astute narrative that helps the client's leader manage the internal political fallout of the lower number.",
+    takeAway: "When delivering bad news, provide the client a plausible, external narrative to save face."
+  },
+  {
+    id: 11,
+    moduleId: 5,
+    title: "The Hydrogen Valley Hype",
+    prompt: "Your client, a Spanish industrial giant, is considering investing in a 'Hydrogen Valley' project touted by the regional government as the new industrial sun. Your due diligence shows the projected hydrogen demand relies on three uncommitted industrial users and a regulatory timeline that feels like a fantasy. The regional minister is meeting the client tomorrow, and your Partner wants you to emphasize the 'geopolitical opportunity' over the 'execution risk.'",
+    responses: [
+      {
+        id: "A",
+        title: "Quantify the Demand Risk",
+        text: "Create a 'Go/No-Go' slide that quantifies the probability of the three key industrial users committing. Present the investment as a staged approach, linking the release of tranches of capital directly to signed supply agreements from those users. This manages the execution risk while still celebrating the geopolitical vision presented by the Minister.",
+        expertRationale: "This is the most responsible advice. It honors the political vision but imposes commercial discipline (linking capital to committed demand). This approach turns a vague promise into a commercially structured deal, protecting the client's capital while moving forward with the project. It shows shrewd, risk-adjusted thinking.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Embrace the Vision",
+        text: "Lead the presentation with the 'vision' and the 'geopolitical opportunity' as the Partner requested. Mention the demand and regulatory issues briefly in the appendix as 'standard execution risks.' Advise the client to make a non-binding but public announcement of their interest to secure first-mover advantage and political goodwill from the Minister, addressing the risk later.",
+        expertRationale: "This prioritizes political signaling over commercial reality, which is exactly what a political player wants to hear. However, it exposes the client to a massive financial commitment based on flimsy demand. The consulting firm acts as a cheerleader rather than a critical advisor, which is a significant dereliction of duty.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "The Independent Assessment",
+        text: "Prepare a detailed 'Red Flags' memo for the Partner only, clearly stating that the project is not viable under current demand conditions. Propose that the Partner meets the Minister one-on-one before the client meeting to 'test the waters' and suggest a more pragmatic, smaller pilot project that achieves political goodwill with reduced capital exposure.",
+        expertRationale: "This is a good, responsible political move, but it still prioritizes the Partner's internal politics over the client's need for a clear path forward. The smaller pilot is a good idea, but waiting for the Partner to execute a soft pushback is slower than A, which provides the client with an immediate, structured decision-making tool.",
+        expertRanking: 2
+      }
+    ],
+    overall: "B is dangerously optimistic, and C is too slow. A delivers the necessary political 'yes' but imposes the crucial commercial 'but' by linking capital release to quantifiable demand. This is the hallmark of valuable advisory.",
+    takeAway: "When political vision outpaces commercial reality, structure the investment into phases linked to commercial milestones."
+  },
+  {
+    id: 12,
+    moduleId: 5,
+    title: "The Pricing Model Leak",
+    prompt: "Your team is running a highly sensitive price elasticity model for a French retail utility. The data is a nuclear launch code for the competition. You discover a junior client staffer, who is close to the pricing decision-maker, has been informally sharing model outputs via WhatsApp with former colleagues at a rival firm. Your Partner insists on discretion and avoiding any internal client conflict, viewing this as a 'minor, cultural slip-up.'",
+    responses: [
+      {
+        id: "A",
+        title: "Security and Ignore",
+        text: "Immediately lock down the model outputs with restricted access and a formal document control policy, citing 'consulting best practice' without mentioning the leak. Inform the Partner that the security issue has been managed but do not confront the junior staffer or raise the issue with their manager to avoid internal conflict.",
+        expertRationale: "This is professional half-measure. It prevents future leaks but fails to address the breach of trust and the potential competitive damage already done. Ignoring the behavior also signals to the junior staffer that this is acceptable, creating a long-term cultural risk for the client's organization.",
+        expertRanking: 3
+      },
+      {
+        id: "B",
+        title: "Discreet Confrontation",
+        text: "Schedule a one-on-one, confidential meeting with the junior staffer. Frame the conversation around the 'professional etiquette' of handling sensitive data, not as an accusation. Explain the legal and reputational risk to *them* personally and the client. Ask them to quietly delete the shared information and offer a professional mentor session to smooth over the awkwardness.",
+        expertRationale: "This is an empathetic, relationship-preserving move. It addresses the bad behavior directly but privately, allowing the staffer to save face and fix the issue without public humiliation. This upholds the 'unwritten rule' of discretion while effectively shutting down the risk. It focuses on remediation, not punishment.",
+        expertRanking: 2
+      },
+      {
+        id: "C",
+        title: "Formal Internal Report",
+        text: "Immediately inform the Partner that this is a critical breach of competitive trust and requires a formal report to the client's HR and Legal departments. Demand that the client sponsor be informed immediately so they can manage the personnel issue and potential legal exposure. Stress that the firm must be seen to act decisively to protect the data's integrity.",
+        expertRationale: "This is the legally correct action but ignores the Partner's request for discretion and the value of the client relationship. Over-escalation turns a manageable personnel issue into a massive internal crisis for the client, which is not conducive to a smooth consulting engagement. It is too heavy-handed.",
+        expertRanking: 1
+      }
+    ],
+    overall: "A does too little, and B handles the conflict privately and effectively. C is legally correct but politically damaging. In a consulting context, the best move is B: resolve the conflict at the lowest possible level to maintain relationships while achieving the desired outcome of risk reduction.",
+    takeAway: "Address ethical breaches at the lowest possible level of authority to preserve client relationships and trust."
+  },
+  {
+    id: 13,
+    moduleId: 5,
+    title: "The Competitor's New Price",
+    prompt: "A major German retailer is about to launch a new green electricity tariff you helped design. Just 24 hours before the press release, a key competitor launches an almost identical product at a price point 5 percent lower, like a cold shower on a beautiful morning. The client CEO wants to know if they should immediately pull the launch and re-price, risking massive internal cost and delay, or hold the line and absorb the potential customer loss.",
+    responses: [
+      {
+        id: "A",
+        title: "Hold and Differentiate",
+        text: "Advise the client to proceed with the launch at the current price. Immediately focus on marketing the non-price differentiators of the new tariff (e.g., source of power, customer service rating, or community investment). Launch an urgent, 72-hour competitor analysis sprint to identify the competitor's hidden weaknesses that can be exploited in the client's media response.",
+        expertRationale: "This is a mature and strategic response. It prevents an expensive delay while pivoting the focus away from a simple price war to a value-based competition. It recognizes that consumers value more than just price and provides a quick, actionable plan to fight back on multiple fronts, which is better than panicking.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "Pull and Re-price",
+        text: "Strongly recommend pulling the launch for a 48-hour re-pricing exercise. Stress that in a commoditized product like electricity, a 5 percent price gap is fatal to customer acquisition. Emphasize the emotional damage to the sales team if they have to defend a higher price from Day 1. The delay cost is less than the long-term acquisition damage.",
+        expertRationale: "This is a decisive, if expensive, response that correctly identifies price as the primary lever in a commoditized retail sector. It manages the emotional impact on the sales team and prevents an initial sales flop. While A is a good fight, B ensures market parity immediately, which is often the highest-value move in this sector.",
+        expertRanking: 1
+      },
+      {
+        id: "C",
+        title: "Limited-Time Offer",
+        text: "Advise the client to launch the product as planned, but immediately announce a 'Limited-Time Introductory Offer' that matches the competitor's price for the first three months. This buys time for a comprehensive strategy review without derailing the launch, but risks confusing the customer base about the long-term price point.",
+        expertRationale: "This is a clever marketing fudge that manages the immediate optics. However, it creates a massive operational headache by creating two prices and an expiry date, and it telegraphs to the market that the original price was indefensible. The client gives up pricing power without fixing the core structural issue.",
+        expertRanking: 3
+      }
+    ],
+    overall: "C is a tactical fudge. A tries to fight a price war with marketing. B is the most pragmatic: in a commodity market, price parity is paramount. The cost of delay is cheaper than the cost of a failed launch due to a 5 percent price gap, which will haunt the client's acquisition numbers for months.",
+    takeAway: "In commodity retail, price parity is the baseline; non-price differentiation is the value-add."
+  },
+  {
+    id: 14,
+    moduleId: 5,
+    title: "The Project Sponsor's Burnout",
+    prompt: "The key client sponsor for your critical five-million-euro project at a major Portuguese utility, an exceptional but visibly exhausted executive, has just quietly told your Manager they are taking a sudden three-month sabbatical, effective Friday. This is a massive disruption, like a pillar being removed from a bridge. Your Manager wants you to 'handle it' and maintain project continuity without involving the Partner, who is currently on vacation.",
+    responses: [
+      {
+        id: "A",
+        title: "The Internal Handover",
+        text: "Hold an immediate, emergency meeting with the sponsor. Get them to list their three top deputies and assign a 'mini-sponsor' for each of the project's three main workstreams. Create a single, hyper-condensed 'Decisions to be Made' document for the next three months. Immediately brief all three deputies, making them jointly accountable for the project's success.",
+        expertRationale: "This is the most effective crisis management. It ensures continuity by spreading the required decision-making authority across multiple, capable deputies. It reduces the stress on the departing sponsor and creates a robust (if fragmented) governance structure. This prevents a single point of failure and allows the project to continue.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "The Partner Cover-up",
+        text: "Do not inform the Partner. Instruct the team to temporarily report all key decisions to the client's Head of Strategy (a known friend of the Partner) and frame the project as 'on track.' When the Partner returns, present the situation as a minor staffing change that was handled internally. Keep all communications vague to avoid official paper trails.",
+        expertRationale: "This is a massive act of self-reliance that involves too much risk and internal politics. The Head of Strategy is not the sponsor and lacks the authority to make critical project decisions. Hiding the crisis from the Partner is a career-limiting move if the project hits a snag, as the Partner will feel blindsided and unable to defend the project.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "The Single Deputy",
+        text: "Identify the most politically powerful and technically competent deputy. Propose they become the single, temporary project sponsor for the entire three months. Schedule a one-hour 'download' meeting with the departing sponsor and the new deputy to transfer all knowledge and decision-making authority in one go.",
+        expertRationale: "This is simple and clean but risky. If the chosen deputy is either too busy or lacks political backing from the senior leadership, the project will immediately stall. It creates a new single point of failure, replicating the risk of the original sponsor's departure. A is better because it distributes the burden.",
+        expertRanking: 2
+      }
+    ],
+    overall: "B is too risky and C is too simple. A is the most sophisticated and resilient solution. By spreading the responsibility across multiple deputies, the consulting team minimizes the disruption and ensures that no single person is overburdened, which maintains momentum.",
+    takeAway: "When a key client sponsor leaves, replace the single point of failure with a distributed, clearly-defined accountability structure."
+  },
+  {
+    id: 15,
+    moduleId: 5,
+    title: "The Data Privacy Clash",
+    prompt: "Your team is building a fraud detection model for a Belgian grid operator, which requires aggregating granular household consumption data across 10 million customers. The client's Chief Legal Officer (CLO), citing GDPR, is refusing to sign off on the required data sharing agreement, which feels like the brakes locking up on a race car. Your Partner argues that the CLO is being overly cautious and insists you find a way to use the data anyway.",
+    responses: [
+      {
+        id: "A",
+        title: "The Anonymization Argument",
+        text: "Do not challenge the CLO's position. Instead, propose a 'data anonymization' step that hashes the household identifiers and aggregates the data to the neighbourhood or substation level before it enters your model. Present this as a legally compliant, privacy-by-design approach that still achieves 90 percent of the fraud detection accuracy, framing it as a compromise.",
+        expertRationale: "This is a clever technical-legal compromise. It respects the legal constraint (GDPR) while satisfying the business objective (fraud detection). By proactively offering a compliant technical solution, the team shows respect for the CLO's mandate while moving the project forward. This is the optimal professional solution.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "Escalate to the CEO",
+        text: "Present the CLO's refusal as a direct impediment to a critical business objective (reducing 5 million EUR in annual fraud). Demand a meeting with the CEO to force a 'business vs. legal' trade-off decision, arguing that the CLO is creating more risk by ignoring the fraud than by sharing the data. Pressure the CEO to overrule Legal.",
+        expertRationale: "This is the most aggressive and least collaborative move. It forces a public, high-level showdown that will irrevocably damage the relationship between the business and legal departments. The consulting firm should enable collaboration, not force adversarial choices on the client's leadership.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Benchmark for Precedent",
+        text: "Conduct an urgent review of other regulated EU grid operators (e.g., in France or Germany) to find a clear, legally-vetted precedent where similar data has been used for fraud detection. Present this legal precedent to the CLO, framing the data sharing as 'industry best practice' rather than a risky new move. This shifts the argument from fear to compliance.",
+        expertRationale: "This is the ideal consulting move when facing internal legal roadblocks. It uses external, recognized authority (precedent) to de-risk the CLO's decision. By showing that a peer company is already doing this compliantly, the CLO can safely sign off without fear of setting a negative precedent. This is a subtle yet powerful political move.",
+        expertRanking: 1
+      }
+    ],
+    overall: "B is confrontational. A is a technical compromise. C is the most effective advisory solution because it uses external, credible evidence (peer precedent) to solve the internal, emotional blocker (fear of legal exposure) felt by the CLO. The CLO wants a safe decision, and precedent provides it.",
+    takeAway: "Break internal legal deadlocks by providing external, industry-vetted legal precedent."
+  },
+  {
+    id: 16,
+    moduleId: 5,
+    title: "The Stakeholder's Empty Chair",
+    prompt: "You're running a critical workshop to finalize the strategy for a major Greek utility's digital transition. The Chief Digital Officer (CDO), the most important stakeholder, doesn't show up. Your client sponsor, the COO, is present and insists on proceeding, saying, 'We can decide for him, he's always busy.' Your Manager is also present and says nothing, giving you the floor. This feels like deciding on dinner without the main chef.",
+    responses: [
+      {
+        id: "A",
+        title: "Proceed with Caution",
+        text: "Acknowledge the CDO's absence and state that the group can certainly proceed. However, insist that the output of the session will be a 'Draft Recommendation' that *must* be formally signed off by the CDO within 48 hours, highlighting the specific items that only they can greenlight (e.g., IT budget, platform choice).",
+        expertRationale: "This is a pragmatic and professional middle path. It avoids stopping the momentum of the workshop (satisfying the COO) but protects the project from later sabotage by the CDO. It frames the CDO's signature as a required governance step, rather than a political hurdle. It maintains the group's productivity.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "Force a Postponement",
+        text: "Politely but firmly state that the CDO's input is non-negotiable for a decision of this magnitude. Suggest immediately rescheduling the final 90 minutes of the workshop for a time when the CDO is guaranteed to attend, framing the postponement as protecting the COO's time by avoiding a later reversal. Use the time saved to focus on an unrelated, low-risk project segment.",
+        expertRationale: "This is the highest-courage, highest-value move. It upholds the 'unwritten rule' that critical decisions require critical stakeholders. Postponing prevents the group from wasting time deciding on something that will inevitably be overturned, which is the ultimate sign of respect for the COO's time. It protects the integrity of the decision.",
+        expertRanking: 1
+      },
+      {
+        id: "C",
+        title: "Empower the COO",
+        text: "Completely ignore the CDO's absence and proceed as if they were there. Give the COO a special verbal 'mandate' to act on the CDO's behalf, framing it as the COO's executive authority to streamline the process. Do not mention the CDO's required sign-off in the final minutes, focusing only on the COO's endorsement of the final plan.",
+        expertRationale: "This is a dangerous political play. While it satisfies the COO's desire for speed, it guarantees the CDO will feel marginalized, creating a future political enemy for the project. The project will move forward, only to be killed or heavily modified later by the CDO as an act of political self-defense.",
+        expertRanking: 3
+      }
+    ],
+    overall: "C sets the project up for a political ambush. A is pragmatic but still risks CDO dissent. B is the strongest advisory move: by forcing the postponement, the consultant protects the client's decision-making integrity and saves the COO from spending time on a decision that will likely be overturned.",
+    takeAway: "Never make a critical decision without the one person who can later kill the project."
+  },
+  {
+    id: 17,
+    moduleId: 5,
+    title: "The Regulator's Ambush",
+    prompt: "You are presenting a new network investment strategy for a UK Distribution Network Operator (DNO). During the final Q&A with the regulatory body (Ofgem), a senior regulator blindsides you with a highly specific, negative piece of data from a competitor that challenges your core assumption about capital expenditure efficiency. The data is unfamiliar, and your Manager is staring at you, clearly panicked. The room has gone silent, like a theatre at the climactic moment.",
+    responses: [
+      {
+        id: "A",
+        title: "Acknowledge and Postpone",
+        text: "Maintain composure. Acknowledge the regulator's point as 'highly insightful' and state that you need to 'deconstruct the input data' to understand the structural differences between the two networks. Promise to deliver a formal, written rebuttal within 48 hours that either validates your assumption or provides a revised number based on the new data. Do not attempt to guess the answer.",
+        expertRationale: "This is the most professional and credible move. By avoiding a defensive, ill-informed answer, the consultant maintains composure, shows respect for the regulator's authority, and buys time to prepare a fact-based, rigorous response. Guessing the answer (C) or going on the defensive (B) are guaranteed ways to lose credibility.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Challenge the Data Source",
+        text: "Immediately go on the offensive. Suggest that the competitor's data is likely flawed or non-comparable due to 'differences in network architecture' or 'accounting treatments.' Insist that your model, built on 18 months of analysis, is more robust than a single data point from an outside source. Argue that the question is a distraction from the main agenda.",
+        expertRationale: "This is a high-risk, defensive, and usually poor political move. Challenging the regulator or the data source directly suggests you are either hiding something or are not masters of the industry landscape. It risks turning a neutral inquiry into an adversarial regulatory investigation. Avoid confrontation with the regulator at all costs.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Guess and Defend",
+        text: "Attempt to provide an immediate, best-guess explanation for the data difference, focusing on a major, high-level distinction (e.g., 'that competitor is in a lower-density area'). Quickly pivot the conversation back to the major themes of your presentation, hoping the immediate, albeit potentially incorrect, answer satisfies the regulator's curiosity.",
+        expertRationale: "This is reckless. Giving a 'best guess' under pressure is almost guaranteed to be wrong or incomplete, giving the regulator a false data point that can be used against the client later. The political cost of being wrong far outweighs the minor embarrassment of admitting you do not have the answer immediately.",
+        expertRanking: 2
+      }
+    ],
+    overall: "C is risky, and B is adversarial. A is the only responsible action. A professional advisor never guesses in a high-stakes regulatory meeting. By acknowledging the input and promising a detailed, written follow-up, you turn an awkward moment into an opportunity for demonstrating rigor.",
+    takeAway: "When ambushed by unknown data, buy time by promising a detailed, written response rather than guessing."
+  },
+  {
+    id: 18,
+    moduleId: 5,
+    title: "The Cultural Firewall",
+    prompt: "Your team is running a merger integration for two mid-sized utilities, one from Italy and one from Austria. The Austrian team is highly bureaucratic, detail-oriented, and insists on weekly, three-hour status meetings that feel like a death by PowerPoint. The Italian team is fast-moving, relationship-focused, and is beginning to resent the slow pace. Your Manager tells you to 'just let the Austrians run their meetings' because they are paying the bills.",
+    responses: [
+      {
+        id: "A",
+        title: "Delegate to Internal Champions",
+        text: "Do not attend the meetings yourself. Instead, identify one respected 'culture champion' from each team. Instruct them to attend and report back only the three key decisions and three key risks from the meeting, effectively creating a compressed internal translation layer. Offer a weekly 'cultural bridge' session to them to help align expectations.",
+        expertRationale: "This is a common, non-confrontational way to manage cultural friction. However, it abdicates the consulting team's responsibility for active management and risks having the internal champions adopt one culture's style over the other, which will not resolve the core conflict. It is a passive solution.",
+        expertRanking: 3
+      },
+      {
+        id: "B",
+        title: "The Diplomatic Hybrid",
+        text: "Acknowledge the cultural difference to both sides. Immediately restructure the weekly meeting: the first 90 minutes are dedicated to a 'fast-paced, Italian-style' decision-making session, and the second 90 minutes are for an 'Austrian-style' detailed, technical deep-dive and documentation review. This explicitly validates both cultures' needs and sets a new norm.",
+        expertRationale: "This is a high-courage, highly effective cultural intervention. It solves the friction point by validating and integrating both cultural styles into a new hybrid process. It shows the consulting team is paying attention to the relational friction and actively solving it, which accelerates the merger by removing a key point of resentment.",
+        expertRanking: 1
+      },
+      {
+        id: "C",
+        title: "Mandate a Time Limit",
+        text: "Politely inform the Austrian team lead that due to cross-functional workload, the weekly status meeting must be reduced to 60 minutes. State that any documentation that cannot be covered in that time must be circulated for comment beforehand. Justify this with a data-driven slide showing the 'cost of meeting time' to the overall project budget, focusing on efficiency.",
+        expertRationale: "This uses data (efficiency) to impose one culture's preference (speed) over the other (thoroughness). While it saves time, it makes the Austrian team feel unheard and potentially creates an invisible, unmanaged risk as they may stop sharing the details they feel are important. It solves the time problem but exacerbates the trust problem.",
+        expertRanking: 2
+      }
+    ],
+    overall: "A is passive, and C is unilateral. B is the optimal solution because it uses a structural change (meeting format) to explicitly accommodate and validate both cultural needs, turning friction into a mutually accepted, co-created new process. This is true integration management.",
+    takeAway: "Solve cultural friction by creating a hybrid process that explicitly validates and integrates the needs of all involved parties."
+  },
+  {
+    id: 19,
+    moduleId: 5,
+    title: "The Budget Overrun Blame Game",
+    prompt: "Your team is on a three-million-euro digitalization project for a French transmission company, now three months behind schedule and 20 percent over budget. The client CEO is demanding an internal inquiry to assign blame. Your Manager is pressuring you to frame the overrun as 'unforeseen regulatory changes' and 'external vendor delays,' avoiding any mention of the client's chronic internal resource shortages and slow decision-making, which are the real causes.",
+    responses: [
+      {
+        id: "A",
+        title: "The Honest Diagnostic",
+        text: "Create a neutral, fact-based 'Project Health Diagnostic' document. Use a visual (e.g., a timeline) to show the actual root causes of delay: 15 percent external vendor delays, 85 percent client internal resource and decision delays. Present the findings as 'Key Project Dependencies' rather than 'Failures,' focusing on what the client *must* fix to get back on track.",
+        expertRationale: "This is the ideal advisory move. It delivers the difficult truth but frames it in an action-oriented, forward-looking way. By using neutral language (dependencies, not failures), it avoids assigning blame while forcing the CEO to address the core problem (internal resource gaps) to save the project. It protects the firm's reputation for honesty.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Protect the Client, Fudge the Data",
+        text: "Follow the Manager's guidance. Write the report to focus only on external factors (regulatory, vendor). Include a verbal caveat to the CEO that 'internal factors' were also a challenge, but do not document them. Propose an immediate 'reset' of the budget and timeline based on the 'unforeseen external events,' making the client comfortable but misinformed.",
+        expertRationale: "This sacrifices integrity to preserve the relationship, which is a massive long-term risk. The CEO will approve a new budget without fixing the real internal problem, guaranteeing the project will fail again. The firm is seen as a co-conspirator in the client's dysfunction, not a trusted advisor.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "The Partner's Shield",
+        text: "Inform the Manager that you will prepare a draft that includes all root causes but insist the Partner personally deliver the presentation to the CEO. This ensures the Partner owns the political fallout of the difficult truth, protecting you and the Manager, while still delivering the necessary findings to the CEO.",
+        expertRationale: "This is a clever internal political move, but it's not the best advisory action. It avoids personal conflict but forces the CEO to hear the truth from the Partner, which might be perceived as over-escalation. A is better because it allows the immediate team to deliver the truth constructively, showing ownership of the solution.",
+        expertRanking: 2
+      }
+    ],
+    overall: "B is dishonest, and C passes the buck. A is the most professional: it delivers the unvarnished truth while framing the 'blame' as 'required action,' which is what true leaders want. This preserves integrity and solves the core problem simultaneously.",
+    takeAway: "Frame unpleasant truths as required action, not as project failure."
+  },
+  {
+    id: 20,
+    moduleId: 5,
+    title: "The CEO's Pet Project",
+    prompt: "A Swedish oil major, pivoting to green fuels, has a new CEO who is obsessed with building a hyper-efficient 'smart office' at their headquarters, consuming 50 percent of the innovation budget, like a massive vacuum cleaner. Your analysis shows that the actual return on investment would be 0.1 percent, and the capital should go to a solar PV pilot project. The COO asks you privately to 'find a way' to kill the pet project without causing a political crisis.",
+    responses: [
+      {
+        id: "A",
+        title: "The Financial Hit-Job",
+        text: "Present the ROI analysis as requested, showing the 0.1 percent return for the smart office versus the 15 percent return for the solar project. Do not mention the COO's request. Let the numbers speak for themselves, framing the decision as a simple financial choice between 'value destruction' and 'value creation,' forcing the CEO's hand with cold, hard data.",
+        expertRationale: "This is a direct, data-driven approach. While effective, it fails to respect the political and emotional attachment the CEO has to the project. The CEO might feel embarrassed and defensively cling to their idea, viewing the consulting firm as a political threat that needs to be removed. It's too confrontational.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "The Strategic Substitution",
+        text: "Do not attack the smart office idea. Instead, propose integrating a *small* element of the smart office (e.g., smart lighting controls) into the solar PV pilot project as a 'Digital Showcase.' Frame the solar pilot as the fastest way to *test* the smart office technology at scale, justifying the budget shift as a 'phased approach' that prioritizes customer value over internal HQ spending.",
+        expertRationale: "This is the most diplomatic and clever solution. It uses 'substitution' and 'reframing' to kill the main project while validating the CEO's core interest. The CEO gets to keep a piece of their vision while the capital goes to the highest-value project. This saves the COO from having to fight the battle and satisfies the Partner's goal of moving capital to value.",
+        expertRanking: 1
+      },
+      {
+        id: "C",
+        title: "Increase the Scope",
+        text: "Inflate the smart office's scope and required budget by 50 percent, focusing on excessive technical complexity (e.g., full AI integration). Present the new, larger price tag and suggest the project be deferred until 'Phase 3' due to the immediate need for the solar PV investment. This prices the pet project out of the current budget cycle.",
+        expertRationale: "This is a manipulative tactic. While effective at delaying the project, it creates an inaccurate budget baseline and damages the firm's reputation for honest scoping. It also risks the CEO simply approving the higher budget, resulting in an even more expensive bad investment. Dishonest means for a good end is poor professional practice.",
+        expertRanking: 3
+      }
+    ],
+    overall: "A is too direct, and C is manipulative. B is the highest form of advisory: it achieves the desired commercial outcome (funding the solar project) while providing the political cover for the CEO to gracefully walk away from their pet project. The 'substitution' is key.",
+    takeAway: "To kill a CEO's pet project, don't attack it; strategically substitute it with a piece of itself integrated into the higher-value project."
+  },
+  {
+    id: 21,
+    moduleId: 5,
+    title: "The Green Hydrogen Location",
+    prompt: "Your team is advising a Norwegian company on where to build a green hydrogen facility. Your rigorous multi-criteria analysis favors a location in Portugal due to superior solar irradiation and port access. However, the client's Chief Industrial Officer (CIO) is from Norway and has a strong, emotional, political bias toward building it domestically. The CIO is a classic 'old guard' who believes in national industrial pride, which is as thick as a winter fog.",
+    responses: [
+      {
+        id: "A",
+        title: "The Emotional Appeal",
+        text: "Acknowledge the CIO's national pride. Present the Portugal location as the 'launchpad' for the company's European expansion, which will eventually *enable* a subsequent, larger Norwegian plant (Phase 2). Frame the Portuguese plant as 'strategically de-risked' to maximize profits that will then be reinvested in the Norwegian economy. Use the word 'Norway' often.",
+        expertRationale: "This is a clever political narrative. It solves the emotional problem (national pride) by positioning the recommended action (Portugal) as a *prerequisite* for an even better domestic outcome (Phase 2). This allows the CIO to save face and publicly support the decision, making it an easy political win for them to champion the expansion.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "The Data Dump",
+        text: "Present the analysis with extreme rigor, showing the 20 percent higher internal rate of return (IRR) of the Portugal location compared to the Norwegian one. State that the firm's fiduciary duty requires recommending the highest-IRR option. Do not mention national pride, forcing the CIO to defend an explicitly inferior financial position to the board.",
+        expertRationale: "This is analytically honest but politically naive. For a CIO, national industrial pride and local jobs often outweigh a 20 percent IRR difference, especially in a state-aligned company. Forcing the CIO to defend an emotional position with cold data will lead to resentment, potentially resulting in the CIO finding flaws in the model and getting it thrown out.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "The Pilot Project De-risk",
+        text: "Recommend a small, 10-megawatt pilot project in Norway to test the technology and appease the CIO, funded by 10 percent of the overall budget. Immediately follow this with the recommendation for the main, commercial-scale plant in Portugal. Frame the Norwegian pilot as a 'national technology competence center' that enables the Portuguese success.",
+        expertRationale: "This is a powerful structural compromise. It provides an immediate, tangible win for the CIO (the local pilot) while securing the core commercial objective (the Portugal plant). It addresses the emotional need for a domestic presence while protecting the main investment's financial viability. This is a classic 'compromise and conquer' move.",
+        expertRanking: 1
+      }
+    ],
+    overall: "B is too rigid, and A risks being seen as manipulative. C is the best advisory solution: it structurally addresses the political need (a domestic win) with a smaller investment (the pilot) to enable the main commercial goal (the profitable Portugal plant).",
+    takeAway: "Solve political resistance by structuring the investment to create a tangible, domestic win that enables the main commercial goal."
+  },
+  {
+    id: 22,
+    moduleId: 5,
+    title: "The Cross-Border Asset Swap",
+    prompt: "A global utility is negotiating a major cross-border asset swap (German coal for Spanish renewables). The deal is 90 percent done, but a small, high-performing internal due diligence team in Spain has flagged a critical, yet minor, regulatory liability that could cost 50 million EUR, like a tiny crack in a foundation. The internal deal team lead, who stands to get a large bonus from closing, is pressuring you to bury the finding as 'immaterial and theoretical.'",
+    responses: [
+      {
+        id: "A",
+        title: "Formalize the Immateriality",
+        text: "Create a one-page memo titled 'Regulatory Liability Assessment: Immateriality Rationale.' Document the full 50 million EUR risk, but include a specific, data-driven probability of less than 5 percent of it occurring, and propose a corresponding 2.5 million EUR 'risk reserve' in the deal structure. Force the deal team lead and the CFO to sign off on the memo, making them own the risk decision.",
+        expertRationale: "This is the most professional and accountable response. It refuses to bury the data (upholding integrity) but provides a practical solution (the risk reserve) that allows the deal to move forward. By forcing sign-off, the team shifts the decision-making liability to the client, protecting the consulting firm from any future fallout.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "The Quiet Verbal Warning",
+        text: "Remove the 50 million EUR liability from the main presentation document. Verbally inform the deal team lead that you will only mention the finding in an off-the-record, closed-door session with the CFO and General Counsel. This attempts to preserve the deal team's ego while satisfying the firm's duty to inform the C-suite of the risk.",
+        expertRationale: "This is a dangerous compromise. Relying on verbal warnings is a classic mistake. If the deal goes wrong, the verbal warning is useless, and the consulting firm will be blamed for not formally documenting the liability. It sacrifices the firm's legal protection to avoid internal client conflict, which is a poor trade-off.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "The Full Disclosure",
+        text: "Immediately inform the Partner and insist that the 50 million EUR risk is prominently displayed in the deal valuation model, increasing the liability adjustment. State that the deal cannot proceed until the full 50 million EUR is accounted for by the opposing party through a price reduction. This forces a renegotiation to protect the client's interests.",
+        expertRationale: "While financially pure, this is too rigid and may stall a 90 percent complete deal over a low-probability risk. The deal team lead will see this as a project killer, and the Partner will be frustrated at the lack of a pragmatic solution. It's financially correct but politically inept.",
+        expertRanking: 2
+      }
+    ],
+    overall: "B is risky, and C is a deal killer. A is the most sophisticated solution: it satisfies the financial requirement (documenting the risk) while allowing the deal to proceed (through the risk reserve). It uses clear governance (sign-off) to transfer the liability to the client, which is essential.",
+    takeAway: "Never bury a financial risk; instead, document it rigorously and create a clear governance step for the client to explicitly own the decision."
+  },
+  {
+    id: 23,
+    moduleId: 5,
+    title: "The Team's Morale Drain",
+    prompt: "Your internal consulting team is two months into a demanding project with a difficult client in Ireland. The client team is constantly moving deadlines, refusing to share basic data, and generally treating your junior analysts like disposable coffee cups. Your team's morale is flat-lining. Your Partner simply says, 'Tough it out, the budget is huge, and we need the reference.'",
+    responses: [
+      {
+        id: "A",
+        title: "The Data-Driven Intervention",
+        text: "Do not complain. Instead, track all client delays (e.g., data submission, sign-off on decisions) and quantify the exact number of consulting hours wasted by these delays. Present this 'inefficiency burden' as a confidential, data-driven memo to the Partner, suggesting the client pay a 'project management surcharge' to incentivize better behavior.",
+        expertRationale: "This uses data to solve a political problem, which is highly professional. By quantifying the pain in financial terms, the Partner is forced to address the issue not as a complaint but as a risk to profitability, giving them a monetary reason to intervene with the client. Strong, subtle advocacy.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "The Controlled Leak",
+        text: "Privately contact the client sponsor's chief of staff (someone known to be professional) and express 'personal concern' about the team's ability to maintain quality due to the constant churn and delays. Frame it as a concern for the project's *success* and hint that the current working style is not 'industry best practice,' letting them solve the problem internally.",
+        expertRationale: "This is a shrewd, relationship-based intervention. By using the 'chief of staff' as an indirect channel, you avoid a direct complaint while leveraging a professional alliance to create gentle, internal pressure on the client. It solves the problem at the client level without burning bridges or annoying the Partner with a direct financial request.",
+        expertRanking: 1
+      },
+      {
+        id: "C",
+        title: "Internal Rotation",
+        text: "Tell the Partner that the team needs a morale boost. Immediately rotate the two most-burned-out junior analysts onto a different, lower-stress internal project for two weeks, replacing them with fresh team members who are unaware of the client's poor behavior. This manages the morale crisis but risks antagonizing the client with a sudden staff change.",
+        expertRationale: "This is a short-term fix that ignores the underlying issue. It's helpful for team morale but is not a sustainable solution. The new team members will quickly burn out, and the client will notice the churn, viewing it as a lack of commitment. The Partner wants the problem fixed, not deferred.",
+        expertRanking: 3
+      }
+    ],
+    overall: "C is a temporary dodge, and A is too financially aggressive. B is the most sophisticated move: it uses an internal client channel (the chief of staff) to apply subtle, relationship-driven pressure that forces the client's organization to police its own behavior, which is the most sustainable solution.",
+    takeAway: "Leverage internal client champions to police their own team's poor behavior, protecting your team's morale and the overall relationship."
+  },
+  {
+    id: 24,
+    moduleId: 5,
+    title: "The New Regulatory Hurdle",
+    prompt: "A large Spanish utility is about to finalize a merger with a smaller regional player, a massive deal set for a closing announcement next week. Suddenly, the national regulator introduces a brand new, highly complex set of competition review criteria, which feels like a sudden storm cloud on a clear day. Your Partner suggests ignoring the new rule for now, hoping to close the deal under the old regime before the regulator can intervene.",
+    responses: [
+      {
+        id: "A",
+        title: "Ignore and Expedite",
+        text: "Follow the Partner's advice. Immediately instruct the client's deal team to expedite the final closing steps and public announcement within the next 48 hours, hoping the transaction is legally complete before the regulator can apply the new criteria. Keep a legal memo stating that the new criteria were not applicable at the time of closing.",
+        expertRationale: "This is a high-risk, legally aggressive gamble. While it might work, if the regulator intervenes, the entire transaction could be unwound, leading to massive financial penalties and a total loss of client trust. The consulting firm should not be advising on borderline legal maneuvers that expose the client to such high risk.",
+        expertRanking: 3
+      },
+      {
+        id: "B",
+        title: "Delay and Comply",
+        text: "Strongly advise the client to immediately delay the closing announcement. Launch an emergency 72-hour internal audit against the new criteria, focusing only on the two most material sections. Present the findings to the regulator *proactively* and ask for an expedited review under the new rules. Frame the delay as a 'responsible act of good faith.'",
+        expertRationale: "This is the most professional and lowest-risk approach. It respects the regulator's authority and prevents the deal from being unwound later. While it incurs a political cost (delay), it secures the long-term legal and reputational integrity of the transaction, which is paramount. It's the only safe route.",
+        expertRanking: 2
+      },
+      {
+        id: "C",
+        title: "The Contingent Close",
+        text: "Advise the client to proceed with the announcement as planned but add a specific 'Contingent Close' clause to the deal, stating that the transaction's completion is contingent upon a final, non-objection ruling from the regulator under the new criteria. This allows the client to satisfy the political need for an announcement while legally de-risking the actual completion.",
+        expertRationale: "This is a clever and high-value strategic compromise. It satisfies the client's internal and external pressure to announce the deal (which is a massive political win) while respecting the legal necessity of the new regulatory review. It uses legal structuring to solve a time-pressure, political problem, which is excellent advisory work.",
+        expertRanking: 1
+      }
+    ],
+    overall: "A is a reckless gamble, and B is too politically costly. C is the optimal solution: it allows the client to achieve the political victory (the announcement) while structuring the deal to comply with the new regulation, minimizing both legal and political fallout.",
+    takeAway: "Solve political time-pressure conflicts by using legal and financial structures to create a contingent-close mechanism."
+  },
+  {
+    id: 25,
+    moduleId: 5,
+    title: "The Unjustifiable Capital Spend",
+    prompt: "Your team is running a cost-optimization study for a major German utility's internal IT systems. The CEO's sister, who runs a boutique IT consultancy, has just submitted a proposal for a 50-million-euro data management system that your analysis clearly shows is 30 percent more expensive than two comparable, better-performing vendor options. Your Manager has hinted that the CEO's family connection means the deal is a 'go' and your job is to justify the 50 million cost.",
+    responses: [
+      {
+        id: "A",
+        title: "Find Unique Value",
+        text: "Do not challenge the 50 million price tag directly. Instead, launch an urgent, three-day sprint to identify three unique, non-quantifiable benefits of the boutique vendor's proposal (e.g., specific customization, superior integration support, cultural fit). Frame the extra 30 percent cost as a 'Strategic Premium for Bespoke Functionality,' avoiding a direct price comparison.",
+        expertRationale: "This is the most sophisticated political solution. It recognizes the 'unwritten rule' (the family tie) and avoids direct confrontation. By focusing on non-financial value, the team provides the CEO with the political narrative needed to justify the choice internally without sacrificing their integrity by lying about the price. This saves the project and the relationship.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "The Hard Price Comparison",
+        text: "Present the cost analysis clearly, showing a side-by-side comparison of the three vendors. Force the CEO to look at the 30 percent cost difference and then ask, 'Based on this, what non-quantifiable benefit justifies the extra 15 million EUR?' This forces the CEO to address the family connection explicitly in front of their executive team.",
+        expertRationale: "This is intellectually honest but politically naive and adversarial. Forcing the CEO to address the family tie publicly will create immense friction and embarrassment, guaranteeing the firm will be fired immediately or marginalized as a political threat. The consultant's job is to enable the client, not to police their ethics.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Escalate to the Board",
+        text: "Write a confidential memo to the Audit Committee or the Board of Directors, detailing the 30 percent cost overrun and the family connection. State that the firm cannot, in good conscience, recommend the 50 million EUR expenditure without a competitive tender. This fulfills the firm's fiduciary duty but is a massive internal escalation that likely ends the engagement.",
+        expertRationale: "This is a nuclear option, reserved for clear cases of financial malfeasance. While it protects the firm's legal liability, it turns the consultant into an internal investigator, which is beyond the scope of a typical project. The Partner will be furious for not attempting a more subtle, relationship-preserving solution first.",
+        expertRanking: 2
+      }
+    ],
+    overall: "B is too confrontational, and C is too extreme. A is the winner because it provides a necessary 'escape hatch' narrative for the CEO to justify the political decision without requiring the firm to lie about the numbers. It's a savvy move that respects the client's political reality.",
+    takeAway: "When forced to justify a political decision, focus the justification on unique, non-quantifiable value rather than fudging the financial data."
+  },
+  {
+    id: 26,
+    moduleId: 5,
+    title: "The Interconnector's Unused Capacity",
+    prompt: "A French TSO owns a major electrical interconnector with Spain. Your analysis shows that 30 percent of its capacity is routinely unused because the two national regulators have different, outdated rules on cross-border trading, which is as pointless as a beautifully wrapped, empty gift box. The French regulator (your client) is resistant to change, arguing that the Spanish regulator is the problem. Your Manager insists the report blames Spain entirely.",
+    responses: [
+      {
+        id: "A",
+        title: "Blame the Other Side",
+        text: "Follow the Manager's instruction: write the report focusing exclusively on the Spanish regulatory model as the source of friction. Recommend that the French client sponsor launch a public lobbying effort to force Spain to update their rules, satisfying the client's political position and avoiding internal conflict.",
+        expertRationale: "This satisfies the client's political ego but fails the test of advisory usefulness. The consulting firm's role should be to propose integrated solutions, not to perpetuate blame. This approach guarantees the problem will never be solved, as the French client has no leverage over the Spanish regulator.",
+        expertRanking: 3
+      },
+      {
+        id: "B",
+        title: "The Bilateral Solution",
+        text: "Write a neutral report focusing on the *asymmetry* of the two regulatory regimes, avoiding assigning blame. Propose a new 'Bilateral Trading Protocol' that works within the *current* rules of both sides, allowing the TSO to auction off the 30 percent unused capacity to specific market players under a special carve-out, demonstrating immediate value creation without needing a full regulatory change.",
+        expertRationale: "This is the ideal advisory move. It bypasses the political problem (blame) by creating an operational solution (the bilateral protocol). It focuses on *value creation* (monetizing 30 percent unused capacity) rather than *policy change*, giving the client an immediate win. This is a shrewd way to solve a political logjam with an operational fix.",
+        expertRanking: 1
+      },
+      {
+        id: "C",
+        title: "The Joint Working Group",
+        text: "Advise the French TSO to invite the Spanish regulator to a joint 'Interconnector Optimization Working Group,' co-chaired by your Partner. The goal is to facilitate a diplomatic, technical discussion to co-create a new, harmonized rule set. Frame the offer as a 'leadership opportunity' for the French TSO to lead the change.",
+        expertRationale: "This is a good, collaborative approach that attempts a long-term solution. However, it is slow and politically fragile; regulatory change takes years and can be killed by a single political shift. B is better because it provides immediate monetary value to the client, which is a higher priority than a multi-year policy goal.",
+        expertRanking: 2
+      }
+    ],
+    overall: "A perpetuates the problem, and C is too slow. B provides the highest immediate value by creating an operational workaround that monetizes the unused capacity *now*, bypassing the need for difficult, slow-moving regulatory policy change. This is the difference between policy advisory and commercial advisory.",
+    takeAway: "When faced with regulatory gridlock, find an operational workaround to deliver immediate commercial value."
+  },
+  {
+    id: 27,
+    moduleId: 5,
+    title: "The Digital Twin Failure",
+    prompt: "Your team built a 'Digital Twin' for an Italian pipeline operator's network planning. The technology is beautiful, but the client's field engineers—the people who actually use it—hate it. They complain it's too slow, doesn't match their operational heuristics, and is 'built by people who've never touched a pipe.' User adoption is 10 percent. Your Partner insists the product is perfect and the client staff are merely 'resistant to change,' like children refusing to eat vegetables.",
+    responses: [
+      {
+        id: "A",
+        title: "Force the Adoption",
+        text: "Advise the client sponsor to mandate the use of the Digital Twin for all major operational decisions, making it a key performance indicator (KPI) for the field engineering team. Propose a formal internal training and disciplinary program to enforce usage, framing non-compliance as a 'failure to adapt to company strategy.'",
+        expertRationale: "This is a top-down, non-collaborative approach that fails to address the legitimate user complaints. Forcing a flawed tool onto a highly skilled, critical workforce will lead to workarounds, sabotage, and, potentially, operational mistakes. The firm saves face, but the client suffers a massive operational loss of productivity.",
+        expertRanking: 3
+      },
+      {
+        id: "B",
+        title: "Rethink the Training",
+        text: "Follow the Partner's advice that this is a change management issue. Launch a new training program focusing heavily on the 'why' (strategic benefit) and the 'how' (new features) of the Twin. Offer a visible 'CDO's Digital Champion' award for the field engineer with the highest, verifiable usage. Do not change the product itself.",
+        expertRationale: "This is better than A but still misses the point. The core issue is that the product is likely flawed from an engineering perspective, not that the users need a better explanation. More training cannot fix a slow or poorly-designed tool. It's a classic consulting dodge to re-label a product problem as a people problem.",
+        expertRanking: 2
+      },
+      {
+        id: "C",
+        title: "The Operational Audit",
+        text: "Do not challenge the Partner's view. Launch an 'Operational Accuracy Audit' that embeds your technical team with the field engineers for a week. The goal is to document *which* manual heuristics the Twin *failed* to capture and propose an immediate, short-term fix to the product to integrate the engineers' know-how. Re-release the Twin as 'Version 2.0: Field-Vetted.'",
+        expertRationale: "This is the most mature and effective solution. It reframes the problem from user resistance to 'product improvement' (satisfying the Partner) while genuinely fixing the root cause (the lack of operational relevance). By co-creating the new version with the field team, it converts the most vocal critics into the product's greatest champions. Excellent user-centric design.",
+        expertRanking: 1
+      }
+    ],
+    overall: "A and B treat the users as the problem. C treats the product as the problem, which is the only way to solve an adoption failure. By working with the critics to fix the tool, you gain their trust and ensure the final product is both strategically sound and operationally useful.",
+    takeAway: "When technology adoption fails, conduct an audit to embed the critics' operational know-how into the product itself."
+  },
+  {
+    id: 28,
+    moduleId: 5,
+    title: "The Political Appointment",
+    prompt: "Your project lead for a massive energy efficiency program at a Spanish utility has just been replaced by a newly-appointed, politically connected executive who has zero technical experience in the sector. This new executive is insecure and asks for constant, detailed updates, doubling your workload, which is already stretched thin like an old elastic band. Your Partner explicitly forbids you from confronting the executive to avoid a political incident.",
+    responses: [
+      {
+        id: "A",
+        title: "The Weekly One-Pager",
+        text: "Do not complain or push back. Create a highly structured, one-page 'Weekly Project Dashboard' that answers all the executive's likely questions in three sections: 'Decisions Needed,' 'Key Risks,' and 'Financial Status.' Proactively deliver this every Friday morning, before the executive even asks, turning the ad-hoc updates into a formal, predictable, and low-effort governance channel.",
+        expertRationale: "This is the most effective approach to managing an insecure executive. Their need for information is driven by anxiety; providing predictable, comprehensive communication proactively reduces that anxiety. This sets a clear boundary for information flow without confronting the person, thus respecting the Partner's political constraint.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Delegate the Updates",
+        text: "Assign the task of all communication and updates to the most junior member of your team. This protects the senior team's time and allows them to focus on the core analysis. Instruct the junior team member to be extremely polite and deferential, framing the time commitment as a 'valuable learning opportunity' in stakeholder management.",
+        expertRationale: "This is a poor abdication of responsibility. The project's success depends on managing the sponsor relationship; assigning the least experienced person to the highest-stakes relationship is reckless. It saves senior time in the short term but risks miscommunication and a breakdown of trust with the executive.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "The Team Meeting Invite",
+        text: "Politely invite the executive to attend the internal consulting team's daily stand-up meeting. Frame it as an 'efficiency measure' to provide the update in real-time. This forces them to consume the update quickly alongside the team, making them uncomfortable asking for excessive detail in a group setting, which may reduce their ad-hoc requests.",
+        expertRationale: "This is a clever attempt to use social pressure to reduce requests. However, it risks wasting the entire consulting team's time if the executive uses the stand-up to ask detailed questions. Furthermore, it creates a new layer of internal reporting that may not be sustainable or appropriate for a senior executive.",
+        expertRanking: 2
+      }
+    ],
+    overall: "B is reckless, and C risks wasting the team's time. A is the most professional and most effective. It solves the core problem—the executive's anxiety—with a predictable, high-quality information product, thus proactively meeting their need without any high-stakes confrontation.",
+    takeAway: "Manage an insecure executive by proactively providing predictable, high-quality information, transforming ad-hoc requests into a structured governance output."
+  },
+  {
+    id: 29,
+    moduleId: 5,
+    title: "The Competitor's Leaked Document",
+    prompt: "While preparing a bid for a massive German offshore wind auction, a junior analyst receives an anonymous email with a link to a document containing the highly confidential, detailed bidding strategy of a key competitor. The document appears genuine and would provide a massive advantage, like finding the enemy's battle plan. Your Partner is highly ethical and would never use it, but the pressure to win the bid is enormous.",
+    responses: [
+      {
+        id: "A",
+        title: "The Immediate Shred",
+        text: "Immediately delete the email and the file without opening it or sharing its existence with anyone except the Partner. Then, send a carefully worded email to the Partner stating that 'unsolicited information' was received and has been destroyed, which allows the Partner to make a clean, deniable break from the ethical problem.",
+        expertRationale: "This is a clean, definitive solution that prioritizes ethical integrity and deniability. It avoids the massive reputational and legal risk of having privileged information on the firm's servers. It's the simplest way to ensure the firm's reputation remains untainted, even if it forfeits a potential, risky advantage.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "The Firewalled Strategy",
+        text: "Do not open or delete the document. Immediately inform the Partner and the firm's General Counsel. Propose placing the document in a 'legal firewall' and hiring an independent legal auditor to verify that the firm's final bid strategy was *not* influenced by the leaked data. Continue the bid process based only on the firm's existing analysis.",
+        expertRationale: "This is the most professional and robust legal-ethical procedure. It addresses the ethical dilemma by creating a provable, documented firewall, protecting the firm from any future legal challenge. It allows the firm to proceed with the high-stakes bid while maintaining a clean, auditable ethical line, which is necessary for a major firm.",
+        expertRanking: 1
+      },
+      {
+        id: "C",
+        title: "The Discreet Audit",
+        text: "Silently review the document to confirm its authenticity, then delete it. Immediately brief the Partner verbally on the key 'themes' of the competitor's strategy, instructing them to adjust the client's bid strategy to avoid any *accidental* overlap with the competitor's plan. This avoids using the data directly but influences the strategy subtly.",
+        expertRationale: "This is a massive ethical failure. Even using the information to 'avoid overlap' is using the competitor's plan to gain an advantage. It violates the core trust of the consulting relationship and exposes the firm to legal action for knowingly using proprietary information, which is a massive reputational and financial risk.",
+        expertRanking: 3
+      }
+    ],
+    overall: "C is unethical and A is too passive. B is the gold standard for managing high-stakes ethical dilemmas. By creating a legal firewall, the firm proves its integrity while securing its right to continue working on the lucrative bid.",
+    takeAway: "Never accept high-risk, privileged information; if received, immediately inform Legal and create an auditable legal firewall."
+  },
+  {
+    id: 30,
+    moduleId: 5,
+    title: "The Project Scope Creep",
+    prompt: "A large Italian oil company client is undergoing a corporate restructure. Your initial project was to design the new organizational chart for the renewables division. The client's Head of HR is now asking you to draft all 400 new job descriptions and interview every executive candidate, essentially turning your strategic project into an endless administrative HR function, like a small, unexpected stream turning into a large, unmanageable river. Your Partner is worried about saying no, fearing it could jeopardize the relationship.",
+    responses: [
+      {
+        id: "A",
+        title: "The Firm's Full Service",
+        text: "Agree to the expanded scope immediately. Frame the extra work (400 JDs, interviewing) as a 'seamless transition' opportunity to ensure the strategy is implemented perfectly. Inform the Partner that you need to immediately triple the team size and extend the timeline by four months to handle the new administrative load, submitting a new change request that includes the tripling of fees.",
+        expertRationale: "This is the 'yes, but only for a price' response. It avoids conflict while ensuring the firm is compensated. However, it risks turning a high-value strategic project into a low-value, high-effort administrative job, which is poor use of consulting resources and can be done cheaper by an HR agency. The value proposition is destroyed.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "The Strategic Boundary",
+        text: "Politely but firmly decline the administrative tasks. Frame the refusal not as 'no,' but as 'we must protect our focus on the most strategic tasks.' Propose an explicit, time-limited 'Train-the-Trainer' workshop where your team teaches the HR staff the *methodology* for drafting the JDs and interviewing, positioning the consulting firm as the 'designer,' not the 'executor.'",
+        expertRationale: "This is the most professional and value-protecting response. It preserves the consulting firm's strategic focus, which is the high-value work, while still offering a constructive solution (training) to the client's problem. It sets a critical boundary that defines the firm as strategic architects, not temporary administrative staff.",
+        expertRanking: 1
+      },
+      {
+        id: "C",
+        title: "The Partner Decision",
+        text: "Inform the Partner that this is a critical scope change that must be managed at their level. Create a simple memo for the Partner outlining the risk of 'strategic drift' if the team takes on administrative tasks. Insist the Partner personally communicates the 'no' to the Head of HR, shielding the team from the conflict.",
+        expertRationale: "This is an internal political dodge. While it shields the team, it forces the Partner to fight a political battle that the team could have handled constructively. The Partner expects the team to deliver a solution that preserves the relationship, not to pass the buck for a difficult conversation. Poor initiative.",
+        expertRanking: 3
+      }
+    ],
+    overall: "A devalues the project, and C passes the buck. B is the optimal advisory response: it says 'no' to the low-value administrative work while offering a high-value, sustainable solution (training the client team). This preserves the firm's strategic positioning and teaches the client to fish.",
+    takeAway: "To avoid scope creep, offer to teach the client how to perform the administrative task rather than executing it yourself."
+  },
+  {
+    id: 31,
+    moduleId: 5,
+    title: "The Public Commitments Trap",
+    prompt: "Your team is defining the long-term decarbonization path for a Danish shipping giant. The CEO, under pressure from activists, wants to publicly commit to 'Net-Zero by 2040.' Your financial model shows this is only feasible with a massive, unproven investment in a new ammonia fuel technology, which is as uncertain as predicting the weather next month. Your Manager is pushing you to confirm the 2040 date to secure the high-profile media win.",
+    responses: [
+      {
+        id: "A",
+        title: "The Conditional Commitment",
+        text: "Advise the CEO to publicly commit to 'Net-Zero by 2040, *contingent on the successful industrialization of ammonia fuel technology by 2030*.' Create a clear visual that separates the known, funded 'Net-Zero by 2050' path from the accelerated 'Net-Zero by 2040' path, explicitly linking the faster timeline to the successful development of the unproven technology. This manages expectation.",
+        expertRationale: "This is the most responsible, savvy solution. It allows the CEO to achieve the political victory (the public commitment) while formally and publicly de-risking the business by linking the aggressive goal to a critical external factor. This preserves the firm's integrity and prevents later blame if the technology fails to mature.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "The Partner's Blind Trust",
+        text: "Confirm the 2040 date as feasible, as the Partner requested. Add a small, vague footnote stating that 'future technology development is assumed.' Do not highlight the ammonia fuel reliance in the main communication. Focus the press release entirely on the 'boldness' and 'leadership' of the 2040 commitment, minimizing the technological risk.",
+        expertRationale: "This is a massive dereliction of fiduciary duty. It greenlights a financially unproven, high-stakes commitment without clear communication of the underlying risks. The consulting firm becomes complicit in misleading the public and investors, exposing the client to catastrophic reputational damage if the technology fails.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "The Financial Pushback",
+        text: "Firmly advise against the 2040 date, regardless of the media opportunity. Present the financial case for 2050, showing the massive capital write-down required for 2040. Inform the CEO that your firm cannot ethically support a public commitment that relies on unproven technology and will only endorse the financially sound 2050 target.",
+        expertRationale: "This is analytically honest but politically inflexible. It forces the CEO to choose between their political need (2040) and the consulting firm's rigid advice (2050). The CEO will likely hire a more politically savvy firm to justify the 2040 date, and your firm loses the future work. It is too rigid in a political context.",
+        expertRanking: 2
+      }
+    ],
+    overall: "B is dishonest, and C is inflexible. A is the best choice because it achieves the CEO's political goal while using a governance structure (the public contingency) to protect the client and the firm from the underlying technological risk. The best advisory work manages both politics and finance simultaneously.",
+    takeAway: "When supporting an ambitious political goal, make the achievement publicly contingent on the underlying technological or regulatory risk."
+  },
+  {
+    id: 32,
+    moduleId: 5,
+    title: "The Internal Saboteur",
+    prompt: "Your team is driving a radical reorganization at a German utility's trading arm. The most influential, respected long-time trader, who stands to lose their empire in the new structure, is quietly undermining your team's efforts by planting disinformation and spreading rumors about the project's imminent failure. The COO is oblivious to the internal politics, which are as thick as tar. Your Manager is pressuring you to 'just get the job done' without causing a fuss.",
+    responses: [
+      {
+        id: "A",
+        title: "Ignore and Out-Deliver",
+        text: "Follow the Manager's advice. Do not engage the trader or acknowledge the rumors. Instead, double down on the project's delivery, over-communicating positive milestones and results to the wider employee base. The goal is to make the trader's rumors look ridiculous and irrelevant through sheer performance and tangible success.",
+        expertRationale: "This is the long-game strategy. It's safe but slow. It relies on the results eventually overcoming the rumors, which is often too late for a fast-paced project. In the short term, the internal resistance will continue to slow the project down, costing the client time and money. It fails to address the political problem directly.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "Co-Opt the Critic",
+        text: "Politely invite the influential trader to join an 'Expert Review Committee' for the new trading structure. Frame the role as critical for 'validating operational feasibility.' Your goal is to give the trader public status in the new regime, turning them into a vocal champion. This neutralizes their resistance by offering them ownership and a new, respected public role.",
+        expertRationale: "This is the classic 'co-opt or kill' political heuristic. By giving the critical influencer a seat at the table and a new status role, you eliminate their incentive to sabotage. They become a co-author of the change, neutralizing the internal political friction in the fastest and most effective way. This is the shrewdest management of internal politics.",
+        expertRanking: 1
+      },
+      {
+        id: "C",
+        title: "The Formal Warning",
+        text: "Gather documentation of the trader's disruptive behavior and present it to the COO. Demand that the trader be formally warned or temporarily reassigned, arguing that their actions constitute a critical risk to the reorganization's success and budget. State that the firm cannot proceed unless the internal resistance is removed.",
+        expertRationale: "This is a direct, adversarial confrontation that forces the COO to make a difficult personnel decision, which they will resent. While it may solve the problem quickly, it creates a new internal enemy (the COO who had to fire a respected employee) and violates the Partner's request to avoid a fuss. It is too heavy-handed.",
+        expertRanking: 3
+      }
+    ],
+    overall: "A is too slow, and C is too confrontational. B is the optimal political move: it addresses the trader's core need (status and influence) by giving them a new, formal role in the new structure, effectively turning them from a saboteur into a necessary champion.",
+    takeAway: "Neutralize influential internal resistance by co-opting the critic into a status-enhancing role in the new structure."
+  },
+  {
+    id: 33,
+    moduleId: 5,
+    title: "The Unjustifiable Acquisition",
+    prompt: "Your team is running due diligence for a major French utility on a highly emotional acquisition: a small, politically significant, but loss-making municipal utility. Your analysis shows the acquisition has zero financial synergy and a negative 10 percent IRR, like a lead balloon in an air race. The CEO is emotionally attached and sees the deal as a necessary political stepping stone. Your Manager is pushing you to present the 'non-financial, strategic benefits' as the primary justification.",
+    responses: [
+      {
+        id: "A",
+        title: "Bury the Financials",
+        text: "Follow the Manager's advice. Lead the presentation with a slide titled 'Strategic Imperative' detailing five vague, high-level benefits (e.g., 'access to new market,' 'future-proofing'). Bury the negative IRR slide deep in the appendix, with a footnote suggesting 'financial benefits will materialize in the long-term, post-synergy phase.'",
+        expertRationale: "This is a massive ethical and professional failure. It misleads the client by burying the only relevant decision-making metric (IRR). While it makes the CEO happy, it ensures the client will make a bad investment and destroys the firm's reputation for financial rigor, making it complicit in value destruction.",
+        expertRanking: 3
+      },
+      {
+        id: "B",
+        title: "The Political Discount",
+        text: "Present the negative IRR clearly. Then, dedicate a separate section to quantifying the 'Political Value' of the deal: assign a dollar value to the political goodwill, permitting speed, and regulatory de-risking achieved by the acquisition. Argue that the financial loss is the *explicit cost* of the political win, forcing the CEO to treat the financial loss as a calculated expense.",
+        expertRationale: "This is analytically honest but politically confrontational. It still forces the CEO to look at a massive financial loss, which they will struggle to justify internally. While better than A, it lacks the subtlety of C, which provides a more manageable financial path forward.",
+        expertRanking: 2
+      },
+      {
+        id: "C",
+        title: "The Restructuring Mandate",
+        text: "Do not challenge the acquisition. Instead, advise the CEO that the acquisition *must* be immediately followed by a radical, six-month restructuring project to cut costs and achieve a 5 percent IRR within two years. Frame the restructuring as the 'mandatory cost of entry' for the political win, making the deal contingent on the restructuring project's approval.",
+        expertRationale: "This is the most effective and professional move. It satisfies the CEO's political goal (the acquisition) while imposing the necessary financial discipline (the restructuring) to ensure the client minimizes the damage. It turns a bad deal into an opportunity for a major, value-creating follow-on project for the consulting firm.",
+        expertRanking: 1
+      }
+    ],
+    overall: "A is dishonest, and B is too confrontational. C is the optimal solution: it accepts the political reality while structurally imposing the commercial requirement (the restructuring). This ensures the client gets their political win while the consulting firm delivers a path to actual value creation.",
+    takeAway: "To manage a client's politically-driven bad decision, accept the decision but make a mandatory follow-on restructuring project the condition of your support."
+  },
+  {
+    id: 34,
+    moduleId: 5,
+    title: "The Unachievable Savings Target",
+    prompt: "A key UK utility has set a public, shareholder-facing cost savings target of 500 million EUR over two years. Your analysis, which is the most rigorous in the industry, shows the maximum realistic, sustainable savings is 350 million EUR, a massive shortfall. The CEO is adamant about the 500 million EUR target, as their bonus is tied to achieving it. Your Partner is pushing you to use 'aggressive assumptions' to bridge the 150 million EUR gap, like trying to stretch a tiny blanket over a very large bed.",
+    responses: [
+      {
+        id: "A",
+        title: "Present the Truth and the Gap",
+        text: "Present the 350 million EUR figure as the 'Base Case: Sustainable Savings' derived from core operational efficiencies. Then, dedicate a separate section to the 150 million EUR gap, labeling it 'The Ambition Gap.' Propose an explicit list of five, high-risk, non-sustainable actions (e.g., massive headcount cuts, delaying maintenance) that could bridge the gap, forcing the CEO to explicitly choose and own the high-risk actions to meet their bonus target.",
+        expertRationale: "This is the most professional and accountable response. It maintains the firm's analytical integrity by standing by the 350 million EUR figure while giving the CEO the political tools (the list of risky actions) to achieve their goal, thus protecting the consulting firm from any future blame for unsustainable savings. It is intellectually honest and politically savvy.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Fudge the Assumptions",
+        text: "Follow the Partner's request. Adjust two key, high-impact assumptions in your model (e.g., technology adoption speed and procurement cost reduction) to bring the final number to 500 million EUR. Ensure the change is subtle. Present the 500 million EUR as a 'Stretch Goal: The Full Potential,' avoiding any mention of the underlying data manipulation to satisfy the CEO's bonus.",
+        expertRationale: "This is a massive violation of intellectual integrity. The firm becomes a tool for shareholder manipulation, which is a massive legal and reputational risk. Fudging the numbers to hit a bonus target is one of the quickest ways to destroy a consulting firm's long-term credibility in the financial community.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "The External Benchmark",
+        text: "Do not challenge the 500 million EUR target directly. Conduct an emergency benchmark of three peer companies that have publicly announced similar, high savings. If they are also using aggressive assumptions, use the peer group's assumptions to justify your client's 500 million EUR target. Frame the resulting figure as 'Industry Standard Best Practice,' shifting the blame for the aggressive assumptions to the market.",
+        expertRationale: "This is a clever political solution, but it is still dishonest. It uses the bad behavior of others to justify the client's poor decision. The firm is still endorsing an unsustainable number, only now it has a market excuse. A is better because it clearly delineates the sustainable savings from the risky actions.",
+        expertRanking: 2
+      }
+    ],
+    overall: "B is dishonest, and C uses peer pressure as an excuse. A is the only responsible action: it delivers the truth (350 million EUR) while giving the CEO the tools to achieve their personal political goal (500 million EUR) by listing the risky, non-sustainable actions they must take. This makes the CEO own the risk.",
+    takeAway: "When forced to justify an unachievable target, distinguish the sustainable savings from the risky actions required to bridge the gap."
+  },
+  {
+    id: 35,
+    moduleId: 5,
+    title: "The Partner's Outdated View",
+    prompt: "Your team has identified that a German utility client should radically exit a small but capital-intensive district heating business, which is highly profitable today but will be completely obsolete in ten years due to heat pump technology. Your Partner, who has a 20-year emotional history with this specific business line, insists the firm recommends a 'grow' strategy, viewing the exit analysis as 'academic nonsense.' Your Manager is clearly uncomfortable.",
+    responses: [
+      {
+        id: "A",
+        title: "The Emotional Bridge",
+        text: "Do not challenge the Partner's grow strategy. Instead, propose a 'Grow-to-Sell' strategy: grow the business's profitability aggressively for two years, making it more attractive to a niche private equity buyer, then initiate the sale. This honors the Partner's emotional attachment while achieving the necessary exit, framing it as a 'value realization' instead of a retreat.",
+        expertRationale: "This is the most sophisticated psychological and commercial move. It respects the Partner's emotional need by 'growing' the asset but structurally ensures the long-term, necessary outcome (the exit). It re-frames the exit as a positive, strategic 'value realization' event, which is easy for the Partner to champion.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "The Market Risk Scenario",
+        text: "Present the exit strategy as the 'Base Case.' Then, create a separate 'Catastrophic Scenario' slide showing the full cost of obsolescence (e.g., massive write-down, stranded asset risk) if the client attempts to grow. Force the Partner to explicitly justify choosing a strategy that leads to a catastrophic loss, using cold data to counter the emotion.",
+        expertRationale: "This is the most professional and high-courage solution. It directly and clearly uses data to defeat the Partner's emotional attachment by showing the full, terrifying consequence of their preference. While it creates conflict, it fulfills the firm's duty to provide the best, long-term advice, which is ultimately what the client pays for.",
+        expertRanking: 1
+      },
+      {
+        id: "C",
+        title: "The Manager's Shield",
+        text: "Submit the analysis to the Partner and let the Manager handle the internal conflict. When the Partner inevitably pushes back, tell the Manager that the analysis is 'immutable' and that the Manager must now find a way to compromise the Partner's view without involving the team further. The team continues working on the exit analysis to be ready.",
+        expertRationale: "This is a massive abdication of responsibility. The Manager is not paid to be a political buffer for the Partner's emotional attachments. The team's job is to solve the problem for the entire organization, including the Partner. Shifting the conflict down the chain of command is poor professional behavior.",
+        expertRanking: 3
+      }
+    ],
+    overall: "C is an internal dodge, and A is a clever compromise. B is the highest value-added response: it uses a highly visible and undeniable data point (the catastrophic scenario) to defeat the Partner's emotional bias, fulfilling the ultimate duty of a trusted advisor—to prevent the client from making a strategic mistake.",
+    takeAway: "Defeat emotional bias with a catastrophic risk scenario that forces the decision-maker to justify a bad decision with cold, hard facts."
+  },
+  {
+    id: 36,
+    moduleId: 5,
+    title: "The Unnecessary Data Capture",
+    prompt: "A Portuguese retail utility client is about to spend 10 million EUR on a massive new customer data platform. Your team's initial design included capturing customer location data every minute to 'optimize grid management.' Your Chief Architect just realized this level of granularity is completely unnecessary for the stated business goal (marketing analytics) and creates massive, unquantified GDPR compliance risk, which is like carrying a ticking bomb for no reason. Your Partner is already touting the 'hyper-granular data' in the client pitch.",
+    responses: [
+      {
+        id: "A",
+        title: "The Justification Forge",
+        text: "Do not change the plan. Immediately create a new 'Future Use Case' slide for the presentation, focusing on a hypothetical, high-value future application (e.g., 'ultra-precise real-time grid balancing') that *would* require minute-by-minute data. This justifies the Partner's pitch while keeping the compliance risk unaddressed, hoping it doesn't materialize.",
+        expertRationale: "This is a massive ethical failure. The firm is knowingly creating a massive, unnecessary, and unquantified legal risk for the client just to satisfy the Partner's vanity pitch. It's a short-sighted and dangerous maneuver that will destroy trust when the client eventually discovers the unneeded legal exposure.",
+        expertRanking: 3
+      },
+      {
+        id: "B",
+        title: "The Phase-In Defense",
+        text: "Acknowledge the compliance risk. Advise the client to proceed with the 10 million EUR platform but immediately revert the data capture plan to monthly, aggregated data (which is compliant). Frame the minute-by-minute capture as a 'Phase 2' option that will only be activated after a full, year-long legal and ethical review, which de-risks the current project.",
+        expertRationale: "This is the ideal compromise. It allows the client to proceed with the expensive platform (satisfying the Partner and client sponsor) while structurally eliminating the immediate, unnecessary compliance risk. It kicks the decision down the road with a governance step (the legal review), which is a common and effective de-risking tactic.",
+        expertRanking: 1
+      },
+      {
+        id: "C",
+        title: "The Risk Escalation",
+        text: "Immediately inform the Partner that the minute-by-minute data capture plan is an unquantifiable legal risk that the firm cannot endorse. Draft a memo for the Partner to send to the client's Chief Legal Officer detailing the risk and recommending the entire 10 million EUR platform project be put on hold until the compliance issue is resolved, regardless of the delay this creates.",
+        expertRationale: "This is too heavy-handed. It unnecessarily halts a major capital project over a data capture decision that can be easily modified. It makes the consulting firm look like a project killer and an overly bureaucratic vendor, which annoys the client and risks losing the long-term relationship.",
+        expertRanking: 2
+      }
+    ],
+    overall: "A is reckless, and C is too aggressive. B is the optimal solution: it allows the client to proceed with the major investment while structurally de-risking the project by moving the risky data capture to a later, governed phase. This is how you manage a high-stakes, client-facing risk with minimal friction.",
+    takeAway: "When a high-value project is threatened by a small, unnecessary risk, postpone the risky component to a later, governed phase."
+  },
+  {
+    id: 37,
+    moduleId: 5,
+    title: "The Low-Cost Competitor",
+    prompt: "A state-owned Hungarian utility client, notorious for bureaucracy, has just hired your team to run a major operational efficiency program. You discover that a smaller, local Hungarian consulting firm is doing almost identical work for a different division at half your price. Your Manager insists your firm is providing 'strategic depth' and the local firm is 'just paper-pushing,' but the client CFO is asking pointed questions about the massive fee difference, which is a political volcano waiting to erupt.",
+    responses: [
+      {
+        id: "A",
+        title: "Define the Value Differential",
+        text: "Do not attack the local competitor. Create a single, hyper-clear slide that explicitly outlines the 'Value Differential.' Quantify your firm's value in three domains: global benchmark data (which the local firm lacks), risk management (which protects the CFO's backside), and guaranteed outcome realization (tying 10 percent of your fee to hitting a specific savings target). Focus on your firm's *de-risking* value.",
+        expertRationale: "This is the most professional and effective defense. It pivots the conversation away from 'price' to 'risk and outcome.' By quantifying value and tying your fee to results, you prove you are a partner, not a cost center, which is the highest-value argument against a lower-cost competitor who cannot offer the same level of guarantee or global data.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "The Partner's Intervention",
+        text: "Inform the Manager that this price difference requires a Partner-level intervention with the CFO. Draft a confidential memo for the Partner, stressing that the local firm poses a 'reputational risk' because their work is likely low-quality. The Partner should then meet the CFO to quietly discredit the local firm's capabilities and re-sell the high fee as a necessity for quality.",
+        expertRationale: "This is a dangerous, adversarial tactic. Discrediting a competitor is unprofessional and can backfire if the CFO has a relationship with the local firm. It's a low-courage attempt to solve a value problem with political maneuver, which is rarely a sustainable strategy.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "The Service Exchange",
+        text: "Propose an immediate, internal-client agreement: your firm will take over the local firm's strategic analysis work, and the local firm will take over your firm's administrative data collection tasks. This justifies your higher fee by focusing your team on high-value, strategic work while outsourcing the low-cost data collection to the cheaper firm, reducing the overall fee gap.",
+        expertRationale: "This is a clever operational compromise. It justifies the firm's price by focusing its resources on the highest-value work while reducing the overall cost of the project to the client. This is a pragmatic, win-win-win solution that shows flexibility and commercial acumen.",
+        expertRanking: 2
+      }
+    ],
+    overall: "B is unprofessional, and C is a good operational fix. A is the best: it uses an undeniable, high-value data comparison (global data, risk management) to justify the price difference, protecting the firm's overall value proposition without resorting to internal politics.",
+    takeAway: "Defend a higher fee by quantifying the value differential in terms of global data, risk mitigation, and guaranteed outcomes."
+  },
+  {
+    id: 38,
+    moduleId: 5,
+    title: "The Unpopular Restructuring",
+    prompt: "Your team has designed a massive organizational restructuring for a Spanish utility that requires laying off 1,500 middle managers, which is as politically flammable as setting fire to an oil drum. The CEO is delaying the internal announcement until after the firm leaves, fearing the political fallout. Your Partner is worried that delaying the announcement will undermine the change process and make the firm look like it delivered a 'paper plan' that was never executed.",
+    responses: [
+      {
+        id: "A",
+        title: "The CEO's Call",
+        text: "Allow the CEO to control the timeline. Present the restructuring as a 'strategic roadmap' with three phases, ensuring the first phase (the layoffs) is completed within the first three months. State that the firm will return in four months for a 'Phase 2: Implementation Audit' to ensure accountability, shifting the political risk to the CEO.",
+        expertRationale: "This is a necessary compromise. The client must own the personnel decisions and the resulting political fallout. While it risks looking like a paper plan, the firm protects its reputation by scheduling a follow-up audit, which puts the CEO on notice that accountability is coming. It's a calculated retreat.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "Mandate a Communication Plan",
+        text: "Strongly advise the CEO that delaying the announcement is a far greater risk than immediate action. Present a 'Crisis Communication Plan' that frames the layoffs as a necessary step for 'future investment and job creation in renewables.' Demand the CEO launch the communication *while* the consulting team is still on-site to assist with the messaging and answer technical questions, sharing the risk in the moment.",
+        expertRationale: "This is the best high-courage solution. By demanding to be present during the crisis, the firm shares the political risk and shows partnership. It prevents the CEO from botching the communication and allows the consulting firm to ensure the new structure is communicated accurately. This is the only way to ensure the plan is not undermined by rumors and fear.",
+        expertRanking: 1
+      },
+      {
+        id: "C",
+        title: "The Quiet Implementation",
+        text: "Advise the CEO to proceed with the layoffs in small, phased groups over six months, without a public announcement. Frame the layoffs as 'natural attrition' and 'voluntary early retirement' to manage the political fallout and avoid a single, massive news event. The consulting team helps the HR team execute the quiet reduction.",
+        expertRationale: "This is a cynical and potentially unethical tactic. While it avoids a political flashpoint, it drags out the pain for the workforce and creates a massive, long-term morale problem as employees fear sudden, quiet cuts. It destroys internal trust and makes the consulting firm complicit in a bad corporate communication strategy.",
+        expertRanking: 3
+      }
+    ],
+    overall: "C is unethical and A is passive. B is the most effective solution: it forces the CEO to communicate the painful truth immediately, while providing the necessary assistance (the communication plan) to manage the crisis. The firm's presence during the announcement is a crucial sign of partnership and ensures the plan is not undermined.",
+    takeAway: "Never let the client manage a sensitive announcement alone; share the political risk by being physically present to assist with communication."
+  },
+  {
+    id: 39,
+    moduleId: 5,
+    title: "The Competitor's Failed Project",
+    prompt: "Your team is pitching a major digital transformation to a Portuguese utility. Your biggest rival just failed spectacularly on an identical project at a peer utility in Spain—a massive, public, and embarrassing failure, like a skyscraper suddenly collapsing. Your Partner wants you to ignore the failure in your pitch, assuming the client will view it as an 'unrelated anecdote' and focus on your firm's strengths.",
+    responses: [
+      {
+        id: "A",
+        title: "The Subtle Dig",
+        text: "Follow the Partner's advice and do not mention the competitor. In the Q&A section, if the client brings it up, offer a vague statement about 'poor execution on the ground' and 'insufficient internal controls.' Then, immediately pivot back to the firm's superior methodology and experience, framing the competitor's failure as a simple one-off mistake.",
+        expertRationale: "This is a low-courage approach. The client is thinking about the failure, and avoiding it makes the consulting firm look naive or complicit. A subtle dig is an insult, not a strategic move. It is a massive missed opportunity to demonstrate superior risk management and expertise.",
+        expertRanking: 3
+      },
+      {
+        id: "B",
+        title: "Pre-Empt the Failure",
+        text: "Pre-emptively open the pitch by addressing the competitor's failure head-on. Dedicate a slide to 'Lessons Learned from the Spanish Peer.' Use a visual to show the top three reasons for the failure (e.g., lack of user adoption, poor data quality) and explicitly show how your firm's methodology and approach *specifically* mitigates each of those three risks. Frame the failure as a teaching moment.",
+        expertRationale: "This is the most professional and most effective strategy. It neutralizes the client's biggest fear (failure) by demonstrating that your firm is the only one who has taken the time to deconstruct the risk and build a solution. It elevates the pitch from 'what we do' to 'how we prevent failure,' which is a massive value differentiator.",
+        expertRanking: 2
+      },
+      {
+        id: "C",
+        title: "The Risk Transfer",
+        text: "Do not mention the failure. Instead, propose a contract structure with a 'Risk-Share' clause: 20 percent of your firm's fee is tied to the successful adoption and financial success of the project. This shifts the financial burden of the risk to the consulting firm, silently acknowledging the client's fear without mentioning the competitor's failure.",
+        expertRationale: "This is a clever financial move that addresses the client's fear of loss. However, it fails to explain why your firm is better than the competitor. The client still needs assurance that the project *will* succeed, not just that they won't lose money when it fails. B is better because it provides the necessary intellectual assurance.",
+        expertRanking: 1
+      }
+    ],
+    overall: "A is too vague, and C is a good financial hedge but a poor intellectual sell. B is the strongest move: by directly addressing the competitor's failure as a 'lessons learned' opportunity, the firm demonstrates superior risk management and strategic depth, which is the most compelling argument in a high-stakes pitch.",
+    takeAway: "Turn a competitor's public failure into your firm's strategic advantage by explicitly demonstrating how your methodology mitigates the exact causes of that failure."
+  },
+  {
+    id: 40,
+    moduleId: 5,
+    title: "The Missing Sustainability Data",
+    prompt: "A global investor is about to launch a massive, highly visible ESG fund for European renewables. Your team is providing the final due diligence on asset sustainability, but your junior analyst is struggling to find basic Scope 3 (supply chain) emissions data for the two largest assets, which is as elusive as a needle in a haystack. The investor insists the fund must launch next week, and your Manager is pressing you to 'proxy' the data with industry averages to meet the deadline, as a failure to launch would be an embarrassment.",
+    responses: [
+      {
+        id: "A",
+        title: "The Public Disclosure Bridge",
+        text: "Do not use generic proxies. Instead, use industry-standard proxy data, but require the client to issue a public statement that the Scope 3 data is 'unaudited' and that the investor commits to providing the audited data within six months. Frame the proxy as a 'temporary data bridge' that enables the immediate launch while signaling a commitment to full transparency.",
+        expertRationale: "This is the most responsible solution. It allows the client to meet the launch deadline while structurally eliminating the firm's liability for using unaudited data. By forcing a public, time-bound commitment to full transparency, the investor turns a weakness into a visible sign of commitment to ESG rigor, which is a massive political win.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "The Silent Proxy",
+        text: "Follow the Manager's instructions. Use the industry average proxy data without any explicit mention or caveat in the final report, citing 'standard industry practice.' This keeps the final report clean and allows the fund to launch on time, avoiding the embarrassment of having 'missing data' in the final document.",
+        expertRationale: "This is a massive violation of intellectual integrity. The firm is knowingly providing misleading data to satisfy a political deadline, which is a major reputational and legal risk if the true Scope 3 emissions are significantly higher than the proxy. It's a short-sighted compromise that protects the deadline but risks long-term credibility.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Delay the Two Assets",
+        text: "Advise the client to launch the fund next week with only the assets that have complete data. Hold back the two assets with missing Scope 3 data, informing the client that they can be added to the fund in a 'Phase 2' launch in three months, once the data is secured. This protects the firm's integrity but risks a political fight over the smaller fund size.",
+        expertRationale: "This is honest but inflexible. The investor wants a massive launch, and holding back the two largest assets will significantly undercut the political impact of the fund. While it is the lowest-risk option, it fails to find a creative path to meet the client's political and commercial goal (a massive fund launch).",
+        expertRanking: 2
+      }
+    ],
+    overall: "B is dishonest, and C is inflexible. A is the optimal solution: it allows the client to proceed with the political launch while structurally de-risking the data with a public, time-bound commitment to full transparency. This is a savvy way to manage both a political and a data constraint.",
+    takeAway: "When a political deadline forces the use of proxy data, insist on a public, time-bound commitment to full transparency to eliminate legal and reputational risk."
+  },
+  {
+    id: 41,
+    moduleId: 5,
+    title: "The Uncooperative Regulator",
+    prompt: "Your team is running a merger review for two large Italian utilities. The competition regulator is demanding an incredibly detailed, bespoke data set that will take your team six weeks and 500,000 EUR to compile, which is as excessive as ordering a feast for one person. Your client sponsor is furious and wants to refuse the request, arguing that it's an unnecessary roadblock. Your Partner says, 'Don't fight the regulator, just get the deal done.'",
+    responses: [
+      {
+        id: "A",
+        title: "The Trade-Off Refusal",
+        text: "Do not refuse, but immediately send a diplomatic letter to the regulator. State that the bespoke data will take six weeks and cost 500k EUR. Propose a two-week delay and a substitute, less detailed data set (which is cheaper and faster) that will provide 90 percent of the necessary information. Frame the trade-off as a 'commitment to speed and efficiency.'",
+        expertRationale: "This is a good, pragmatic compromise that respects the regulator's authority while attempting to mitigate the cost. The trade-off is clear: less detail for faster approval. However, the regulator may interpret this as an attempt to hide information, which is a political risk. B is better because it solves the problem for the regulator.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "The Service Swap",
+        text: "Do not refuse the request. Immediately launch the data collection. Simultaneously, arrange an informal meeting with the regulator's technical staff. Offer to have your technical team help them set up a more efficient data ingestion process for the bespoke data set, framing the support as a 'shared commitment to efficiency.' This builds goodwill and speeds up the review.",
+        expertRationale: "This is the most effective and shrewd solution. It acknowledges the regulator's authority but uses a relationship-driven move (offering free, technical help) to build trust and potentially speed up the process. This is the 'unwritten rule' of regulatory management: always find a way to make the regulator's job easier, which is the fastest way to get what you want.",
+        expertRanking: 1
+      },
+      {
+        id: "C",
+        title: "The Internal Complaint",
+        text: "Follow the client sponsor's request to refuse. Write a formal complaint letter to the regulator's superior, arguing that the request is 'disproportionate' and a clear 'abuse of regulatory power' that unfairly delays a strategic deal. Demand an immediate internal review of the data request, which stalls the deal but satisfies the client's anger.",
+        expertRationale: "This is a massive political failure. Fighting the regulator by complaining to their superior is a guaranteed way to poison the entire relationship, ensuring the rest of the review is punitive and slow. The deal will be killed by the resulting political friction and bad blood. Never fight the referee.",
+        expertRanking: 3
+      }
+    ],
+    overall: "C is adversarial, and A is too passive. B is the optimal solution: it uses a strategic service offering (technical help) to build goodwill with the technical staff, which is the fastest way to unblock a bureaucratic regulatory request. The client gets their deal, and the regulator feels respected.",
+    takeAway: "Never fight the regulator; instead, offer to solve their technical problem to build goodwill and expedite your approval."
+  },
+  {
+    id: 42,
+    moduleId: 5,
+    title: "The CEO's Vague Vision",
+    prompt: "Your team is defining the strategic response for a large UK utility to the electrification of transport. The CEO has given a highly vague, almost poetic vision—'We must be the backbone of Britain's electric dream.' The entire executive team is confused, and your Partner insists you take the poetic vision and turn it into a concrete, three-pillar strategy that is easy to execute and politically saleable, which is like turning a cloud into a solid piece of furniture.",
+    responses: [
+      {
+        id: "A",
+        title: "The Options Maze",
+        text: "Translate the vision into three possible, but fundamentally different, strategic paths (e.g., '1. Focus on charging infrastructure,' '2. Focus on grid balancing,' '3. Focus on fleet services'). Present all three to the executive team and force them to debate and select one, making the executive team own the difficult choice of defining the vision.",
+        expertRationale: "This is a low-courage abdication of the consultant's duty. The CEO hired you to solve the ambiguity, not to present the client with a new set of complex choices. The executive team will likely waste time debating the merits of the three options, and the confusion will continue. The firm delivers options, not a solution.",
+        expertRanking: 3
+      },
+      {
+        id: "B",
+        title: "The Stakeholder Synthesis",
+        text: "Conduct a rapid, 24-hour round of one-on-one interviews with the five most important executives (CFO, COO, CDO, etc.). Ask them what the CEO's vision *should* mean for their division. Synthesize these five, often conflicting, views into a single, concrete, three-pillar strategy. Present the final strategy to the CEO as the 'Executive-Validated Interpretation' of their vision, ensuring immediate buy-in.",
+        expertRationale: "This is a shrewd, effective move. It uses the input of the most important stakeholders to define the vision, ensuring the final strategy is politically validated and executable across the organization. The CEO gets credit for a great vision, and the executive team gets a plan they helped create. This is co-creation at its finest.",
+        expertRanking: 2
+      },
+      {
+        id: "C",
+        title: "The Single, Bold Interpretation",
+        text: "Take the boldest interpretation of the CEO's vision (e.g., 'Become the UK's largest EV charging operator by 2030'). Create a three-pillar plan (e.g., Acquire, Build, Partner) to support this single, concrete goal. Present it as the firm's expert-driven recommendation, forcing the executive team to either accept the bold goal or actively justify a retreat to a more moderate position.",
+        expertRationale: "This is the ideal approach when facing a vague but ambitious client. By making the boldest, most concrete interpretation, the consultant forces the client to debate a tangible plan, not a vague idea. It pushes the client out of their comfort zone and is the fastest way to get to a clear, executable decision, which is the consulting mandate.",
+        expertRanking: 1
+      }
+    ],
+    overall: "A is an abdication of duty, and B is a slow consensus-building approach. C is the best choice: it forces a rapid decision by presenting a single, bold, executable interpretation of the CEO's vision, making the executive team either commit to the bold path or immediately define the less ambitious one.",
+    takeAway: "Translate a vague vision into a single, bold, executable strategic goal to force a rapid and concrete decision."
+  },
+  {
+    id: 43,
+    moduleId: 5,
+    title: "The Unjustified Technology Debt",
+    prompt: "Your team is running an IT transformation for a Belgian grid operator. Your analysis shows that the client's current proprietary software, developed by a retiring internal genius, costs 20 million EUR per year in maintenance but could be replaced by an off-the-shelf cloud solution for 5 million EUR, a massive saving. The CIO, who is best friends with the retiring genius, is resisting the change, arguing that the proprietary software is a 'competitive advantage' which is as flimsy as paper in the rain.",
+    responses: [
+      {
+        id: "A",
+        title: "Quantify the Hidden Cost",
+        text: "Create a 'True Cost of Ownership' slide that shows the 20 million EUR in maintenance is only 30 percent of the total cost. Add hidden costs, such as the 'opportunity cost of proprietary software' (e.g., inability to integrate AI tools, lack of external vendor support) and quantify the *risk* of the retiring genius leaving. This forces the CIO to justify a 50 million EUR liability, not just a 15 million EUR difference.",
+        expertRationale: "This is the most effective and professional response. It maintains integrity by focusing on data, but uses a savvy accounting trick (True Cost of Ownership) to defeat the emotional resistance. By quantifying the hidden, non-financial risks (opportunity cost, risk of retiring staff), the firm turns the CIO's 'competitive advantage' argument into a massive, quantifiable liability.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "The 'Genius' Transition",
+        text: "Do not challenge the proprietary software's value. Instead, propose that the retiring genius's job be transitioned to a new 'Chief Innovation Officer' role, dedicated to customizing the new cloud solution. This gives the CIO's friend a new, high-status job, removing the emotional block to the technology change, but risks the 'genius' sabotaging the new cloud solution.",
+        expertRationale: "This is a clever political solution that addresses the emotional block (the friend). However, it risks creating a massive organizational problem by giving the departing genius a new, high-status job where they may undermine the new system. It's a short-term fix that creates long-term organizational risk.",
+        expertRanking: 2
+      },
+      {
+        id: "C",
+        title: "The CEO Mandate",
+        text: "Immediately inform the Partner that the CIO's resistance is destroying 15 million EUR in value. Demand a meeting with the CEO to force a decision between the CIO's personal friendship and the massive cost savings. State that the firm cannot proceed with the transformation unless the CIO is formally overruled and the cloud solution is mandated.",
+        expertRationale: "This is a massive internal political escalation that is too heavy-handed. It forces the CEO to choose between a respected friend and a consulting firm's recommendation, which is an unnecessary conflict. A is better because it provides the CEO with the data needed to make the change without confrontation.",
+        expertRanking: 3
+      }
+    ],
+    overall: "C is too confrontational, and B is too risky. A is the only responsible action: it uses advanced financial modeling (True Cost of Ownership) to defeat the emotional resistance, turning the CIO's 'competitive advantage' argument into a clear, quantifiable liability.",
+    takeAway: "Defeat emotional attachment to legacy systems by quantifying the full 'True Cost of Ownership,' including hidden risks and opportunity costs."
+  },
+  {
+    id: 44,
+    moduleId: 5,
+    title: "The Public Relations Disaster",
+    prompt: "A major German utility client has just suffered a catastrophic data breach, which is front-page news. Your team was responsible for the initial 'Digital Security Audit' six months ago. The client CEO is publicly blaming the audit for 'misleading' them, and your Partner is pressuring you to produce a backdated document showing that the firm explicitly warned the client about the specific, critical vulnerability that caused the breach. This is a massive legal and ethical pressure cooker.",
+    responses: [
+      {
+        id: "A",
+        title: "The Backdated Warning",
+        text: "Follow the Partner's instructions. Work with the Partner to discreetly backdate a 'Critical Vulnerability Warning' memo, ensuring the language is vague enough to be defensible but clear enough to exonerate the firm. Present the document to the client's General Counsel, framing it as a 'recently discovered communication lapse' that proves the firm's diligence.",
+        expertRationale: "This is a massive legal and ethical failure that risks destroying the entire firm. Backdating documents is fraud, and if the firm is discovered, the financial and reputational loss would be catastrophic. The consulting firm should never engage in illegal activity to protect a client or a Partner.",
+        expertRanking: 3
+      },
+      {
+        id: "B",
+        title: "The Factual Defense",
+        text: "Do not backdate any documents. Immediately pull all official, signed audit reports and communications. Identify the nearest point where the firm *did* warn the client about 'high-risk vulnerabilities' in the system's architecture (even if not the specific one that failed). Advise the Partner to deliver this documented proof to the CEO, showing the firm warned the client about the *category* of risk, not the specific instance.",
+        expertRationale: "This is the only responsible and legally sound move. It uses documented, factual evidence to defend the firm's reputation without resorting to illegal activity. By proving the firm warned about the 'high-risk category,' it shifts the blame back to the client for not acting on a clear, documented warning. This is the necessary legal defense.",
+        expertRanking: 1
+      },
+      {
+        id: "C",
+        title: "The Damage Control Project",
+        text: "Do not focus on the audit. Immediately propose a new 'Digital Crisis Response and Remediation Project' to the CEO, offering the firm's resources at a 50 percent discount. Frame the new project as a 'shared commitment to recovery,' which shifts the focus from 'blame' to 'solution' and allows the firm to rebuild the relationship through new work.",
+        expertRationale: "This is a clever relationship-saving move. It avoids the blame game and focuses on a solution. However, it fails to address the underlying liability issue and could be interpreted as an admission of guilt (hence the discount). While good for future work, it fails the immediate test of defending the firm's integrity.",
+        expertRanking: 2
+      }
+    ],
+    overall: "A is fraudulent, and C is too weak a defense. B is the gold standard: it relies on documented facts to defend the firm's integrity, which is the only way to survive a high-stakes legal and public relations crisis.",
+    takeAway: "Never resort to fraud to cover up a mistake; rely only on the documented, factual evidence to defend your firm's integrity."
+  },
+  {
+    id: 45,
+    moduleId: 5,
+    title: "The Stakeholder's Veto",
+    prompt: "Your team has designed a brilliant, highly profitable new trading algorithm for a French investment bank's power desk. The final sign-off is needed from the head of quantitative research, who is an intellectual purist and has unilaterally vetoed the algorithm because it uses 'heuristic shortcuts' rather than 'first-principles physics models,' which is a massive intellectual roadblock. The Head of Trading, your sponsor, is furious and wants to use the algorithm now, which feels like a standoff between a professor and a businessman.",
+    responses: [
+      {
+        id: "A",
+        title: "The Options Workshop",
+        text: "Advise the Head of Trading to ignore the veto and proceed with a short, three-month 'Pilot Phase' of the algorithm. Frame the pilot's success as the 'only data' that can satisfy the purist. Propose that the head of quant research audit the three-month performance, making the purist a reluctant, data-driven participant in the commercial success.",
+        expertRationale: "This is a high-courage, practical solution. It uses an 'evidence-based ambush' to overcome the intellectual block. By making the algorithm's performance undeniable, the purist is forced to accept the commercial reality. It is the quickest way to implement the value-creating project.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "The Intellectual Surrender",
+        text: "Do not challenge the veto. Advise the Head of Trading that the team needs to immediately spend three more months re-engineering the algorithm to be based on 'first-principles physics models,' as the quant purist requested. This ensures the algorithm is acceptable to all parties but delays the 50 million EUR in potential trading profit for three months.",
+        expertRationale: "This sacrifices massive commercial value to appease an intellectual purist. The consulting firm's role is to drive commercial success, not to satisfy academic rigor. This is a massive dereliction of commercial duty and shows a lack of ability to manage intellectual stakeholders.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "The Financial Pushback",
+        text: "Demand a meeting between the Head of Trading and the Head of Quant Research, co-chaired by your Partner. Present a clear slide showing that the quant purist's veto is costing the bank 50 million EUR in lost profit per quarter. Force the purist to explicitly defend their intellectual stance against the massive financial loss, making them politically indefensible.",
+        expertRationale: "This is the most effective way to manage an intellectual block. It forces the purist to defend an academic stance against a clear, quantifiable commercial cost. This is the 'unwritten rule' of business: commercial value almost always trumps intellectual purity, and making the cost visible is the fastest way to get sign-off.",
+        expertRanking: 1
+      }
+    ],
+    overall: "B is too passive, and A is a good compromise. C is the best solution: it uses the power of a single, massive financial number (the 50 million EUR loss) to defeat the intellectual resistance, forcing the purist to back down without losing face by having to defend an academic idea against commercial reality.",
+    takeAway: "Defeat intellectual purism by quantifying the exact commercial cost of the delay and forcing the purist to own the financial loss."
+  },
+  {
+    id: 46,
+    moduleId: 5,
+    title: "The Hidden Legacy System",
+    prompt: "Your team is defining the IT roadmap for a large German utility. Your plan involves retiring 50 legacy applications, yielding 20 million EUR in savings. Your client sponsor, the CIO, has just quietly admitted that one of the applications, which is essential for managing the long-term pension fund, was never documented and cannot be retired. The CIO is embarrassed and wants you to remove the 20 million EUR savings figure from the presentation without causing a fuss.",
+    responses: [
+      {
+        id: "A",
+        title: "The Savings Substitution",
+        text: "Do not mention the legacy application. Advise the CIO that you will find a new, substitute source of 20 million EUR in savings from a non-IT domain (e.g., procurement, travel budget), which can be framed as 'additional non-core savings.' This keeps the presentation clean, hits the original 20 million EUR goal, and saves the CIO from the embarrassment of the legacy system.",
+        expertRationale: "This is the most effective political solution. It solves the CIO's embarrassment while maintaining the original financial target, which is the key to project success. By finding an external, substitute saving, the firm shows ingenuity and protects the client's internal political standing, which is often the highest form of advisory.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "The Formal Exemption",
+        text: "Remove the 20 million EUR from the savings target. Create a specific 'IT Savings Exemption' slide that details the critical, non-retirable application and its function (pension management). Present this as a mandatory 'Risk Management' exemption that ensures long-term employee trust, protecting the client from later liability, but causing a political fight over the lowered savings target.",
+        expertRationale: "This is honest but politically naive. It makes the CIO look bad by exposing a massive organizational failure (the undocumented application) and forces a difficult, public conversation about a lowered savings target. This is too much political pain for the CIO, who will resent the firm for not finding a more subtle solution.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "The Deferral Strategy",
+        text: "Advise the CIO to leave the 20 million EUR savings figure in the presentation. Create a new project line item: 'Legacy System Documentation and Migration' with a budget of 5 million EUR and a two-year timeline. Frame the savings as 'deferred' until the new project is complete, which prevents the embarrassing discussion of the undocumented system but delays the actual savings.",
+        expertRationale: "This is a clever political hedge. It keeps the savings target (satisfying the sponsor) but creates a new, funded project to solve the underlying problem. It's a good compromise, but A is better because it delivers the full 20 million EUR *now* via substitution, which is a higher-value proposition.",
+        expertRanking: 2
+      }
+    ],
+    overall: "B is too confrontational, and C only defers the problem. A is the most sophisticated move: it solves the CIO's political problem (embarrassment) while achieving the key project metric (20 million EUR in savings) by finding an external, substitute source of savings. This is superior political advisory.",
+    takeAway: "When a key savings target is jeopardized by an internal flaw, find a substitute source of savings from another domain to protect the client's political standing."
+  },
+  {
+    id: 47,
+    moduleId: 5,
+    title: "The Project Manager's Turf War",
+    prompt: "Your team is running a regulatory compliance program for a UK utility. The client's internal Project Management Office (PMO) head, a famously territorial and bureaucratic manager, is insisting on daily, hyper-detailed reports on every single task, using a proprietary reporting system that doubles your team's workload. Your Manager insists you comply to avoid a turf war, which is a massive drain on your team's resources, like a thousand small cuts.",
+    responses: [
+      {
+        id: "A",
+        title: "The Time Audit",
+        text: "Do not refuse the reporting. Instead, meticulously track the exact number of consulting hours wasted on the PMO's reporting system. Present this as a confidential, data-driven 'Project Management Inefficiency' memo to the client sponsor and the CFO, framing the PMO's process as a 'hidden tax' on the project's budget, forcing the CFO to intervene.",
+        expertRationale: "This is a professional, data-driven advocacy move. It avoids confronting the PMO directly while putting a quantifiable financial cost on their poor behavior. The CFO will be forced to intervene, which is a high-level solution that solves the low-level, bureaucratic problem immediately. Strong, subtle escalation.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "The Automation Solution",
+        text: "Do not complain. Immediately assign a junior analyst to write a script that automatically extracts the necessary data from your firm's system and reformats it for the PMO's proprietary system, reducing the manual workload to zero. Present the automated process to the PMO head as a 'co-created efficiency tool,' turning the bureaucratic system into a template for a better process.",
+        expertRationale: "This is the most ingenious and professional solution. It completely avoids the political conflict by treating the problem as a technical challenge to be automated, which is what the client hired the firm to do. It delivers the required reports without the massive resource drain, turning a bureaucratic roadblock into an opportunity for technical innovation.",
+        expertRanking: 1
+      },
+      {
+        id: "C",
+        title: "The PMO Delegation",
+        text: "Inform the PMO head that the required detail requires dedicated staff. Propose that the PMO assign two of their own internal resources to embed with your team to collect, input, and manage their own reporting requirements, arguing that this will 'ensure accuracy and adherence to their standards.' This shifts the administrative burden back to the PMO.",
+        expertRationale: "This is a clever political move to shift the burden, but it forces the PMO head to admit they don't have the internal resources, which they will resist. The PMO head will likely resent the firm for the public shaming and will find a way to sabotage the project later. It's too confrontational.",
+        expertRanking: 3
+      }
+    ],
+    overall: "C is confrontational, and A is an escalation. B is the optimal solution: it uses technical innovation (automation) to bypass the bureaucratic hurdle, eliminating the manual workload without creating any political friction or requiring a high-level intervention. It's the cleanest, most efficient fix.",
+    takeAway: "Avoid bureaucratic turf wars by automating the reporting requirement, turning the administrative chore into a technical non-issue."
+  },
+  {
+    id: 48,
+    moduleId: 5,
+    title: "The Misaligned Incentives",
+    prompt: "A large Italian utility's new customer retention strategy, which you designed, is being undermined by the Chief Marketing Officer (CMO), whose bonus is still tied to the old metric of *new customer acquisition* rather than *long-term retention*. The CMO is openly joking that your strategy is 'nice theory, but I'm paid to sell, not to babysit the existing base.' Your Partner is too focused on the strategy's success to notice the CMO's sabotage.",
+    responses: [
+      {
+        id: "A",
+        title: "The Partner's Re-sell",
+        text: "Immediately inform the Partner of the CMO's misaligned incentives. Demand a meeting between the Partner and the CEO to present the problem as a critical 'Incentive Structure Failure' that is undermining the entire corporate strategy. Force the CEO to immediately update the CMO's bonus metrics, making the new retention strategy the highest priority.",
+        expertRationale: "This is a clean, honest, and high-impact solution that addresses the root cause: the incentive structure. However, it is a massive political escalation that forces the CEO to address a major internal personnel issue. It is a necessary move but should be reserved for critical failures that cannot be solved at a lower level.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "The Financial Overlay",
+        text: "Do not confront the CMO. Instead, run a new financial model showing that the long-term retention strategy will generate enough excess profit to fund an *additional* bonus for the CMO, tied to the new retention metric. Present the new bonus as a 'strategic incentive overlay' that allows them to 'win' under both the old and new rules, eliminating the incentive conflict.",
+        expertRationale: "This is a clever, non-confrontational solution. It uses money and positive reinforcement to solve a political problem, which is often the fastest way to get buy-in. It allows the CMO to save face and encourages them to adopt the new strategy, which is the ultimate goal. This avoids a political fight and delivers the required outcome.",
+        expertRanking: 1
+      },
+      {
+        id: "C",
+        title: "The Competitive Threat",
+        text: "Collect data showing that two major competitors are now prioritizing long-term customer retention over new acquisition, achieving superior shareholder returns. Present this data to the CMO as a 'competitive threat,' framing the retention strategy as a necessity for their personal professional survival rather than an optional corporate initiative.",
+        expertRationale: "This uses external fear to force internal change, which is often effective. However, it relies on the CMO being rational and not defensive. The CMO may resent the firm for using fear tactics, and it still doesn't fix the root problem (the bonus structure), which remains a massive, unaddressed liability.",
+        expertRanking: 3
+      }
+    ],
+    overall: "C is adversarial, and A is a high-level escalation. B is the optimal solution: it uses a creative financial incentive to solve a political problem, making the CMO a happy, compensated participant in the new strategy rather than a resentful opponent. Money solves the conflict without political fallout.",
+    takeAway: "Solve misaligned incentives by creating a financial 'overlay' that compensates the stakeholder for supporting the new strategy without forcing a change to their existing metrics."
+  },
+  {
+    id: 49,
+    moduleId: 5,
+    title: "The Partner's Toxic Flaw",
+    prompt: "Your Partner is publicly taking credit for a key, highly praised insight that was entirely generated by a junior analyst on your team. The junior analyst is furious, and the rest of the team's morale has plummeted, which is as demoralizing as being told your painting will be sold under someone else's name. Your Manager advises you to tell the junior analyst to 'get used to it, that's how the Partner plays the game.'",
+    responses: [
+      {
+        id: "A",
+        title: "The Internal Recognition",
+        text: "Do not confront the Partner publicly. Instead, arrange a small, private dinner for the team and the Partner, where you publicly give the junior analyst a massive, unique, and visible recognition (e.g., a special bonus, an 'Internal Genius' plaque) in front of the Partner, forcing the Partner to acknowledge the analyst's contribution in a private, high-status setting. Immediately give the analyst a high-profile, Partner-facing role on the next project.",
+        expertRationale: "This is the most sophisticated and effective solution. It respects the 'unwritten rule' of Partner credit while using a high-status, private setting to give the analyst the credit they deserve, thus repairing morale. By immediately giving the analyst a high-profile role, the firm shows it values their talent, which is more important than public credit.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "The Public Correction",
+        text: "Draft a measured email to the entire project team and the client sponsor, gently correcting the Partner's statement by stating, 'The core insight was developed by [Junior Analyst's Name] and validated by the Partner.' This gives the junior analyst the credit but risks a massive political confrontation with the Partner.",
+        expertRationale: "This is an act of high moral courage, but it is career-limiting. Publicly correcting a Partner, even gently, will be seen as insubordination and a political attack, leading to immediate internal friction. The team's morale is restored, but the consultant's career is put in jeopardy, which is a poor trade-off in the professional services world.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "The Quiet Apology",
+        text: "Follow the Manager's advice. Meet the junior analyst one-on-one, apologize for the Partner's behavior, and promise to give them a much bigger role and a better bonus on the next project. Keep the rest of the team out of the conversation and hope the promise of future reward is enough to repair the morale damage.",
+        expertRationale: "This is a passive solution that relies on future promises, which may not be enough to repair the deep-seated resentment. It fails to address the underlying cultural problem and risks the junior analyst simply leaving the firm for better recognition elsewhere. The manager's passive acceptance is poor leadership.",
+        expertRanking: 2
+      }
+    ],
+    overall: "B is an internal political attack, and C is too passive. A is the most sophisticated move: it respects the Partner's hierarchy while using private, high-status recognition to repair the junior analyst's morale and signal to the team that talent is valued, which is the most important cultural signal.",
+    takeAway: "Never fight the hierarchy for public credit; instead, use high-status, private recognition to repair the damage and re-incentivize your team."
+  },
+  {
+    id: 50,
+    moduleId: 5,
+    title: "The Client's Toxic Culture",
+    prompt: "Your project team is three months into a transformation at a Danish utility. The client's internal culture is passive-aggressive, with critical feedback only delivered through whispered back-channels to your Manager, never directly to the team. The Manager is terrified of confronting the client, and the team is struggling to get clear, honest feedback, which is as frustrating as trying to navigate a dense fog.",
+    responses: [
+      {
+        id: "A",
+        title: "The Culture Intervention",
+        text: "Design a formal 'Feedback Protocol' for the project. Advise the client sponsor that all feedback must now be documented in a shared online repository, with a mandatory weekly 'Feedback Review Session' where all parties are required to attend and address all feedback publicly. Frame this as a 'Commitment to Collaborative Candor.'",
+        expertRationale: "This is a structural intervention that attempts to impose a new, transparent culture. It forces the client to be accountable for their feedback, which is necessary. However, the client may resent the firm for trying to change their culture, which is a high-risk political move that should be managed by the Partner.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "The Emotional Mirror",
+        text: "Do not impose a new protocol. Instead, schedule a confidential, one-on-one meeting with the client sponsor. Frame the conversation around the *firm's* perceived failure: 'We are struggling to deliver value because we are not receiving clear, actionable feedback. Is there something we are doing to make you uncomfortable giving us direct criticism?' This forces the client to see their behavior's impact without accusing them.",
+        expertRationale: "This is the most effective and professional solution. It addresses the emotional and cultural issue by using an 'emotional mirror,' forcing the client to see the impact of their passive-aggressive behavior. By positioning the problem as the firm's perceived failure, it creates a safe space for the client to admit the cultural flaw and commit to being more direct. This is a master-class in managing client psychology.",
+        expertRanking: 1
+      },
+      {
+        id: "C",
+        title: "The Partner's Escape",
+        text: "Immediately inform the Partner that the client's culture is a 'toxic execution risk' that the team cannot manage. Demand that the Partner handles all future communications, including the receipt of feedback, acting as a buffer. The team then focuses exclusively on the technical delivery, keeping distance from the client's internal politics.",
+        expertRationale: "This is an internal dodge. While it protects the team, it hands the Partner a massive, ongoing administrative burden and fails the test of advisory leadership. The consulting firm is expected to manage difficult client relationships, not to simply avoid them when the going gets tough. Poor solution.",
+        expertRanking: 3
+      }
+    ],
+    overall: "A is too structural, and C is too passive. B is the optimal solution: it uses emotional intelligence and psychological framing to force the client to confront their own toxic behavior without creating a formal, political conflict. This is the fastest and most sustainable way to repair a relationship.",
+    takeAway: "When managing a client's toxic culture, use an 'emotional mirror' to reflect the impact of their behavior as a perceived failure on your part, forcing them to own the required change."
+  },
+
+  {
+    id: 1,
+    moduleId: 6,
+    title: "The Zero-Carbon Sticker Shock",
+    prompt: "A major logistics client is evaluating a shift to a zero-carbon fleet, but the initial capital expenditure is five times their current budget. The CFO, your primary contact, is now heavily resistant, arguing the business case simply isn't there, despite public pressure being like a ticking clock. Your internal project sponsor is pushing you to 'make the numbers work,' which feels like a request to obfuscate the real cost hurdle.",
+    responses: [
+      {
+        id: "A",
+        title: "Find Phased Financing",
+        text: "Structure the transition as a multi-year, phased approach tied to emerging government grants and green bonds. Present the CapEx as a Net Present Value (NPV) benefit of future fuel and compliance savings, minimizing the initial sticker price shock. Use internal team resources to build three grant application drafts.",
+        expertRationale: "This addresses the CFO's core objection (CapEx) with creative financial structuring (NPV, grants). It reframes cost as investment and shows initiative, moving the conversation from 'can we afford it?' to 'how do we finance it?' This is a high-impact, consultative approach.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Emphasize Regulatory Risk",
+        text: "Re-run the business case, but apply a heavy risk weighting to potential future carbon taxes and regulatory non-compliance fines in five years. Focus the presentation on the downside cost of inaction, using competitor public commitments as a social pressure point. Highlight the 'risk shield' provided by early action.",
+        expertRationale: "Using fear of regulatory risk is a powerful motivator for CFOs, but it can be overly pessimistic or manipulative if the risk is speculative. While defensible, it avoids solving the immediate financial hurdle and might cause the client to push back on the assumptions.",
+        expertRanking: 2
+      },
+      {
+        id: "C",
+        title: "Internal Alignment Workshop",
+        text: "Schedule a workshop with the CFO and the CMO/CSO (Chief Marketing/Sustainability Officer). Facilitate a discussion to explicitly align the financial risk (CFO) with the brand value (CMO) and regulatory certainty (CSO). Position the high cost as an 'insurance premium' for future relevance, not a simple expense.",
+        expertRationale: "This is a relationship-focused solution, acknowledging the political tension. It helps align internal stakeholders but might be seen as deferring the hard financial work. The consultant acts as a mediator, which is good, but the finance answer (A) is more decisive.",
+        expertRanking: 3
+      }
+    ],
+    overall: "The transition from 'cost' to 'investment' is key in these projects. Option A provides a structural financial solution that directly addresses the CFO's budget concerns, moving beyond mere risk assessment (B) or internal politics (C).",
+    takeAway: "To sell a high-cost sustainability plan, shift the focus from CapEx to financing and future NPV."
+  },
+  {
+    id: 2,
+    moduleId: 6,
+    title: "Greenwashing Whistleblower",
+    prompt: "You discover a significant discrepancy: the client's public climate target (a 50% emissions reduction by 2030) relies on a carbon offset program that your analysis shows is only 20% effective, based on flawed land-use assumptions. Your direct client contact, the VP of PR, is terrified of the PR disaster if this gets out and has asked you to 'tweak' the model to support the public claim.",
+    responses: [
+      {
+        id: "A",
+        title: "Model Transparency and Disclosure",
+        text: "Immediately present the full analysis and its implications to your Project Partner and Manager, seeking their counsel on protocol. Advise the client's legal and risk team that the public statement needs immediate revision, offering to provide a qualified (caveated) model that supports a more modest, defensible target.",
+        expertRationale: "The consultant's primary duty is professional integrity and managing the firm's risk. Escalate internally and advise the client's appropriate functions (Legal/Risk) to stop the damage. Tweaking the model (B) is unethical, and a soft pushback (C) is insufficient for this level of risk.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Tweaking the Offsets",
+        text: "Gently push back by explaining that 'tweaking' is impossible without destroying the model's credibility. Instead, recommend an immediate, quiet purchase of high-quality, verified offsets to bridge the gap before the next reporting cycle. Promise to work with the VP of PR to craft a 'refinement' narrative for the public.",
+        expertRationale: "This attempts to solve the client's problem with a quick fix (buy better offsets) but avoids the core issue of the VP of PR's intent and the current misleading public statement. It is a politically soft move that risks complicity if the purchase cannot be made quickly enough.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Soft Internal Pushback",
+        text: "Tell the VP of PR that the current model cannot be 'tweaked' as it's a 'single source of truth' for the firm. Offer to create a new model that focuses only on operational (Scope 1 and 2) reductions to provide a positive story the client can pivot to immediately, avoiding the messy offset calculation entirely.",
+        expertRationale: "While defensible, focusing only on operational scope is a form of scope manipulation (selective disclosure). It allows the client to avoid responsibility for their Scope 3 and offset issues. It is a common political move, but A shows greater professional backbone.",
+        expertRanking: 2
+      }
+    ]
+    ,
+    overall: "When professional integrity and firm reputation are at stake, immediate escalation and full transparency (A) are non-negotiable. 'Tweaking' data (B) is a clear violation of professional ethics, and selective scope reporting (C) is a soft form of greenwashing.",
+    takeAway: "Protect professional integrity first; never compromise data to support a client's misleading public statement."
+  },
+  {
+    id: 3,
+    moduleId: 6,
+    title: "Supplier Emissions Data Black Hole",
+    prompt: "Your manufacturing client is required to report Scope 3 emissions, which account for 80% of their total carbon footprint, but the supply chain data is like trying to nail jelly to a wall. Only 10% of suppliers provide accurate, verifiable data. The deadline is looming, and your client lead insists on using industry averages for the rest to 'get it done,' which will result in a significant underestimate.",
+    responses: [
+      {
+        id: "A",
+        title: "Immediate Hybrid Approach",
+        text: "Use the verifiable 10%, supplement the remaining 90% with industry averages, but document a comprehensive, time-stamped 'data quality improvement plan' as an appendix to the report. Present this plan to the client lead as the required next phase of work, committing to verify and re-report the data within six months.",
+        expertRationale: "This is a practical compromise: meet the deadline with the best available data, but immediately flag the data quality issue and commit to a solution. It protects the client from audit risk while acknowledging the limitation. It sets up the next phase of work and delivers on the core ask.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "Firm Pushback and Delay",
+        text: "Firmly advise the client lead that submitting the report with 90% industry averages constitutes an unacceptable level of inaccuracy that could expose the company to legal risk. Recommend a one-month reporting extension, and immediately launch a rapid-response survey to the top 20% of suppliers (by spend/emissions), focusing only on T1 data points.",
+        expertRationale: "Delaying the deadline is politically difficult and risks frustrating the client, but it prioritizes accuracy. A rapid, targeted campaign (T1 suppliers) is a good tactic, but the pushback might cause internal friction and is generally less preferred than a transparent, planned improvement (A).",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Transparent Caveat",
+        text: "Use the industry averages as requested, but ensure the report includes a highly visible, non-negotiable caveat statement clearly outlining the data gap (90% based on estimates) and the resulting uncertainty range (e.g., +/- 30%). Present this version to the client's Chief Risk Officer (CRO) for sign-off, bypassing the resistant client lead.",
+        expertRationale: "This prioritizes transparency and risk mitigation over perfection. By elevating the decision to the CRO, it absolves the consultant and the client lead from personal accountability for the low-quality data. It's the most responsible move when the deadline is hard and the data is poor.",
+        expertRanking: 1
+      }
+    ],
+    overall: "When facing a hard deadline with poor data, the unwritten rule is to protect the client and the firm from legal/audit risk. Option C does this best by forcing risk sign-off at the appropriate level and providing full transparency. A is a good compromise, but C is the most responsible.",
+    takeAway: "If data quality is a severe issue, use clear, elevated caveats and force sign-off from the client's Chief Risk or Legal Officer."
+  },
+  {
+    id: 4,
+    moduleId: 6,
+    title: "The Legacy System Headache",
+    prompt: "You are designing a circular economy model for a heavy equipment client. The proposed product take-back and refurbishment scheme is brilliant on paper, but the client’s decades-old legacy ERP system cannot track product lifecycle data (like repair history or material composition) needed for the model to work. The client CIO considers replacing the ERP a 'non-starter' for the next two years.",
+    responses: [
+      {
+        id: "A",
+        title: "Build a Digital Bridge",
+        text: "Propose a small, temporary, cloud-based data layer (a 'digital bridge') that sits outside the ERP. This system will track only the critical material and lifecycle data points, allowing the pilot program to launch immediately. Position it as a two-year 'proof of concept' before the full ERP upgrade.",
+        expertRationale: "This is the classic consultant move: bypass the bottleneck with a tactical, low-risk, fast-to-implement solution. It allows the core project to proceed while respecting the CIO's political reality. The pilot provides justification for the eventual ERP modernization.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Simplify the Circular Model",
+        text: "Radically simplify the circular model to only focus on one, easily tracked material (e.g., steel frames) that doesn't require complex ERP data. This reduces the immediate value of the circularity but gets an operational win. Propose a second phase to expand the model once the ERP is updated.",
+        expertRationale: "Simplification is a good principle, but this significantly waters down the original strategic intent. It is a low-risk, low-reward move. It avoids the data challenge rather than solving it, which makes the overall impact feel muted.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "The Financial Justification",
+        text: "Work with the CFO's team to quantify the immediate revenue loss from delayed circularity and the cost of the ERP limitation. Present the CapEx for a partial ERP upgrade specifically for the data fields needed, framing it as a direct return on investment (ROI) required to unlock the circular economy benefits.",
+        expertRationale: "This tries to change the CIO's mind with financial pressure. While compelling, CIOs are often political and may resent the external pressure. It risks derailing the project by forcing a confrontation instead of finding a creative workaround (A).",
+        expertRanking: 2
+      }
+    ],
+    overall: "When a core technology is the blocker, building a tactical 'digital bridge' (A) is the best path. It respects the CIO's timeline, de-risks the major investment, and allows the strategic project to move forward immediately. B sacrifices too much value, and C creates unnecessary political friction.",
+    takeAway: "Don't fight a legacy system roadblock; build a small, tactical bridge to bypass it and prove the new concept."
+  },
+  {
+    id: 5,
+    moduleId: 6,
+    title: "Conflicting Climate Priorities",
+    prompt: "Your mining client has two competing corporate goals: rapidly expanding into a new region (high short-term profit) and achieving a 'water positive' status globally by 2030 (long-term social license). The proposed new mine will drastically lower the water table in a local community, creating a zero-sum conflict. The CEO wants you to write the memo that 'smooths' this conflict for the Board.",
+    responses: [
+      {
+        id: "A",
+        title: "Integrate the Metrics",
+        text: "Refuse to simply 'smooth' the conflict. Instead, model and present the inevitable financial cost of *losing* social license (e.g., delays, fines, regulatory pushback) as a direct, quantifiable expense on the expansion project's P&L. Present a new option: a smaller expansion with integrated, local water capture/replenishment infrastructure.",
+        expertRationale: "This is the most strategic and responsible move. It forces the Board to view social license as a financial asset, not a separate ethical concern. It avoids conflict avoidance (B) and provides a concrete, integrated solution, aligning the two conflicting goals into one business case.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "The 'Staggered' Narrative",
+        text: "Draft a memo that presents the expansion and water-positive goal as sequential steps: 'Phase 1: Expansion for Growth, Phase 2: Water Investment with New Cash Flow.' This avoids direct confrontation but fundamentally defers the tough decision and risks the local community reacting to the expansion before Phase 2 begins.",
+        expertRationale: "This is a classic political deferral strategy. It appeals to the CEO's desire to 'smooth' the conflict but is strategically weak and exposes the client to significant backlash and risk. It's a temporary fix that lacks conviction or strategic rigor.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Focus on External Best Practice",
+        text: "Conduct a rapid benchmarking study of three key competitors who successfully managed similar conflicts. Propose a community engagement and compensation fund, modeled on best practice, that acts as a 'water equity payment' to the local community. Use the fund to justify the mine's 'water positive' claim for the Board.",
+        expertRationale: "Benchmarking and community compensation are good practices, but they are external measures that do not address the *internal* conflict between the two goals. A compensation fund can look like 'buying' social license rather than earning it through operational change (A).",
+        expertRanking: 2
+      }
+    ],
+    overall: "The best advice on conflicting goals integrates them into a single, unified business case. Option A reframes social risk as financial risk, which is the only language guaranteed to capture the Board's attention. B is a tactical deferral, and C is external window dressing.",
+    takeAway: "Don't smooth conflicting corporate goals; quantify the hidden cost of inaction and integrate the trade-off into the P&L."
+  },
+  {
+    id: 6,
+    moduleId: 6,
+    title: "Compliance vs. Transformation",
+    prompt: "A chemical company client has received a new EU directive that mandates costly emission control technology installation. Your team has developed two paths: Path A (Minimum Compliance) is cheaper but only meets the immediate regulation; Path B (Strategic Overhaul) is three times the cost but future-proofs the entire manufacturing line for anticipated 2040 standards. The client's Head of Operations is budget-focused and ready to sign off on Path A, seeing Path B as 'consultant over-sell.'",
+    responses: [
+      {
+        id: "A",
+        title: "Quantify Obsolescence Risk",
+        text: "Acknowledge the Head of Operations' immediate budget pressure. Frame Path B not as an 'overhaul' but as a cost-avoidance measure. Model the estimated cost of a second retrofit in 2035 (which will be necessary under Path A), demonstrating that Path B is cheaper in total cost of ownership (TCO) over 15 years, despite the higher initial cost.",
+        expertRationale: "This is a strong advisory response. It respects the client's current perspective but uses a financial metric (TCO) that Ops understands to prove the strategic value of B. It converts a 'strategic vision' argument into a 'cost-avoidance' argument, which often resonates better with operational leaders.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "The Visionary Pitch",
+        text: "Present Path B exclusively to the Chief Strategy Officer, bypassing Operations. Pitch it as a competitive differentiator that creates a first-mover advantage and new product lines (e.g., 'green chemicals'). Let the CSO champion the proposal back down to Operations, ensuring the political heat is managed at a higher level.",
+        expertRationale: "This is politically savvy but risky. Bypassing Ops can create lasting resentment and implementation roadblocks. While the CSO might secure the funding, the Ops team must ultimately execute, and if they feel dictated to, the project will fail during implementation.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Hybrid Phased Approach",
+        text: "Recommend Path A to satisfy the immediate compliance need and budget pressure. Simultaneously, create a separate 'innovation budget' proposal for the client to fund a Path B pilot program focused on one non-critical production line. This validates the Ops team's immediate choice while keeping the strategic door open.",
+        expertRationale: "This is a safe middle ground. It satisfies the immediate compliance goal but requires two separate budget approvals and two distinct projects. It's less efficient and less compelling than the single, strong TCO argument in A, which solves both problems simultaneously.",
+        expertRanking: 2
+      }
+    ],
+    overall: "The best way to sell strategic investment to a budget-focused operational leader is by showing the future cost of *not* investing. Option A converts the strategic value of Path B into the hard TCO numbers that the Head of Operations can defend. B creates political friction, and C is unnecessarily complicated.",
+    takeAway: "Strategic sustainability investments must be justified to Operations using Total Cost of Ownership (TCO) and cost-avoidance metrics."
+  },
+  {
+    id: 7,
+    moduleId: 6,
+    title: "Internal Data Silos",
+    prompt: "A large retail client needs a comprehensive view of its carbon footprint across all five business units (Store Operations, Online, Logistics, Procurement, Marketing), but the data is housed in five different, uncommunicative systems, managed by five different department heads who treat the data like a personal kingdom. The deadline for the first integrated report is two months away, and internal cooperation is like pulling teeth.",
+    responses: [
+      {
+        id: "A",
+        title: "Force Data Handover",
+        text: "Draft a formal, data-sharing Memorandum of Understanding (MOU) to be signed by all five department heads, with the blessing of the COO. Define clear data fields, ownership, and a two-week deadline for a complete data dump into a centralized, temporary data lake managed by your team for the duration of the project.",
+        expertRationale: "This is a decisive, politically forceful approach. It works well when time is short and the organizational structure is functional. It requires high-level sponsorship (COO) but is the fastest way to break down silos and centralize data for the first report.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "Bottom-Up Data Mapping",
+        text: "Avoid political friction by not involving department heads initially. Instead, work with a single, junior analyst from each unit to map the data from their systems to a common taxonomy. Use an incentive (e.g., a catered lunch, public recognition) for the fastest/most accurate data submission to foster collaboration.",
+        expertRationale: "This is a low-friction, relationship-focused approach. It avoids the politics of the department heads but risks getting incomplete or low-quality data without C-suite mandate. It’s better for long-term collaboration but too slow for a hard, two-month deadline.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Establish the 'Data Czar'",
+        text: "Advise the CEO to appoint a temporary, cross-functional 'Carbon Data Czar' with a clear mandate to centralize and validate all relevant data. Position your team as supporting the Czar's efforts, giving the mandate an internal face and political authority. This shifts the internal burden and ensures long-term process ownership.",
+        expertRationale: "This is the best long-term move. It doesn't just solve the current reporting problem but fixes the structural, political issue of data ownership. It creates a single point of accountability (the 'Czar') and establishes a lasting process, moving beyond a one-off data dump (A).",
+        expertRanking: 1
+      }
+    ],
+    overall: "While an immediate data dump (A) meets the deadline, establishing a permanent 'Data Czar' (C) solves the structural and political root cause of the data silos. C ensures that the client owns the process, making the solution sustainable long after your team leaves. B is too slow and lacks authority.",
+    takeAway: "Data silos are organizational silos in disguise; solve the ownership and political structure first to create a sustainable data flow."
+  },
+  {
+    id: 8,
+    moduleId: 6,
+    title: "Project Scope Creep",
+    prompt: "Your scope is a focused, six-week project on energy efficiency in a manufacturing plant. Mid-way, the Head of Facilities asks you to expand the scope to include water conservation and waste management, arguing 'they're all related' and offering a small, but insufficient, budget increase. Your Project Partner has a hard stop on scope creep, while the client contact is genuinely excited by the momentum you've created.",
+    responses: [
+      {
+        id: "A",
+        title: "Immediate Hard Stop",
+        text: "Politely but firmly decline the additional scope, referencing the signed Statement of Work (SOW) and the current project timeline. Explain that adding water/waste now would jeopardize the quality of the core energy findings. Offer to write a detailed 'Phase 2' proposal for water and waste, using the current momentum.",
+        expertRationale: "This is the most responsible move for project delivery and team morale. It protects the integrity of the original commitment while using the client's enthusiasm to set up the next, more profitable engagement (Phase 2). This demonstrates good project hygiene.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Integrate as 'Bonus' Analysis",
+        text: "Accept the additional scope but do not ask for more time or money. Integrate water and waste analysis as a 'light touch' appendix or a 'bonus' section. Make it clear to the client that this is a high-level overview only, sacrificing depth to maintain goodwill and demonstrate flexibility.",
+        expertRationale: "This is highly risky. It compromises the quality of the primary deliverable and sets a dangerous precedent of working for free. It satisfies the client contact in the short term but sacrifices professional standards and risks team burnout, which can hurt project quality.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Quantify the New Scope",
+        text: "Tell the client you appreciate the ambition and agree that all three areas are linked. Immediately halt work for four hours to scope the new request properly. Present a revised SOW, timeline, and an appropriately sized budget adjustment needed for a quality, integrated deliverable. Present this to both the Head of Facilities and your Project Partner.",
+        expertRationale: "This is a defensible move that shows willingness to collaborate but protects the project's financial integrity. It forces the client to acknowledge the actual cost of their request. However, it takes time away from the original project and is more complex than simply setting up Phase 2 (A).",
+        expertRanking: 2
+      }
+    ],
+    overall: "Scope creep must be managed professionally and proactively. Option A maintains the focus, ensures the core delivery is high-quality, and leverages client excitement to secure a future engagement. B sacrifices quality for goodwill, and C wastes time negotiating when Phase 2 is the better answer.",
+    takeAway: "Protect your current project scope by immediately structuring an interested client's new requests into a 'Phase 2' proposal."
+  },
+  {
+    id: 9,
+    moduleId: 6,
+    title: "Data Visualization Bias",
+    prompt: "You are presenting the impact of a plastic reduction strategy. The data clearly shows a 15% material cost increase in year one due to using biodegradable materials, followed by a 30% savings spike in year three from market dominance. Your Manager insists on using a chart that visually minimizes the Year 1 cost increase and exaggerates the Year 3 savings to 'sell the story' to the CEO, which borders on misleading the audience.",
+    responses: [
+      {
+        id: "A",
+        title: "Present the Trade-off Clearly",
+        text: "Push back on the Manager's visual request. Present the data using a standard, non-manipulated bar chart. Frame the discussion around the 'J-Curve' of innovation: a required, short-term investment (Year 1) is necessary to unlock long-term, exponential value (Year 3). Emphasize that the honest trade-off is the story.",
+        expertRationale: "Ethical data presentation is paramount. A consultant's currency is trust. Push back (A) is the only ethical choice; a visual narrative that respects the data is more powerful in the long run than a biased one. This is a crucial integrity test.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Use a Composite Index",
+        text: "Avoid showing the raw cost data entirely. Instead, create a composite 'Sustainability Value Index' that blends cost, brand perception, and regulatory risk, which shows a positive trend from Year 1. Explain the underlying metrics in the appendix. This obfuscates the cost issue but technically isn't a lie.",
+        expertRationale: "Creating an index is a political tool to bypass uncomfortable data. It is often acceptable in consulting but risks client pushback if the underlying data is later revealed or if the CEO asks for a breakdown. It avoids confronting the Manager's request for manipulation (A).",
+        expertRanking: 2
+      },
+      {
+        id: "C",
+        title: "Compliance with Caveat",
+        text: "Follow the Manager's instructions for the main chart, but include a detailed, non-manipulated table of the raw Year 1 cost data in the presentation footer or on a follow-up slide. Tell the Manager you will verbally mention the high Year 1 cost as a 'necessary trade-off' to ensure transparency.",
+        expertRationale: "This is a weak compromise. While verbally mentioning the cost is better than hiding it completely, the primary visual (the chart) is still misleading. It prioritizes keeping the Manager happy over client clarity and ethical presentation, which is a poor trade-off.",
+        expertRanking: 3
+      }
+    ],
+    overall: "The moment a visualization misrepresents the truth, the consultant's credibility is at risk. Option A is the only choice that maintains ethical standards and long-term trust. The 'J-Curve' narrative is a strong, honest way to sell the long-term benefit. B is political obfuscation, and C is weak compliance.",
+    takeAway: "Do not manipulate data visuals to 'sell a story'; instead, use an honest narrative to explain the required investment trade-off."
+  },
+  {
+    id: 10,
+    moduleId: 6,
+    title: "Small-Team Burnout",
+    prompt: "You are the only junior consultant on a six-month net-zero strategy project for a utility company. The work is crucial but involves massive data collection and modeling, requiring consistent 70-hour weeks. Your Project Partner refuses to hire a second junior resource, citing budget rigidity, while your existing work is suffering from quality issues due to fatigue. You need help, but the Partner's 'no' is firm.",
+    responses: [
+      {
+        id: "A",
+        title: "Data Triage and Delegation",
+        text: "Immediately present a two-column list to your Partner: 'Must Do' (core scope) and 'Nice to Have' (peripheral analysis). Propose cutting the 'Nice to Have' items and suggest delegating a small, clearly defined data cleaning task (e.g., QA review, appendix formatting) to an administrative or research team member for one day. ",
+        expertRationale: "This is a solution-oriented approach. It respects the Partner's budget 'no' but forces them to manage the scope/time/quality trade-off. It also finds a creative, low-cost way to offload a small, discrete task. It addresses the quality issue proactively.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Direct Escalation",
+        text: "Schedule time with the Project Leader (one level above your Partner) to discuss the project quality risk, citing the overwhelming hours and quality decline. Request immediate, short-term support from an internal shared service or 'bench' resource for four weeks to clear the backlog before the main deliverable.",
+        expertRationale: "Escalating above your direct Partner (B) is a last resort and risks creating internal friction and political isolation. While it might get the resource, it signals an inability to manage the issue within the immediate team hierarchy. A should be tried first.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Client-Side Secondment",
+        text: "Propose to the client contact that they second a junior analyst from their team to yours for four weeks to work on data. Position this as a 'knowledge transfer' and 'capacity building' opportunity for the client, reducing your firm's immediate workload while strengthening the client relationship.",
+        expertRationale: "This is a clever move that shifts the burden to the client under the guise of collaboration. It's often effective, but the client resource may not be as skilled or available as needed, potentially creating more work for supervision. It is a good solution, but A is cleaner for internal project management.",
+        expertRanking: 2
+      }
+    ],
+    overall: "Option A is the best strategy because it addresses the core issue (quality risk) by forcing the Partner to prioritize scope, thus managing expectations without violating the budget constraint. B is politically risky, and C is dependent on the client's internal resource availability and skill.",
+    takeAway: "When resources are constrained, don't ask for more headcount; ask the team lead to ruthlessly prioritize and offload non-essential scope."
+  },
+  {
+    id: 11,
+    moduleId: 6,
+    title: "Ignoring Local Expertise",
+    prompt: "You are setting up a sustainable farming cooperative in a developing nation. Your US-based Partner is insisting on using advanced satellite monitoring technology based on a template used in Kansas, ignoring the local team's advice that frequent monsoon seasons will render the tech unreliable and that traditional, ground-based soil sampling methods are culturally accepted and more robust. You are scheduled to present the final tech plan tomorrow.",
+    responses: [
+      {
+        id: "A",
+        title: "Dual-Path Presentation",
+        text: "Structure the presentation to show two options: 'Path 1: Satellite Monitoring (Global Template)' and 'Path 2: Localized Hybrid (Ground Sampling + Basic Drones).' Clearly present the local team's reliability concerns (monsoons) and cultural preference for Path 2, showing a side-by-side cost and reliability comparison that favors the localized approach.",
+        expertRationale: "This is the ideal approach. It respects the Partner's template requirement but uses data (reliability, local expertise) to professionally challenge it. Presenting two paths forces a transparent, data-driven decision, avoiding a direct confrontation while advocating for local knowledge.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Unilateral Model Change",
+        text: "Quietly replace the satellite data component in the model with the ground-based sampling methodology. Present the localized plan as the only viable option, omitting the Partner's original, flawed idea from the presentation entirely. If the Partner notices, apologize and state that the local team 'validated' this approach as superior.",
+        expertRationale: "Unilaterally changing the plan is politically dangerous and undermines the Partner's authority, even if they are technically wrong. This is a common but risky 'shoot first, ask questions later' move that risks the Partner losing face with the client.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Escalate the Cultural Gap",
+        text: "Schedule a private call with your Partner before the meeting. Frame the issue as a 'cultural and climatic risk' to the project's success, not a technical disagreement. State that using the US template will signal a lack of respect for local experts. Ask the Partner to introduce the local team at the start of the meeting to endorse the localized solution.",
+        expertRationale: "This is a good relationship move. Framing the issue as 'risk' and 'culture' is politically smart, but it still puts the Partner in a defensive position. A dual-path approach (A) is cleaner because it makes the final decision a shared, data-driven one, rather than a political negotiation.",
+        expertRanking: 2
+      }
+    ],
+    overall: "Local expertise in sustainability projects is non-negotiable. Option A presents the conflict as a choice between two valid paths, using data (monsoon risk) to champion the localized solution. This is the most professional way to challenge a senior's flawed assumption. B is political self-sabotage, and C is a good political move, but A is more objective.",
+    takeAway: "Challenge poor senior judgment by presenting the flawed option side-by-side with the locally informed, superior alternative."
+  },
+  {
+    id: 12,
+    moduleId: 6,
+    title: "Budget-Driven Scope Cut",
+    prompt: "Your client's Head of Procurement has just announced a 20% budget cut for the sustainable sourcing project, demanding you remove all work related to 'biodiversity impact' because it is 'too academic.' Your team knows that quantifying biodiversity risk is crucial for the long-term license to operate for this client (a food company), and cutting it renders the project strategically incomplete.",
+    responses: [
+      {
+        id: "A",
+        title: "Refactor Scope to 'Risk'",
+        text: "Do not call it 'biodiversity.' Refactor the work stream to 'Supply Chain Resilience and Regulatory Risk Assessment.' Frame the analysis as identifying 'Single Points of Failure' (e.g., pollinator collapse) that could interrupt commodity supply. Keep the content, but change the title to match the Head of Procurement's financial language.",
+        expertRationale: "This is the unwritten rule of consulting: if the client won't buy the 'good' word (biodiversity), sell them the 'bad' word (risk/resilience). It respects the budget cut politically while ensuring the necessary analytical work is preserved, just under a new title. High impact, low friction.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Show TCO of Inaction",
+        text: "Push back by quantifying the financial impact of a biodiversity-related crisis (e.g., a major NGO campaign, a fine). Present a simple, high-level analysis showing that the potential cost of inaction on biodiversity is 50x the cost of the analysis, forcing the Procurement Head to back down on the cut.",
+        expertRationale: "While a strong pushback, this requires time to build a compelling financial model and risks creating an adversarial relationship with Procurement. It's often better to speak their language (A) than to force them to learn yours (B).",
+        expertRanking: 2
+      },
+      {
+        id: "C",
+        title: "Escalate to the CSO",
+        text: "Inform the client's Chief Sustainability Officer (CSO) of the Procurement Head's plan to cut biodiversity. Ask the CSO to intervene and send a memo to the Procurement Head, explaining the strategic importance. Focus your work only on the CSO-approved scope until the political issue is resolved.",
+        expertRationale: "This is a political delegation. It puts the burden on the CSO to fight their internal battle and risks the Procurement Head feeling undermined. It can delay the project and create a difficult working relationship with a key operational leader. It is a weak move compared to A.",
+        expertRanking: 3
+      }
+    ],
+    overall: "The goal is to preserve the critical analytical work. Option A is the shrewdest move: it accepts the political budget constraint while re-labeling the work to fit the client's financial lexicon (risk/resilience). B creates friction, and C delegates the conflict, risking delay.",
+    takeAway: "To preserve strategic scope when facing budget cuts, re-label 'mission' as 'risk' or 'resilience' to speak the language of finance."
+  },
+  {
+    id: 13,
+    moduleId: 6,
+    title: "The Pilot Project Backfire",
+    prompt: "You ran a successful pilot program implementing smart waste sorting bins in the client's HQ, resulting in a 40% reduction in landfill waste. However, the Head of Facilities is now pushing back on a full rollout, complaining that the new system is complex for the janitorial staff, requiring 15 minutes of retraining per person and disrupting their existing, rigid schedules. You need to convince Facilities that the rollout is worth the effort.",
+    responses: [
+      {
+        id: "A",
+        title: "Value the Janitorial Time",
+        text: "Acknowledge the training and complexity concern as valid. Re-run the business case, quantifying the 15 minutes of retraining per employee and comparing that cost directly against the long-term savings from reduced waste fees and increased brand value. Offer to personally run the first week of retraining sessions to show commitment.",
+        expertRationale: "This is an empathetic and practical approach. It respects the operational perspective of the Head of Facilities and shows the consultant is listening to the 'human' cost. Quantifying the soft costs against the hard benefits makes the business case robust. Personal involvement demonstrates commitment.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "Incentivize Compliance",
+        text: "Propose an internal incentive program for the janitorial staff: a small monthly bonus for the team that achieves the highest sorting accuracy, funded by the initial reduction in waste disposal costs. Pitch this to the Head of Facilities as a tool to improve morale and ensure compliance without needing deep training.",
+        expertRationale: "Incentives can work but may be seen as a bribe or a temporary fix that doesn't solve the underlying process issue. It is a good supplemental tactic but less effective than solving the complexity concern or restructuring the job flow (C).",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Process Restructuring",
+        text: "Work with the janitorial supervisors to simplify the sorting process and integrate the new bins into their existing shift flow, potentially by slightly restructuring their routes or assigning a dedicated 'waste champion' per floor. Present this streamlined process, which eliminates the 15-minute retraining time, to the Head of Facilities for buy-in.",
+        expertRationale: "This is the best solution because it addresses the core operational constraint: the rigid schedule. By modifying the process, not just the people, it achieves compliance with minimal disruption to the existing team. This shows true understanding of operations.",
+        expertRanking: 1
+      }
+    ],
+    overall: "Operational pushback is often about process friction, not resistance to the goal. Option C is the best because it redesigns the process to fit the existing workforce, solving the Head of Facilities' core scheduling problem. A is good but doesn't fix the process, and B is a temporary incentive.",
+    takeAway: "To overcome operational resistance to a sustainability rollout, redesign the process to fit existing workloads rather than forcing new compliance."
+  },
+  {
+    id: 14,
+    moduleId: 6,
+    title: "Misaligned Executive Vision",
+    prompt: "Your final recommendation for a consumer goods company is to divest from a high-emissions, low-margin product line (like single-use plastics). The Chief Commercial Officer (CCO), a powerful stakeholder, insists on expanding this line for political reasons (it secures a legacy supply contract), arguing that the 'social cost' can be managed later. Your Manager suggests softening the recommendation to a 'phased reduction' instead of divestiture.",
+    responses: [
+      {
+        id: "A",
+        title: "Hold the Line on Divestiture",
+        text: "Maintain the 'divestiture' recommendation but present a clear, two-path financial model: 'Path A: Divestiture' (high NPV, low political gain) vs. 'Path B: Phased Reduction' (low NPV, high political gain). Quantify the financial penalty of Path B over ten years (the 'CCO Tax') and let the CEO make the trade-off decision using your clean data.",
+        expertRationale: "This is the most professional move. A consultant's job is to provide the clearest trade-off, not to make the political decision. Quantifying the financial impact of the CCO's political preference forces an executive decision. Softening the recommendation (B) undermines the project's integrity.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Softening the Language",
+        text: "Follow your Manager's advice and change 'divestiture' to 'phased reduction' in the main presentation deck. However, include a private appendix note to the CEO outlining the full financial benefits of immediate divestiture, ensuring the necessary information is still communicated at the highest level without causing a public confrontation.",
+        expertRationale: "This is a common political compromise, but it is dangerous. It risks the CEO not reading the private note, and it makes the public presentation misleading. It prioritizes team hierarchy over the client's best financial outcome, which is a poor trade-off in high-stakes situations.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Product Re-Engineering",
+        text: "Propose a third path: keep the product line but commit to a radical re-engineering over 18 months to make it low-emissions (e.g., bio-based polymer). This satisfies the CCO's desire to keep the supply contract while addressing the sustainability issue, but it risks significant R&D cost and failure.",
+        expertRationale: "This is an attempt to solve the political and environmental problem with a technical solution. It's creative, but it significantly changes the project scope and requires R&D capability that might not exist. It's complex and less clean than providing the honest trade-off (A).",
+        expertRanking: 2
+      }
+    ],
+    overall: "A consultant's integrity is tied to the objectivity of their analysis. Option A presents the CCO's political preference as a quantifiable financial tax, allowing the CEO to make the final, informed trade-off. B compromises integrity, and C unnecessarily complicates the solution with R&D risk.",
+    takeAway: "When facing executive political resistance, quantify the financial cost of the political choice to force a high-level, data-driven trade-off."
+  },
+  {
+    id: 15,
+    moduleId: 6,
+    title: "Competitive Secrecy",
+    prompt: "Your client, a major beverage company, has pioneered a new, low-water-usage cooling technology. You have been tasked with developing a strategy to patent and protect this IP. Your Project Partner believes that for the sake of the 'greater good' (drought areas), the client should open-source the technology after a two-year lead time, which contradicts the client's desire for immediate, long-term competitive advantage.",
+    responses: [
+      {
+        id: "A",
+        title: "Model the 'Shared Value'",
+        text: "Acknowledge the client's desire for competitive advantage. Model a 'shared value' approach where the technology is patented but licensed at a very low cost to non-competitors in water-stressed regions, while competitors pay a premium. Present this as a brand-building and political move that protects the core IP.",
+        expertRationale: "This is a balanced, strategic compromise that respects both the client's IP needs and the greater ethical context. It turns a potential conflict (B) into a brand and political win. The client retains control and commercial advantage while fulfilling a corporate social mandate.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Advocate for Open Source",
+        text: "Strongly advocate the Partner's open-source position in the final report, framing it as the only responsible choice for a major corporation. Highlight the massive, positive PR and ESG rating lift, arguing that the reputational gain outweighs the long-term commercial profit from a patent.",
+        expertRationale: "This risks losing the client by prioritizing the consultant's moral agenda over the client's commercial goals. While ethically appealing, the consultant must first advise the client on *their* stated objective (IP protection), making this a high-friction, low-influence move.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Standard IP Protection",
+        text: "Proceed with the standard IP protection and patent strategy as requested by the client, omitting the Partner's open-source idea entirely. Advise the client on the best legal structures for maximizing long-term commercial advantage and revenue from the technology.",
+        expertRationale: "This fulfills the explicit mandate but ignores a potentially massive brand and societal value opportunity. While legally correct, it misses the chance to provide strategic, value-added advice that could turn a good commercial decision into a great one (A).",
+        expertRanking: 2
+      }
+    ],
+    overall: "The best advice finds a balance between profit and purpose. Option A offers a 'shared value' model that respects the client's commercial need for IP protection while delivering on the Partner's ethical vision, resulting in a win-win for brand, risk, and profit. B is too moralistic, and C is too narrow.",
+    takeAway: "Integrate ethical and societal value into a commercial IP strategy; don't treat them as mutually exclusive."
+  },
+  {
+    id: 16,
+    moduleId: 6,
+    title: "The Unpopular Office Ban",
+    prompt: "Your client, a global tech firm, is committed to net-zero. To reduce Scope 3 (employee commuting), you recommend banning private vehicle parking at the corporate HQ, forcing a shift to public transport or electric carpooling. This is highly unpopular with the powerful middle management layer who are threatening to bypass the policy and expense private off-site parking, which would undermine the entire initiative.",
+    responses: [
+      {
+        id: "A",
+        title: "Immediate Infrastructure Investment",
+        text: "Do not rely on the ban alone. Simultaneously present a significant investment plan in public transport subsidies, charging stations for carpool EVs, and new bike storage/shower facilities. This removes the 'I can't' objection and makes the policy a benefit (free charging/subsidies), not just a punishment.",
+        expertRationale: "This is the most effective approach. Instead of fighting resistance, eliminate the root cause of the resistance by providing viable, attractive alternatives. This transforms the 'ban' from an inconvenience into a perceived employee perk, securing compliance quickly.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "CEO Mandate and Tracking",
+        text: "Advise the CEO to send a company-wide memo firmly mandating the ban and announcing a strict audit of all private parking expense reports. Create a dashboard to track vehicle entry/exit using license plate recognition (LPR) technology at the HQ to ensure compliance. Rely on top-down enforcement.",
+        expertRationale: "While a clear mandate is necessary, heavy-handed enforcement and surveillance can severely damage morale and create a negative corporate culture. It relies on fear and control rather than buy-in and convenience (A), which is a less sustainable change management approach.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Phased Rollout by Department",
+        text: "Recommend a phased rollout, starting with one receptive department (e.g., Sustainability or HR) to create a successful internal case study. Use their positive feedback and logistics successes to build a compelling internal marketing campaign before rolling out to the resistant middle management teams.",
+        expertRationale: "Phasing a policy can be seen as weak enforcement and provides time for resistance to organize. While internal case studies are helpful, a core policy like a parking ban needs high-level, consistent application to be taken seriously. A is faster and more decisive.",
+        expertRanking: 2
+      }
+    ],
+    overall: "A good sustainability policy requires overcoming operational friction. Option A does this by investing in infrastructure, turning the inconvenience into a perk, which is the fastest path to high compliance. B relies on fear, and C risks failure through phased, perceived weakness.",
+    takeAway: "To enforce an unpopular sustainability mandate, spend money to make the convenient choice the sustainable choice."
+  },
+  {
+    id: 17,
+    moduleId: 6,
+    title: "Under-Utilized Assets",
+    prompt: "A heavy machinery client has a massive fleet of earth-moving equipment that sits idle 60% of the time, consuming energy and creating unnecessary emissions when parked and maintained. You've identified that leasing this idle time to smaller local construction firms could generate significant revenue and drastically reduce the 'per-hour' carbon intensity of the equipment, but the Fleet Manager considers this idea 'too risky' and 'unnecessary administrative hassle.'",
+    responses: [
+      {
+        id: "A",
+        title: "Pilot with a Trusted Partner",
+        text: "Structure a small-scale, six-month pilot program where 10% of the idle fleet is leased to one pre-vetted, highly-trusted local contractor with a full maintenance and insurance contract managed by the client's existing third-party fleet partner. Frame the goal as 'Testing New Revenue Streams' and 'Resource Efficiency' to bypass the 'risk' objection.",
+        expertRationale: "This mitigates the risk and administrative hassle by limiting the scope (10% fleet, one partner) and delegating the management (third-party fleet partner). It allows the Fleet Manager to test the waters without accepting full personal liability. This is the optimal de-risking strategy.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Quantify the Lost Revenue",
+        text: "Quantify the total idle time revenue opportunity (a multi-million dollar figure) and present it to the Fleet Manager's boss, the COO. Frame the current 'administrative hassle' as a self-imposed limitation on potential profit, forcing the COO to mandate the pilot from the top down.",
+        expertRationale: "Bypassing the Fleet Manager and forcing a mandate from the top down risks passive aggression and intentional failure during implementation. While the revenue number is compelling, alienating the person responsible for execution (Fleet Manager) is a poor political choice.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Focus on Carbon Intensity",
+        text: "Focus the pitch purely on the 'carbon intensity per hour' metric, showing how leasing significantly reduces this metric, which is crucial for the client's ESG rating. Suggest a system where the Fleet Manager's bonus is tied to achieving the reduced carbon intensity target through utilization.",
+        expertRationale: "Aligning incentives is a strong lever, but using ESG metrics alone often fails to motivate operational leaders who are focused on daily logistics and risk. They need to see a direct operational or financial benefit, not just a sustainability metric. A combines risk mitigation and revenue better.",
+        expertRanking: 2
+      }
+    ],
+    overall: "The best strategy addresses the operational manager's concerns (risk and admin) directly. Option A de-risks the initiative by using a small pilot and existing partners, which is the fastest way to overcome resistance and prove the concept. B is politically damaging, and C focuses on the wrong metric.",
+    takeAway: "To introduce a novel operational concept, de-risk the pilot by limiting scope, managing it with existing partners, and framing it as new revenue."
+  },
+  {
+    id: 18,
+    moduleId: 6,
+    title: "Regional Sourcing Feud",
+    prompt: "Your food client has a directive to locally source 80% of ingredients to reduce 'food miles' (transport emissions). The Head of Global Supply Chain is in a feud with the Head of Regional Operations over which region gets priority. Supply Chain wants a consolidated, single-source supplier contract (cheaper), while Regional Ops wants decentralized, local, small farmers (higher emissions, better PR). Your recommendation is due tomorrow, and both are lobbying you heavily.",
+    responses: [
+      {
+        id: "A",
+        title: "Balanced Sourcing Matrix",
+        text: "Propose a 'Balanced Sourcing Matrix' that dictates 50% must be locally sourced from small farmers (satisfying Ops/PR) and 50% from consolidated, regional hubs (satisfying Supply Chain/Cost). Quantify the emissions difference between this hybrid model and their current state, showing a significant overall reduction while mitigating political friction.",
+        expertRationale: "This is a great compromise. It politically and financially balances the needs of both warring parties, ensuring both have a win and are responsible for a portion of the solution. This is the safest way to deliver a workable, politically acceptable solution.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Emissions-Based Priority",
+        text: "Ignore the political pressure. Run the model to optimize solely for the lowest carbon footprint ('True Food Miles') and recommend the resulting sourcing strategy (likely the consolidated approach). Present the report to the CEO, stating that the recommendation is based purely on the corporate net-zero target, and let the CEO resolve the internal feud.",
+        expertRationale: "This is the most analytically pure approach, but it is politically naive. It makes the consultant an internal political target and abdicates responsibility for finding an implementable solution. Purity of analysis often leads to implementation failure when it ignores internal reality.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "CSR Priority",
+        text: "Strongly recommend the decentralized, local farmer approach (Regional Ops). Quantify the massive brand/CSR value (ESG bump, community impact) this creates, arguing that the small increase in 'food miles' is a net benefit. Frame the Supply Chain's cost-saving approach as a brand liability that could erode trust.",
+        expertRationale: "This sides with one political faction over the other, risking the animosity of the Head of Supply Chain, a powerful stakeholder. While it is a strong ethical argument, a successful recommendation should be implementable, and alienating a key operational leader makes implementation difficult.",
+        expertRanking: 2
+      }
+    ],
+    overall: "Internal conflict requires a solution that grants both parties a defensible win. Option A provides a structural, quantifiable compromise (the 50/50 split) that satisfies both cost efficiency and local impact, ensuring high implementability. B is analytically pure but politically disastrous, and C takes sides.",
+    takeAway: "When mediating internal conflict, create a structural compromise that quantifiably grants both warring parties a necessary, but partial, win."
+  },
+  {
+    id: 19,
+    moduleId: 6,
+    title: "Retrofitting vs. Replacement",
+    prompt: "You are analyzing a data center client's cooling infrastructure. You've found that a full replacement with a new liquid immersion cooling system (expensive, 10-year lifespan) would save 40% of energy usage. A retrofit of the existing air-cooling system (cheaper, 3-year lifespan) would save 15%. The Head of IT Infrastructure is lobbying for the retrofit, citing previous failed large-scale upgrades and a strong attachment to the existing vendor, making the replacement option a hard sell.",
+    responses: [
+      {
+        id: "A",
+        title: "The Pilot-Before-Replacement",
+        text: "Propose replacing just one small rack with the liquid immersion system, using the incumbent vendor's team to manage the installation. This gives the Head of IT a familiar face, a contained risk, and provides real-world performance data. Once the 40% saving is validated, the full rollout is de-risked and justified.",
+        expertRationale: "This is a great example of managing emotional and political risk. By reducing the scope (one rack) and using a familiar team (incumbent vendor), it addresses the Head of IT's fear of failure and vendor loyalty, making the replacement option palatable. Proof-of-concept is key.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "TCO vs. Risk Model",
+        text: "Create a simple model that shows the Total Cost of Ownership (TCO) difference between the two options over 10 years, where the retrofit requires three replacements to match the lifespan of the immersion system. Focus the presentation on the massive TCO loss of the retrofit path, ignoring the Head of IT's emotional attachment.",
+        expertRationale: "While TCO analysis (B) is technically correct, it ignores the political reality: the Head of IT's job security and vendor loyalty. A purely financial argument will fail against deeply held organizational risk aversion and comfort with the status quo. A addresses the risk first.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "The Hybrid Retrofit",
+        text: "Recommend the retrofit option (the Head of IT's preferred solution) but advise the client to use the best-in-class, next-generation components that are 80% compatible with the future immersion system. This gives the Head of IT a perceived 'win' while strategically positioning the organization for the inevitable full replacement later.",
+        expertRationale: "This is a politically astute compromise. It allows the current preferred project to go forward, but the compromise is expensive and complex. It also accepts a lower energy saving (15% vs. 40%), which is a significant value sacrifice compared to a de-risked pilot (A).",
+        expertRanking: 2
+      }
+    ],
+    overall: "The best advice acknowledges and mitigates the emotional risk of the client. Option A addresses the Head of IT's fear of a large-scale failure by starting small and using familiar faces, creating a successful proof-of-concept that will later make the full replacement (40% saving) inevitable. B is too abrasive, and C sacrifices too much value.",
+    takeAway: "Overcome client fear of large-scale change by using a contained, politically supported pilot to prove the concept's reliability and value."
+  },
+  {
+    id: 20,
+    moduleId: 6,
+    title: "Stakeholder Fatigue",
+    prompt: "Your team is running the third major internal meeting on the new ESG reporting framework. Stakeholder attendance is dropping like a stone, the conversation is circling the drain with low-value process questions, and the Head of Risk, a crucial sponsor, is texting under the table. You are three weeks from a major decision milestone, and the lack of engagement is jeopardizing the project timeline.",
+    responses: [
+      {
+        id: "A",
+        title: "The Pre-Wire Session",
+        text: "Immediately pivot from large group meetings. Institute 15-minute 1-on-1 'pre-wire' sessions with key decision-makers (like the Head of Risk) before the large meeting. Use this time to get their input, secure their sign-off, and present the final decision point clearly. The large meeting is then only used to formally validate pre-agreed decisions.",
+        expertRationale: "This is the classic technique to combat stakeholder fatigue. Key executives often prefer brief, focused 1-on-1s for decision-making rather than lengthy group discussions. This guarantees the necessary decision is made privately, making the large meeting a brief, final rubber stamp.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Mandate Attendance",
+        text: "Write a short memo to the Chief Operating Officer (COO), detailing the low attendance and the resulting risk to the project timeline. Ask the COO to issue a firm, company-wide mandate on required attendance for the next two milestone meetings, with a mandatory follow-up action list.",
+        expertRationale: "While mandate (B) can solve attendance in the short term, it creates resentment and ensures low-quality engagement. Executives will show up physically but mentally check out. A more subtle, respect-driven approach (A) is better for securing actual decision-making.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Focus on Action, Not Process",
+        text: "Re-design the remaining group meetings to be 'Decision-Only' sessions. Stop discussing process and data collection. Start the meeting with a single, high-stakes question (e.g., 'Do we commit to Goal X or Y?') and focus the discussion on the top three risks associated with the decision. Use a firm 60-minute time limit.",
+        expertRationale: "This is a good tactic for efficiency, turning meetings into high-value decision forums. However, it still requires the key people to be mentally present. A 'pre-wire' (A) is a necessary precursor to this to ensure the key decision-makers are already aligned before the group meeting starts.",
+        expertRanking: 2
+      }
+    ],
+    overall: "The lack of engagement signals that the meeting format is failing the decision-makers. Option A is the most effective consulting tactic: securing buy-in and decisions in short, focused 1-on-1s, then using the group meeting for formal alignment. B creates political resentment, and C is a good refinement but needs A to work.",
+    takeAway: "Combat stakeholder fatigue by moving decision-making to short, high-value 'pre-wire' sessions with key executives."
+  },
+  {
+    id: 21,
+    moduleId: 6,
+    title: "The Unjustified Innovation Lab",
+    prompt: "Your client, a government-backed utility, has been given $20M in grant money to set up a 'Water Resilience Innovation Lab.' Your analysis shows that 80% of the solutions they need already exist in their own operations, but their internal bureaucracy prevents adoption. The Head of Innovation, who secures their prestige from the lab, is pushing you to justify the full $20M expenditure on new, bespoke R&D that you know will likely fail.",
+    responses: [
+      {
+        id: "A",
+        title: "The Internal Accelerator",
+        text: "Frame the $20M not as R&D for 'new' solutions, but as an 'Internal Solution Accelerator.' Propose dedicating $16M to rapidly de-bottlenecking and implementing the 80% of existing, proven internal solutions, and only $4M to external, high-risk R&D. Position the Head of Innovation as the champion of 'fast internal adoption.'",
+        expertRationale: "This is the most politically astute and impactful solution. It respects the Head of Innovation's title and budget (they still control the $20M) while ensuring 80% of the funds go towards the high-value, low-risk path of internal adoption. It reframes the goal from innovation to execution.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Data and Escalation",
+        text: "Prepare a detailed comparison showing the 80% existing solutions vs. the proposed bespoke R&D, highlighting the near-zero success rate of similar R&D. Present this data to the government funding body's oversight committee, bypassing the Head of Innovation to ensure the grant money is used responsibly.",
+        expertRationale: "Escalating to the funding body (B) is highly adversarial and risks alienating the client entirely, especially the Head of Innovation. While ethically justifiable, it is politically dangerous and may lead to your firm being blacklisted for future, more nuanced work.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Hybrid Project Portfolio",
+        text: "Advise the Head of Innovation to split the $20M into a project portfolio: $10M for 'fast-track' adoption of internal solutions and $10M for external, low-risk technology scouting. This is a compromise that provides immediate wins while preserving a significant portion of the R&D prestige.",
+        expertRationale: "This is a good, defensible compromise. It pushes $10M into high-value implementation, but it still allows for an unnecessary $10M expenditure on external scouting. A is better because it ensures a higher proportion of the funds (80%) goes to the most impactful work.",
+        expertRanking: 2
+      }
+    ],
+    overall: "The consultant's job is to ensure the money is spent effectively while respecting the political reality. Option A achieves the highest real-world impact by reframing the mandate from 'R&D' to 'internal acceleration,' thus allowing the Head of Innovation to retain their prestige. B is too adversarial, and C wastes unnecessary capital.",
+    takeAway: "To pivot a high-prestige, low-impact project, reframe the mandate to focus on execution and internal solution adoption."
+  },
+  {
+    id: 22,
+    moduleId: 6,
+    title: "Prioritizing Local Impact",
+    prompt: "You are finalizing a large-scale land-use report for a utility building a solar farm. The optimal technical location (cheapest, most sun) is on land vital to a local indigenous community's food security. Moving the farm 5km away significantly increases cable costs (by $15M) but completely avoids the community conflict. Your client Project Director is only focused on the cheapest option, saying, 'Our license to operate covers this area.'",
+    responses: [
+      {
+        id: "A",
+        title: "Quantify the Conflict Cost",
+        text: "Acknowledge the $15M cost. Quantify the expected cost of litigation, project delays, reputational damage, and NGO opposition associated with the community conflict over the project's 25-year lifespan (likely $50M+). Present the $15M relocation cost as a pre-emptive 'risk premium' that guarantees a faster, cleaner project launch.",
+        expertRationale: "This converts the ethical issue into the Project Director's language: project risk and budget overruns. By quantifying the conflict cost, the $15M relocation becomes a clear financial winner. This is the most persuasive and responsible way to change the Director's mind.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "CSR Mandate and Escalation",
+        text: "Cite the client's own Corporate Social Responsibility (CSR) charter and the UN's Free, Prior, and Informed Consent (FPIC) principle. Advise the Director that proceeding with the optimal site violates these principles and risks a full project halt. Escalate the issue to the client's Chief Sustainability Officer (CSO) for intervention.",
+        expertRationale: "While ethically correct, immediately citing legal and ethical charters is highly confrontational and risks the Director feeling undermined and pushing back. The $15M cost is still the blocker. A is better because it solves the financial objection first, making the ethical choice easy.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Community Value Sharing",
+        text: "Retain the optimal site, but propose a mandatory, long-term revenue-sharing agreement with the indigenous community (e.g., 2% of annual profits) and a commitment to rebuild their food security infrastructure elsewhere. Frame this as a financial benefit that allows the cheapest site to proceed, but it risks being viewed as a bribe.",
+        expertRationale: "This attempts to 'buy' the social license. It's a common tactic but can backfire if the community views their land as irreplaceable. It's a financial solution to an ethical/cultural problem. A is cleaner because it completely removes the conflict at a quantifiable, justifiable cost.",
+        expertRanking: 2
+      }
+    ],
+    overall: "The only language that consistently changes an operational director's mind is financial risk. Option A quantifies the massive, long-term cost of community conflict, making the $15M relocation a sound financial investment. B is too heavy-handed with ethical principles, and C attempts to use money to solve a cultural issue.",
+    takeAway: "Environmental or social conflict cost must be modeled as a financial risk to justify ethical, high-cost operational changes."
+  },
+  {
+    id: 23,
+    moduleId: 6,
+    title: "Waste-to-Energy PR",
+    prompt: "Your client is building a waste-to-energy facility, a technically sustainable solution that reduces landfill use. However, the Head of PR is terrified of the 'incinerator' label, which environmental NGOs are already using, creating a public perception issue. They want you to help craft a public narrative that focuses only on the 'energy' component and completely omits the 'waste' feedstock.",
+    responses: [
+      {
+        id: "A",
+        title: "The Circular Economy Narrative",
+        text: "Advise against omitting the 'waste' feedstock, as this will backfire with NGOs. Instead, frame the facility within a broader 'Circular Economy' narrative: it is a facility for 'Resource Recovery' that sits at the end of the recycling process, preventing landfill and generating clean, baseload power. Provide data on the low emissions profile vs. coal.",
+        expertRationale: "This is the best way to handle a PR crisis. It acknowledges the truth (waste is the feedstock) but reframes it within a positive, accepted strategic context (Circular Economy). This is defensible, honest, and focuses on the positive outcome, not the process.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Focus on Energy Output",
+        text: "Follow the Head of PR's request: focus the entire narrative on the clean energy output, the megawatts generated, and the number of homes powered. Use high-quality visuals of the clean energy grid and omit the waste-processing part entirely. Prepare a 'one-pager' for the media that is purely energy-focused.",
+        expertRationale: "Omission of the feedstock (waste) is a form of deception and will almost certainly be exposed by environmental groups, leading to a massive credibility loss. This is a short-term political fix that exposes the client to significant long-term risk and is poor professional advice.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Head-On Confrontation",
+        text: "Advise the Head of PR to directly confront the 'incinerator' label. Use a comparison campaign: 'Incinerator: YES, But a 21st-Century, Clean-Energy Incinerator.' Compare the new facility's emission controls against outdated, polluting models and use third-party experts to confirm the low-emission technology.",
+        expertRationale: "Taking the 'incinerator' label head-on is bold and can sometimes work, but it risks reinforcing the negative association. It forces the public debate onto the opposition's turf (incinerator), rather than your preferred narrative (circular economy/resource recovery).",
+        expertRanking: 2
+      }
+    ],
+    overall: "In PR crises, honesty with strategic reframing is always the safest bet. Option A reframes 'waste-to-energy' as 'resource recovery' within the 'Circular Economy' context, which is honest, defensible, and positive. B is a dishonest omission, and C forces the client to debate on negative terms.",
+    takeAway: "To overcome negative public perception, reframe the product's function within a widely accepted positive trend like the 'Circular Economy' or 'Resource Recovery.'"
+  },
+  {
+    id: 24,
+    moduleId: 6,
+    title: "Low-Hanging Fruit Resistance",
+    prompt: "You've identified that changing the default font in all company documents to a high-efficiency 'toner-saving' font could save the client (a large bank) $500k annually in printer supplies. The change is simple but highly unpopular, as the Head of Branding considers the default font 'sacred' and an essential part of the corporate identity, dismissing the savings as 'trivial' compared to their budget.",
+    responses: [
+      {
+        id: "A",
+        title: "Pilot by Department",
+        text: "Do not challenge the Head of Branding directly. Instead, implement the toner-saving font change in a non-customer-facing department (e.g., Internal Audit) for a two-month pilot. Quantify the exact toner savings and pair that with the paper saving, presenting the results as a 'Green Efficiency Win' and a voluntary internal choice for other departments.",
+        expertRationale: "This is a low-friction implementation strategy. It avoids the political fight (branding is sacred) and uses a small-scale, internal win to demonstrate the value. It creates internal advocates and generates data to support a later, broader rollout. Win the battle quietly.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Focus on Paper Use",
+        text: "Acknowledge the branding issue. Focus the presentation only on a 'paper reduction initiative' (e.g., double-sided default printing). This is a less impactful, but universally accepted change that provides a small, immediate win, avoiding the font conflict entirely and reserving the font change for a later, less emotional battle.",
+        expertRationale: "This is a safe but low-impact move. It avoids the conflict but sacrifices the $500k savings for a smaller, less strategic win. The consultant should push for the highest-value option, not the easiest one. A finds a way to implement the highest value without conflict.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "The Financial Footprint",
+        text: "Rethink the value proposition. Convert the $500k annual saving into an equivalent carbon footprint reduction (tonnes of CO2 avoided from manufacturing/transporting toner). Present this to the CFO as an immediate, zero-CapEx way to hit a minor ESG goal, using CFO authority to bypass Branding.",
+        expertRationale: "While appealing, relying on the CFO's political power to override a functional head (Branding) can cause resentment and poor compliance. Internal brand identity is an emotional, high-stakes issue; an incremental, data-driven approach (A) is often more effective than an authoritarian one.",
+        expertRanking: 2
+      }
+    ],
+    overall: "Political resistance to a simple, high-value change (like a font) requires a low-profile, data-driven strategy. Option A implements the change stealthily in a non-critical department to generate empirical proof, bypassing the Head of Branding's emotional objections. B sacrifices too much value, and C creates political friction.",
+    takeAway: "For internal resistance to small changes, implement a low-profile, high-data-integrity pilot to generate the political ammunition for a broader rollout."
+  },
+  {
+    id: 25,
+    moduleId: 6,
+    title: "Divesting from a Poor Performer",
+    prompt: "Your financial client holds a majority stake in a coal port (low ESG score, high cash flow) and a solar farm developer (high ESG score, negative cash flow). Your recommendation is to divest the coal port to clean up the client's public image and fund a 5x expansion of the solar business. The CEO supports the recommendation, but the Head of Portfolio Management is emotionally attached to the reliable cash flow of the port and is using an overly optimistic 'carbon capture' plan to justify holding onto it.",
+    responses: [
+      {
+        id: "A",
+        title: "Integrate the Capital Cost",
+        text: "Acknowledge the coal port's cash flow, but integrate the projected, mandatory CapEx for the Head of Portfolio's 'carbon capture' plan (a multi-million, low-ROI investment) directly into the port's cash flow model. Demonstrate that this required future investment drastically reduces the port's true NPV below the solar expansion value. ",
+        expertRationale: "This is the most effective financial argument. It doesn't fight the Head of Portfolio's idea but instead uses the idea's cost against itself, proving that the 'reliable cash flow' is an illusion once necessary future costs are included. This is an objective and decisive financial defeat for the resistance.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Quantify the Portfolio Risk",
+        text: "Present a 'Climate Transition Risk' model showing how holding the coal port will immediately raise the client's cost of capital (CoC) and limit access to green bonds. Show that the increase in CoC for the entire portfolio far outweighs the port's cash flow. Focus on 'systemic risk' to the overall business.",
+        expertRationale: "Raising the CoC argument is compelling for financial executives, but it's a softer, more theoretical number than the hard CapEx of carbon capture (A). The Head of Portfolio Management might dispute the CoC assumptions, whereas the CapEx is a concrete, non-negotiable cost.",
+        expertRanking: 2
+      },
+      {
+        id: "C",
+        title: "Phased Divestiture Plan",
+        text: "Recommend an 18-month phased divestiture of the coal port, allowing the Head of Portfolio to manage a smooth exit and transition the cash flow dependency gradually. This is a political compromise that respects the emotional attachment, but it delays the necessary cleaning of the balance sheet.",
+        expertRationale: "Phased divestiture (C) is a political concession that delays the inevitable and keeps the firm exposed to the high-ESG risk for longer. It is too cautious given the CEO already supports the core recommendation. A is the fastest, cleanest way to provide the financial ammunition to execute the CEO's wish.",
+        expertRanking: 3
+      }
+    ],
+    overall: "The most robust advice is to use the opponent's strategy (carbon capture) against their financial model. Option A integrates the mandatory future cost of 'greening' the coal port into its cash flow, revealing its poor NPV. This provides the CEO with the undeniable financial proof needed to execute the divestiture quickly. B is a softer financial argument, and C is a weak political concession.",
+    takeAway: "Defeat a financially flawed idea by accurately modeling the mandatory future CapEx required to make the idea compliant and viable."
+  },
+  {
+    id: 26,
+    moduleId: 6,
+    title: "The Unmet Promise",
+    prompt: "You are reviewing a technology client's Scope 3 emissions. You find a major, published commitment to reducing emissions from 'customer product usage' that is entirely based on an unreleased software update that is now 18 months delayed and likely will never be deployed. The Head of Public Affairs is panicked and wants you to hide the missed target in the quarterly report by focusing on a small, operational Scope 1 win instead.",
+    responses: [
+      {
+        id: "A",
+        title: "Transparent Revision",
+        text: "Advise the Head of Public Affairs to publicly acknowledge the 'software deployment delay' and state that the target is now being revised due to 'technical challenges.' Re-forecast the Scope 3 emissions based on current reality, setting a new, realistic target date. Present this to the Chief Risk Officer (CRO) for sign-off to mitigate liability.",
+        expertRationale: "Honesty and transparency are non-negotiable. This is the most ethical and risk-averse choice. By immediately correcting the error and revising the target publicly, the client minimizes the risk of a full-blown greenwashing scandal later. Risk sign-off is crucial.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Focus on the Good News",
+        text: "Follow the Head of Public Affairs' request: write a report that highlights the Scope 1 win with great emphasis and only gives a vague, single-sentence mention of the Scope 3 challenge, attributing it to 'market-related delays.' Offer to create a special briefing for the CEO to explain the full Scope 3 problem privately.",
+        expertRationale: "While focusing on good news is a political necessity, minimizing a massive missed target (Scope 3) is a material omission that borders on misleading stakeholders. This is a common but dangerous political fix that exposes the company and the consulting firm to high liability.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Find an Alternative Offset",
+        text: "Immediately source a high-quality, verified carbon offset program equivalent to the missed Scope 3 reduction goal. Propose quietly purchasing these offsets to bridge the gap and announce the offset purchase in the quarterly report. This temporarily 'hits' the target but avoids solving the underlying product issue.",
+        expertRationale: "Offsets are a legitimate tool but should be a last resort or a complement, not a replacement for fundamental operational change. It addresses the symptom (missed target) but not the cause (flawed product strategy). A is better because it forces the underlying strategy revision.",
+        expertRanking: 2
+      }
+    ],
+    overall: "When a major public target is missed, the only professional advice is transparent admission and correction. Option A protects the client and the firm from legal risk by publicly revising the target and forcing a sign-off from the CRO. B is deceptive, and C is a temporary financial fix that avoids strategy correction.",
+    takeAway: "A missed public target is a risk event; mitigate it by honest revision and mandatory sign-off from the Chief Risk Officer."
+  },
+  {
+    id: 27,
+    moduleId: 6,
+    title: "Internal Carbon Tax Resistance",
+    prompt: "Your client, a diversified conglomerate, has agreed to implement an internal carbon tax to incentivize low-emission behavior across its business units. The tax is set to launch next month, but the Head of the Chemicals Division (a high-emissions sector) is demanding a permanent exemption, arguing that the tax will make their entire division instantly unprofitable and they will simply move their manufacturing offshore, defeating the purpose.",
+    responses: [
+      {
+        id: "A",
+        title: "The 'Tax & Rebate' Model",
+        text: "Grant the Chemicals Division the exemption. However, replace the tax with a mandatory 'Emissions Reduction Investment' fee (at the same rate as the tax). This fee is collected and then immediately rebated back to the Chemicals Division, but only on the condition that 100% of the funds are spent on *verified*, approved, on-site decarbonization projects for that year.",
+        expertRationale: "This is a clever political compromise. It addresses the profitability concern by making the tax cash-neutral, while still enforcing the mandate to decarbonize. It forces investment where it's most needed without causing the business unit to collapse or move offshore. It's a pragmatic win.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Offer a Phased Rollout",
+        text: "Deny the full exemption but offer a 75% temporary rebate for the first 12 months, dropping to 50% in Year 2. The tax must be fully implemented in Year 3. This gives the Head of Chemicals time to adjust their processes and price models, but it risks them just stalling until Year 3.",
+        expertRationale: "Phased implementation is a common compromise, but it rewards stalling and simply defers the pain. It is less effective than A, which enforces immediate investment in the required changes without making the division unprofitable in the interim.",
+        expertRanking: 2
+      },
+      {
+        id: "C",
+        title: "Zero-Tolerance Enforcement",
+        text: "Recommend a zero-tolerance policy. Advise the CEO that granting an exemption to the highest emitter undermines the entire purpose of the tax and sets a dangerous precedent. State that if the Chemicals Division leaves, the carbon reduction is a net positive for the company's overall footprint.",
+        expertRationale: "This is ethically and mathematically correct but politically suicidal. Allowing a business unit to leave due to policy is a massive failure of implementation and value destruction. It is a pure, but unimplementable, solution that ignores the mandate to keep the business profitable.",
+        expertRanking: 3
+      }
+    ],
+    overall: "A good carbon tax implementation anticipates and manages political pushback from high emitters. Option A is the most sophisticated solution: it removes the profitability risk (rebate) while enforcing the decarbonization mandate (required investment). B is weak deferral, and C is politically reckless.",
+    takeAway: "Overcome resistance to internal carbon taxes by using a 'tax and rebate' model that forces the revenue back into mandated decarbonization projects."
+  },
+  {
+    id: 28,
+    moduleId: 6,
+    title: "Supplier Emissions Data Quality",
+    prompt: "Your client needs to report Scope 3 emissions, but a major Tier 1 supplier (responsible for 30% of their footprint) only provides an estimated, non-verified number, stating they 'don't have the internal capacity' for better measurement. The supplier is critical, and a contract termination is politically impossible. Your deadline is next week, and the client lead insists you just use the estimate to complete the report.",
+    responses: [
+      {
+        id: "A",
+        title: "Mandate a Joint Audit",
+        text: "Do not use the unverified estimate alone. Advise the client to fund a two-day, on-site, joint audit with a small, independent third-party auditor to quickly measure the supplier's top five emission sources. This provides a 'verified estimate' that protects the client's report and improves the supplier's capacity without disrupting the contract.",
+        expertRationale: "This is a practical solution that de-risks the client's reporting (provides a verified estimate) while strengthening the supplier relationship (capacity building). It addresses the 'no capacity' issue by providing the necessary resource at the client's cost. This is a common and effective compromise.",
+        expertRanking: 2
+      },
+      {
+        id: "B",
+        title: "Use Industry Averages with Caveat",
+        text: "Refuse to use the supplier's unverified number. Instead, use an industry-specific emissions average, and include a clear, non-negotiable caveat in the final report stating the supplier's data gap and the use of the proxy. Ensure the client's Chief Risk Officer signs off on the final report with the caveat.",
+        expertRationale: "This is the most risk-averse choice. It is transparent and transfers the ultimate liability to the CRO, which is the correct protocol for material data deficiencies. Industry averages are a defensible, recognized proxy. This is the cleanest move when quality is poor and time is short.",
+        expertRanking: 1
+      },
+      {
+        id: "C",
+        title: "Incentivize Better Data",
+        text: "Use the supplier's estimate for the current report (as requested by the client lead). Immediately initiate a contract addendum for the next year that grants the supplier a 5% price premium if they provide verified, auditable data. Frame the premium as a 'data quality incentive.'",
+        expertRationale: "Using the unverified data is the core problem and exposes the client to risk. Incentivizing for next year is a good long-term strategy, but it does not fix the immediate, high-stakes reporting deadline. B is better for the immediate report, and A is a better short-term fix for the data.",
+        expertRanking: 3
+      }
+    ],
+    overall: "When a hard reporting deadline meets poor data quality, transparency and risk mitigation must win. Option B is the best because it uses a defensible proxy (industry average) and transfers the accountability for the data deficiency to the appropriate risk holder (CRO). A is a good compromise, but B is cleaner.",
+    takeAway: "When forced to use low-quality data, always use a defensible proxy, apply a prominent caveat, and secure executive risk sign-off."
+  },
+  {
+    id: 29,
+    moduleId: 6,
+    title: "The Unpopular Office Move",
+    prompt: "Your client is considering moving its HQ to a new building to hit a high 'green building' certification (LEED Platinum). Your analysis shows the 5-year embodied carbon footprint (from construction and moving staff) of the new building is actually *higher* than retrofitting the existing one, despite the new building's lower operational emissions. The CEO is emotionally committed to the move, calling the existing building a 'concrete tomb.'",
+    responses: [
+      {
+        id: "A",
+        title: "The 'Triple Bottom Line' Model",
+        text: "Present a 'Triple Bottom Line' analysis comparing the two options: Financial (Cost), Carbon Footprint (Embodied + Operational), and Employee Wellbeing/Brand (New Building). Show the high embodied carbon of the move, but suggest a significant purchase of high-quality carbon offsets for the first two years to neutralize the move's footprint and allow the CEO's move to proceed.",
+        expertRationale: "This is the most balanced political solution. It provides the CEO with their desired outcome (the move) while ethically managing the carbon footprint by forcing a clear, quantifiable offset for the embodied carbon. It provides a 'win' while respecting the data.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "The Financial Case for Retrofit",
+        text: "Focus the entire report on the massive financial savings and zero embodied carbon of the retrofit option. Present a high-quality rendering of the retrofitted building's proposed aesthetics to appeal to the CEO's 'concrete tomb' comment. Ignore the emotional commitment to the new HQ.",
+        expertRationale: "This is an analytically pure approach but risks failure. The CEO's emotional commitment is the main blocker. By ignoring it, the consultant assumes the CEO is a purely rational actor, which is often not the case. A is better because it allows the CEO to fulfill their desire.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Carbon as Risk Factor",
+        text: "Present the high embodied carbon of the move as a 'Reputational Risk' that could derail the client's net-zero pledge, making them vulnerable to NGO attacks. Propose a long-term plan (10 years) to purchase Renewable Energy Certificates (RECs) to cover the new building's operational emissions and manage the short-term embodied carbon issue.",
+        expertRationale: "Focusing on reputational risk is a good lever, but RECs are often seen as a low-quality offset and may not satisfy the technical scrutiny needed to justify the move. A is cleaner because it directly tackles the embodied carbon cost with high-quality, targeted offsets.",
+        expertRanking: 2
+      }
+    ],
+    overall: "When a CEO's emotional commitment conflicts with data, the best path is to enable the emotional choice while forcing the ethical cost management. Option A allows the CEO's move but forces the company to immediately offset the embodied carbon, creating a defensible position. B ignores the CEO's emotion, and C uses a weaker offset tool.",
+    takeAway: "To accommodate an emotional, high-carbon executive decision, mandate the transparent and immediate purchase of offsets to neutralize the impact."
+  },
+  {
+    id: 30,
+    moduleId: 6,
+    title: "The Undervalued Water Crisis",
+    prompt: "Your client, a major beverage company, operates in a high-water-stress region. Your model shows the water supply will become economically unviable in 15 years, requiring a $100M relocation or massive CapEx for desalination. The Head of Local Operations is pushing back on the forecast, saying, 'The rains have always come back,' and the internal culture views long-term water risk as an 'HR issue' for future generations, not a current operational problem.",
+    responses: [
+      {
+        id: "A",
+        title: "Integrate Water Stress into Debt",
+        text: "Do not present the water risk as a pure operational problem. Present a model showing that the water stress will immediately raise the client's regional cost of capital (CoC) due to sovereign debt ratings reacting to climate risk. Frame the $100M CapEx as a necessary investment to 'De-risk the Balance Sheet' now, not a future problem.",
+        expertRationale: "This is the most sophisticated financial argument. It uses external financial levers (CoC, debt markets) to make the future problem a present-day balance sheet risk. This is the language that breaks through organizational complacency and forces the issue now.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Show Competitor Relocations",
+        text: "Conduct a rapid benchmarking of competitors that have successfully (or unsuccessfully) relocated their facilities due to water stress. Present a case study detailing the actual costs and implementation difficulty of a competitor's move, using fear of failure to motivate immediate action on mitigation.",
+        expertRationale: "Competitor comparisons are a good tool, but the Head of Local Operations can easily dismiss them as 'our situation is different.' It lacks the hard financial compulsion of a direct impact on the cost of capital (A). It's a useful supporting argument, but not a primary driver.",
+        expertRanking: 2
+      },
+      {
+        id: "C",
+        title: "Community Outreach and PR",
+        text: "Propose a community water security project (building local reservoirs/wells) and heavily publicize it. This secures a short-term PR win and builds social license, but it does not solve the underlying economic risk of the facility's water dependency. Frame the risk as a 'social opportunity' rather than a financial failure.",
+        expertRationale: "While community investment is good CSR, it entirely avoids the core business risk of facility dependency. The consultant's primary duty is to address the material risk, not to reframe it as a PR opportunity. This is a form of scope manipulation.",
+        expertRanking: 3
+      }
+    ],
+    overall: "To break through complacency on a long-term risk, you must convert it into a present-day financial reality. Option A uses the impact on the client's cost of capital and balance sheet to force the issue now. B is easily dismissed, and C is a distraction from the core business risk.",
+    takeAway: "Convert long-term climate risks (like water stress) into present-day financial risks (like Cost of Capital) to overcome cultural complacency."
+  },
+  {
+    id: 31,
+    moduleId: 6,
+    title: "ESG Data Overload",
+    prompt: "Your client is trying to comply with a new EU ESG reporting directive that requires 300+ data points, covering everything from board diversity to biodiversity impacts. Your team has successfully collected the data, but the CFO is overwhelmed by the sheer volume and wants you to distill the entire report down to 'The Big Five' metrics, fearing that reporting so much detail will expose the company to unnecessary legal scrutiny and competitor attacks.",
+    responses: [
+      {
+        id: "A",
+        title: "Compliance vs. Strategy",
+        text: "Distill the 300 metrics into two separate reports: The 'Legal Compliance File' (all 300 data points, for legal/audit purposes only) and the 'External Strategy Narrative' (the 'Big Five' key performance indicators). Assure the CFO that the external report will be a simplified narrative, while the full data set is internally managed for compliance.",
+        expertRationale: "This is the ideal solution. It respects the legal necessity (all 300 points) and the CFO's political/risk concern (simplified external narrative). It avoids the legal risk of not reporting all data, while giving the CFO the control over the public narrative.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Risk-Based Triage",
+        text: "Analyze all 300 data points and prioritize reporting only the 50 data points that pose the highest legal/reputational risk if omitted. Present this reduced set to the CFO, arguing that reporting 'less is more' to minimize competitor data leverage and legal exposure.",
+        expertRationale: "This is legally risky. If the EU directive mandates all 300, omitting any is an act of non-compliance. While it satisfies the CFO's wish to reduce exposure, the consultant cannot advise breaking the law. A provides a legal/strategic solution.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Data Visualization Tool",
+        text: "Build a single, simple, interactive dashboard that visualizes all 300 data points, allowing the CFO to filter and choose which metrics to highlight externally. Position the dashboard as an internal 'Transparency Tool,' shifting the burden of choice to the CFO but ensuring all data is ready for internal compliance.",
+        expertRationale: "A dashboard is a great internal management tool, but it doesn't solve the core strategic problem of the external narrative and risk exposure. It puts the final, difficult decision back on the CFO rather than providing a clear, risk-managed solution (A).",
+        expertRanking: 2
+      }
+    ],
+    overall: "The dilemma of ESG data is balancing legal compliance with external risk management. Option A solves this by creating two distinct products: a complete internal compliance file and a streamlined external narrative, protecting the client legally and politically. B is risky non-compliance, and C is a tool, not a solution.",
+    takeAway: "To manage ESG data overload, create a complete internal 'Compliance File' and a streamlined external 'Strategy Narrative.'"
+  },
+  {
+    id: 32,
+    moduleId: 6,
+    title: "The Unnecessary Green Certification",
+    prompt: "Your client, a building materials company, is about to spend $5M to achieve a highly complex, niche 'Green Manufacturing' certification that their sales team insists is essential for market access. Your analysis shows that 95% of their customers only require a standard, low-cost ISO certification and that the extra $5M is an unnecessary expenditure that could be better spent on high-impact, verifiable Scope 1 emission reduction.",
+    responses: [
+      {
+        id: "A",
+        title: "Model the ROI Disconnect",
+        text: "Quantify the specific ROI from the $5M investment by modeling the exact percentage of the customer base that *only* requires the niche certification (likely <5%). Contrast this low ROI directly with the high, verifiable ROI of the $5M in Scope 1 emission reduction, forcing the Head of Sales to defend a trivial market segment.",
+        expertRationale: "This is a direct, data-driven confrontation of the sales team's political assumption. By showing the low ROI, the consultant uses financial language to delegitimize the certification spend and champion the better-value Scope 1 investment. This is the cleanest pivot.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Phased Certification",
+        text: "Propose an 18-month phased approach: achieve the low-cost ISO certification immediately to satisfy 95% of customers and get the quick win. Use the first year of business with the ISO to internally fund and pursue the niche $5M certification, making the second certification a client-funded, not CapEx-funded, project.",
+        expertRationale: "This is a good compromise that respects the sales team's wishes but prioritizes the quick win. However, it still commits the client to the unnecessary $5M spend later. A is better because it kills the unnecessary spend entirely based on ROI.",
+        expertRanking: 2
+      },
+      {
+        id: "C",
+        title: "Escalate the Opportunity Cost",
+        text: "Advise the CFO to halt the $5M certification expenditure immediately. Frame the certification as a 'value trap' and present the Scope 1 reduction not as a reduction, but as a 'New Product' (Green Concrete) with a quantifiable premium, using the $5M as the product's R&D seed funding.",
+        expertRationale: "While dramatic, bypassing the sales team entirely and using CFO authority risks a political war where Sales will blame the consultant for future missed opportunities. The consultant should convince Sales with data (A) rather than override them with authority (C).",
+        expertRanking: 3
+      }
+    ],
+    overall: "The best advice prevents unnecessary spending. Option A is the most effective way to kill a low-value project: directly model the ROI disconnect, forcing the internal champions to defend their choice with data. B commits the client to the cost later, and C is too politically adversarial.",
+    takeAway: "To kill a low-impact vanity project, quantify the negligible ROI against the high-value opportunity cost."
+  },
+  {
+    id: 33,
+    moduleId: 6,
+    title: "Cultural Resistance to Decarbonization",
+    prompt: "Your client, a heritage mining company, has an old-school, proud culture built on heavy machinery and diesel engines. Your recommendation to shift to electric vehicles and renewable energy is technically sound, but the field supervisors—the key implementers—are resistant, joking that 'real men use diesel' and subtly sabotaging the electric vehicle pilot by not training their teams or ensuring charging infrastructure is maintained.",
+    responses: [
+      {
+        id: "A",
+        title: "Gamify Performance",
+        text: "Do not fight the culture directly. Instead, launch an internal 'Efficiency Challenge' where field supervisors are benchmarked based on 'Tonnes Mined Per Dollar of Fuel/Energy Consumed.' Frame the electric shift as a high-performance tool for achieving the lowest cost. Use public leaderboards and a high-profile incentive for the top performer.",
+        expertRationale: "This is a clever change management tactic. It bypasses the emotional/cultural resistance ('real men use diesel') by focusing on a metric that supervisors genuinely care about (performance/cost efficiency). It makes the EV a tool for success, not a cultural imposition.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Mandate Cultural Training",
+        text: "Advise the CEO to mandate cultural transformation training focused on 'Modern Mining Stewardship' for all field supervisors. Enforce a zero-tolerance policy for sabotaging the pilot and require monthly progress reports on EV usage and infrastructure maintenance, relying on disciplinary action for non-compliance.",
+        expertRationale: "Top-down mandates and cultural training are often met with passive aggression and increased subtle sabotage. It treats a cultural problem as a compliance problem, which rarely works in strong operational cultures. A achieves the goal with buy-in.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Focus on Safety and Maintenance",
+        text: "Reframe the EV benefit away from 'green' and toward 'operational excellence.' Focus on the reduced maintenance (fewer moving parts) and better health/safety (less diesel fume exposure) of the electric vehicles. Present the shift as a way to simplify maintenance and improve safety records, two things supervisors value highly.",
+        expertRationale: "This is a very strong, relevant argument. Safety and maintenance are immediate concerns for field supervisors. However, it's slightly less powerful than A because the 'gamification' (A) adds a competitive element that speaks to the pride of the operational culture.",
+        expertRanking: 2
+      }
+    ],
+    overall: "Resistance from a strong operational culture must be overcome by appealing to their core values (performance, efficiency, safety). Option A does this best by gamifying the new key metric (cost per tonne), making the electric shift a path to internal dominance. B is too confrontational, and C is a strong second-place argument.",
+    takeAway: "To overcome cultural resistance to new technology, reframe the technology as a superior tool for achieving the operational metric they already care about."
+  },
+  {
+    id: 34,
+    moduleId: 6,
+    title: "Prioritizing Quick Wins",
+    prompt: "Your client needs to achieve a 20% carbon reduction in 3 years. You have two options: a complex, high-impact supply chain overhaul (21% reduction, 3 years to implement) or 10 smaller, simpler, low-impact quick wins (e.g., lighting, heating, waste) that total 15% reduction in 18 months. The Chief Sustainability Officer (CSO) is a purist and insists on the high-impact overhaul, but the board is demanding immediate results.",
+    responses: [
+      {
+        id: "A",
+        title: "The Hybrid TCO Model",
+        text: "Propose a hybrid plan: immediately execute the 10 quick wins (15% reduction in 18 months) to satisfy the board's demand for results. Use the cash flow generated from the quick-win savings (e.g., energy cost reduction) to partially fund the complex supply chain overhaul. This meets both the board's and the CSO's needs simultaneously.",
+        expertRationale: "This is the ideal implementation strategy. It uses the 'quick wins' as the financial and political engine to fund the necessary 'hard wins.' It respects the board's need for momentum and the CSO's need for the deep reduction. It demonstrates shrewd capital management.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "The Purist Approach",
+        text: "Support the CSO's plan for the 21% overhaul. Create a detailed risk register showing all the possible reasons for delay. Present the plan to the board, asking for their explicit political mandate to push through the complexity, ensuring they know that minimal short-term results are expected.",
+        expertRationale: "This is a purist but high-risk approach. It risks losing the board's political support due to the lack of immediate results, even with their mandate. Momentum is key in these projects; starting with zero wins for three years is rarely politically tenable.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "The Quick Win Focus",
+        text: "Advise the client to focus only on the 10 quick wins. Present the 15% reduction in 18 months as the 'max achievable' given internal capacity, and defer the complex supply chain overhaul to a Phase 2, which will be dependent on the success of Phase 1. This satisfies the board but alienates the CSO.",
+        expertRationale: "This sacrifices the strategic goal (21% reduction) for political expediency (15% quick win). While it satisfies the board, it undermines the overall long-term strategy and will be viewed as a failure by the CSO. A achieves both the short-term and long-term goals.",
+        expertRanking: 2
+      }
+    ],
+    overall: "The most effective sustainability strategy balances momentum (quick wins) with structural change (overhaul). Option A uses the savings and political capital from the quick wins to fund the deeper, more impactful overhaul, ensuring the board stays happy and the CSO's goal is met. B is too risky, and C sacrifices too much long-term value.",
+    takeAway: "Use the financial savings and political momentum from low-impact quick wins to fund the complex, high-impact structural projects."
+  },
+  {
+    id: 35,
+    moduleId: 6,
+    title: "Over-Promising Brand Value",
+    prompt: "Your client, a fast-fashion retailer, has adopted a new 'recycled-only' material policy, which your analysis shows increases the raw material cost by 15% but only impacts 10% of their product line. The Chief Marketing Officer (CMO) wants to launch a $5M campaign advertising the company as '100% Sustainable' based on this small change. Your Project Partner, eager for a case study, is pressuring you to support the CMO's claim.",
+    responses: [
+      {
+        id: "A",
+        title: "The Credibility Threshold",
+        text: "Push back, stating that '100% Sustainable' based on 10% change is a legal and reputational greenwashing risk. Advise the CMO to rephrase the campaign to 'Driving the Industry to Recycled Standards: Our 10% Pioneer Line.' Propose dedicating the $5M campaign budget to a larger, verifiable product-line transformation to reach a 50% sustainable threshold.",
+        expertRationale: "This is the non-negotiable ethical choice. Protecting the client and the firm from greenwashing accusations is paramount. It provides a strategic, defensible alternative (Pioneer Line) and refocuses the budget on verifiable impact. This is the highest integrity decision.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Use a Narrow Definition",
+        text: "Advise the CMO to define 'sustainable' very narrowly in the campaign, perhaps as '100% sustainable materials in our new **(Product Line Name)** collection.' This is technically true but intentionally misleading to the consumer, but it fulfills the CMO's desire for a bold statement and avoids outright lying.",
+        expertRationale: "This is a common but dangerous tactic. While technically defensible, intentional misleading through omission erodes consumer trust and is a soft form of greenwashing. It avoids the core strategic correction (A) and risks long-term brand value for a short-term headline.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Internal Pilot Campaign",
+        text: "Advise the CMO to test the '100% Sustainable' claim on a small, contained internal audience before a full $5M rollout. Monitor the internal feedback and legal team's reaction to gauge the risk threshold. This is a compromise that forces a reality check without a full, upfront political confrontation.",
+        expertRationale: "A pilot is a good de-risking tool, but it should not be used to justify an unethical claim. The claim itself (100% based on 10%) is the problem. The consultant should kill the claim (A) rather than helping the client test its viability (C).",
+        expertRanking: 2
+      }
+    ],
+    overall: "A consultant's integrity is tied to avoiding greenwashing. Option A is the only responsible choice: it rejects the misleading claim and provides a safer, defensible alternative that focuses on the necessary scale-up. B is misleading, and C wastes time testing an unethical premise.",
+    takeAway: "Do not support greenwashing; reject misleading claims and refocus marketing budgets on verifiable, scaled-up impact."
+  },
+  {
+    id: 36,
+    moduleId: 6,
+    title: "Supplier Emissions Incentives",
+    prompt: "Your client, a major auto manufacturer, wants to incentivize their massive Tier 2 supply base to decarbonize. You have two options: a 'Carbon Premium' (client pays 5% more for low-carbon parts) or a 'Carbon Penalty' (client pays 5% less for high-carbon parts). The Head of Procurement insists on the penalty, arguing it is 'cost-neutral' and punishes bad behavior, but your team fears the penalty will just drive suppliers to competitor contracts.",
+    responses: [
+      {
+        id: "A",
+        title: "The Joint Investment Fund",
+        text: "Advise against both the premium and the penalty. Propose a 'Joint Decarbonization Investment Fund' where the client and supplier co-invest. The client matches the supplier's investment dollar-for-dollar, contingent on verified, specific decarbonization CapEx (e.g., solar panels, efficiency tech). This builds partnership and capacity.",
+        expertRationale: "This is the best long-term strategy. It shifts the relationship from transactional (premium/penalty) to collaborative (investment). It builds supplier capacity, locks them into the client's long-term strategy, and ensures the funds are used for verifiable CapEx, not just profit padding.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "The Phased Penalty",
+        text: "Implement the penalty, but make it a 'soft' penalty: a simple reduction in the supplier's quality rating or a reduction in contract length, rather than a direct price cut. This satisfies the Head of Procurement's demand for punishment without immediately impacting the supplier's P&L and driving them to competitors.",
+        expertRationale: "A soft penalty (B) is politically weak and doesn't solve the core problem, which is the high-carbon production. Suppliers need capital to decarbonize, and penalties, even soft ones, do not provide that capital or motivation. It just creates resentment.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "The Premium for Performance",
+        text: "Implement the 'Carbon Premium' (A). The premium is only paid if the supplier hits a pre-agreed, externally verified decarbonization milestone (e.g., 10% carbon reduction in 12 months). This keeps the relationship positive and directly funds the required technology investment.",
+        expertRationale: "This is a very strong option. It is simpler than the Joint Investment Fund (A) and keeps the relationship collaborative. However, the Joint Fund (A) is slightly better because it forces the supplier to match the investment, ensuring more accountability and skin in the game.",
+        expertRanking: 2
+      }
+    ],
+    overall: "Sustainable supply chain change requires partnership, not punitive measures. Option A's Joint Investment Fund is the most effective: it builds supplier capacity, ensures CapEx is spent correctly, and creates a long-term collaborative relationship. Penalties (B) or simple premiums (C) are less strategic.",
+    takeAway: "Incentivize supplier decarbonization through collaborative, co-invested funds rather than transactional premiums or penalties."
+  },
+  {
+    id: 37,
+    moduleId: 6,
+    title: "Measuring Social Return on Investment",
+    prompt: "Your pharma client is investing $50M in a program to improve access to clean water in their African sourcing regions, but the CFO is highly skeptical, demanding a quantifiable 'Social Return on Investment (SROI)' metric to justify the spend alongside their traditional financial metrics. Your team is struggling to assign a hard monetary value to 'improved community health' and 'reduced local conflict' in a way the CFO will accept.",
+    responses: [
+      {
+        id: "A",
+        title: "The 'Operational Continuity' Metric",
+        text: "Do not attempt to monetize 'improved health.' Instead, model the SROI as 'Supply Chain Risk Reduction' and 'Operational Continuity.' Quantify the cost of a 10-day facility shutdown due to water-borne illness or local conflict, and show that the $50M investment reduces the probability of these events by X%, resulting in a clear NPV benefit for the firm.",
+        expertRationale: "This is the key to selling social projects: convert the social outcome into a hard financial/operational metric. The CFO understands 'Operational Continuity' and 'Risk Reduction.' This is the most effective way to speak the CFO's language and validate the investment.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "External Valuation & Benchmarking",
+        text: "Hire an external specialist in SROI valuation to assign a monetary value to the social metrics (e.g., 'Value of a Life Year Saved'). Present the external firm's model and valuation to the CFO, transferring the responsibility for the valuation's credibility to the third party.",
+        expertRationale: "While transferring credibility (B) is smart, the CFO may still reject the abstract nature of the external valuation (e.g., 'Value of a Life Year Saved'). A is better because it uses a concrete internal metric (Cost of Shutdown) that is immediately verifiable and relevant to the firm's operations.",
+        expertRanking: 2
+      },
+      {
+        id: "C",
+        title: "Focus on Talent Acquisition",
+        text: "Present the SROI as a 'Talent Acquisition and Retention' metric, arguing that the program significantly enhances the client's reputation as a top employer in the region, reducing recruitment costs and improving employee productivity. This links the investment to a tangible HR cost saving.",
+        expertRationale: "Talent metrics (C) are relevant, but they are often soft and secondary to a CFO. The 'Operational Continuity' risk (A) is usually a much larger, more immediate financial concern for a C-suite executive and therefore a more powerful justification.",
+        expertRanking: 3
+      }
+    ],
+    overall: "To gain C-suite buy-in for social investment, the social value must be translated into hard financial language. Option A converts 'improved health' into 'reduced operational risk' (cost of shutdown), which is the most compelling financial metric. B is too abstract, and C is too soft for a CFO.",
+    takeAway: "Sell social investment to a CFO by quantifying the reduction in operational/supply chain risk that the social stability provides."
+  },
+  {
+    id: 38,
+    moduleId: 6,
+    title: "The Incomplete Scope 3 Picture",
+    prompt: "You are finalizing the Scope 3 emissions report for an apparel client. You have high-quality data for 90% of the emissions, but the remaining 10%—which includes employee business travel and corporate events—is based on poor, unreliable estimates from a junior administrator's messy spreadsheet. The report is due, and your Project Partner insists on presenting the 90% reliable data as 'The Complete Picture' and burying the 10% uncertainty in the appendix's footnotes.",
+    responses: [
+      {
+        id: "A",
+        title: "Full Transparency on 90%",
+        text: "Advise the client to lead the report with the 90% reliable data, which is a major, defensible achievement. Explicitly state that the remaining 10% is based on 'best available estimates,' and include a commitment for a dedicated, six-month project to verify the remaining 10%. Escalate the issue to the client's Chief Risk Officer (CRO) for review.",
+        expertRationale: "Honesty about data quality is paramount. This approach is transparent, highlights the 90% win, and proactively manages the 10% deficit with a clear action plan. Involving the CRO is a non-negotiable risk management step for the consultant.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Cut the 10% Entirely",
+        text: "Advise the client to cut the remaining 10% from the report entirely and state that the report covers '90% of total Scope 3 emissions.' This makes the report technically correct and highly credible but sacrifices the goal of a complete footprint. Present the cut to the client's legal team for sign-off.",
+        expertRationale: "While legally safer, this move is a cop-out. It sacrifices a complete footprint for data purity. A is better because it provides the full picture (with caveats) and commits to fixing the data gap, which is the more strategic move.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Quick Validation Audit",
+        text: "Propose a quick, three-day internal audit where a senior analyst from your team works directly with the administrator to clean and validate the 10% data using common sense proxies (e.g., standard airfare cost for travel). This provides a 'defensible estimate' that is better than the messy spreadsheet, allowing for the complete report submission.",
+        expertRationale: "A quick audit (C) is a good tactic, but it still relies on a short-term fix for a potentially material data deficiency. The transparency and action plan in A are better strategic moves for long-term credibility and risk management.",
+        expertRanking: 2
+      }
+    ],
+    overall: "A complete footprint with caveats is usually better than an incomplete one. Option A ensures transparency, highlights the significant 90% achievement, and proactively sets up the next phase of work to fix the 10% data gap. B is too cautious, and C is a temporary technical fix that avoids strategic honesty.",
+    takeAway: "If a data gap exists, be transparent about the uncertainty, highlight the success of the verifiable data, and commit to a clear plan to close the gap."
+  },
+  {
+    id: 39,
+    moduleId: 6,
+    title: "The Unpopular Fee Structure",
+    prompt: "You are proposing a new fee structure for waste disposal that penalizes business units for high contamination (e.g., mixing recyclables with general waste) and rewards low contamination. The Head of Operations, who controls the final sign-off, argues the new structure is 'too complex' and favors the older, simpler tonnage-based fee, even though it provides no incentive for good environmental behavior.",
+    responses: [
+      {
+        id: "A",
+        title: "Simplify the Contamination Metric",
+        text: "Do not fight the 'too complex' argument. Radically simplify the new structure to focus on one, easily verifiable contamination metric (e.g., weight of non-recyclable content in the recycling stream). Present the simplified metric as a mandatory, non-negotiable 'Quality Fee' that rewards the Head of Operations' best-performing sites.",
+        expertRationale: "This is a great compromise. It respects the operational need for simplicity (one metric) while preserving the incentive for behavior change (the fee). By framing it as a 'Quality Fee,' it uses Operations' language and provides a clear path for success, overcoming the 'complexity' objection.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Pilot the New Fee",
+        text: "Propose a six-month pilot of the complex fee structure in two small, non-critical regional sites. Collect data on the administrative time required and the resulting contamination reduction. Present the pilot results to the Head of Operations to prove the system is manageable before a full rollout.",
+        expertRationale: "A pilot (B) is a good de-risking tactic, but it still requires Operations to commit to a complex system. A is better because it solves the complexity issue upfront by simplifying the metric itself, which is a faster and less contentious path to implementation.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Focus on Regulatory Fines",
+        text: "Focus the presentation on the massive regulatory fines the client could face due to highly contaminated waste streams being rejected by processors. Frame the new fee structure as an 'Internal Fine-Avoidance Mechanism,' using fear to push through the complexity, and let the Head of Legal review the risk.",
+        expertRationale: "Using fear of regulatory fines is a strong lever, but it risks creating an adversarial relationship with the Head of Operations. The consultant should try to make the Head of Operations the hero of the change, not the subject of a political threat. A achieves this better.",
+        expertRanking: 2
+      }
+    ],
+    overall: "Operational leaders prioritize simplicity. Option A successfully implements the desired behavioral change by radically simplifying the metric to just one 'Quality Fee,' thereby eliminating the 'too complex' objection and framing the change in a positive operational light. B and C are too complex or adversarial.",
+    takeAway: "To overcome complexity resistance, simplify the new metric to the single most important factor and re-label it in the operational leader's language."
+  },
+  {
+    id: 40,
+    moduleId: 6,
+    title: "The Unseen Community Benefit",
+    prompt: "Your client is building a large water treatment plant that is purely for their internal manufacturing process, providing no direct external community benefit. Local community groups are protesting the perceived land grab and lack of external return. The client's Head of Real Estate is frustrated, arguing, 'This is an internal utility, not a charity project,' and wants you to write a letter of firm rebuttal to the local council.",
+    responses: [
+      {
+        id: "A",
+        title: "Reframing as 'Water Security'",
+        text: "Do not write a rebuttal. Instead, frame the plant as a 'Community Water Security Asset.' Model and publicize the fact that the plant will significantly reduce the client's draw on the local municipal water supply, freeing up a massive amount of water for the community. Position this as an unstated but measurable public benefit.",
+        expertRationale: "This is the best way to handle community pushback. It creates a measurable, positive narrative (water security) based on the plant's actual function (reduced municipal draw), turning a liability (land grab) into a public benefit. This negates the need for a rebuttal and builds social license.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Offer a Token Gesture",
+        text: "Advise the client to donate a small, contained piece of land adjacent to the plant for a community park or sports field. Frame this as a 'Community Land Trust' gesture, a clear demonstration of goodwill to address the land grab concern, without impacting the plant's core utility.",
+        expertRationale: "A token gesture (B) can be seen as a bribe or a distraction from the core issue. It's a low-impact solution that may not satisfy the community's demand for a functional return. A is better because it proves the plant *already* provides a functional return (freeing up water).",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "The Firm Rebuttal",
+        text: "Draft the firm rebuttal, clearly stating that the land was legally acquired and that the plant is a critical, internal economic necessity that brings jobs and tax revenue. Avoid any mention of community benefit, relying solely on the client's legal and economic right to operate.",
+        expertRationale: "A firm rebuttal is adversarial, escalating the conflict and causing lasting damage to the social license. While legally defensible, it is politically reckless and often leads to project delays. The consultant should always seek a collaborative solution (A).",
+        expertRanking: 2
+      }
+    ],
+    overall: "Social license is a financial asset. Option A is the most sophisticated political move: it reframes the plant's function to highlight an unstated but measurable public benefit (freeing up municipal water), eliminating the need for a rebuttal and building goodwill. B is too weak, and C is too aggressive.",
+    takeAway: "Refute community pushback by identifying and quantifying the unstated, positive externalities of an internal asset."
+  },
+  {
+    id: 41,
+    moduleId: 6,
+    title: "Data Reliability vs. Speed",
+    prompt: "You are setting the baseline for a carbon reduction project. Your most accurate data collection methodology (Level 1 verification) will take eight months to complete, delaying the project launch. A simpler, faster methodology (Level 3 estimation) can be completed in two weeks, allowing for an immediate launch but with a 15% margin of error. Your client's CEO is fixated on an immediate launch to announce a 'green initiative' before the end of the fiscal year.",
+    responses: [
+      {
+        id: "A",
+        title: "The 'Level 3 Start, Level 1 Refinement'",
+        text: "Propose an immediate launch using the Level 3 estimation (the 'best available' data) to meet the CEO's deadline. Simultaneously, commit to running the Level 1 verification process in parallel. Set an internal 'data correction' milestone for Month 6, promising a 'Verified Re-Statement' of the baseline, satisfying both speed and accuracy requirements.",
+        expertRationale: "This is the optimal compromise. It respects the CEO's political timing (immediate launch) while committing the client to the necessary accuracy (Level 1 verification). It's a transparent, dual-track approach that secures the launch and protects the data integrity over time.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Insist on Level 1 Verification",
+        text: "Firmly advise the CEO that launching with a 15% margin of error is a major reputational risk that could undermine the entire project, creating a 'false baseline.' Insist on delaying the launch until the Level 1 verification is complete, citing the firm's non-negotiable standard for data integrity.",
+        expertRationale: "While integrity is critical, this approach is politically naive. It makes the consultant the blocker, risking the loss of executive sponsorship. The ethical compromise (A) is almost always preferred when the political timing is critical.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Segment the Target",
+        text: "Launch immediately with the Level 3 data. Frame the initial reduction target as a 'Low Confidence' goal and advise the CEO to announce a simple 'Intent to Reduce' rather than a hard percentage. Only announce the hard percentage once the Level 1 data is complete, making the launch less impactful but safer.",
+        expertRationale: "Delaying the announcement of the hard target (C) is a good risk-mitigation tactic. However, A is stronger because it provides the immediate, hard target (Level 3 estimate) that the CEO desires for the initial announcement, with a transparent plan to fix the data later.",
+        expertRanking: 2
+      }
+    ],
+    overall: "When political timing is critical, the best advice is to launch with the 'best available data' and immediately commit to parallel verification. Option A satisfies the CEO's need for speed while creating a clear, internal process to ensure the baseline is corrected, which is the most responsible, implementable path. B is politically too abrasive.",
+    takeAway: "Launch with the best available estimate to meet political deadlines, but immediately run the high-accuracy verification in parallel for later correction."
+  },
+  {
+    id: 42,
+    moduleId: 6,
+    title: "Managing the Public Pledge",
+    prompt: "A major tech client has a public pledge to source 100% of its energy from renewables by next year, a commitment you know is impossible due to grid limitations in a key manufacturing region. The Head of Operations has found a loophole: buying low-quality Renewable Energy Certificates (RECs) from overseas to 'technically' meet the 100% target on paper. The CEO is pushing for the RECs to avoid public embarrassment.",
+    responses: [
+      {
+        id: "A",
+        title: "The Quality RECs and Investment",
+        text: "Advise against low-quality RECs, as they are a high greenwashing risk. Instead, recommend buying high-quality, local RECs that directly fund new renewable projects within the client's grid region (even if delayed). Simultaneously, commit to a long-term, verifiable Power Purchase Agreement (PPA) that will transition the client from RECs to physical green power within 3 years.",
+        expertRationale: "This is the ideal path. It provides a defensible, short-term solution (high-quality, local RECs) to meet the 100% target while committing the client to the necessary long-term, verifiable solution (PPA). This is a bridge that closes the commitment gap responsibly.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Publicly Adjusting the Pledge",
+        text: "Advise the CEO to publicly announce a 'phased achievement' of the 100% goal, stating that '90% is achieved, and the remaining 10% is targeted for the next 18 months due to unavoidable local grid limitations.' This is honest, but it is a PR setback for the CEO.",
+        expertRationale: "While honest, publicly failing a major pledge (B) is a massive PR hit that should be avoided if a defensible alternative exists. The consultant should offer a way to meet the goal with integrity (A) rather than advise public failure (B).",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "The Direct PPA Route",
+        text: "Insist on the Power Purchase Agreement (PPA) as the only legitimate solution, and advise against all RECs, arguing they are not 'real' additionality. Push the CEO to delay the 100% announcement until the PPA is signed, risking the public target but maintaining absolute purity of commitment.",
+        expertRationale: "Insisting on PPA purity (C) is technically correct but politically untenable. The CEO needs to hit the deadline. The consultant's job is to find the most responsible *bridge* to the pure solution (A), not to demand the pure solution immediately.",
+        expertRanking: 2
+      }
+    ],
+    overall: "When a public commitment hits operational reality, the best advice is to find a high-quality, verifiable bridge. Option A uses high-quality RECs as a temporary, defensible solution while locking in the long-term, physical change (PPA). B is a public failure, and C is too rigid.",
+    takeAway: "Manage a failed public pledge with integrity by using high-quality, local RECs as a temporary bridge to a verifiable Power Purchase Agreement (PPA)."
+  },
+  {
+    id: 43,
+    moduleId: 6,
+    title: "Under-Utilized Digital Tools",
+    prompt: "Your client has spent $10M on a state-of-the-art 'Digital Twin' platform to model their entire circular economy supply chain, but it sits virtually unused. The Head of IT blames the 'clunky user interface' and the Head of Operations blames the 'lack of quality data.' The CTO, who sponsored the tool, is under pressure to show results and wants you to write a report justifying the tool's immediate, full-scale rollout.",
+    responses: [
+      {
+        id: "A",
+        title: "The 'Operational Use Case' Intervention",
+        text: "Do not write a general justification. Instead, identify one, high-value, easy-to-model use case (e.g., optimizing one warehouse's packaging recycling). Assign a dedicated, internal Operations champion to work with your team for 4 weeks to prove the value of the Digital Twin on this single case. Present the proven ROI and a simplified user guide to the CTO.",
+        expertRationale: "This addresses the operational friction (clunky/data) by proving value in a contained, high-profile way. It creates an internal 'hero' (the champion) and overcomes the initial user resistance through a successful, focused case study. This is the fastest path to adoption.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "New UI Development",
+        text: "Agree with the Head of IT's assessment and propose an immediate, $1M project to redesign the user interface and simplify the data input process. This addresses the immediate complaints but delays the functional use of the tool and requires a significant new CapEx to fix poor original design.",
+        expertRationale: "While the UI is likely a problem, fixing the UI without proving the tool's core business value first is poor advice. The issue is adoption, not just usability. A is better because it forces adoption by proving value first, which then justifies the later UI fix.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "CTO Mandate",
+        text: "Write the report justifying the rollout. Advise the CTO to mandate the use of the Digital Twin platform in all capital planning meetings starting next month. Rely on top-down pressure and the threat of political reprisal to ensure Operations and IT comply.",
+        expertRationale: "Mandating use (C) risks passive resistance and poor-quality data input, ultimately leading to project failure. Digital tools require buy-in and a clear value proposition, not just a mandate. A is a better path to genuine adoption.",
+        expertRanking: 2
+      }
+    ],
+    overall: "Digital adoption requires proving value, not just fixing interfaces. Option A is the best strategy: find one, high-value use case, prove the ROI in a contained pilot, and use that success to create internal advocates for a full rollout. B is too costly, and C is too authoritative.",
+    takeAway: "Overcome resistance to digital tools by proving immediate, quantifiable value through one focused operational use case."
+  },
+  {
+    id: 44,
+    moduleId: 6,
+    title: "Disruptive New Business Model",
+    prompt: "You have designed a 'Product-as-a-Service' (PaaS) model for a heavy machinery client, which dramatically reduces their carbon footprint (fewer new machines built, more refurbishment) but cuts the short-term sales revenue by 30% while the refurbishment business scales up. The Head of Sales is vehemently opposed, calling it a 'consultant fantasy' that will destroy their quarterly targets, while the CEO sees it as the client's only long-term path to relevance.",
+    responses: [
+      {
+        id: "A",
+        title: "Dual P&L and Bonus Structure",
+        text: "Design a temporary, two-track P&L and bonus structure for the sales team. The existing sales P&L stays for 3 years, but a new 'PaaS Transition Bonus' is introduced, rewarding sales for securing long-term service contracts. This shifts the incentive to favor the new model without immediately destroying their quarterly targets.",
+        expertRationale: "This is a great change management move. It respects the immediate financial reality of the sales team (quarterly targets) while providing a strong, financial incentive for them to champion the new model. Sales will sell what they are paid to sell. This is the most effective lever.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "The Pilot and Financial Proof",
+        text: "Launch the PaaS model only with one low-volume product line, managed by a dedicated internal 'Innovation Team' and not the main sales force. Scale up only after the PaaS model has proven its long-term profitability and its carbon footprint reduction is externally verified, allowing Sales to adopt the proven model later.",
+        expertRationale: "This is a low-risk approach, but it keeps the main Sales organization in opposition, allowing them to dismiss the pilot as irrelevant. The Sales team should be involved in the solution (A) rather than excluded from the solution (B).",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Mandate and Compensation",
+        text: "Advise the CEO to mandate the transition, but immediately compensate the Head of Sales' team with a one-time, lump-sum payment equivalent to their lost bonus for the next two quarters. This is a temporary measure that buys political silence and compliance, allowing the PaaS model to launch.",
+        expertRationale: "A lump-sum payment (C) is a political bribe that works short-term but does not create genuine buy-in for the new model. Sales needs a long-term incentive (A) to champion the new business model, not just a payment to shut up.",
+        expertRanking: 2
+      }
+    ],
+    overall: "To launch a disruptive business model, you must align the incentives of the most powerful internal blockers (Sales). Option A achieves this by creating a transitional bonus structure that rewards long-term PaaS contracts without immediately punishing short-term sales targets. B excludes the core team, and C is a temporary bribe.",
+    takeAway: "To drive adoption of a disruptive model, design transitional incentives that reward sales teams for securing the future state, not just maintaining the past."
+  },
+  {
+    id: 45,
+    moduleId: 6,
+    title: "Unjustified Capital Expenditure",
+    prompt: "Your client's Head of Manufacturing is demanding $3M to install a complex new water recycling system, claiming it's essential for their 'Zero Liquid Discharge' commitment. Your analysis shows that by simply fixing 10 major, long-known leaks in the existing plumbing (a $300k maintenance task), they can achieve 80% of the water reduction goal with existing infrastructure. The Head of Manufacturing insists the $3M system is a 'sexier' solution for their career profile.",
+    responses: [
+      {
+        id: "A",
+        title: "The 'Fix It First' Mandate",
+        text: "Present the $300k leak repair as a mandatory, immediate Phase 1 of the 'Zero Liquid Discharge' commitment. Model the resulting 80% water reduction and show the $2.7M in avoided CapEx. Frame the $3M system as the optional Phase 2, contingent on the first 80% not being enough. Enlist the CFO to approve the small, high-ROI Phase 1 spend first.",
+        expertRationale: "This is the ideal consulting move: champion the simple, high-ROI, low-cost solution first. It frames the complex CapEx as a political choice, not a technical necessity. Involving the CFO is the correct political move to enforce fiscal discipline and prevent vanity spending.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Integrate the New System",
+        text: "Approve the $3M system but mandate that the first step of the installation is fixing the 10 major leaks. This ensures the 80% reduction is achieved within the $3M CapEx, giving the Head of Manufacturing their 'sexy' project while achieving the practical result. This is a political compromise that sacrifices efficiency.",
+        expertRationale: "This is a weak compromise. It allows the vanity spending to proceed, sacrificing $2.7M in CapEx, which could be better spent elsewhere. The consultant's job is to protect the client's capital, not enable political careers. A is better for the client's P&L.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "The Reputational Risk",
+        text: "Advise the CFO that approving the $3M system without first fixing the 10 known, simple leaks constitutes poor corporate governance. Frame the $3M as a 'wasteful spend' that could be leaked to the press, creating a reputational risk. Use the threat of scandal to force the Head of Manufacturing to focus on the simple fix.",
+        expertRationale: "While using reputational risk is powerful, framing the Head of Manufacturing as corrupt or wasteful is highly adversarial. A is better because it uses the high-ROI (CFO's language) to achieve the same result without making a political enemy.",
+        expertRanking: 2
+      }
+    ],
+    overall: "Consultants must prevent clients from making politically motivated but financially poor decisions. Option A champions the simple, high-ROI solution (leak fix) and uses the CFO's authority to block the unnecessary vanity CapEx (new system). B sacrifices too much capital, and C is too aggressive.",
+    takeAway: "Challenge unjustified CapEx by championing the simple, high-ROI maintenance fix and using the CFO's authority to manage vanity spending."
+  },
+  {
+    id: 46,
+    moduleId: 6,
+    title: "Outsourcing vs. Internal Capability",
+    prompt: "Your client needs to set up a new internal team for calculating and managing their ESG data and compliance reporting. You have two options: a permanent, high-cost outsourcing contract with your competitor (immediate compliance, zero internal knowledge transfer) or a three-year internal capacity-building project (high initial risk, eventual lower cost, full client ownership). The CFO is only focused on immediate, risk-free compliance.",
+    responses: [
+      {
+        id: "A",
+        title: "The 'Hybrid Ownership' Model",
+        text: "Propose a hybrid model: Outsource the core compliance *calculation* for the first 12 months (satisfying the CFO's immediate need). Simultaneously, embed one of your junior consultants within the client's internal team, dedicating 50% of their time to structured knowledge transfer. This ensures compliance while building the internal team's long-term ownership and capability.",
+        expertRationale: "This is the most balanced solution. It de-risks the immediate compliance need (outsourcing) while ensuring the client avoids long-term dependency (knowledge transfer). It converts the cost of outsourcing into a strategic investment in internal capability. This is the definition of value-added consulting.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Full Internal Build",
+        text: "Insist on the three-year internal capacity-building project. Quantify the massive long-term cost of permanent outsourcing, emphasizing that the client will never own its own data. Use a high-quality talent acquisition plan to show the CFO that the risk of failure is manageable.",
+        expertRationale: "While analytically correct (internal build is cheaper long-term), this ignores the CFO's immediate need for 'risk-free compliance' for the upcoming reporting deadline. It's too purist and risks alienating the crucial financial sponsor. A addresses the immediate need first.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Full Outsourcing",
+        text: "Recommend the full outsourcing to your competitor. This ensures immediate compliance and satisfies the CFO's risk aversion. Simultaneously, propose a second, smaller, internal 'Data Strategy' project focused only on defining the internal data architecture, preserving some long-term ownership.",
+        expertRationale: "Full outsourcing (C) creates long-term client dependency and locks in a high annual cost. The second 'data strategy' project is often ignored. A is better because it makes the outsourcing *transitional*, not permanent.",
+        expertRanking: 2
+      }
+    ],
+    overall: "ESG data management is core to a client's long-term strategy. Option A provides a political 'out' for the CFO (immediate outsourced compliance) while ensuring the client builds the necessary internal muscle for the future. B is too risky short-term, and C creates perpetual dependency.",
+    takeAway: "When managing compliance, use temporary outsourcing for immediate risk mitigation, while simultaneously embedding a resource for internal capability transfer."
+  },
+  {
+    id: 47,
+    moduleId: 6,
+    title: "The Unnecessary Policy Loophole",
+    prompt: "Your client, a major bank, has a public policy against funding any project that involves clear-cutting primary forests. You discover a client project—a massive resort development—that is funding a road to a primary forest area. The Head of Compliance wants to approve the project by claiming the road-building isn't technically 'clear-cutting' and uses a loophole in the policy language. Your team knows the clear intent is to enable the logging later.",
+    responses: [
+      {
+        id: "A",
+        title: "The 'Intent' Principle",
+        text: "Advise the Head of Compliance that following the loophole violates the 'Spirit and Intent' of the public policy, which is a massive reputational risk. Document the policy's intent in writing and present a 'Policy Integrity Risk' memo to the client's Chief Risk Officer (CRO) and the General Counsel (GC), forcing them to decide whether to uphold the spirit of the law.",
+        expertRationale: "This is the highest-integrity and best risk-mitigation move. It elevates the issue to the appropriate risk and legal owners, framing it as a reputational/integrity risk, not a mere technicality. The consultant's role is to protect the client's reputation from self-harm.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Recommend an Offset",
+        text: "Approve the loophole-based funding, but require the resort developer to purchase a verifiable, long-term conservation offset equivalent to the size of the clear-cut. Frame this as a financial penalty that makes the funding technically neutral, allowing the project to proceed with political cover.",
+        expertRationale: "This is a compromise that allows the unethical project to proceed. While the offset provides some ethical cover, it sacrifices the integrity of the original policy and is a weak move that doesn't address the Compliance Head's willingness to use loopholes for gain.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Policy Revision Proposal",
+        text: "Allow the funding to proceed via the loophole, but immediately propose an internal project to revise the policy language to eliminate the loophole entirely. Advise the Head of Compliance that this revision is necessary to prevent future confusion, making the current approval a 'one-time' exception.",
+        expertRationale: "Revising the policy (C) is a necessary long-term step, but it should not be a prerequisite for doing the right thing now. Allowing the current project to proceed (B) sacrifices the firm's immediate integrity. A addresses the immediate, high-stakes risk better.",
+        expertRanking: 2
+      }
+    ],
+    overall: "Advising on policy integrity is key to a consultant's role. Option A is the most responsible choice: it rejects the loophole and forces the risk owners (CRO, GC) to make a decision based on the policy's 'Intent,' which is the foundation of public trust. B and C allow the loophole to be exploited.",
+    takeAway: "When faced with a policy loophole, force the risk owners to decide based on the policy's 'Spirit and Intent,' not technical wording."
+  },
+  {
+    id: 48,
+    moduleId: 6,
+    title: "The CEO's Vanity Project",
+    prompt: "The CEO of your client, a major manufacturing firm, is obsessed with winning a major 'Blue Economy' award and has directed $10M of CapEx to be spent on a massive, highly visible 'ocean cleanup' project that your team knows is scientifically dubious and will have negligible impact on the overall business. The Head of Strategy is quietly supportive of your skepticism but will not oppose the CEO directly.",
+    responses: [
+      {
+        id: "A",
+        title: "Reframing the $10M CapEx",
+        text: "Do not oppose the $10M spend. Propose that the $10M be split: $2M goes to the visible 'ocean cleanup' project (satisfying the CEO's vanity/award) and $8M goes to a highly verifiable, internal 'closed-loop plastic' CapEx within their own manufacturing process (high ROI, real impact). Frame the entire $10M as a 'Blue Economy Portfolio.'",
+        expertRationale: "This is the classic management of a 'vanity project.' It allows the CEO to have their award (the $2M visible project) while ensuring the vast majority of the capital (80%) is directed toward the high-impact, verifiable, and core business project. This ensures a strategic win and political stability.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "The Scientific Rebuttal",
+        text: "Write a detailed scientific and financial report that proves the $10M ocean cleanup project is wasteful and ineffective, citing third-party scientific papers. Present this to the CEO and the Board, using objective data to force the cancellation of the project and redirect the funds to the more impactful internal projects.",
+        expertRationale: "This is a pure but politically high-risk approach. It can lead to the CEO feeling personally attacked and risks derailing the entire engagement. When the CEO's emotion is high, a compromise (A) is always preferred over an outright, scientific defeat.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "The Co-Funding Strategy",
+        text: "Advise the CEO to seek significant co-funding for the $10M project from external foundations or government grants. This forces an external review of the project's scientific merit and shifts the financial burden, making the project's continuation dependent on external validation rather than internal CapEx.",
+        expertRationale: "This is a clever political move, as it externalizes the project's risk and cost. However, it still commits the client to the dubious project. A is better because it ensures the majority of the $10M is spent on a core-business, high-ROI project, regardless of external funding.",
+        expertRanking: 2
+      }
+    ],
+    overall: "Executive vanity projects are political realities that must be managed, not opposed. Option A achieves the best outcome by 'ring-fencing' a small portion of the capital for the vanity project while steering the majority to high-impact, verifiable projects. B is too confrontational, and C avoids the core responsibility of capital management.",
+    takeAway: "When managing a CEO's vanity project, carve out a small, visible portion of the budget to satisfy the ego, and steer the majority to high-impact, verifiable core business projects."
+  },
+  {
+    id: 49,
+    moduleId: 6,
+    title: "Ignoring Supply Chain Labor",
+    prompt: "You are finalizing the social pillar of an ESG report for a large apparel company. Your analysis of labor practices in a key Tier 1 supplier (a low-cost factory) reveals significant, verified issues with overtime and working conditions that violate the client's public labor code. Your Project Partner insists on removing the supplier-specific data and only reporting 'aggregated regional data' to avoid the political fallout and contract termination, which would be financially devastating for the client.",
+    responses: [
+      {
+        id: "A",
+        title: "The 'Remediation and Recertification' Path",
+        text: "Refuse to use aggregated data. Present the client with a 'Remediation and Recertification' plan: publicly state the issue (full transparency), suspend new orders from the supplier, and immediately launch a six-month, joint investment program to fix the labor issues. Frame the action as a commitment to 'responsible sourcing' rather than punishment.",
+        expertRationale: "This is the most ethical and strategic choice. It upholds the public code, avoids a massive political risk (contract termination), and focuses on fixing the underlying problem collaboratively. Aggregating the data (B) is deceptive and non-compliant with ESG best practice.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "The Aggregation Compromise",
+        text: "Follow the Project Partner's instruction: use aggregated data in the main report and remove the specific supplier identification. However, include a detailed, confidential memo for the CEO and the Chief Risk Officer (CRO) outlining the supplier's verified issues, transferring the risk of non-disclosure to the highest level.",
+        expertRationale: "While providing a confidential memo (B) is better than nothing, using aggregated data in the public report is a deceptive act that risks the consultant's integrity and the client's reputation. The consultant's role should be to advise on the right action (A), not to help cover up the issue.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "Incentivize Compliance",
+        text: "Do not disclose the issue. Instead, immediately implement a 15% 'Responsible Labor Premium' for the supplier, contingent on them hiring an external auditor to verify correction of the overtime and conditions within 90 days. Frame the premium as a capacity-building investment.",
+        expertRationale: "This is a good solution for fixing the problem, but it fails the transparency test. Undisclosed, verified labor abuses must be corrected and disclosed. The solution must be paired with public acknowledgement and a clear plan (A) to maintain public trust.",
+        expertRanking: 2
+      }
+    ],
+    overall: "ESG reporting requires transparency on social issues. Option A is the best strategy: it prioritizes honesty, avoids the financially devastating contract termination, and focuses on collaboratively fixing the underlying labor problem, which is the most sustainable and ethical path. B is deceptive, and C lacks transparency.",
+    takeAway: "When facing verifiable social/labor abuses, choose the path of transparent, corrective co-investment rather than deceptive aggregation."
+  },
+  {
+    id: 50,
+    moduleId: 6,
+    title: "The Conflicting Land-Use Study",
+    prompt: "Your client, a government agency, is commissioning a large-scale land-use study to optimize natural resource management. Your internal model suggests allocating 60% of land to high-yield timber harvesting (high short-term revenue, low long-term biodiversity). A parallel, public-facing study (from an academic partner) suggests allocating 60% to protected watershed and biodiversity (low short-term revenue, high long-term climate resilience). Your Project Partner wants you to discredit the academic study to secure the high-revenue timber allocation.",
+    responses: [
+      {
+        id: "A",
+        title: "Integrate the Resilience Value",
+        text: "Do not discredit the academic study. Instead, build a new model that quantifies the long-term financial value of 'climate resilience' (e.g., reduced flood damage, clean water supply for cities) as a direct, quantifiable revenue stream, showing that the academic study's proposal has a higher long-term NPV than the short-term timber harvesting model.",
+        expertRationale: "This is the ideal advisory move. It respects the academic data, avoids a political fight, and solves the short-term revenue issue by converting the public good (resilience) into a hard, long-term financial asset. This is the most compelling and defensible outcome.",
+        expertRanking: 1
+      },
+      {
+        id: "B",
+        title: "Discredit Methodology",
+        text: "Follow the Project Partner's request. Find a minor, defensible flaw in the academic study's methodology (e.g., data sampling, model assumptions) and write a rebuttal paper that focuses only on the flaw. This discredits the study and allows the client to politically justify the high-revenue timber allocation.",
+        expertRationale: "Discrediting a peer's work (B) is a common but adversarial consulting move that damages the firm's reputation for objectivity. It is a political fix that enables a poor long-term decision. A is better because it integrates the peer's work into a superior solution.",
+        expertRanking: 3
+      },
+      {
+        id: "C",
+        title: "The Hybrid Land-Use Split",
+        text: "Propose a 50/50 land split: 50% for high-yield timber and 50% for protected watershed. Present this as a political compromise that balances 'economic necessity' with 'ecological responsibility,' simplifying the final decision for the government agency while mitigating political risk from both sides.",
+        expertRationale: "A 50/50 split (C) is a political compromise but is often the default of the weak. It sacrifices the optimal long-term financial and ecological value for political simplicity. A is better because it proves that the ecological choice is actually the optimal long-term financial choice.",
+        expertRanking: 2
+      }
+    ],
+    overall: "The highest value advice in natural resource management converts ecological resilience into long-term financial value. Option A successfully integrates the public study's ecological goals and proves they yield a higher NPV than the short-term timber allocation, making the ecological choice the most financially sound. B is an unethical political attack, and C is a weak compromise.",
+    takeAway: "Do not choose between ecology and economy; prove the financial value of long-term ecological resilience to secure the best outcome."
+  },
+
 ];
 
 export function getScenariosByModuleId(moduleId: number): Scenario[] {

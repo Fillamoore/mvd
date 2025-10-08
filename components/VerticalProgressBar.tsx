@@ -8,6 +8,7 @@ interface VerticalProgressBarProps {
 }
 
 export default function VerticalProgressBar({ current, total }: VerticalProgressBarProps) {
+
   const [hydrated, setHydrated] = useState(false);
   useEffect(() => {
     setHydrated(true);
@@ -17,7 +18,7 @@ export default function VerticalProgressBar({ current, total }: VerticalProgress
 
   return (
     <div className="relative w-1.5 h-[35px] bg-gray-600 rounded-sm">
-      {hydrated && (
+      {hydrated && progressPercentage > 0 && ( 
         <div
           className="absolute bottom-0 pb-1 w-full bg-lilac-300 rounded-sm transition-all duration-300 ease-in-out"
           style={{ height: `${progressPercentage}%` }}
