@@ -17,10 +17,10 @@ export default function VerticalProgressBar({ current, total }: VerticalProgress
   const progressPercentage = total > 0 ? (current / total) * 100 : 0;
 
   return (
-    <div className="relative w-1.5 h-[35px] bg-gray-600 rounded-sm">
+    <div className="relative w-1.5 h-[35px] bg-gray-600">
       {hydrated && progressPercentage > 0 && ( 
         <div
-          className="absolute bottom-0 pb-1 w-full bg-lilac-300 rounded-sm transition-all duration-300 ease-in-out"
+          className="absolute bottom-0 pb-[1px] w-full bg-lilac-300"
           style={{ height: `${progressPercentage}%` }}
         />
       )}
