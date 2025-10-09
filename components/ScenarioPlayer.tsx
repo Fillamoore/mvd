@@ -61,6 +61,7 @@ export default function ScenarioPlayer() {
   const currentScenarioIndex = storedCurrentScenario ? storedCurrentScenario.scenarioId - 1 : 0;
   const currentScenarioData = moduleScenarios[currentScenarioIndex];
 
+  {/*
   useEffect(() => {
     if (hydrated && currentScenarioData && !storedCurrentScenario) {
       setCurrentScenario(moduleId, currentScenarioData.id);
@@ -72,9 +73,11 @@ export default function ScenarioPlayer() {
         }
       });
       setExpertRankings(moduleId, currentScenarioData.id, expertRankingsMap);
+      console.log("in useEffect, currentScenarioData.id = ",currentScenarioData.id);
     }
   }, [hydrated, storedCurrentScenario, currentScenarioData, moduleId, setCurrentScenario, setExpertRankings]);
-
+  */}
+  
   const isRevealed = storedCurrentScenario?.isRevealed || false;
   const userRankings = storedCurrentScenario?.userRankings || {};
 
