@@ -48,7 +48,7 @@ export default function PWAInstallPrompt({ onInstallComplete }: PWAInstallPrompt
           priority
           className="mb-6"
         />
-        <div className="bg-white rounded-2xl max-w-md w-full p-6">
+        <div className="bg-white rounded-2xl max-w-md w-full p-4">
           <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
             Installing on iPhone
           </h2>
@@ -82,7 +82,15 @@ export default function PWAInstallPrompt({ onInstallComplete }: PWAInstallPrompt
             </div>
             
             <div className="flex justify-between items-center">
-              <p className="font-medium text-gray-800">3. Tap 'Add' in the top right corner</p>
+              <p className="font-medium text-gray-800">3. Tap 'done' in bottom right</p>
+              <Image
+                src="/done.png"
+                alt="done"
+                width={70}
+                height={35}
+                priority={true} 
+                loading="eager"   
+              />
             </div>
             
             <div className="flex justify-between items-center">
@@ -99,7 +107,7 @@ export default function PWAInstallPrompt({ onInstallComplete }: PWAInstallPrompt
                 loading="eager"   
               />
               <p className="ml-4 font-medium text-gray-800">
-                You'll then be able to choose qikr from the Home Screen.
+                You'll then be able to run qikr from the Home Screen.
               </p>
             </div>
 

@@ -2,7 +2,7 @@
 'use client';
 
 import './globals.css';
-import { useState, useEffect, ReactNode } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import SplashScreen from '../components/SplashScreen';
 import PWAInstallPrompt from '../components/PWAInstallPrompt';
@@ -18,6 +18,13 @@ const lato = Lato({
   display: 'swap',
 })
 
+// Add proper type for window with MSStream
+declare global {
+  interface Window {
+    MSStream?: unknown;
+  }
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -29,18 +36,7 @@ export default function RootLayout({
   const [showPWAInstall, setShowPWAInstall] = useState(false);
   const pathname = usePathname();
 
-  const isTestRoute = pathname?.includes('test') || pathname?.includes('otp-test');
-  
-  if (isTestRoute) {
-    return (
-      <html>
-        <body style={{ margin: 0, padding: 20 }}>
-          {children}
-        </body>
-      </html>
-    );
-  }
-  
+  // ALL HOOKS AT TOP
   useEffect(() => {
     setIsTransitioning(true);
     const timer = setTimeout(() => setIsTransitioning(false), 50); 
@@ -49,15 +45,14 @@ export default function RootLayout({
 
   useEffect(() => {
     const checkDevice = () => {
-      const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+      const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
       setIsMobile(isIOSDevice);
     };
 
     const checkPWAInstall = () => {
       const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-      const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+      const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
       
-      // Show install prompt ONLY for iOS Safari in browser mode (NOT standalone)
       if (isIOSDevice && !isStandalone) {
         setShowPWAInstall(true);
         setShowSplash(false);
@@ -71,20 +66,14 @@ export default function RootLayout({
   }, []);
 
   const renderContent = () => {
-    const MobileMasterViewAny = MobileMasterView as any;
-    const MobileLayoutAny = MobileLayout as any;
-    const DesktopLayoutAny = DesktopLayout as any;
-
-    const pageChildren: ReactNode = children;
-
     if (isMobile) {
       if (pathname === '/mobile-master') {
-        return <MobileMasterViewAny>{pageChildren}</MobileMasterViewAny>;
+        return <MobileMasterView />; // NO CHILDREN
       } else {
-        return <MobileLayoutAny>{pageChildren}</MobileLayoutAny>;
+        return <MobileLayout />; // NO CHILDREN
       }
     } else {
-      return <DesktopLayoutAny>{pageChildren}</DesktopLayoutAny>;
+      return <DesktopLayout />; // NO CHILDREN
     }
   };
 
