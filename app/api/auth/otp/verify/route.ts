@@ -2,7 +2,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 
-const globalAny = global as any;
+const globalAny = global as unknown as { 
+  otpStore?: Map<string, { code: string; expiresAt: number; attempts: number }> 
+};
 if (!globalAny.otpStore) {
   console.log('🆕 Creating new otpStore in verify route');
   globalAny.otpStore = new Map();
@@ -15,7 +17,7 @@ export async function POST(request: NextRequest) {
     console.log('🔍 STORE SIZE:', otpStore.size);
     console.log('🔍 STORE ENTRIES:', Array.from(otpStore.entries()));
     
-    const { email, code } = await request.json();
+    const { email, code }: { email: string; code: string } = await request.json();
     console.log('🔐 Verify request:', { email, code });
 
     // FIRST check database connection - if we can't reach DB, reject the request

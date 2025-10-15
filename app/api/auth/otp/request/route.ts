@@ -3,7 +3,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { sendOTPEmail } from '@/lib/email-service';
 
-const globalAny = global as any;
+const globalAny = global as unknown as { 
+  otpStore?: Map<string, { code: string; expiresAt: number; attempts: number }> 
+};
 if (!globalAny.otpStore) {
   console.log('🆕 Creating new otpStore in request route');
   globalAny.otpStore = new Map();
@@ -12,7 +14,7 @@ const otpStore = globalAny.otpStore;
 
 export async function POST(request: NextRequest) {
   try {
-    const { email } = await request.json();
+    const { email }: { email: string } = await request.json();
     console.log('📧 OTP request for:', email);
 
     if (!email) {
@@ -30,14 +32,6 @@ export async function POST(request: NextRequest) {
         console.log('❌ Email not found:', email);
         return NextResponse.json({ error: 'Access not allowed for this email' }, { status: 403 });
       }
-
-      {/*
-      const userType = result.rows[0].user_type;
-      if (userType !== 'admin' && userType !== 'user') {
-        console.log('❌ Access restricted for user type:', userType);
-        return NextResponse.json({ error: 'Access restricted' }, { status: 403 });
-      }
-      */}  
 
     } catch (dbError) {
       console.error('❌ Database error:', dbError);

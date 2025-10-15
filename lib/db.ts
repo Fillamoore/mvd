@@ -1,6 +1,10 @@
 // lib/db.ts
-import { sql } from '@vercel/postgres';
+import { Pool } from 'pg';
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
 
 export const db = {
-  query: (text: string, params?: any[]) => sql.query(text, params),
+  query: (text: string, params?: unknown[]) => pool.query(text, params), 
 };
