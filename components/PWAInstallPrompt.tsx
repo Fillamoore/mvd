@@ -12,17 +12,17 @@ export default function PWAInstallPrompt({ onInstallComplete }: PWAInstallPrompt
   const [showPrompt, setShowPrompt] = useState(false);
 
   useEffect(() => {
-    // SIMPLE CHECK: Only show if we're in regular Safari browser, NOT when launched from home screen
+    // SIMPLE CHECK: Only show if we&apos;re in regular Safari browser, NOT when launched from home screen
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
     
     if (isStandalone) {
-      // App was launched from home screen - DON'T show install prompt
+      // App was launched from home screen - DON&apos;T show install prompt
       setShowPrompt(false);
       return;
     }
 
     // Only show for iOS Safari in regular browser mode
-    const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+    const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as Window & { MSStream?: unknown }).MSStream;
     const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     
     if (isIOSDevice && isSafari) {
@@ -69,7 +69,7 @@ export default function PWAInstallPrompt({ onInstallComplete }: PWAInstallPrompt
             </div>
 
             <div className="flex justify-between items-center">
-              <p className="font-medium text-gray-800">2. Scroll to 'Add to Home Screen'</p>
+              <p className="font-medium text-gray-800">2. Scroll to &apos;Add to Home Screen&apos;</p>
               <Image
                 src="/next-icon.png"
                 alt="Add"
@@ -82,7 +82,7 @@ export default function PWAInstallPrompt({ onInstallComplete }: PWAInstallPrompt
             </div>
             
             <div className="flex justify-between items-center">
-              <p className="font-medium text-gray-800">3. Tap 'done' in bottom right</p>
+              <p className="font-medium text-gray-800">3. Tap &apos;done&apos; in bottom right</p>
               <Image
                 src="/done.png"
                 alt="done"
@@ -107,7 +107,7 @@ export default function PWAInstallPrompt({ onInstallComplete }: PWAInstallPrompt
                 loading="eager"   
               />
               <p className="ml-4 font-medium text-gray-800">
-                You'll then be able to run qikr from the Home Screen.
+                You&apos;ll then be able to run qikr from the Home Screen.
               </p>
             </div>
 
