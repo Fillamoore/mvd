@@ -1,11 +1,6 @@
 // lib/db.ts
-import { Pool } from 'pg';
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL, // Now with ?sslmode=no-verify
-  // No need for ssl config - handled by connection string
-});
+import { sql } from '@vercel/postgres';
 
 export const db = {
-  query: (text: string, params?: any[]) => pool.query(text, params),
+  query: (text: string, params?: any[]) => sql.query(text, params),
 };
