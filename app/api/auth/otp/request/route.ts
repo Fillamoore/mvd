@@ -67,10 +67,12 @@ export async function POST(request: NextRequest) {
       message: 'Verification code sent to your email'
     });
 
-  } catch (error: any) {
-    console.error('❌ Uncaught error in OTP route:', error);
-    return NextResponse.json({
-      error: error?.message || 'Internal server error'
-    }, { status: 500 });
+  } catch (error: unknown) {
+    let message = 'Internal server error';
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    console.error('❌ Uncaught error in OTP route:', message);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
