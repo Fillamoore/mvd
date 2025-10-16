@@ -1,11 +1,13 @@
-// app/api/auth/otp/request/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { sendOTPEmail } from '@/lib/email-service';
 
-const globalAny = global as unknown as { 
-  otpStore?: Map<string, { code: string; expiresAt: number; attempts: number }> 
+console.log('🚀 OTP route triggered');
+
+const globalAny = global as unknown as {
+  otpStore?: Map<string, { code: string; expiresAt: number; attempts: number }>
 };
+
 if (!globalAny.otpStore) {
   console.log('🆕 Creating new otpStore in request route');
   globalAny.otpStore = new Map();
@@ -14,6 +16,8 @@ const otpStore = globalAny.otpStore;
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('🚀 OTP route triggered');
+
     const { email }: { email: string } = await request.json();
     console.log('📧 OTP request for:', email);
 
@@ -21,30 +25,27 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
     }
 
-    // Check if user exists and is allowed
+    let result;
     try {
-      const result = await db.query(
+      result = await db.query(
         `SELECT user_type FROM users WHERE email = $1`,
         [email.toLowerCase()]
       );
-      
-      if (result.rows.length === 0) {
-        console.log('❌ Email not found:', email);
-        return NextResponse.json({ error: 'Access not allowed for this email' }, { status: 403 });
-      }
-
     } catch (dbError) {
       console.error('❌ Database error:', dbError);
-      return NextResponse.json({ 
-        error: 'Currently offline. Try again when online.' 
+      return NextResponse.json({
+        error: 'Database connection failed. Please try again later.'
       }, { status: 503 });
     }
 
-    // Generate OTP
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    const expiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes
+    if (!result || result.rows.length === 0) {
+      console.log('❌ Email not found or not allowed:', email);
+      return NextResponse.json({ error: 'Access not allowed for this email' }, { status: 403 });
+    }
 
-    // Store OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const expiresAt = Date.now() + 10 * 60 * 1000;
+
     otpStore.set(email.toLowerCase(), {
       code: otp,
       expiresAt,
@@ -54,13 +55,11 @@ export async function POST(request: NextRequest) {
     console.log('🔐 Generated OTP for:', email);
     console.log('📊 Current OTP store size:', otpStore.size);
 
-    // Send email
     try {
       await sendOTPEmail(email, otp);
       console.log('✅ Email sent to:', email);
     } catch (emailError) {
       console.error('❌ Email sending failed:', emailError);
-      // Don't fail the request if email fails, but log it
     }
 
     return NextResponse.json({
@@ -68,10 +67,10 @@ export async function POST(request: NextRequest) {
       message: 'Verification code sent to your email'
     });
 
-  } catch (error) {
-    console.error('❌ OTP request error:', error);
-    return NextResponse.json({ 
-      error: 'Internal server error. Please try again.' 
+  } catch (error: any) {
+    console.error('❌ Uncaught error in OTP route:', error);
+    return NextResponse.json({
+      error: error?.message || 'Internal server error'
     }, { status: 500 });
   }
 }
