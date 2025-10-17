@@ -4,7 +4,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import { generateCorrectClockwiseSpiralOrder } from '@/utils/spiral';
-import { authService } from '@/services/authService';
+// import { authService } from '@/services/authService';
 
 const GRID_SIZE = 7;
 const TOTAL_TILES = 49;
@@ -15,9 +15,9 @@ interface SplashScreenProps {
 }
 
 type SplashPhase = 'logo' | 'grid' | 'animating' | 'done' | 'fading';
-type AuthPhase = 'email' | 'otp' | 'success';
+// type AuthPhase = 'email' | 'otp' | 'success';
 
-export default function SplashScreen({ onComplete }: SplashScreenProps) { 
+export default function SplashScreen({ onComplete }: SplashScreenProps) {
   const [phase, setPhase] = useState<SplashPhase>('logo');
   const [visibleTiles, setVisibleTiles] = useState(TOTAL_TILES);
   const [spiralOrder, setSpiralOrder] = useState<{ id: number; row: number; col: number }[]>([]);
@@ -26,7 +26,8 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
   const [dotPosition, setDotPosition] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   
-  // Enhanced Auth States
+  // Enhanced Auth States - COMMENTED OUT
+  /*
   const [showAuthForm, setShowAuthForm] = useState(false);
   const [authPhase, setAuthPhase] = useState<AuthPhase>('email');
   const [email, setEmail] = useState('');
@@ -35,15 +36,21 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState<'success' | 'error' | 'info'>('info');
   const [showPopup, setShowPopup] = useState(false);
+  */
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const currentTileRef = useRef<number>(0);
   const isMountedRef = useRef(true);
+  
+  // Auth refs - COMMENTED OUT
+  /*
   const emailInputRef = useRef<HTMLInputElement | null>(null);
   const otpInputRef = useRef<HTMLInputElement | null>(null);
   const messageTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  */
 
-  // Clear message timeout on unmount
+  // Clear message timeout on unmount - COMMENTED OUT
+  /*
   useEffect(() => {
     return () => {
       if (messageTimeoutRef.current) {
@@ -51,7 +58,9 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
       }
     };
   }, []);
+  */
 
+  /*
   const showMessage = (newMessage: string, type: 'success' | 'error' | 'info') => {
     setMessage(newMessage);
     setMessageType(type);
@@ -76,6 +85,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
       clearTimeout(messageTimeoutRef.current);
     }
   };
+  */
 
   useEffect(() => {
     const checkMobile = () => {
@@ -127,6 +137,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     }, ANIMATION_INTERVAL);
   }, []);
 
+  /*
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || isLoading) return;
@@ -210,17 +221,19 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     clearMessage();
     setTimeout(() => emailInputRef.current?.focus(), 100);
   };
+  */
 
-  const handleContinue = () => {
-    const hasLoggedIn = localStorage.getItem('hasLoggedIn') === 'y';
+  // Simplified handleContinue - always proceed to fading
+  const handleContinue = useCallback(() => {
+    // const hasLoggedIn = localStorage.getItem('hasLoggedIn') === 'y';
     
-    if (hasLoggedIn) {
+    // if (hasLoggedIn) {
       setPhase('fading'); 
-    } else {
-      setShowAuthForm(true);
-      setAuthPhase('email');
-    }
-  };
+    // } else {
+    //   setShowAuthForm(true);
+    //   setAuthPhase('email');
+    // }
+  }, []);
 
   useEffect(() => {
     switch (phase) {
@@ -259,7 +272,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [phase, onComplete, startTileAnimation]);
+  }, [phase, onComplete, startTileAnimation, handleContinue]);
 
   useEffect(() => {
     if (visibleTiles === TOTAL_TILES && phase === 'animating') {
@@ -269,6 +282,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     }
   }, [visibleTiles, phase]);
   
+  /*
   useEffect(() => {
     if (showAuthForm && authPhase === 'email') {
       const timer = setTimeout(() => {
@@ -279,6 +293,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
       return () => clearTimeout(timer);
     }
   }, [showAuthForm, authPhase]);
+  */
 
   const renderGrid = () => {
     if (!spiralOrder.length || !tileScores.length) return null;
@@ -355,6 +370,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     );
   };
 
+  /*
   const renderMessagePopup = () => {
     if (!showPopup || !message) return null;
 
@@ -391,7 +407,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
               Enter email to get one-time login passcode:
             </div>
             
-            {/* Integrated input + button */}
+            {/* Integrated input + button *\/}
             <div className="relative">
               <input 
                 ref={emailInputRef}
@@ -428,7 +444,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
               </button>
             </div>
             
-            {/* Message popup appears below the input */}
+            {/* Message popup appears below the input *\/}
             <div className={`${inputWidth} relative mt-2`}>
               {renderMessagePopup()}
             </div>           
@@ -439,7 +455,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
               Enter passcode from the email just sent:
             </div>
             
-            {/* Integrated OTP input + button - same as email */}
+            {/* Integrated OTP input + button - same as email *\/}
             <div className="relative">
               <input 
                 ref={otpInputRef}
@@ -477,7 +493,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
               </button>
             </div>
             
-            {/* Message popup appears below the input */}
+            {/* Message popup appears below the input *\/}
             <div className={`${inputWidth} relative mt-2`}>
               {renderMessagePopup()}
             </div>
@@ -501,12 +517,13 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
                 Resend Code
               </button>
             </div>
-            */}
+            *\/}
           </>
         )}
       </form>
     );
   };
+  */
 
   return (
     <div className={`fixed inset-0 flex flex-col ${isMobile ? 'justify-start' : 'justify-center'} h-screen bg-black text-white z-50 
@@ -523,8 +540,9 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
           {renderGrid()}
           {renderProgressBar()}
         </div>
-
+        {/*
         {renderAuthForm()}
+        */}  
       </div>
     </div>
   );

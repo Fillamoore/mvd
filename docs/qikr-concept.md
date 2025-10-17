@@ -1,12 +1,15 @@
-## **aijai: The Strategic Judgement Platform - WIP Exposition**
+## **qikr: Knowhow ahead of the Pack.**
 
-### **1. The Core Concept: Scaling Wisdom**
+### **1. Core Concept: Capture, Scale and Apply Enterprise Knowhow**
 
-*   **Fundamental Purpose:** aijai is a multi-sided platform ecosystem designed to capture the tacit wisdom and nuanced judgement of experienced professionals and transmit it to the next generation. It addresses the critical business problem of "brain drain" and the human need for continuous, impactful professional growth.
-*   **Core Metaphor:** It is a modern vehicle for **transmission** (in the Buddhist sense) or **parampara** (in the Indian tradition), passing on the essence of professional mastery.
-*   **Tagline:** **people + wisdom + ai**
-*   **Brand Philosophy:** The deliberate lowercase **aijai** reflects a low-ego, enabling platform in service of others.
-*   **The Unit of Value:** A **scenario**—a succinct, authentic case study based on real events, designed to create a "Bad News Insight" that calibrates a learner's judgement.
+*   **Fundamental Purpose:** The qikr platform captures the knowhow of experienced professionals and gets in into the heads of the up-and-comings. Faster than ever before. 
+*   **Problem Solved:** Building an affordable middle for diamond-shaped organisations. Brain drain. Capitalising on AI fast. Bite-sized. mobile-first.
+*   **Core Analog:** Coursera for grown-ups. What Coursera does for knowledge and early career, qikr does for knowhow and the up and comings.
+*   **Tagline:** **Your people, your knowhow. AI-enabled.**
+*   **Brand Philosophy:** Lowercase **qikr** communicating a low-ego, enabling platform in service of others.
+*   **Unit of Value:** Scenario — pithyly drawn high-stakes business situation where analysis, options and decision-making are honed.  
+*   **Build Strategy:** Start B-C with the 'faster progression' proposition for junior to mid-level professionals. Then morph to B-B with the user demand and value proven.
+*   **AI Angle:** It took   
 
 ### **2. The Unbeatable USP: "It's our owls."**
 
