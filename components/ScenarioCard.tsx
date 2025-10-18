@@ -159,7 +159,6 @@ export default function ScenarioCard({
   }, []);
 
   useEffect(() => {
-    console.log('ScenarioPlayer useEffect');
     if (isHydrated && expertRationales) {
       const expertRankingsMap: { [key: string]: number } = {};
       expertRationales.forEach(response => {

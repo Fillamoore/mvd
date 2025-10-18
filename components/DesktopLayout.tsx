@@ -1,6 +1,7 @@
 // components/DesktopLayout.tsx
 import DesktopSidebar from './DesktopSidebar';
 import ScenarioPlayer from './ScenarioPlayer';
+import { useEffect } from 'react';
 
 export default function DesktopLayout() {
   return (

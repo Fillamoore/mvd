@@ -56,7 +56,7 @@ export default function PWAInstallPrompt({ onInstallComplete }: PWAInstallPrompt
           <div className="space-y-6">
             
             <div className="flex justify-between items-center">
-              <p className="font-medium text-gray-800">1. Tap the Share Button</p>
+              <p className="font-medium text-gray-800">1. Tap the Share Button below</p>
               <Image
                 src="/share-icon.png"
                 alt="Share"

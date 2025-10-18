@@ -1,3 +1,4 @@
+
 // components/MobileLayout.tsx - FIXED
 'use client';
 

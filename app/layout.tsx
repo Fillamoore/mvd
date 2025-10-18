@@ -1,29 +1,31 @@
-// app/layout.tsx
 'use client';
 
 import './globals.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import SplashScreen from '../components/SplashScreen';
 import PWAInstallPrompt from '../components/PWAInstallPrompt';
 import DesktopLayout from '../components/DesktopLayout';
 import MobileLayout from '../components/MobileLayout';
 import MobileMasterView from '../components/MobileMasterView';
+import OnboardingMobile from '../components/OnboardingMobile';
+import OnboardingDesktop from '../components/OnboardingDesktop';
 
-import { Lato } from 'next/font/google'
+import { Lato } from 'next/font/google';
 
 const lato = Lato({
   subsets: ['latin'],
   weight: ['400', '700'],
   display: 'swap',
-})
+});
 
-// Add proper type for window with MSStream
 declare global {
   interface Window {
     MSStream?: unknown;
   }
 }
+
+type AppState = 'checking' | 'pwa_install' | 'onboarding' | 'splash' | 'main_app';
 
 export default function RootLayout({
   children,
@@ -31,50 +33,51 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const [isMobile, setIsMobile] = useState(false);
-  const [showSplash, setShowSplash] = useState(true);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [showPWAInstall, setShowPWAInstall] = useState(false);
+  const [appState, setAppState] = useState<AppState>('checking');
+  const prevAppStateRef = useRef<AppState>('checking');
   const pathname = usePathname();
 
-  // ALL HOOKS AT TOP
   useEffect(() => {
-    setIsTransitioning(true);
-    const timer = setTimeout(() => setIsTransitioning(false), 50); 
-    return () => clearTimeout(timer);
-  }, [pathname]);
+    const initializeApp = () => {
+      if (appState !== 'checking') return;
 
-  useEffect(() => {
-    const checkDevice = () => {
       const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
       setIsMobile(isIOSDevice);
-    };
 
-    const checkPWAInstall = () => {
       const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-      const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-      
+      const onboardingCompleted = localStorage.getItem('onboardingCompleted');
+
       if (isIOSDevice && !isStandalone) {
-        setShowPWAInstall(true);
-        setShowSplash(false);
+        setAppState('pwa_install');
+      } else if (!onboardingCompleted) {
+        setAppState('onboarding');
       } else {
-        setShowSplash(true);
+        setAppState('splash');
       }
     };
 
-    checkDevice();
-    checkPWAInstall();
-  }, []);
-
-  const renderContent = () => {
-    if (isMobile) {
-      if (pathname === '/mobile-master') {
-        return <MobileMasterView />; // NO CHILDREN
-      } else {
-        return <MobileLayout />; // NO CHILDREN
-      }
-    } else {
-      return <DesktopLayout />; // NO CHILDREN
+    if (typeof window !== 'undefined') {
+      initializeApp();
     }
+  }, [appState]);
+
+  const handlePWAInstallComplete = () => {
+    const onboardingCompleted = localStorage.getItem('onboardingCompleted');
+    setAppState(onboardingCompleted ? 'splash' : 'onboarding');
+  };
+
+  const handleOnboardingComplete = () => {
+    localStorage.setItem('onboardingCompleted', 'true');
+    setAppState('splash');
+  };
+
+  const handleSplashComplete = () => {
+    setAppState('main_app');
+    setTimeout(() => {
+      if (appState !== 'main_app') {
+        setAppState('main_app');
+      }
+    }, 500);
   };
 
   return (
@@ -83,32 +86,37 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#000000" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="qikr" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
         <meta name="apple-mobile-web-app-orientations" content="portrait" />
       </head>
       <body className={`${lato.className} h-screen w-screen overflow-hidden pb-[env(safe-area-inset-bottom)] bg-black`}>
-        
-        {/* Main App - ONLY show if NOT showing install prompt */}
-        {!showPWAInstall && (
-          <div className="relative w-full h-full z-10">
-            {renderContent()}
+        {(appState === 'main_app' || appState === 'splash') && (
+          <div className="w-full h-full">
+            {isMobile ? <MobileLayout /> : <DesktopLayout />}
           </div>
         )}
 
-        {/* Install Prompt - BLOCKS everything else when shown */}
-        {showPWAInstall && (
-          <PWAInstallPrompt onInstallComplete={() => setShowPWAInstall(false)} />
+        {appState === 'pwa_install' && (
+          <PWAInstallPrompt onInstallComplete={handlePWAInstallComplete} />
         )}
 
-        {/* Splash Screen - ONLY show if NOT showing install prompt */}
-        {showSplash && !showPWAInstall && (
-          <SplashScreen onComplete={() => setShowSplash(false)} />
+        {appState === 'onboarding' && (
+          isMobile ? 
+            <OnboardingMobile onComplete={handleOnboardingComplete} /> : 
+            <OnboardingDesktop onComplete={handleOnboardingComplete} />
         )}
-        
-        {isTransitioning && (
-          <div className="fixed inset-0 bg-black z-40"></div>
+
+        {appState === 'splash' && (
+          <SplashScreen onComplete={handleSplashComplete} />
+        )}
+
+        {appState === 'checking' && (
+          <div className="w-full h-full flex items-center justify-center bg-black">
+            <div className="text-white">Loading...</div>
+          </div>
         )}
       </body>
     </html>
