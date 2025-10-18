@@ -1,6 +1,6 @@
 // components/OnboardingMobile.tsx
 'use client';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 interface OnboardingProps {
   onComplete: () => void;
@@ -8,7 +8,8 @@ interface OnboardingProps {
 
 const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [startX, setStartX] = useState(0);
+  const startXRef = useRef(0);
+  const [isSwiping, setIsSwiping] = useState(false);
 
   const totalSlides = 4;
 
@@ -59,24 +60,36 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    const touchStartX = e.touches[0].clientX;
-    setStartX(touchStartX);
+    startXRef.current = e.touches[0].clientX;
+    setIsSwiping(true);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isSwiping) return;
     
-    const handleTouchEnd = (e: React.TouchEvent) => {
-      const endX = e.changedTouches[0].clientX;
-      const diff = startX - endX;
-      const swipeThreshold = 50;
+    const currentX = e.touches[0].clientX;
+    const diff = startXRef.current - currentX;
+    
+    // Optional: Add visual feedback during swipe
+    // You can implement this if you want swipe animations
+  };
 
-      if (Math.abs(diff) > swipeThreshold) {
-        if (diff > 0) {
-          nextSlide();
-        } else {
-          prevSlide();
-        }
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!isSwiping) return;
+    
+    const endX = e.changedTouches[0].clientX;
+    const diff = startXRef.current - endX;
+    const swipeThreshold = 50;
+
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        nextSlide();
+      } else {
+        prevSlide();
       }
-    };
-
-    e.currentTarget.addEventListener('touchend', handleTouchEnd as any, { once: true });
+    }
+    
+    setIsSwiping(false);
   };
 
   return (
@@ -87,6 +100,8 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
           className="flex w-full h-full transition-transform duration-400 ease-in-out"
           style={{ transform: `translateX(-${currentSlide * 100}%)` }}
           onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
         >
           {slides.map((slide, index) => (
             <div key={index} className="w-full h-full flex-shrink-0 flex flex-col items-center justify-center p-6 text-center">
