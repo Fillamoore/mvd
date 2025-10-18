@@ -28,12 +28,12 @@ const OnboardingDesktop: React.FC<OnboardingProps> = ({ onComplete }) => {
     },
     {
       image: '/knowhow.png',
-      title: 'Develop and demonstrate know-how',
+      title: 'Develop and demonstate know-how',
       description: 'Reading situations astutely, making the right calls on the \'how\' and the \'why\' (as well as the \'what\'), enabling powerful teamwork. How do you develop it? How do you demonstrate it?'
     },
     {
       image: '/platform.png',
-      title: 'Building know-how daily',
+      title: 'Build your know-how daily',
       description: '2000+ scenarios covering all facets of high-stakes professional work. Mobile-first. Pick-up-and-put-down. Self-paced with \'how am I doing\' cohort comparators. Hone it today. Apply it tomorrow.',
     }
   ];
@@ -81,10 +81,10 @@ const OnboardingDesktop: React.FC<OnboardingProps> = ({ onComplete }) => {
   }, [currentSlide]);
 
   return (
-    <div className={`fixed inset-0 bg-black flex items-center justify-center p-8 z-50 transition-opacity duration-500 ease-in-out ${
+    <div className={`fixed inset-0 bg-black flex items-center justify-center z-50 transition-opacity duration-500 ease-in-out ${
       isExiting ? 'opacity-0' : 'opacity-100'
     }`}>
-      <div className="bg-white rounded-[10px] w-full max-w-2xl h-[700px] overflow-hidden relative flex flex-col">
+      <div className="bg-white rounded-[8px] w-full max-w-xl h-[650px] overflow-hidden ">
         
         {/* 
         <div className="absolute top-6 right-8 z-10">
@@ -103,9 +103,9 @@ const OnboardingDesktop: React.FC<OnboardingProps> = ({ onComplete }) => {
           style={{ transform: `translateX(-${currentSlide * 100}%)` }}
         >
           {slides.map((slide, index) => (
-            <div key={index} className="w-full flex-shrink-0 flex flex-col items-center justify-center pt-16 px-4 text-center">
+            <div key={index} className="w-full flex-shrink-0 flex flex-col items-center justify-center pt-8 px-4 text-center">
               {/* Image Container - 4:1 aspect ratio, ~100px height */}
-              <div className="w-full max-w-lg h-[220px] mb-6 rounded-[10px] overflow-hidden">
+              <div className="w-full max-w-lg h-[220px] mb-6 rounded-[8px] overflow-hidden">
                 <div className="relative w-full h-full">
                   <Image
                     src={slide.image}
@@ -138,7 +138,7 @@ const OnboardingDesktop: React.FC<OnboardingProps> = ({ onComplete }) => {
               {/* Action Button */}
               <button 
                 onClick={nextSlide}
-                className="bg-lilac-400 text-gray-800 px-6 py-3 rounded-[5px] hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
+                className="bg-lilac-400 text-gray-800 px-6 py-3 mb-6 rounded-[5px] hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
               >
                 {index === totalSlides - 1 ? 'Launch app' : 'Continue'}
               </button>
