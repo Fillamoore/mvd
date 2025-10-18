@@ -4,7 +4,6 @@ const nextConfig = {
   reactStrictMode: true,
   // This might help suppress the warning
   devIndicators: {
-    buildActivity: false,
   }
 }
 

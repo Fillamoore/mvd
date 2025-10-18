@@ -18,6 +18,9 @@ module.exports = {
           300: '#ddd6fe',  // Medium lilac (response border)
           400: '#c4b5fd',  // Darker lilac (scenario border, hover)
           500: '#a396d4',  // Darker lilac (scenario border, hover)
+          600: '#7e73a3',  // Darker lilac (scenario border, hover)
+          700: '#685e8c',  // Darker lilac (scenario border, hover)
+          800: '#625884',  // Darker lilac (scenario border, hover)
           900: '#4c1d95',  // Dark lilac (text)
         },
         'lilac-charcoal-f': '#1a1a1a',     // Foundation: near-black, minimal lilac

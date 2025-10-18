@@ -1,10 +1,13 @@
 // components/OnboardingDesktop.tsx
 'use client';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 interface OnboardingProps {
   onComplete: () => void;
 }
+
+const italicWords = ['do'];
 
 const OnboardingDesktop: React.FC<OnboardingProps> = ({ onComplete }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -14,24 +17,24 @@ const OnboardingDesktop: React.FC<OnboardingProps> = ({ onComplete }) => {
 
   const slides = [
     {
-      icon: '🎯',
-      title: 'Welcome to Qikr Desktop',
-      description: 'Your powerful B-C platform with advanced features for productivity.',
+      image: '/people.png',
+      title: 'So how do you progress faster?',
+      description: 'When it\'s harder for organisations to promote, flatter structures mean fewer leadership roles, and hybrid working reduces the opportunities for networking and visibility.',
     },
     {
-      icon: '🖱️',
-      title: 'Desktop Optimized', 
-      description: 'Use keyboard shortcuts and right-click menus for faster workflow.',
+      image: '/headwinds.png',
+      title: 'Given these headwinds', 
+      description: 'AI devaluing knowledge by the second, benign neglect the best you\’ll get from your overstretched manager, and \'moving on to move up\' nigh-on impossible in this market.',
     },
     {
-      icon: '💼',
-      title: 'B-B Features',
-      description: 'Access advanced business features alongside core B-C functionality.',
+      image: '/knowhow.png',
+      title: 'Develop and demonstrate know-how',
+      description: 'Reading situations astutely, making the right calls on the \'how\' and the \'why\' (as well as the \'what\'), enabling powerful teamwork. How do you develop it? How do you demonstrate it?'
     },
     {
-      icon: '🚀',
-      title: 'Ready to Work',
-      description: 'Start being productive with our comprehensive desktop experience.',
+      image: '/platform.png',
+      title: 'Building know-how daily',
+      description: '2000+ scenarios covering all facets of high-stakes professional work. Mobile-first. Pick-up-and-put-down. Self-paced with \'how am I doing\' cohort comparators. Hone it today. Apply it tomorrow.',
     }
   ];
 
@@ -78,11 +81,12 @@ const OnboardingDesktop: React.FC<OnboardingProps> = ({ onComplete }) => {
   }, [currentSlide]);
 
   return (
-    <div className={`fixed inset-0 bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center p-8 z-50 transition-opacity duration-500 ease-in-out ${
+    <div className={`fixed inset-0 bg-black flex items-center justify-center p-8 z-50 transition-opacity duration-500 ease-in-out ${
       isExiting ? 'opacity-0' : 'opacity-100'
     }`}>
-      <div className="bg-white rounded-3xl shadow-2xl w-full max-w-2xl h-[700px] overflow-hidden relative flex flex-col">
-        {/* Header with skip button */}
+      <div className="bg-white rounded-[10px] w-full max-w-2xl h-[700px] overflow-hidden relative flex flex-col">
+        
+        {/* 
         <div className="absolute top-6 right-8 z-10">
           <button 
             onClick={handleSkip}
@@ -91,81 +95,104 @@ const OnboardingDesktop: React.FC<OnboardingProps> = ({ onComplete }) => {
             Skip Tour
           </button>
         </div>
+        */}
 
         {/* Slides Container */}
         <div 
-          className="flex w-full h-full transition-transform duration-500 ease-in-out flex-1 relative z-0"
+          className="flex w-full transition-transform duration-500 ease-in-out z-0"
           style={{ transform: `translateX(-${currentSlide * 100}%)` }}
         >
           {slides.map((slide, index) => (
-            <div key={index} className="w-full h-full flex-shrink-0 flex flex-col items-center justify-center p-12 text-center">
-              <div className="w-32 h-32 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-3xl flex items-center justify-center text-white text-5xl mb-8">
-                {slide.icon}
+            <div key={index} className="w-full flex-shrink-0 flex flex-col items-center justify-center pt-16 px-4 text-center">
+              {/* Image Container - 4:1 aspect ratio, ~100px height */}
+              <div className="w-full max-w-lg h-[220px] mb-6 rounded-[10px] overflow-hidden">
+                <div className="relative w-full h-full">
+                  <Image
+                    src={slide.image}
+                    alt={slide.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 448px"
+                    priority={index === 0}
+                  />
+                </div>
               </div>
+
               
-              <h2 className="text-3xl font-bold text-gray-800 mb-6">
-                {slide.title}
+              <h2 className="text-3xl font-bold text-gray-800 mt-2 mb-4">
+                {slide.title.split(' ').map((word, i) => (
+                  <span key={i} className={italicWords.includes(word.toLowerCase()) ? 'italic' : ''}>
+                    {word}{' '}
+                  </span>
+                ))}
               </h2>
               
-              <p className="text-gray-600 text-lg leading-relaxed mb-8 max-w-md">
-                {slide.description}
-              </p>
+              <div className="text-gray-600 text-lg leading-relaxed mb-8 px-16">
+                {slide.description.split(' ').map((word, i) => (
+                  <span key={i} className={italicWords.includes(word.toLowerCase()) ? 'italic' : ''}>
+                    {word}{' '}
+                  </span>
+                ))}
+              </div>
 
               {/* Action Button */}
               <button 
                 onClick={nextSlide}
-                className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-10 py-4 rounded-xl font-semibold text-lg hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
+                className="bg-lilac-400 text-gray-800 px-6 py-3 rounded-[5px] hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
               >
-                {index === totalSlides - 1 ? 'Launch App' : 'Continue'}
+                {index === totalSlides - 1 ? 'Launch app' : 'Continue'}
               </button>
             </div>
           ))}
         </div>
 
         {/* Bottom Navigation with Centered Dots */}
-        <div className="border-t border-gray-200 py-6 px-8 relative z-0">
+        <div className="border-t border-gray-200 py-4 px-8 mt-auto relative z-0">
           <div className="flex justify-between items-center">
-            {/* Previous Button - Bigger Icon */}
+
+            {/* Previous Button - No ring, no hover */}
             <button 
               onClick={prevSlide}
-              className={`flex items-center justify-center w-12 h-12 rounded-full transition-all duration-200 ${
+              className={`flex items-center justify-center w-16 h-16 rounded-full ${
                 currentSlide > 0 
-                  ? 'text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50' 
+                  ? 'text-lilac-600' 
                   : 'text-gray-400 cursor-not-allowed'
               }`}
               disabled={currentSlide === 0}
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             
-            {/* Centered Progress Dots */}
-            <div className="flex gap-3">
+            {/* Centered Progress Dots - Smaller and Tighter */}
+            <div className="flex gap-1.5">
               {slides.map((_, dotIndex) => (
                 <button
                   key={dotIndex}
                   onClick={() => setCurrentSlide(dotIndex)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
                     dotIndex === currentSlide 
-                      ? 'bg-indigo-500 scale-110' 
+                      ? 'bg-lilac-500 scale-110' 
                       : 'bg-gray-300 hover:bg-gray-400'
                   }`}
                 />
               ))}
             </div>
             
-            {/* Next Button - Bigger Icon */}
+            {/* Next Button - No ring, no hover */}
             <button 
               onClick={nextSlide}
-              className="flex items-center justify-center w-12 h-12 rounded-full text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 transition-all duration-200"
+              className="flex items-center justify-center w-16 h-16 rounded-full text-lilac-600"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
           </div>
         </div>
+
+      
       </div>
     </div>
   );
