@@ -341,8 +341,8 @@ export default function ScenarioCard({
                 </div>
               </div>
                
-              <div className="leading-tight overall-box rounded bg-lilac-400 p-3 select-none text-sm text-black leading-snug">{overall}</div>  
-              <div className="leading-tight takeaway-box rounded bg-lilac-100 p-3 select-none text-sm text-black leading-snug shadow-sm mt-2 mb-6">{takeAway}</div>               
+              <div className="overall-box rounded bg-lilac-400 p-3 select-none text-sm text-black leading-snug">{overall}</div>  
+              <div className="takeaway-box rounded bg-lilac-100 p-3 select-none text-sm text-black leading-snug shadow-sm mt-2 mb-6">{takeAway}</div>               
             </div>
           )}
         </div>
