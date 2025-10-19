@@ -16,55 +16,55 @@ const OnboardingDesktop: React.FC<OnboardingProps> = ({ onComplete }) => {
 
   const slides = [
     {
-      image: '/people.png',
+      image: '/people.webp',
       title: 'How do you progress faster?',
       description:
         "When it's harder for organisations to promote, flatter structures mean fewer senior roles, and hybrid working is reducing the opportunities for networking, visibility and water-cooler moments.",
     },
     {
-      image: '/headwinds.png',
+      image: '/headwinds.webp',
       title: 'Given these headwinds',
       description:
         "With AI devaluing your knowledge by the second, benign neglect the best you'll get from your overstretched manager, and 'moving on to move up' nigh-on impossible in these market conditions.",
     },
     {
-      image: '/knowhow.png',
+      image: '/knowhow.webp',
       title: 'Develop know-how',
       description:
         "It's know-how that gets you noticed: reading the situation astutely, making the right calls on the 'how' and the 'why' (as well as the 'what'), enabling powerful teamwork. So how do you develop it? And then show up with it?",
     },
     {
-      image: '/platform.png',
+      image: '/platform.webp',
       title: "Inch by inch",
       description:
         "Imagine if you could practice day by day with real-life scenarios drawn from high-stakes professional work. You could be honing your know-how today. And showing up with it at work tomorrow.",
     },
     {
-      image: '/qikr-app.png',
+      image: '/qikr-app.webp',
       title: 'With qikr...',
       description:
         "The qikr app gives you 2000+ high-stakes scenarios to practice on. It's easy to dip in and out of, so you can use it in your spare moments. The Matrix charts your progress across areas of know-how over time.",
     },
     {
-      image: '/desktop.png',
+      image: '/desktop.webp',
       title: 'Select a module',
       description:
         "On desktop, top left is the Matrix. Underneath is the scenario modules list. Click on a tile or a list item to switch modules whenever you feel like a change. No need to work through them sequentially.",
     },
     {
-      image: '/desktop2.png',
+      image: '/desktop2.webp',
       title: 'Work through a scenario',
       description:
         "Each scenario has three responses. Consider each carefully then click to rank as gold/silver/bronze. Once they're ranked, click on the 'eye' to reveal what the experts think and see how well you scored.",
     },
     {
-      image: '/desktop3.png',
+      image: '/desktop3.webp',
       title: 'Get the \'aha\'',
       description:
         "Review each expert rationale carefully along with the summary and the key takeaway. Here's where the new insights and 'aha' moments may come. Click '+' to move on to the next scenario.",
     },
     {
-      image: '/desktop4.png',
+      image: '/desktop4.webp',
       title: 'See how you did',
       description:
         "Each scenario is scored on completion. The tile in the top right (and the Matrix) shows your running average score. The progress bar shows how far you've got to in this module. Ready to give qikr a go?",
