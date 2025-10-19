@@ -1,6 +1,6 @@
 // components/OnboardingMobile.tsx
 'use client';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 
 interface OnboardingProps {
@@ -12,6 +12,7 @@ const italicWords = ['do'];
 const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
   const [isExiting, setIsExiting] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
   const startXRef = useRef(0);
   const [isSwiping, setIsSwiping] = useState(false);
 
@@ -73,6 +74,31 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
         "Each scenario is scored on completion. The tile in the top right (and the Matrix) shows your running average score. The progress bar shows how far you've got to in this module. Ready to give qikr a go?",
     },
   ];
+
+  // Preload images on component mount
+  useEffect(() => {
+    const preloadImages = async () => {
+      const imagePromises = slides.map((slide) => {
+        return new Promise((resolve, reject) => {
+          const img = new window.Image(); // Use window.Image instead of Image
+          img.src = slide.image;
+          img.onload = resolve;
+          img.onerror = reject;
+        });
+      });
+
+      try {
+        await Promise.all(imagePromises);
+        setImagesLoaded(true);
+      } catch (error) {
+        console.error('Error preloading images:', error);
+        // Continue even if some images fail to load
+        setImagesLoaded(true);
+      }
+    };
+
+    preloadImages();
+  }, []);
 
   const nextSlide = () => {
     if (currentSlide < totalSlides - 1) {
@@ -139,13 +165,23 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
         isExiting ? 'opacity-0' : 'opacity-100'
       }`}
     >
-      <div className="bg-white rounded-[8px] w-full max-w-[390px] h-[635px] overflow-hidden">
+      {/* Loading overlay - only shows briefly while images preload */}
+      {!imagesLoaded && (
+        <div className="absolute inset-0 bg-black flex items-center justify-center z-10">
+          <div className="text-white">Loading...</div>
+        </div>
+      )}
+      
+      <div className={`bg-white rounded-[8px] w-full max-w-[390px] h-[635px] overflow-hidden transition-opacity duration-300 ${
+        !imagesLoaded ? 'opacity-0' : 'opacity-100'
+      }`}>
         <div
           className="flex w-full transition-transform duration-500 ease-in-out z-0 transform-gpu"
           style={{
             transform: `translateX(-${currentSlide * 100}%)`,
             willChange: 'transform',
             backfaceVisibility: 'hidden',
+            perspective: '1000px', // Enhanced hardware acceleration
           }}
         >
           {slides.map((slide, index) => {
@@ -177,7 +213,9 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
                       alt={slide.title}
                       fill
                       className="w-full h-full object-cover"
-                      priority={index === 0}
+                      priority={index <= 2} // Priority for first 3 slides
+                      quality={65} // Optimized quality
+                      sizes="(max-width: 390px) 302px, 302px" // Proper sizing
                     />
                   </div>
                 </div>
