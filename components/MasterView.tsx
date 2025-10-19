@@ -150,7 +150,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
       <img
         src="/qikr-logo.png"
         alt="qikr logo"
-        className={isMobile ? 'w-[120px] h-auto' : 'w-32 h-auto'}
+        className="w-[120px] h-auto"
       />
     </div>
 
@@ -244,7 +244,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
                         height={34}
                       />
                     </div>
-                    <div className="flex-1 select-none text-xs text-white overflow-hidden text-ellipsis whitespace-nowrap">
+                    <div className="flex-1 select-none text-base text-white overflow-hidden text-ellipsis whitespace-nowrap">
                       {moduleItem.name}
                     </div>
                   </div>

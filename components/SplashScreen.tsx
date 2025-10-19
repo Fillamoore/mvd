@@ -126,9 +126,9 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
       spiralMap.set(`${row},${col}`, { index, id });
     });
 
-    const tileSize = isMobile ? 'w-10 h-10' : 'w-14 h-14';
-    const gridGap = isMobile ? 'gap-1' : 'gap-2';
-
+    const tileSize = isMobile ? 'w-8 h-8' : 'w-10 h-10';
+    const gridGap = isMobile ? 'gap-1' : 'gap-[5px]';
+    const roundSize = isMobile ? 'rounded-[3px]' : 'rounded-[4px]';
     return (
       <div className={`grid grid-cols-7 ${gridGap} mx-auto mt-2`}>
         {Array(GRID_SIZE).fill(null).map((_, rowIndex) =>
@@ -141,7 +141,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
               return (
                 <div
                   key={key}
-                  className={`${tileSize} border border-gray-700 rounded-lg bg-black`}
+                  className={`${tileSize} bg-black`}
                 />
               );
             }
@@ -162,7 +162,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
             return (
               <div
                 key={key}
-                className={`${tileSize} border border-gray-700 rounded-lg ${isFinal ? 'animate-once-pulse' : ''} ${!dynamicBg ? bgClass : ''}`}
+                className={`${tileSize} ${roundSize} ${isFinal ? 'animate-once-pulse' : ''} ${!dynamicBg ? bgClass : ''}`}
                 style={dynamicBg ? { backgroundColor: dynamicBg } : undefined}
               />
             );
@@ -193,22 +193,14 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
   }, [animatedTiles, isMobile, dotPosition]);
 
   return (
-    <div className={`fixed inset-0 flex flex-col ${isMobile ? 'justify-start' : 'justify-center'} h-screen text-white z-50 bg-black`}>
+    <div className={`fixed inset-0 flex flex-col ${isMobile ? 'mt-10' : 'mt-12'} justify-start h-screen text-white z-50 bg-black`}>
       <div className={`flex flex-col items-center ${phase === 'logo' ? 'opacity-0 pointer-events-none' : 'opacity-100 transition-opacity duration-500'}`}>
-        <div className={`${isMobile ? 'scale-75' : 'scale-[0.8]'}`}>
-          <Image
+          <img
             src="/qikr-logo.png"
-            alt="App Logo"
-            width={isMobile ? 180 : 290}
-            height={isMobile ? 105 : 169}
-            priority
-            style={{ 
-              width: 'auto',
-              height: 'auto'
-            }}
+            alt="qikr logo"
+            className={isMobile ? 'w-[110px] h-auto' : 'w-[135px] h-auto'}
           />
-        </div>
-        <div className={`mt-2 flex flex-col items-center ${isMobile ? 'min-h-[200px] scale-75' : 'min-h-[360px] scale-[0.8]'}`}>
+        <div className={`mt-2 flex flex-col items-center `}>
           {renderGrid()}
           {renderProgressBar()}
         </div>
