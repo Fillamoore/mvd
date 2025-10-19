@@ -144,18 +144,17 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
   };
 
   return (
-    <div className='master-view-container p-5 h-full flex flex-col bg-black'>
+    <div className={`master-view-container  ${isMobile ? '' : 'p-5'} h-full flex flex-col bg-black`}>
       
-      <div className="logo flex justify-center items-center gap-2">
-        <img
-          src="/qikr-logo.png"
-          alt="qikr logo"
-          width={132}
-          height={77}
-        />
-      </div>
+    <div className="logo flex justify-center items-center gap-2">
+      <img
+        src="/qikr-logo.png"
+        alt="qikr logo"
+        className={isMobile ? 'w-[120px] h-auto' : 'w-32 h-auto'}
+      />
+    </div>
 
-      <div className={`mt-6 mb-6 flex justify-center ${isMobile ? 'scale-95' : ''} ${isMobile ? 'px-2' : ''}`}>
+      <div className={`mb-6 flex justify-center  ${isMobile ? 'px-2 mt-3' : 'mt-6'}`}>
         <div className="grid grid-cols-7 gap-1 w-fit">
           {grid.map((row, rowIndex) => (
             row.map((tile, colIndex) => {
@@ -206,7 +205,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
         </div>
       </div>
 
-      <div className={`mb-4 ${isMobile ? 'px-2' : 'px-[32px]'} ${isMobile ? 'scale-90' : ''}`}>
+      <div className={`mb-4 ${isMobile ? 'px-[50px]' : 'px-[32px]'}`}>
         <div className="w-full bg-gray-200 rounded-full h-1.5 relative">
           <div
             className="bg-lilac-500 h-1.5 rounded-full"
@@ -219,7 +218,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
         </div>
       </div>
 
-      <div className={`modules-list-container pt-3 pb-4 flex-1 bg-black text-white flex flex-col min-h-0 ${isMobile ? 'pl-2 pr-2' : 'pl-7 pr-7'}`}>
+      <div className={`modules-list-container pt-3 pb-4 flex-1 bg-black text-white flex flex-col min-h-0 ${isMobile ? 'px-[44px]' : 'pl-7 pr-7'}`}>
         <div className="custom-scrollbar-container flex-1 min-h-0 overflow-y-auto overflow-x-hidden pl-1 ">
           <div className="mt-1 space-y-[2px] ">
             {renderedModuleItems.map((moduleItem) => {
@@ -248,13 +247,6 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
                     <div className="flex-1 select-none text-xs text-white overflow-hidden text-ellipsis whitespace-nowrap">
                       {moduleItem.name}
                     </div>
-                    {/*
-                    {moduleItem.completed && (
-                      <div className="text-[10px] text-gray-300 mt-1 ml-8">
-                        {(moduleItem.score).toFixed(0)}%
-                      </div>
-                    )}
-                    */}  
                   </div>
                 </div>
               );

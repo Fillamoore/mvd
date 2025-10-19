@@ -1,13 +1,11 @@
 'use client';
 
 import './globals.css';
-import { useState, useEffect, useRef } from 'react';
-import { usePathname } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import SplashScreen from '../components/SplashScreen';
 import PWAInstallPrompt from '../components/PWAInstallPrompt';
 import DesktopLayout from '../components/DesktopLayout';
 import MobileLayout from '../components/MobileLayout';
-import MobileMasterView from '../components/MobileMasterView';
 import OnboardingMobile from '../components/OnboardingMobile';
 import OnboardingDesktop from '../components/OnboardingDesktop';
 
@@ -19,69 +17,44 @@ const lato = Lato({
   display: 'swap',
 });
 
-declare global {
-  interface Window {
-    MSStream?: unknown;
-  }
-}
-
 type AppState = 'checking' | 'pwa_install' | 'onboarding' | 'splash' | 'main_app';
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const [isMobile, setIsMobile] = useState(false);
+export default function RootLayout() {
   const [appState, setAppState] = useState<AppState>('checking');
-  const prevAppStateRef = useRef<AppState>('checking');
-  const pathname = usePathname();
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const initializeApp = () => {
-      if (appState !== 'checking') return;
+    if (appState !== 'checking') return;
 
-      const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-      setIsMobile(isIOSDevice);
+    const ua = navigator.userAgent;
+    const isIOS = /iPhone|iPad|iPod/.test(ua) && !('MSStream' in window);
+    const isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    const onboardingCompleted = localStorage.getItem('onboardingCompleted');
 
-      const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-      const onboardingCompleted = localStorage.getItem('onboardingCompleted');
+    setIsMobile(isIOS);
 
-      if (isIOSDevice && !isStandalone) {
-        setAppState('pwa_install');
-      } else if (!onboardingCompleted) {
-        setAppState('onboarding');
-      } else {
-        setAppState('splash');
-      }
-    };
-
-    if (typeof window !== 'undefined') {
-      initializeApp();
+    if (isIOS && isSafari && !isStandalone) {
+      setAppState('pwa_install');
+    } else if (!onboardingCompleted) {
+      setAppState('onboarding');
+    } else {
+      setAppState('splash');
     }
   }, [appState]);
-
-  const handlePWAInstallComplete = () => {
-    const onboardingCompleted = localStorage.getItem('onboardingCompleted');
-    setAppState(onboardingCompleted ? 'splash' : 'onboarding');
-  };
 
   const handleOnboardingComplete = () => {
     localStorage.setItem('onboardingCompleted', 'true');
     setAppState('splash');
   };
 
-  const handleSplashComplete = () => {
-    setAppState('main_app');
-    setTimeout(() => {
-      if (appState !== 'main_app') {
-        setAppState('main_app');
-      }
-    }, 500);
+  const handlePWAInstallComplete = () => {
+    const onboardingCompleted = localStorage.getItem('onboardingCompleted');
+    setAppState(onboardingCompleted ? 'splash' : 'onboarding');
   };
 
   return (
-    <html>
+    <html lang="en">
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#000000" />
@@ -92,10 +65,11 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icon-192.png" />
         <meta name="apple-mobile-web-app-orientations" content="portrait" />
       </head>
+
       <body className={`${lato.className} h-screen w-screen overflow-hidden pb-[env(safe-area-inset-bottom)] bg-black`}>
-        {(appState === 'main_app' || appState === 'splash') && (
-          <div className="w-full h-full">
-            {isMobile ? <MobileLayout /> : <DesktopLayout />}
+        {appState === 'checking' && (
+          <div className="w-full h-full flex items-center justify-center bg-black">
+            <div className="text-white">Loading...</div>
           </div>
         )}
 
@@ -104,18 +78,18 @@ export default function RootLayout({
         )}
 
         {appState === 'onboarding' && (
-          isMobile ? 
-            <OnboardingMobile onComplete={handleOnboardingComplete} /> : 
-            <OnboardingDesktop onComplete={handleOnboardingComplete} />
+          isMobile
+            ? <OnboardingMobile onComplete={handleOnboardingComplete} />
+            : <OnboardingDesktop onComplete={handleOnboardingComplete} />
         )}
 
         {appState === 'splash' && (
-          <SplashScreen onComplete={handleSplashComplete} />
+          <SplashScreen onComplete={() => setAppState('main_app')} />
         )}
 
-        {appState === 'checking' && (
-          <div className="w-full h-full flex items-center justify-center bg-black">
-            <div className="text-white">Loading...</div>
+        {appState === 'main_app' && (
+          <div className="w-full h-full">
+            {isMobile ? <MobileLayout /> : <DesktopLayout />}
           </div>
         )}
       </body>

@@ -1,7 +1,5 @@
-// components/MobileScenariosPlayerFooter.tsx - LINK VERSION
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
 
 interface MobileScenariosPlayerFooterProps {
@@ -9,25 +7,27 @@ interface MobileScenariosPlayerFooterProps {
   onNextScenario: () => void;
   allRated: boolean;
   isRevealed: boolean;
+  onSwitchToMaster: () => void;
 }
 
 export default function MobileScenariosPlayerFooter({
   onReveal,
   onNextScenario,
   allRated,
-  isRevealed
+  isRevealed,
+  onSwitchToMaster
 }: MobileScenariosPlayerFooterProps) {
-
   const showRevealButton = allRated && !isRevealed;
   const showNextButton = isRevealed;
 
   return (
-    <footer className="bg-black border-t border-gray-700 p-3 safe-area-padding-bottom">
+    <footer className="bg-black border-t border-gray-700 p-2 safe-area-padding-bottom">
       <div className="flex justify-between items-center">
-
-        <Link
-          href="/mobile-master"
-          className="flex items-center justify-center p-3 rounded-lg bg-transparent transition-colors select-none"
+        
+        {/* MASTER BUTTON */}
+        <button
+          onClick={onSwitchToMaster}
+          className="flex items-center justify-center p-3 rounded-lg select-none"
           title="Master View"
         >
           <Image
@@ -36,20 +36,15 @@ export default function MobileScenariosPlayerFooter({
             width={24}
             height={24}
             className="w-6 h-6 invert"
-            priority={true} // Preload important images
-            loading="eager" // Load immediately
           />
-        </Link>
+        </button>
 
         <div className="flex gap-3">
-          {/* Mobile Reveal Icon - ACTION BUTTON (can't be Link) */}
           {showRevealButton && (
-            <div
+            <button
               onClick={onReveal}
-              role="button"
-              tabIndex={0}
-              className="flex items-center justify-center p-3 rounded-lg bg-transparent transition-colors select-none"
-              title="Reveal Expert Rankings"
+              className="flex items-center justify-center p-3 rounded-lg bg-transparent transition-colors select-none hover:bg-gray-800"
+              title="Reveal"
             >
               <Image
                 src="/reveal-icon.png"
@@ -57,20 +52,15 @@ export default function MobileScenariosPlayerFooter({
                 width={24}
                 height={24}
                 className="w-6 h-6 invert"
-                priority={true} // Preload important images
-                loading="eager" // Load immediately
               />
-            </div>
+            </button>
           )}
 
-          {/* Mobile Next Scenario Icon - ACTION BUTTON (can't be Link) */}
           {showNextButton && (
-            <div
+            <button
               onClick={onNextScenario}
-              role="button"
-              tabIndex={0}
-              className="flex items-center justify-center p-3 rounded-lg bg-transparent transition-colors cursor-pointer"
-              title="Next Scenario"
+              className="flex items-center justify-center p-3 rounded-lg bg-transparent transition-colors select-none hover:bg-gray-800"
+              title="Next"
             >
               <Image
                 src="/next-icon.png"
@@ -78,10 +68,8 @@ export default function MobileScenariosPlayerFooter({
                 width={24}
                 height={24}
                 className="w-6 h-6 invert"
-                priority={true} // Preload important images
-                loading="eager" // Load immediately
               />
-            </div>
+            </button>
           )}
         </div>
       </div>

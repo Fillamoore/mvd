@@ -1,16 +1,19 @@
-// components/DesktopLayout.tsx
+'use client';
+
 import DesktopSidebar from './DesktopSidebar';
 import ScenarioPlayer from './ScenarioPlayer';
-import { useEffect } from 'react';
 
 export default function DesktopLayout() {
   return (
-    <div className="hidden md:flex flex-col h-screen">
-      <div className="p-5 flex shadow-inner space-x-5 overflow-auto bg-[url('/screen-background.jpg')] bg-cover bg-center">
-        <aside className="desktop-sidebar-wrapper w-96">
+    <div className="flex flex-col h-screen bg-[url('/screen-background.jpg')] bg-cover bg-center">
+      <div className="p-5 flex space-x-5 overflow-auto">
+        {/* Sidebar: MasterView */}
+        <aside className="w-96">
           <DesktopSidebar />
         </aside>
-        <main className="desktop-scenarios-panel-wrapper flex-1 overflow-auto">
+
+        {/* Main scenario player */}
+        <main className="flex-1 overflow-auto">
           <ScenarioPlayer />
         </main>
       </div>
