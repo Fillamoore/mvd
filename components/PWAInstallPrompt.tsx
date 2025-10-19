@@ -84,7 +84,7 @@ export default function PWAInstallPrompt({ onInstallComplete }: PWAInstallPrompt
             <div className="flex justify-between items-center">
               <p className="font-medium text-gray-800">3. Tap &apos;done&apos; in bottom right</p>
               <Image
-                src="/done.png"
+                src="/done-button.png"
                 alt="done"
                 width={70}
                 height={35}
