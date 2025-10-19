@@ -62,13 +62,13 @@ const OnboardingDesktop: React.FC<OnboardingProps> = ({ onComplete }) => {
       image: '/desktop3.webp',
       title: 'Get the \'aha\'',
       description:
-        "Review each expert rationale carefully along with the summary and the key takeaway. Here's where the new insights and 'aha' moments may come. Click '+' to move on to the next scenario.",
+        "Review each expert rationale carefully along with your score, the summary and the key takeaway. Here's where the new insights and 'aha' moments may come. '+' moves you on to the next scenario.",
     },
     {
       image: '/desktop4.webp',
-      title: 'See how you did',
+      title: 'How am I doing?',
       description:
-        "Each scenario is scored on completion. The tile in the top right (and the Matrix) shows your running average score. The progress bar shows how far you've got to in this module. Ready to give qikr a go?",
+        "The tile in the top right (and the Matrix) shows your running average score. The progress bar shows how far you've gone in the module. You can try it for free for 10 days. Ready to give it a go?",
     },
   ];
 

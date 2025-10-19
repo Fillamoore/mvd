@@ -21,7 +21,7 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
   const slides = [
     {
       image: '/people.webp',
-      title: 'How do you progress faster?',
+      title: 'How do you advance faster?',
       description:
         "When it's harder for organisations to promote, flatter structures mean fewer senior roles, and hybrid working is reducing the opportunities for networking, visibility and water-cooler moments.",
     },
@@ -59,19 +59,19 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
       image: '/desktop2.webp',
       title: 'Work through a scenario',
       description:
-        "Each scenario has three responses. Consider each carefully then click to rank as gold/silver/bronze. Once they're ranked, click on the 'eye' to reveal what the experts think and see how well you scored.",
+        "Each scenario has three responses. Consider each carefully then tap to rank as gold/silver/bronze. Once they're ranked, tap on the 'eye' to reveal what the experts think and see how well you scored.",
     },
     {
       image: '/desktop3.webp',
       title: 'Get the \'aha\'',
       description:
-        "Review each expert rationale carefully along with the summary and the key takeaway. Here's where the new insights and 'aha' moments may come. Click '+' to move on to the next scenario.",
+        "Review each expert rationale carefully along with your score, the summary and the key takeaway. Here's where the new insights and 'aha' moments may come. '+' moves you on to the next scenario.",
     },
     {
       image: '/desktop4.webp',
-      title: 'See how you did',
+      title: 'How am I doing?',
       description:
-        "Each scenario is scored on completion. The tile in the top right (and the Matrix) shows your running average score. The progress bar shows how far you've got to in this module. Ready to give qikr a go?",
+        "The tile in the top right (and the Matrix) shows your running average score. The progress bar shows how far you've gone in the module. You can try it for free for 10 days. Ready to give it a go?",
     },
   ];
 
@@ -161,7 +161,7 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
 
   return (
     <div
-      className={`fixed inset-0 bg-black flex items-center justify-center z-50 transition-opacity duration-500 ease-in-out ${
+      className={`fixed inset-0 bg-blue-400 flex items-center justify-center z-50 transition-opacity duration-500 ease-in-out ${
         isExiting ? 'opacity-0' : 'opacity-100'
       }`}
     >
@@ -172,7 +172,7 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
         </div>
       )}
       
-      <div className={`bg-white rounded-[8px] w-full max-w-[390px] h-[635px] overflow-hidden transition-opacity duration-300 ${
+      <div className={`bg-white rounded-[8px] w-full max-w-[360px] h-[635px] overflow-hidden transition-opacity duration-300 ${
         !imagesLoaded ? 'opacity-0' : 'opacity-100'
       }`}>
         <div
@@ -195,7 +195,7 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
                 key={index}
                 className="w-full flex-shrink-0 flex flex-col items-center justify-center pt-8 pb-12 px-4 text-center"
               >
-                <h2 className="text-2xl font-bold text-gray-800 mt-8 mb-10">
+                <h2 className="text-3xl font-bold text-gray-800 mt-8 mb-10">
                   {slide.title.split(' ').map((word, i) => (
                     <span
                       key={i}
