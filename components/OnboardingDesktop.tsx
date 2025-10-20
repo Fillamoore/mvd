@@ -68,7 +68,7 @@ const OnboardingDesktop: React.FC<OnboardingProps> = ({ onComplete }) => {
       image: '/desktop4.webp',
       title: 'How am I doing?',
       description:
-        "The tile in the top right (and the Matrix) shows your running average score. The progress bar shows how far you've gone in the module. You can try it for free for 10 days. Ready to give it a go?",
+        "The tile in the top right (and the Matrix) shows your average score and the progress bar shows how far you've progressed through the module. Try it free for 10 days. Ready to give it a go?",
     },
   ];
 
@@ -160,17 +160,16 @@ const OnboardingDesktop: React.FC<OnboardingProps> = ({ onComplete }) => {
           }}
         >
           {slides.map((slide, index) => {
-            const buttonText = index < 5 ? 'Continue' : 'Show more';
             const imageWrapperClass = index < 4
-              ? 'w-[302px] h-[170px] mb-12 rounded-[8px] overflow-hidden'
-              : 'w-[302px] h-[170px] mb-12';
+              ? 'w-[302px] h-[170px] mb-6 rounded-[8px] overflow-hidden'
+              : 'w-[360px] h-[185px] mb-6 border-[1px] border-gray-300';
 
             return (
               <div
                 key={index}
-                className="w-full flex-shrink-0 flex flex-col items-center justify-center pt-8 pb-12 px-4 text-center"
+                className="w-full flex-shrink-0 flex flex-col items-center justify-start pt-8 pb-8 px-4 text-center"
               >
-                <h2 className="text-3xl font-bold text-gray-800 mt-8 mb-10">
+                <h2 className="text-3xl font-bold text-gray-800 mt-8 mb-7">
                   {slide.title.split(' ').map((word, i) => (
                     <span
                       key={i}
@@ -182,20 +181,14 @@ const OnboardingDesktop: React.FC<OnboardingProps> = ({ onComplete }) => {
                 </h2>
 
                 <div className={imageWrapperClass}>
-                  <div className="relative w-full h-full">
-                    <Image
+                    <img
                       src={slide.image}
                       alt={slide.title}
-                      fill
                       className="w-full h-full object-cover"
-                      priority={index <= 2} // Priority for first 3 slides
-                      quality={65} // Optimized quality
-                      sizes="(max-width: 450px) 302px, 302px" // Proper sizing
                     />
-                  </div>
                 </div>
 
-                <div className="text-gray-600 text-lg leading-relaxed mb-8 px-8">
+                <div className="text-gray-600 text-lg leading-relaxed mb-[70px] px-8">
                   {slide.description.split(' ').map((word, i) => (
                     <span
                       key={i}

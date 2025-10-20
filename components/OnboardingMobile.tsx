@@ -44,35 +44,35 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
         "Imagine if you could practice day by day with real-life scenarios drawn from high-stakes professional work. You could be honing your know-how today. And showing up with it at work tomorrow.",
     },
     {
-      image: '/qikr-app.webp',
+      image: '/qikr-app-mobile.webp',
       title: 'With qikr...',
       description:
         "The qikr app gives you 2000+ high-stakes scenarios to practice on. It's easy to dip in and out of, so you can use it in your spare moments. The Matrix charts your progress across areas of know-how over time.",
     },
     {
-      image: '/desktop.webp',
-      title: 'Select a module',
-      description:
-        "On desktop, top left is the Matrix. Underneath is the scenario modules list. Click on a tile or a list item to switch modules whenever you feel like a change. No need to work through sequentially.",
-    },
-    {
-      image: '/desktop2.webp',
+      image: '/mobile.webp',
       title: 'Work through a scenario',
       description:
         "Each scenario has three responses. Consider each carefully then tap to rank as gold/silver/bronze. Once they're ranked, tap on the 'eye' to reveal what the experts think and see how well you scored.",
     },
     {
-      image: '/desktop3.webp',
+      image: '/mobile.webp',
       title: 'Get the \'aha\'',
       description:
         "Review each expert rationale carefully along with your score, the summary and the key takeaway. Here's where the new insights and 'aha' moments may come. '+' moves you on to the next scenario.",
     },
     {
-      image: '/desktop4.webp',
+      image: '/mobile.webp',
       title: 'How am I doing?',
       description:
         "The tile in the top right (and the Matrix) shows your running average score. The progress bar shows how far you've gone in the module. You can try it for free for 10 days. Ready to give it a go?",
     },
+    {
+      image: '/mobile.webp',
+      title: 'Select a module',
+      description:
+        "On desktop, top left is the Matrix. Underneath is the scenario modules list. Click on a tile or a list item to switch modules whenever you feel like a change. No need to work through sequentially.",
+    }
   ];
 
   // Preload images on component mount
@@ -161,7 +161,7 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
 
   return (
     <div
-      className={`fixed inset-0 bg-black flex items-center justify-center z-50 transition-opacity duration-500 ease-in-out ${
+      className={`fixed inset-0 bg-black flex items-center justify-start z-50 transition-opacity duration-500 ease-in-out ${
         isExiting ? 'opacity-0' : 'opacity-100'
       }`}
     >
@@ -185,17 +185,16 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
           }}
         >
           {slides.map((slide, index) => {
-            const buttonText = index < 5 ? 'Continue' : 'Show more';
-            const imageWrapperClass = index < 4
-              ? 'w-[302px] h-[170px] mb-12 rounded-[8px] overflow-hidden'
-              : 'w-[302px] h-[170px] mb-12';
+
+            const titleMargins = index < 4 ? 'mt-10 mb-10' : 'mt-6 mb-4';
+            const textMargins = index < 4 ? 'mt-[-70px] mb-[95px]' : 'mt-[5px] mb-[16px]';
 
             return (
               <div
                 key={index}
-                className="w-full flex-shrink-0 flex flex-col items-center justify-center pt-8 pb-12 px-4 text-center"
+                className={`w-full flex-shrink-0 flex flex-col items-center justify-start px-4 text-center`}
               >
-                <h2 className="text-2xl font-bold text-gray-800 mt-8 mb-10">
+                <h2 className={`text-2xl font-bold text-gray-800 ${titleMargins}`}>
                   {slide.title.split(' ').map((word, i) => (
                     <span
                       key={i}
@@ -206,21 +205,15 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
                   ))}
                 </h2>
 
-                <div className={imageWrapperClass}>
-                  <div className="relative w-full h-full">
-                    <Image
+                  <div className="w-full h-full flex justify-center">
+                    <img
                       src={slide.image}
                       alt={slide.title}
-                      fill
-                      className="w-full h-full object-cover"
-                      priority={index <= 2} // Priority for first 3 slides
-                      quality={65} // Optimized quality
-                      sizes="(max-width: 390px) 302px, 302px" // Proper sizing
+                      className={index < 4 ? 'w-[320px] h-[180px] rounded-[10px]' : 'w-[150px] h-auto mb-3'}
                     />
                   </div>
-                </div>
 
-                <div className="text-gray-600 text-lg leading-relaxed mb-2 px-1">
+                <div className={`text-gray-600 text-lg leading-relaxed ${textMargins} px-1`}>
                   {slide.description.split(' ').map((word, i) => (
                     <span
                       key={i}
