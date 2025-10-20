@@ -42,7 +42,7 @@ export async function GET() {
 
     return new Response(`Spoofed signup inserted (target interval: ${targetInterval} min)`);
   } catch (err) {
-    console.error('Cron error:', err);
+    console.error('❌ Cron error:', err instanceof Error ? err.message : err);
     return new Response('Cron failed', { status: 500 });
   }
 }
