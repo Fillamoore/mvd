@@ -1,18 +1,30 @@
+// app/api/spoof-signup/route.ts
+
+import { db } from '@/lib/db';
+
+type Persona = {
+  email: string;
+  display_name: string;
+  role_description: string;
+  company_type: string;
+  country: string;
+  knowhow_goal: string;
+};
+
 export const config = {
   schedule: '* * * * *' // every minute
 };
 
-export default async function handler(req, res) {
+export async function GET() {
   if (process.env.ENABLE_SPOOFING !== 'true') {
-    return res.status(200).send('Spoofing disabled');
+    return new Response('Spoofing disabled');
   }
 
-  // Randomize target interval between 10–30 minutes
   const targetInterval = Math.floor(Math.random() * 21) + 10;
   const shouldRun = Math.random() < 1 / targetInterval;
 
   if (!shouldRun) {
-    return res.status(200).send(`Skipped this run (target interval: ${targetInterval} min)`);
+    return new Response(`Skipped this run (target interval: ${targetInterval} min)`);
   }
 
   try {
@@ -22,10 +34,10 @@ export default async function handler(req, res) {
     const user_id = await insertIntoAiven({ ...persona, email });
     await logCronEvent(user_id);
 
-    res.status(200).send(`Spoofed signup inserted (target interval: ${targetInterval} min)`);
+    return new Response(`Spoofed signup inserted (target interval: ${targetInterval} min)`);
   } catch (err) {
     console.error('Cron error:', err);
-    res.status(500).send('Cron failed');
+    return new Response('Cron failed', { status: 500 });
   }
 }
 
@@ -61,7 +73,16 @@ async function fetchGeminiPersona() {
   return JSON.parse(jsonText);
 }
 
-async function insertIntoAiven({ email, display_name, role_description, company_type, country, knowhow_goal }) {
+async function insertIntoAiven(persona: Persona): Promise<string> {
+  const {
+    email,
+    display_name,
+    role_description,
+    company_type,
+    country,
+    knowhow_goal
+  } = persona;
+
   const query = `
     INSERT INTO users (
       email, display_name, role_description, company_type,
@@ -70,11 +91,18 @@ async function insertIntoAiven({ email, display_name, role_description, company_
       $1, $2, $3, $4, $5, $6, FALSE, 'trial', NOW()
     ) RETURNING id;
   `;
-  const result = await db.query(query, [email, display_name, role_description, company_type, country, knowhow_goal]);
+  const result = await db.query(query, [
+    email,
+    display_name,
+    role_description,
+    company_type,
+    country,
+    knowhow_goal
+  ]);
   return result.rows[0].id;
 }
 
-async function logCronEvent(user_id) {
+async function logCronEvent(user_id: string) {
   const query = `
     INSERT INTO cron_log (user_id) VALUES ($1);
   `;
