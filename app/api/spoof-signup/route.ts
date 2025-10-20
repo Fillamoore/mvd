@@ -1,22 +1,22 @@
-// app/api/spoof-signup/route.ts
-
-import { db } from '@/lib/db';
-
-type Persona = {
-  email: string;
-  display_name: string;
-  role_description: string;
-  company_type: string;
-  country: string;
-  knowhow_goal: string;
-};
+import type { Pool } from 'pg';
 
 export const config = {
   schedule: '* * * * *' // every minute
 };
 
-export async function GET() {
+// Top-level module log to confirm file loads
+console.log('📦 Cron module loaded');
 
+let db: Pool; 
+try {
+  const { db: importedDb } = await import('@/lib/db');
+  db = importedDb;
+  console.log('🔌 DB imported');
+} catch (err) {
+  console.error('❌ DB import failed:', err instanceof Error ? err.message : err);
+}
+
+export async function GET() {
   const now = new Date().toISOString();
   console.log(`🕒 Cron heartbeat at ${now}`);
 
@@ -33,13 +33,22 @@ export async function GET() {
     return new Response(`Skipped this run (target interval: ${targetInterval} min)`);
   }
 
+  console.log('🚀 Proceeding with spoofing logic');
+
   try {
+    console.log('🔍 Fetching persona...');
     const persona = await fetchGeminiPersona();
+    console.log('👤 Persona:', persona);
+
     const email = `${persona.display_name.toLowerCase()}_${Date.now()}@example.com`;
 
+    console.log('📥 Inserting into Aiven...');
     const user_id = await insertIntoAiven({ ...persona, email });
+
+    console.log('📝 Logging cron event...');
     await logCronEvent(user_id);
 
+    console.log(`✅ Spoofed signup inserted (target interval: ${targetInterval} min)`);
     return new Response(`Spoofed signup inserted (target interval: ${targetInterval} min)`);
   } catch (err) {
     console.error('❌ Cron error:', err instanceof Error ? err.message : err);
@@ -79,6 +88,15 @@ async function fetchGeminiPersona() {
   return JSON.parse(jsonText);
 }
 
+type Persona = {
+  email: string;
+  display_name: string;
+  role_description: string;
+  company_type: string;
+  country: string;
+  knowhow_goal: string;
+};
+
 async function insertIntoAiven(persona: Persona): Promise<string> {
   const {
     email,
@@ -109,8 +127,6 @@ async function insertIntoAiven(persona: Persona): Promise<string> {
 }
 
 async function logCronEvent(user_id: string) {
-  const query = `
-    INSERT INTO cron_log (user_id) VALUES ($1);
-  `;
+  const query = `INSERT INTO cron_log (user_id) VALUES ($1);`;
   await db.query(query, [user_id]);
 }
