@@ -44,7 +44,7 @@ const OnboardingDesktop: React.FC<OnboardingProps> = ({ onComplete }) => {
       image: '/qikr-app.webp',
       title: 'With qikr...',
       description:
-        "The qikr app gives you 2000+ high-stakes scenarios to practice on. It's easy to dip in and out of, so you can use it in your spare moments. The Matrix charts your progress across areas of know-how over time.",
+        "The qikr app gives you 2000+ high-stakes scenarios to practice on. It's easy to dip in and out of - so you can use it in your spare moments. The Matrix charts your progress across areas of know-how over time.",
     },
     {
       image: '/desktop.webp',

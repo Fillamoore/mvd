@@ -47,7 +47,7 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
       image: '/qikr-app-mobile.webp',
       title: 'With qikr...',
       description:
-        "The qikr app gives you 2000+ high-stakes scenarios to practice on. It's easy to dip in and out of, so you can use it in your spare moments. The Matrix charts your progress across areas of know-how over time.",
+        "The qikr app gives you 2000+ high-stakes scenarios to practice on. It's easy to dip in and out of - so you can use it in your spare moments. The Matrix charts your progress across areas of know-how over time.",
     },
     {
       image: '/mobile.webp',
@@ -56,22 +56,22 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
         "Each scenario has three responses. Consider each carefully then tap to rank as gold/silver/bronze. Once they're ranked, tap on the 'eye' to reveal what the experts think and see how well you scored.",
     },
     {
-      image: '/mobile.webp',
+      image: '/mobile2.webp',
       title: 'Get the \'aha\'',
       description:
         "Review each expert rationale carefully along with your score, the summary and the key takeaway. Here's where the new insights and 'aha' moments may come. '+' moves you on to the next scenario.",
     },
     {
-      image: '/mobile.webp',
+      image: '/mobile3.webp',
       title: 'How am I doing?',
       description:
-        "The tile in the top right (and the Matrix) shows your running average score. The progress bar shows how far you've gone in the module. You can try it for free for 10 days. Ready to give it a go?",
+        "The tile in the top right (and the Matrix) shows your average score. The progress bar shows how far you've gone in the module. To change to a different module, tap the bottom left icon.",
     },
     {
-      image: '/mobile.webp',
-      title: 'Select a module',
+      image: '/mobile4.webp',
+      title: 'Choose a module',
       description:
-        "On desktop, top left is the Matrix. Underneath is the scenario modules list. Click on a tile or a list item to switch modules whenever you feel like a change. No need to work through sequentially.",
+        "In module view, topmost is the Matrix, underneath is the modules list. Tap on a tile or a list item to switch modules whenever you like. You can try qikr free for 10 days. Ready to give it a go?",
     }
   ];
 
