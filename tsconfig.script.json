@@ -1,0 +1,18 @@
+{
+  // Inherit all common settings from your main tsconfig.json
+  "extends": "./tsconfig.json", 
+  "compilerOptions": {
+    // *** CRITICAL OVERRIDES for Build Scripts ***
+    // 1. Force compilation to CommonJS to fix ERR_UNKNOWN_FILE_EXTENSION / ERR_REQUIRE_CYCLE_MODULE
+    "module": "CommonJS",
+    // 2. Use Node module resolution, required by CommonJS, instead of "bundler"
+    "moduleResolution": "node",
+    // These options are inherited from your main config but explicitly set here for clarity:
+    "target": "ES2020", 
+    "esModuleInterop": true 
+  },
+  "include": [
+    // Only include your scripts folder, separating it from the main app files
+    "scripts/**/*.ts"
+  ]
+}
