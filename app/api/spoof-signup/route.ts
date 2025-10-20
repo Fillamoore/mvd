@@ -1,9 +1,12 @@
 // app/api/spoof-signup/route.ts
 
-import type { QueryResult } from 'pg';
+import type { QueryResult, QueryResultRow } from 'pg';
 
 type DB = {
-  query: (text: string, params?: unknown[]) => Promise<QueryResult<any>>;
+  query: <T extends QueryResultRow = QueryResultRow>(
+    text: string,
+    params?: unknown[]
+  ) => Promise<QueryResult<T>>;
 };
 
 let db: DB;
