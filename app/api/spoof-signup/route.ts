@@ -17,9 +17,11 @@ export const config = {
 
 export async function GET() {
 
-  console.log('🚀 Cron triggered at', new Date().toISOString());
-  
+  const now = new Date().toISOString();
+  console.log(`🕒 Cron heartbeat at ${now}`);
+
   if (process.env.ENABLE_SPOOFING !== 'true') {
+    console.log('⚠️ Spoofing disabled');
     return new Response('Spoofing disabled');
   }
 
@@ -27,6 +29,7 @@ export async function GET() {
   const shouldRun = Math.random() < 1 / targetInterval;
 
   if (!shouldRun) {
+    console.log(`⏭️ Skipped this run (target interval: ${targetInterval} min)`);
     return new Response(`Skipped this run (target interval: ${targetInterval} min)`);
   }
 
