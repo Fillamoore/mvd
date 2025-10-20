@@ -16,6 +16,9 @@ export const config = {
 };
 
 export async function GET() {
+
+  console.log('🚀 Cron triggered at', new Date().toISOString());
+  
   if (process.env.ENABLE_SPOOFING !== 'true') {
     return new Response('Spoofing disabled');
   }
