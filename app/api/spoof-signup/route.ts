@@ -1,4 +1,12 @@
-import type { Pool } from 'pg';
+// app/api/spoof-signup/route.ts
+
+import type { QueryResult } from 'pg';
+
+type DB = {
+  query: (text: string, params?: unknown[]) => Promise<QueryResult<any>>;
+};
+
+let db: DB;
 
 export const config = {
   schedule: '* * * * *' // every minute
@@ -7,7 +15,6 @@ export const config = {
 // Top-level module log to confirm file loads
 console.log('📦 Cron module loaded');
 
-let db: Pool; 
 try {
   const { db: importedDb } = await import('@/lib/db');
   db = importedDb;
