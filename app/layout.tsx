@@ -69,7 +69,7 @@ export default function RootLayout() {
       <body className={`${lato.className} h-screen w-screen overflow-hidden pb-[env(safe-area-inset-bottom)] bg-black`}>
         {appState === 'checking' && (
           <div className="flex justify-center items-center h-full">
-            <img src="/spinner.svg" alt="Loading..." className="w-12 h-12 animate-spin filter invert" />
+            <img src="/spinner.svg" alt="Loading..." className="w-16 h-16 animate-spin filter invert" />
           </div>
         )}
 
