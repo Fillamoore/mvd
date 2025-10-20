@@ -91,7 +91,7 @@ export default function ScenarioPlayer() {
     <div className={`scenarios-player-pane border-1 border-gray-700 h-full flex flex-col ${containerBorderRadius}`}>
 
       {/* Header - conditional rounded top corners */}
-      <div className={`scenarios-area-header border-b-1 p-1 border-gray-600 bg-black overflow-auto overflow-hidden text-white flex justify-between items-center ${headerBorderRadius}`}>
+      <div className={`scenarios-area-header border-b-1 p-1 border-gray-600 bg-black overflow-hidden text-white flex justify-between items-center ${headerBorderRadius}`}>
         <div className="icon-container p-1 flex items-center gap-2 select-none">
           <div style={{ backgroundColor: '#dfd5dbff', borderRadius: '3px', padding: '5px' }}>
             <Image
@@ -140,7 +140,7 @@ export default function ScenarioPlayer() {
           </div>
         ) : (
           <div className="flex justify-center items-center h-full text-lilac-300 text-lg">
-            {hydrated ? 'No scenarios available for this module.' : 'Loading...'}
+            {hydrated ? 'No scenarios available for this module.' : 'Loading from Scenario Player...'}
           </div>
         )}
       </div>

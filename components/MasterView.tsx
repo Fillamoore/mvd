@@ -114,14 +114,6 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
 
   const timelinePosition = 35;
 
-  if (!isClient) {
-    return (
-      <div className={`flex flex-col h-full bg-black ${!isMobile && 'border-r border-gray-200'} p-4`}>
-        <div className="text-sm text-gray-500">Loading grid...</div>
-      </div>
-    );
-  }
-
   const grid = Array(7).fill(0).map(() => Array(7).fill(null));
   
   spiralTiles.forEach(({id, row, col}) => {

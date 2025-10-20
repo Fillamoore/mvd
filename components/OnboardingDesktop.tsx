@@ -140,13 +140,6 @@ const OnboardingDesktop: React.FC<OnboardingProps> = ({ onComplete }) => {
         isExiting ? 'opacity-0' : 'opacity-100'
       }`}
     >
-      {/* Loading overlay - only shows briefly while images preload */}
-      {!imagesLoaded && (
-        <div className="absolute inset-0 bg-black flex items-center justify-center z-10">
-          <div className="text-white">Loading...</div>
-        </div>
-      )}
-      
       <div className={`bg-white rounded-[8px] w-full max-w-[450px] h-[665px] overflow-hidden transition-opacity duration-300 ${
         !imagesLoaded ? 'opacity-0' : 'opacity-100'
       }`}>

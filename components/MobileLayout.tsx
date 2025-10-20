@@ -37,10 +37,6 @@ export default function MobileLayout() {
     triggerScenarioCompletion();
   };
 
-  if (!hydrated) {
-    return <div className="flex justify-center items-center h-full text-lilac-300">Loading...</div>;
-  }
-
   return (
     <div className="flex flex-col h-screen bg-black">
       <main className="flex-1 overflow-auto">

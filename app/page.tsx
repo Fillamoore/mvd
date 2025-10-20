@@ -67,11 +67,6 @@ export default function RootLayout() {
       </head>
 
       <body className={`${lato.className} h-screen w-screen overflow-hidden pb-[env(safe-area-inset-bottom)] bg-black`}>
-        {appState === 'checking' && (
-          <div className="w-full h-full flex items-center justify-center bg-black">
-            <div className="text-white">Loading...</div>
-          </div>
-        )}
 
         {appState === 'pwa_install' && (
           <PWAInstallPrompt onInstallComplete={handlePWAInstallComplete} />
