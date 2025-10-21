@@ -1,0 +1,9 @@
+// this is archived because Vercel requires paid plan for a cron that runs more than once per day!
+{
+  "crons": [
+    {
+      "path": "/api/spoof-signup",
+      "schedule": "* * * * *"
+    }
+  ]
+}

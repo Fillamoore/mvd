@@ -104,8 +104,8 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
 
   // Get module name by ID
   const getModuleName = (id: number): string => {
-    const module = moduleData.find(module => module.module_id === id);
-    return module ? module.title : `Module ${id}`;
+    const foundModule = moduleData.find(m => m.module_id === id);
+    return foundModule ? foundModule.title : `Module ${id}`;
   };
   
   // Dynamically generate module data for the list from scenarios-content
