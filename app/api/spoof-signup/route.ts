@@ -1,5 +1,8 @@
 import { NextRequest } from 'next/server';
 
+// Startup log
+console.log('🚀 spoof-signup cron job loaded and ready');
+
 const countryDistribution = [
   { country: "UK", probability: 0.60 },
   { country: "Germany", probability: 0.05 },
@@ -135,25 +138,31 @@ function getRandomKnowhowAnchor() {
 }
 
 export async function GET(request: NextRequest) {
-  console.log('🕒 Cron triggered');
+  console.log('🕒 Cron triggered at:', new Date().toISOString());
   
   try {
     const { db } = await import('@/lib/db');
+    console.log('✅ Database connected');
     
     if (process.env.ENABLE_SPOOFING !== 'true') {
+      console.log('❌ Spoofing disabled - check ENABLE_SPOOFING env var');
       return new Response('Spoofing disabled');
     }
+    
+    console.log('✅ Spoofing enabled');
     
     // ORIGINAL LOGIC: 10-30 minute random intervals
     const targetInterval = Math.floor(Math.random() * 21) + 10;
     const shouldRun = Math.random() < 1 / targetInterval;
+    
+    console.log(`🎲 Random check: interval=${targetInterval}min, shouldRun=${shouldRun}`);
     
     if (!shouldRun) {
       console.log(`⏭️ Skipped this run (target interval: ${targetInterval} min)`);
       return new Response(`Skipped this run (target interval: ${targetInterval} min)`);
     }
     
-    console.log('🚀 Generating persona with Gemini...');
+    console.log('🚀 PROCEEDING - Generating persona with Gemini...');
     
     const persona = await fetchGeminiPersona();
     console.log('👤 Persona generated:', persona);
@@ -185,6 +194,9 @@ async function fetchGeminiPersona() {
   const model = 'gemini-2.5-flash-preview-09-2025';
   const selectedCountry = getRandomCountry();
   const knowhowAnchor = getRandomKnowhowAnchor();
+  
+  console.log(`🌍 Selected country: ${selectedCountry}`);
+  console.log(`🎯 Knowhow anchor: ${knowhowAnchor.example}`);
   
   const prompt = `Generate a realistic user persona as valid JSON with these exact fields: display_name, role_description, company_type, country, knowhow_goal. 
 
