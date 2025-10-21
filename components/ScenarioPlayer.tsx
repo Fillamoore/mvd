@@ -1,16 +1,15 @@
-// components/ScenarioPlayer.tsx 
+// components/ScenarioPlayer.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
 import ScenarioCard from '@/components/ScenarioCard';
-import { getScenariosByModuleId } from '@/data/scenarios';
-import { getModuleById } from '@/data/modules';
 import { useLocalStore } from '@/store/useLocalStore';
 import Image from 'next/image';
 import { useShallow } from 'zustand/react/shallow';
 import VerticalProgressBar from '@/components/VerticalProgressBar';
 import { ModuleTile } from '@/components/ModuleTile';
 import DesktopControlButton from '@/components/DesktopControlButton';
+import { getScenariosByModuleId, getModuleById, type Response } from '@/data/scenarios-content';
 
 export default function ScenarioPlayer() {
   const {
@@ -49,7 +48,7 @@ export default function ScenarioPlayer() {
   const moduleId = currentModule ? parseInt(currentModule, 10) : 1;
   const currentModuleData = getModuleById(moduleId);
   if (!currentModuleData) {
-    throw new Error(`Module with ID ${moduleId} not found in modules.ts`);
+    throw new Error(`Module with ID ${moduleId} not found in scenarios-content.ts`);
   }
 
   const moduleScenarios = getScenariosByModuleId(moduleId);
@@ -95,13 +94,13 @@ export default function ScenarioPlayer() {
         <div className="icon-container p-1 flex items-center gap-2 select-none">
           <div style={{ backgroundColor: '#dfd5dbff', borderRadius: '3px', padding: '5px' }}>
             <Image
-              src={`/module-infographics/${String(currentModuleData.id)}.png`}
-              alt={`Module ${currentModuleData.id} icon`}
+              src={`/module-infographics/${String(currentModuleData.module_id)}.png`}
+              alt={`Module ${currentModuleData.module_id} icon`}
               width={28}
               height={28}
             />
           </div>
-          <h1 className="ml-1 text-base font-bold text-lilac-300 select-none">{currentModuleData.name}</h1>
+          <h1 className="ml-1 text-base font-bold text-lilac-300 select-none">{currentModuleData.title}</h1>
         </div>
         <div className="mr-[6px]">
           <div className="flex items-center gap-[2px]">
@@ -131,7 +130,7 @@ export default function ScenarioPlayer() {
               scenarioId={currentScenarioData.id}
               title={currentScenarioData.title}
               prompt={currentScenarioData.prompt}
-              responses={currentScenarioData.responses.map(r => ({ id: r.id, title: r.title, text: r.text }))}
+              responses={currentScenarioData.responses.map((r: Response) => ({ id: r.id, title: r.title, text: r.text }))}
               expertRationales={isRevealed ? currentScenarioData.responses : undefined}
               totalScenarios={moduleScenarios.length}
               overall={currentScenarioData.overall}

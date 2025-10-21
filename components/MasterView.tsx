@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { modules } from '@/data/modules';
 import { useLocalStore } from '@/store/useLocalStore';
 import { useShallow } from 'zustand/react/shallow';
+import { getAllModules } from '@/data/scenarios-content';
 
 // Re-using the spiral function that you had
-const generateCorrectClockwiseSpiralOrder = (size: number) => {  const result = [];
+const generateCorrectClockwiseSpiralOrder = (size: number) => {  
+  const result = [];
   const grid = Array(size).fill(0).map(() => Array(size).fill(0));
 
   const center = Math.floor(size / 2);
@@ -65,15 +66,21 @@ const generateCorrectClockwiseSpiralOrder = (size: number) => {  const result = 
   return result;
 };
 
-
 interface MasterViewProps {
   isMobile?: boolean;
+}
+
+interface ModuleData {
+  module_id: number;
+  title: string;
+  content_body: string;
 }
 
 export default function MasterView({ isMobile = false }: MasterViewProps) {
   const [isClient, setIsClient] = useState(false);
   const [spiralTiles, setSpiralTiles] = useState<{id: number, row: number, col: number}[]>([]);
   const [hoverModule, setHoverModule] = useState<number | null>(null);
+  const [moduleData, setModuleData] = useState<ModuleData[]>([]);
 
   const { currentModule, pickUpAndPutDown, setCurrentModule } = useLocalStore(useShallow(state => ({
     currentModule: state.currentModule,
@@ -94,22 +101,31 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
     
     return 0;
   };
+
+  // Get module name by ID
+  const getModuleName = (id: number): string => {
+    const module = moduleData.find(module => module.module_id === id);
+    return module ? module.title : `Module ${id}`;
+  };
   
-  // Dynamically generate module data for the list
-  const renderedModuleItems = modules.map(thisModule => {
-    const score = getTileScore(thisModule.id);
+  // Dynamically generate module data for the list from scenarios-content
+  const renderedModuleItems = moduleData.map(module => {
+    const score = getTileScore(module.module_id);
     const completed = score > 0;
     return {
-      id: thisModule.id,
-      name: thisModule.name,
+      id: module.module_id,
+      name: module.title,
       completed,
       score
     };
-  });
+  }).sort((a, b) => a.id - b.id);
   
   useEffect(() => {
     setIsClient(true);
     setSpiralTiles(generateCorrectClockwiseSpiralOrder(7));
+    
+    // Load module data from scenarios-content
+    setModuleData(getAllModules());
   }, []);
 
   const timelinePosition = 35;
@@ -153,7 +169,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
               if (!tile) return null;
 
               const { id, completed, score } = tile;
-              const thisModule = modules.find(m => m.id === id);
+              const moduleName = getModuleName(id);
               const isCurrentModule = id === currentModuleId;
 
               let bgClass = '';
@@ -184,7 +200,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
                   style={{
                     backgroundColor: dynamicBg,
                   }}
-                  title={`${thisModule ? thisModule.name : `Module ${id}`}${completed ? ` - ${score.toFixed(0)}%` : ''}`}
+                  title={`${moduleName}${completed ? ` - ${score.toFixed(0)}%` : ''}`}
                   onMouseEnter={() => setHoverModule(id)}
                   onMouseLeave={() => setHoverModule(null)}
                   onClick={() => {
