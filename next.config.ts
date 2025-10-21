@@ -1,10 +1,9 @@
-// next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  // This might help suppress the warning
-  devIndicators: {
-  }
+  // Ensure env vars are properly loaded
+  env: {
+    ENABLE_SPOOFING: process.env.ENABLE_SPOOFING,
+  },
 }
 
 module.exports = nextConfig
