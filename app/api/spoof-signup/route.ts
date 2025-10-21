@@ -251,5 +251,5 @@ Return ONLY JSON.`;
     return JSON.parse(jsonMatch[0]);
   }
   
-  throw new Error('Could not parse the JSON from Gemini response');
+  throw new Error('Could not parse the JSON string from Gemini response');
 }
