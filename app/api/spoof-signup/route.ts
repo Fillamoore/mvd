@@ -16,7 +16,7 @@ export const config = {
 };
 
 // Top-level module log to confirm file loads
-console.log('📦 Cron module loaded');
+console.log('📦 2:22 Cron module loaded');
 
 try {
   const { db: importedDb } = await import('@/lib/db');
