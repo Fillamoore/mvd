@@ -1,19 +1,19 @@
 import { NextRequest } from 'next/server';
 
 const countryDistribution = [
-  { country: "UK", probability: 0.70 },
+  { country: "UK", probability: 0.60 },
   { country: "Germany", probability: 0.05 },
   { country: "France", probability: 0.03 },
   { country: "Spain", probability: 0.02 },
   { country: "Italy", probability: 0.02 },
-  { country: "Netherlands", probability: 0.01 },
-  { country: "USA", probability: 0.07 },
-  { country: "Canada", probability: 0.03 },
-  { country: "Australia", probability: 0.02 },
-  { country: "India", probability: 0.02 },
-  { country: "Singapore", probability: 0.01 },
-  { country: "Japan", probability: 0.01 },
-  { country: "China", probability: 0.01 }
+  { country: "Netherlands", probability: 0.03 },
+  { country: "USA", probability: 0.08 },
+  { country: "Canada", probability: 0.04 },
+  { country: "Australia", probability: 0.03 },
+  { country: "India", probability: 0.03 },
+  { country: "Singapore", probability: 0.02 },
+  { country: "Japan", probability: 0.02 },
+  { country: "China", probability: 0.03 }
 ];
 
 function getRandomCountry() {
@@ -99,13 +99,13 @@ const knowhowAnchors = [
     probability: 0.10
   },
   {
-    type: "politics",
+    type: "informal_slang",
     examples: [
-      "Sussing things out",
+      "Getting stuff done",
       "Playing the game",
       "Office politics",
       "Managing up",
-      "Using the power dynamics",
+      "Cutting through noise",
       "Street smarts",
       "Navigating the maze",
       "Keeping your head"
@@ -127,7 +127,6 @@ function getRandomKnowhowAnchor() {
       };
     }
   }
-  // Fallback to first anchor if no match (should never happen but TypeScript wants it)
   const fallback = knowhowAnchors[0];
   return {
     type: fallback.type,
@@ -136,13 +135,8 @@ function getRandomKnowhowAnchor() {
 }
 
 export async function GET(request: NextRequest) {
-  // Add this security check for production
-  const authHeader = request.headers.get('authorization');
+  console.log('🕒 Cron triggered');
   
-  if (process.env.NODE_ENV === 'production' && authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-    return new Response('Unauthorized', { status: 401 });
-  }
-
   try {
     const { db } = await import('@/lib/db');
     
@@ -150,9 +144,13 @@ export async function GET(request: NextRequest) {
       return new Response('Spoofing disabled');
     }
     
-    const shouldRun = Math.random() < 0.5;
+    // ORIGINAL LOGIC: 10-30 minute random intervals
+    const targetInterval = Math.floor(Math.random() * 21) + 10;
+    const shouldRun = Math.random() < 1 / targetInterval;
+    
     if (!shouldRun) {
-      return new Response('Skipped this run');
+      console.log(`⏭️ Skipped this run (target interval: ${targetInterval} min)`);
+      return new Response(`Skipped this run (target interval: ${targetInterval} min)`);
     }
     
     console.log('🚀 Generating persona with Gemini...');
@@ -169,7 +167,7 @@ export async function GET(request: NextRequest) {
     );
     
     console.log('✅ Real user inserted with Gemini:', result.rows[0].id);
-    return new Response('Real spoofed user created with Gemini!');
+    return new Response(`Spoofed user created! (target interval: ${targetInterval} min)`);
     
   } catch (error) {
     console.log('❌ Error:', error);
@@ -192,14 +190,15 @@ async function fetchGeminiPersona() {
 
 SPECIFIC REQUIREMENTS:
 - The person is from ${selectedCountry}
-- Generate a complete randomized name (first name and last name) for display_name that is authentic to ${selectedCountry} and its ethnicity
-- The full name should sound like it was randomly selected from a large, diverse, metropolitan phonebook
-- Use UK English spellings
-- The company_type needs to be appropriate to a mid-large sized professional services, solutions or management consulting company
+- Generate a complete randomized name (first name and last name) for display_name that is authentic to ${selectedCountry}
+- Use ${selectedCountry === 'UK' ? 'UK' : 'appropriate local'} spellings
+- The company_type needs to be appropriate to a mid-large sized professional services company
 
 KNOWHOW GOAL REQUIREMENTS:
-- Contextualise the knowhow_goal be in "${knowhowAnchor.type}" and "${knowhowAnchor.example}"
-- Use everyday and conversational language i.e. what someone might say to a work friend over a coffee. 1-5 words.
+- Anchor the knowhow_goal around concepts like: "${knowhowAnchor.example}"
+- The knowhow_goal should be 1-5 words, concise and impactful
+- Use everyday language not buzzword bingo
+- Make it sound like a genuine professional development priority
 - Role description should be short 1-3 words
 
 Return ONLY JSON.`;
@@ -235,7 +234,6 @@ Return ONLY JSON.`;
     throw new Error('No response from Gemini');
   }
 
-  // Extract JSON from the response
   const jsonMatch = text.match(/\{[\s\S]*\}/);
   if (jsonMatch) {
     return JSON.parse(jsonMatch[0]);
