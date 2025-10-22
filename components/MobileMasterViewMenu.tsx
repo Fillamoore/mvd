@@ -12,7 +12,7 @@ export default function MobileMasterViewMenu({ onBackToScenario }: { onBackToSce
           title="Back to Scenarios"
         >
           <Image
-            src="/back-icon.png"
+            src="/back-icon.webp"
             alt="Back to Scenarios"
             width={24}
             height={24}

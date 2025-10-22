@@ -31,7 +31,7 @@ export default function MobileScenariosPlayerFooter({
           title="Master View"
         >
           <Image
-            src="/master-icon.png"
+            src="/master-icon.webp"
             alt="Master View"
             width={24}
             height={24}
@@ -47,7 +47,7 @@ export default function MobileScenariosPlayerFooter({
               title="Reveal"
             >
               <Image
-                src="/reveal-icon.png"
+                src="/reveal-icon.webp"
                 alt="Reveal"
                 width={24}
                 height={24}
@@ -63,7 +63,7 @@ export default function MobileScenariosPlayerFooter({
               title="Next"
             >
               <Image
-                src="/next-icon.png"
+                src="/next-icon.webp"
                 alt="Next"
                 width={24}
                 height={24}

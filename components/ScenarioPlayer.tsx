@@ -94,7 +94,7 @@ export default function ScenarioPlayer() {
         <div className="icon-container p-1 flex items-center gap-2 select-none">
           <div style={{ backgroundColor: '#dfd5dbff', borderRadius: '3px', padding: '5px' }}>
             <Image
-              src={`/module-infographics/${String(currentModuleData.module_id)}.png`}
+              src={`/module-infographics/${String(currentModuleData.module_id)}.webp`}
               alt={`Module ${currentModuleData.module_id} icon`}
               width={28}
               height={28}

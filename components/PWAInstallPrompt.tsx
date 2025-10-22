@@ -41,7 +41,7 @@ export default function PWAInstallPrompt({ onInstallComplete }: PWAInstallPrompt
     <div className="fixed inset-0 bg-black z-50 flex items-center justify-center p-4">
       <div className="flex flex-col items-center">
         <Image
-          src="/qikr-logo.png"
+          src="/qikr-logo.webp"
           alt="App Logo"
           width={180}
           height={105} 
@@ -58,7 +58,7 @@ export default function PWAInstallPrompt({ onInstallComplete }: PWAInstallPrompt
             <div className="flex justify-between items-center">
               <p className="font-medium text-gray-800">1. Tap the Share Button below</p>
               <Image
-                src="/share-icon.png"
+                src="/share-icon.webp"
                 alt="Share"
                 width={32}
                 height={32}
@@ -71,7 +71,7 @@ export default function PWAInstallPrompt({ onInstallComplete }: PWAInstallPrompt
             <div className="flex justify-between items-center">
               <p className="font-medium text-gray-800">2. Scroll to &apos;Add to Home Screen&apos;</p>
               <Image
-                src="/next-icon.png"
+                src="/next-icon.webp"
                 alt="Add"
                 width={32}
                 height={32}
@@ -84,7 +84,7 @@ export default function PWAInstallPrompt({ onInstallComplete }: PWAInstallPrompt
             <div className="flex justify-between items-center">
               <p className="font-medium text-gray-800">3. Tap &apos;done&apos; in bottom right</p>
               <Image
-                src="/done-button.png"
+                src="/done-button.webp"
                 alt="done"
                 width={70}
                 height={35}
@@ -99,7 +99,7 @@ export default function PWAInstallPrompt({ onInstallComplete }: PWAInstallPrompt
             
             <div className="flex items-center">
               <Image
-                src="/icon-192x192.png"
+                src="/icon-192x192.webp"
                 alt="Add"
                 width={70}
                 height={70}

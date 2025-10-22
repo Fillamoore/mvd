@@ -156,7 +156,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
       
     <div className="logo flex justify-center items-center gap-2">
       <img
-        src="/qikr-logo.png"
+        src="/qikr-logo.webp"
         alt="qikr logo"
         className="w-[120px] h-auto"
       />
@@ -246,7 +246,7 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
                   <div className="flex items-center min-w-0">
                     <div className="w-8 h-8 mr-2 flex-shrink-0 bg-[#dfd5db] rounded-[3px] select-none p-[3px] flex items-center justify-center">
                       <Image
-                        src={`/module-infographics/${moduleItem.id}.png`}
+                        src={`/module-infographics/${moduleItem.id}.webp`}
                         alt={`Module ${moduleItem.id} icon`}
                         width={34}
                         height={34}

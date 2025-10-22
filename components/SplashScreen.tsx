@@ -349,7 +349,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
     <div className={`fixed inset-0 flex flex-col ${isMobile ? 'mt-10' : 'mt-12'} justify-start h-screen text-white z-50 bg-black`}>
       <div className={`flex flex-col items-center ${phase === 'logo' ? 'opacity-0 pointer-events-none' : 'opacity-100 transition-opacity duration-500'}`}>
           <img
-            src="/qikr-logo.png"
+            src="/qikr-logo.webp"
             alt="qikr logo"
             className={isMobile ? 'w-[110px] h-auto' : 'w-[135px] h-auto'}
           />

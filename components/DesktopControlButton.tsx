@@ -50,7 +50,7 @@ export default function DesktopControlButton() {
     return null;
   }
 
-  const buttonIcon = isRevealed ? '/next-icon.png' : '/reveal-icon.png';
+  const buttonIcon = isRevealed ? '/next-icon.webp' : '/reveal-icon.webp';
   const buttonLabel = isRevealed ? 'Next scenario' : 'Reveal expert rankings';
 
   return (

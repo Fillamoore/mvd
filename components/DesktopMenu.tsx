@@ -32,7 +32,7 @@ export default function DesktopMenu() {
         title="Menu"
       >
         <Image
-          src="/menu-icon.png"
+          src="/menu-icon.webp"
           alt="Menu"
           width={24}
           height={24}
