@@ -117,7 +117,7 @@ export default function ScenarioPlayer() {
 
       <div
         key={moduleId}
-        className={`scenarios-container bg-black bg-[url('/scenarios-canvas.jpg')] bg-cover bg-center h-full overflow-y-auto ${contentBorderRadius}`}
+        className={`scenarios-container bg-black bg-[url('/scenarios-canvas.webp')] bg-cover bg-center h-full overflow-y-auto ${contentBorderRadius}`}
       >
         {hydrated && currentScenarioData ? (
           <div 

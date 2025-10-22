@@ -1,3 +1,4 @@
+// app/layout.tsx (KEEP THIS ONE)
 'use client';
 
 import './globals.css';
@@ -8,6 +9,7 @@ import DesktopLayout from '../components/DesktopLayout';
 import MobileLayout from '../components/MobileLayout';
 import OnboardingMobile from '../components/OnboardingMobile';
 import OnboardingDesktop from '../components/OnboardingDesktop';
+import { getAllModules } from '@/data/scenarios-content';
 
 import { Lato } from 'next/font/google';
 
@@ -18,6 +20,28 @@ const lato = Lato({
 });
 
 type AppState = 'checking' | 'pwa_install' | 'onboarding' | 'splash' | 'main_app';
+
+// Pre-loading utility
+const preloadImages = (imageUrls: string[]): Promise<void[]> => {
+  if (typeof window === 'undefined') return Promise.resolve([]);
+  
+  const promises = imageUrls.map(url => {
+    return new Promise<void>((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve();
+      img.onerror = () => reject(new Error(`Failed to load ${url}`));
+      img.src = url;
+    });
+  });
+  
+  return Promise.all(promises);
+};
+
+const getModuleImagePaths = (count: number): string[] => {
+  return Array.from({ length: count }, (_, i) => 
+    `/module-infographics/${i + 1}.webp`
+  );
+};
 
 export default function RootLayout() {
   const [appState, setAppState] = useState<AppState>('checking');
@@ -42,6 +66,22 @@ export default function RootLayout() {
       setAppState('splash');
     }
   }, [appState]);
+
+  // Pre-load all module images when app starts
+  useEffect(() => {
+    const preloadAllModuleImages = async () => {
+      try {
+        const modules = getAllModules();
+        const imagePaths = getModuleImagePaths(modules.length);
+        await preloadImages(imagePaths);
+        console.log('🎉 All module images pre-loaded!');
+      } catch (error) {
+        console.warn('Some images failed to pre-load:', error);
+      }
+    };
+
+    preloadAllModuleImages();
+  }, []);
 
   const handleOnboardingComplete = () => {
     localStorage.setItem('onboardingCompleted', 'true');
@@ -83,13 +123,19 @@ export default function RootLayout() {
             : <OnboardingDesktop onComplete={handleOnboardingComplete} />
         )}
 
-        {appState === 'splash' && (
-          <SplashScreen onComplete={() => setAppState('main_app')} />
+        {/* Main app renders in background while splash is visible */}
+        {(appState === 'main_app' || appState === 'splash') && (
+          <div className={`w-full h-full transition-opacity duration-500 ${
+            appState === 'main_app' ? 'opacity-100' : 'opacity-0'
+          }`}>
+            {isMobile ? <MobileLayout /> : <DesktopLayout />}
+          </div>
         )}
 
-        {appState === 'main_app' && (
-          <div className="w-full h-full">
-            {isMobile ? <MobileLayout /> : <DesktopLayout />}
+        {/* SplashScreen overlays on top */}
+        {appState === 'splash' && (
+          <div className="fixed inset-0 z-50">
+            <SplashScreen onComplete={() => setAppState('main_app')} />
           </div>
         )}
       </body>

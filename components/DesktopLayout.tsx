@@ -5,7 +5,7 @@ import ScenarioPlayer from './ScenarioPlayer';
 
 export default function DesktopLayout() {
   return (
-    <div className="flex flex-col h-screen bg-[url('/screen-background.jpg')] bg-cover bg-center">
+    <div className="flex flex-col h-screen bg-[url('/screen-background.webp')] bg-cover bg-center">
       <div className="p-5 flex space-x-5 overflow-auto">
         {/* Sidebar: MasterView */}
         <aside className="w-96">
