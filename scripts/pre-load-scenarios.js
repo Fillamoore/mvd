@@ -15,8 +15,8 @@ const OUTPUT_FILE_PATH = path.join(__dirname, '..','data', 'scenarios-content.ts
 const DATABASE_URL = process.env.DATABASE_URL;
 
 // Paths to head and tail files
-const HEAD_FILE_PATH = path.join(__dirname, 'top.ts');
-const TAIL_FILE_PATH = path.join(__dirname, 'tail.ts');
+const HEAD_FILE_PATH = path.join(__dirname, 'top.ts.bak');
+const TAIL_FILE_PATH = path.join(__dirname, 'tail.ts.bak');
 
 /**
  * @typedef {Object} ScenarioItem
