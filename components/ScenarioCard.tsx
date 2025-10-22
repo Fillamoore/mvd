@@ -4,9 +4,7 @@
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import RankingBox from './RankingBox';
-import ExpertMedia from './ExpertMedia';
 import { useLocalStore } from '@/store/useLocalStore';
-import type { ExpertMedia as ExpertMediaType, Resource } from '@/data/scenarios';
 import { useShallow } from 'zustand/react/shallow';
 
 interface ScenarioCardProps {
@@ -25,8 +23,6 @@ interface ScenarioCardProps {
     text: string;
     expertRationale: string;
     expertRanking: number;
-    expertMedia?: ExpertMediaType;
-    resources?: Resource[]; 
   }>;
   takeAway: string;
   overall: string; 
@@ -291,32 +287,7 @@ export default function ScenarioCard({
                     <div className="expert-rationale bg-lilac-400 rounded p-3 flex relative">
                       
                       <div className="flex-1 mr-2 pr-[28px]">
-                        <p className="leading-tight select-none text-sm text-black">{expertResponse.expertRationale}</p>
-                        
-                        {expertResponse.expertMedia && (
-                          <div className="mt-3">
-                            <ExpertMedia media={expertResponse.expertMedia} />
-                          </div>
-                        )}
-                        
-                        {expertResponse.resources && expertResponse.resources.length > 0 && (
-                          <div className="resources mt-3 pt-3 border-t border-gray-500/50">
-                            <h5 className="text-xs font-semibold text-white mb-2">Resources:</h5>
-                            <div className="space-y-1">
-                              {expertResponse.resources.map((resource, idx) => (
-                                <a
-                                  key={idx}
-                                  href={resource.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-xs text-blue-200 hover:text-blue-100 block transition-colors"
-                                >
-                                  📚 {resource.title}
-                                </a>
-                              ))}
-                            </div>
-                          </div>
-                        )}
+                        <p className="leading-tight select-none text-sm text-black">{expertResponse.expertRationale}</p>                        
                       </div>
 
                       <div className="flex-shrink-0 absolute top-1 right-1">
