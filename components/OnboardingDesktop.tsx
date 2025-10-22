@@ -56,7 +56,7 @@ const OnboardingDesktop: React.FC<OnboardingProps> = ({ onComplete }) => {
       image: '/desktop2.webp',
       title: 'Work through a scenario',
       description:
-        "Each scenario has three responses. Consider each carefully then click to rank as gold/silver/bronze. Once they're ranked, click on the 'eye' to reveal what the experts think and see how well you scored.",
+        "Each scenario has three responses. Consider each carefully then click to rank as bronze/silver/gold. Once they're ranked, click on the 'eye' to reveal what the experts think and see how well you scored.",
     },
     {
       image: '/desktop3.webp',
