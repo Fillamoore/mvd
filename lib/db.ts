@@ -1,35 +1,49 @@
-// lib/db.ts - OPTIMIZED FOR AIVEN
+// lib/db.ts - FIXED FOR PRODUCTION
 import { Pool } from 'pg';
-import * as fs from 'fs';
-import * as path from 'path';
 
-let sslConfig: boolean | object = false;
+// SIMPLIFIED SSL CONFIG - NO FILE SYSTEM ACCESS
+const getSSLConfig = () => {
+  // In production, always use SSL but don't try to read files
+  if (process.env.NODE_ENV === 'production') {
+    return {
+      rejectUnauthorized: false // Critical for Aiven in production
+    };
+  }
+  
+  // In development, use your existing logic
+  try {
+    const fs = require('fs');
+    const path = require('path');
+    const ca = fs.readFileSync(path.join(process.cwd(), 'lib', 'ca.pem'), 'utf8').trim();
+    return {
+      ca,
+      rejectUnauthorized: true
+    };
+  } catch {
+    console.warn('⚠️ No ca.pem found. SSL validation disabled.');
+    return { rejectUnauthorized: false };
+  }
+};
 
-try {
-  const ca = fs.readFileSync(path.join(process.cwd(), 'lib', 'ca.pem'), 'utf8').trim();
-  sslConfig = {
-    ca,
-    rejectUnauthorized: true
-  };
-  //console.log('✅ Loaded CA cert from ca.pem');
-} catch {
-  console.warn('⚠️ No ca.pem found. SSL validation disabled.');
-  sslConfig = { rejectUnauthorized: false };
-}
-
-// SMALL POOL FOR AIVEN'S CONNECTION LIMITS
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: sslConfig,
-  // CRITICAL: Small pool for Aiven's cheap plans
-  max: 3, // Maximum number of clients in the pool (reduced from 20)
-  idleTimeoutMillis: 10000, // How long a client is allowed to remain idle before being closed
-  connectionTimeoutMillis: 5000, // How long to wait for a connection
+  ssl: getSSLConfig(), // Use the new function
+  max: 3,
+  idleTimeoutMillis: 10000,
+  connectionTimeoutMillis: 5000,
 });
 
-// Export the pool with both query and connect methods
+// Add connection logging for debugging
+pool.on('connect', () => {
+  console.log('✅ Database connected');
+});
+
+pool.on('error', (err) => {
+  console.error('💥 Database pool error:', err);
+});
+
 export const db = {
   query: (text: string, params?: unknown[]) => pool.query(text, params),
-  connect: () => pool.connect(), // Add this method for manual connection management
-  end: () => pool.end(), // For graceful shutdown
+  connect: () => pool.connect(),
+  end: () => pool.end(),
 };
