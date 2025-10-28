@@ -4,6 +4,8 @@
 import { db } from '@/lib/db';
 
 export async function createUser(email: string): Promise<{ success: boolean; error?: string }> {
+
+  console.log("in createUser, email:",email)
   try {
     // Check if user already exists - SIMPLE QUERY
     const existingUser = await db.query(
