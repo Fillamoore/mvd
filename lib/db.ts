@@ -1,41 +1,45 @@
-// lib/db.ts - FIXED FOR PRODUCTION
+// lib/db.ts - WORKS IN DEV & PRODUCTION
 import { Pool } from 'pg';
+import fs from 'fs';
+import path from 'path';
 
-// SIMPLIFIED SSL CONFIG - NO FILE SYSTEM ACCESS
 const getSSLConfig = () => {
-  // In production, always use SSL but don't try to read files
+  // Always use simple SSL in production
   if (process.env.NODE_ENV === 'production') {
-    return {
-      rejectUnauthorized: false // Critical for Aiven in production
-    };
-  }
-  
-  // In development, use your existing logic
-  try {
-    const fs = require('fs');
-    const path = require('path');
-    const ca = fs.readFileSync(path.join(process.cwd(), 'lib', 'ca.pem'), 'utf8').trim();
-    return {
-      ca,
-      rejectUnauthorized: true
-    };
-  } catch {
-    console.warn('⚠️ No ca.pem found. SSL validation disabled.');
     return { rejectUnauthorized: false };
   }
+  
+  // In development, try to use ca.pem but only if filesystem is available
+  if (typeof window === 'undefined') {
+    // Server-side: try to read the file
+    try {
+      const caPath = path.join(process.cwd(), 'lib', 'ca.pem');
+      // Check if file exists before trying to read
+      if (fs.existsSync(caPath)) {
+        const ca = fs.readFileSync(caPath, 'utf8').trim();
+        return { ca, rejectUnauthorized: true };
+      }
+    } catch (error) {
+      // Silent fail - filesystem not available (serverless)
+    }
+  }
+  
+  // Fallback for both dev (no ca.pem) and production
+  return { rejectUnauthorized: false };
 };
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: getSSLConfig(), // Use the new function
+  ssl: getSSLConfig(),
   max: 3,
   idleTimeoutMillis: 10000,
   connectionTimeoutMillis: 5000,
 });
 
-// Add connection logging for debugging
 pool.on('connect', () => {
-  console.log('✅ Database connected');
+  if (process.env.NODE_ENV === 'development') {
+    console.log('✅ Database connected');
+  }
 });
 
 pool.on('error', (err) => {
