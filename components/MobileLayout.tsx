@@ -1,3 +1,4 @@
+// In MobileLayout.tsx - UPDATED
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -26,11 +27,19 @@ export default function MobileLayout() {
   const storedCurrentScenario = currentModule ? pickUpAndPutDown[currentModule]?.currentScenario : null;
 
   const userRankings = storedCurrentScenario?.userRankings || {};
+  const expertRankings = storedCurrentScenario?.expertRankings || {};
   const allRated = ['A', 'B', 'C'].every(id => userRankings[id] != null);
   const isRevealed = storedCurrentScenario?.isRevealed || false;
 
   const handleReveal = () => {
-    if (allRated) revealScenario(moduleId);
+    if (allRated) {
+      // Use the new revealScenario with rankings parameters
+      revealScenario(
+        moduleId, 
+        userRankings as { [responseId: string]: number }, 
+        expertRankings as { [responseId: string]: number }
+      );
+    }
   };
 
   const handleNextScenario = () => {

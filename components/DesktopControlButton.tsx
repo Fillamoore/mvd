@@ -1,4 +1,4 @@
-// components/DesktopControlButton.tsx - COMPLETE VERSION
+// components/DesktopControlButton.tsx - SIMPLIFIED
 'use client';
 
 import { useEffect } from 'react';
@@ -10,14 +10,15 @@ export default function DesktopControlButton() {
     currentModule, 
     pickUpAndPutDown, 
     revealScenario,
-    triggerScenarioCompletion // ADD THIS
+    triggerScenarioCompletion
   } = useLocalStore();
   
   // Read directly from store
   const currentScenario = pickUpAndPutDown[currentModule!]?.currentScenario;
   const userRankings = currentScenario?.userRankings || {};
+  const expertRankings = currentScenario?.expertRankings || {};
   
-  // Button visibility logic
+  // Button visibility logic - THIS GUARANTEES NO NULLS!
   const allRated = ['A', 'B', 'C'].every(id => userRankings[id] != null);
   const isRevealed = currentScenario?.isRevealed || false;
   const isVisible = (allRated && !isRevealed) || isRevealed;
@@ -39,9 +40,11 @@ export default function DesktopControlButton() {
     if (!currentModule) return;
     
     if (!isRevealed) {
-      revealScenario(parseInt(currentModule));
-    } else {
-      // USE THE TRIGGER ACTION WE ADDED TO THE STORE
+      // REVEAL: SAFE - allRated guarantees no nulls!
+      const moduleId = parseInt(currentModule);
+      console.log('🔄 DESKTOP BUTTON: Revealing scenario');
+      revealScenario(moduleId, userRankings as { [responseId: string]: number }, expertRankings as { [responseId: string]: number });    } else {
+      // NEXT: Just trigger navigation
       triggerScenarioCompletion();
     }
   };

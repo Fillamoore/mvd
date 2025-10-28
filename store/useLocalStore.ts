@@ -1,93 +1,126 @@
-// store/useLocalStore.ts - COMPLETE WITH PROPER INITIAL STATE
+// store/useLocalStore.ts
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
-// Core Data Structures
-interface CompletedScenario {
-  scenarioId: number;
-  userRankings: { [responseId: string]: number | null };
-  expertRankings: { [responseId: string]: number | null };
-  score: number;
-  timestamp: string;
-  dateStarted: string;
-  dateCompleted: string;
-}
-
+// Data Structures
 interface PickUpAndPutDownState {
-  completedScenarios: CompletedScenario[];
   currentScenario: {
     scenarioId: number;
     userRankings: { [responseID: string]: number | null };
     expertRankings: { [responseID: string]: number | null };
     userRankingDirections: { [responseID: string]: boolean };
     isRevealed: boolean;
-    dateStarted: string;
-    dateCompleted?: string;
     shouldComplete?: boolean;
   } | null;
 }
 
+interface ModulePerformance {
+  moduleId: number;
+  scenariosCompleted: number;
+  averageScore: number;
+  lastUpdated: string;
+}
+
+interface PendingSync {
+  id: string;
+  type: 'performance_update';
+  timestamp: string;
+  data: ModulePerformance[];
+  email: string;
+  retryCount: number;
+}
+
 export interface PickUpAndPutDownStore {
+  // Core state
   currentModule: string | null;
-  pickUpAndPutDown: {
-    [moduleId: string]: PickUpAndPutDownState;
-  };
+  pickUpAndPutDown: { [moduleId: string]: PickUpAndPutDownState };
+  performanceData: ModulePerformance[];
   
-  // Actions
+  // Auth state
+  email: string | null;
+  
+  // Offline state
+  isOnline: boolean;
+  pendingSyncs: PendingSync[];
+  lastSuccessfulSync: string | null;
+
+  // Core actions
   setCurrentModule: (moduleId: number) => void;
   setCurrentScenario: (moduleId: number, scenarioId: number) => void;
   setExpertRankings: (moduleId: number, scenarioId: number, rankings: { [responseId: string]: number }) => void;
   rankScenario: (moduleId: number, scenarioId: number, responseId: string, ranking: number, direction: boolean) => void;
-  revealScenario: (moduleId: number) => void;
+  revealScenario: (moduleId: number, userRankings: { [responseId: string]: number | null }, expertRankings: { [responseId: string]: number }) => void;
   clearCurrentScenario: (moduleId: number) => void;
-  completeCurrentScenario: (completedScenario: CompletedScenario) => void;
   setNextScenario: (scenarioId: number) => void;
   triggerScenarioCompletion: () => void;
+
+  // Performance actions
+  updateModulePerformance: (moduleId: number, scenariosCompleted: number, averageScore: number) => void;
+  incrementScenariosCompleted: (moduleId: number, newScore: number) => void;
+
+  // Auth actions
+  setEmail: (email: string) => void;
+  clearAuth: () => void;
+
+  // NEW: Position sync action
+  setModuleAndScenarioFromPerformance: () => void;
+
+  // Sync actions
+  syncOnAppLoad: () => Promise<void>;
+  setOnlineStatus: (isOnline: boolean) => void;
+  syncPerformanceToServer: () => Promise<void>;
+  syncPerformanceFromServer: () => Promise<void>;
+  retryPendingSyncs: () => Promise<void>;
 }
 
 export const useLocalStore = create<PickUpAndPutDownStore>()(
   devtools(
     persist(
       immer((set, get) => ({
-        // PROPER INITIAL STATE - Always have module 1, scenario 1
+        // INITIAL STATE
         currentModule: "1",
         pickUpAndPutDown: {
           "1": {
-            completedScenarios: [],
             currentScenario: {
               scenarioId: 1,
               userRankings: {},
               expertRankings: {},
               userRankingDirections: { 'A': true, 'B': true, 'C': true },
               isRevealed: false,
-              dateStarted: new Date().toISOString(),
-              dateCompleted: undefined,
               shouldComplete: false,
             },
           },
         },
 
-        // Actions
+        performanceData: Array.from({ length: 49 }, (_, index) => ({
+          moduleId: index + 1,
+          scenariosCompleted: 0,
+          averageScore: 0,
+          lastUpdated: new Date().toISOString(),
+        })),
+
+        email: null,
+
+        // Offline state - default to true
+        isOnline: true,
+        pendingSyncs: [],
+        lastSuccessfulSync: null,
+
+        // Core actions
         setCurrentModule: (moduleId: number) => {
           set((state) => {
             state.currentModule = moduleId.toString();
-            
-            // Ensure the module exists in the structure
             const moduleKey = moduleId.toString();
             if (!state.pickUpAndPutDown[moduleKey]) {
               state.pickUpAndPutDown[moduleKey] = {
-                completedScenarios: [],
                 currentScenario: {
                   scenarioId: 1,
                   userRankings: {},
                   expertRankings: {},
                   userRankingDirections: { 'A': true, 'B': true, 'C': true },
                   isRevealed: false,
-                  dateStarted: new Date().toISOString(),
-                  dateCompleted: undefined,
-                  shouldComplete: false,
                 },
               };
             }
@@ -97,22 +130,15 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
         setCurrentScenario: (moduleId: number, scenarioId: number) => {
           set((state) => {
             const moduleKey = moduleId.toString();
-            
             if (!state.pickUpAndPutDown[moduleKey]) {
-              state.pickUpAndPutDown[moduleKey] = {
-                completedScenarios: [],
-                currentScenario: null,
-              };
+              state.pickUpAndPutDown[moduleKey] = { currentScenario: null };
             }
-            
             state.pickUpAndPutDown[moduleKey].currentScenario = {
               scenarioId,
               userRankings: {},
               expertRankings: {},
               userRankingDirections: { 'A': true, 'B': true, 'C': true },
               isRevealed: false,
-              dateStarted: new Date().toISOString(),
-              dateCompleted: undefined,
               shouldComplete: false,
             };
           });
@@ -122,7 +148,6 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
           set((state) => {
             const moduleKey = moduleId.toString();
             const scenario = state.pickUpAndPutDown[moduleKey]?.currentScenario;
-            
             if (scenario && scenario.scenarioId === scenarioId) {
               scenario.expertRankings = rankings;
             }
@@ -133,7 +158,6 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
           set((state) => {
             const moduleKey = moduleId.toString();
             const scenario = state.pickUpAndPutDown[moduleKey]?.currentScenario;
-            
             if (scenario) {
               scenario.userRankings[responseId] = ranking;
               scenario.userRankingDirections[responseId] = direction;
@@ -141,7 +165,8 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
           });
         },
 
-        revealScenario: (moduleId: number) => {
+        // In useLocalStore.ts - update revealScenario with more debugging
+        revealScenario: (moduleId: number, userRankings: { [responseId: string]: number | null }, expertRankings: { [responseId: string]: number }) => {
           set((state) => {
             const moduleKey = moduleId.toString();
             const scenario = state.pickUpAndPutDown[moduleKey]?.currentScenario;
@@ -150,27 +175,35 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
               scenario.isRevealed = true;
             }
           });
+
+          // Calculate score and update performance OUTSIDE the set function
+          let totalDifference = 0;
+          let ratedResponses = 0;
+          
+          Object.entries(userRankings).forEach(([responseId, userRanking]) => {
+            const expertRanking = expertRankings[responseId];
+            if (userRanking !== null && userRanking !== undefined && expertRanking !== undefined) {
+              totalDifference += Math.abs(userRanking - expertRanking);
+              ratedResponses++;
+            }
+          });
+          
+          if (ratedResponses > 0) {
+            const averageDifference = totalDifference / ratedResponses;
+            const score = Math.round(100 - (averageDifference / 2) * 100);
+            
+            console.log('🔴 REVEAL: Calling incrementScenariosCompleted with:', { moduleId, score });
+            // Update performance AFTER the state update is complete
+            get().incrementScenariosCompleted(moduleId, score);
+          }
         },
 
         clearCurrentScenario: (moduleId: number) => {
           set((state) => {
             const moduleKey = moduleId.toString();
             const moduleData = state.pickUpAndPutDown[moduleKey];
-            
             if (moduleData) {
               moduleData.currentScenario = null;
-            }
-          });
-        },
-
-        completeCurrentScenario: (completedScenario: CompletedScenario) => {
-          set((state) => {
-            if (!state.currentModule) return;
-            const moduleKey = state.currentModule;
-            const moduleData = state.pickUpAndPutDown[moduleKey];
-            
-            if (moduleData) {
-              moduleData.completedScenarios.push(completedScenario);
             }
           });
         },
@@ -180,7 +213,6 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
             if (!state.currentModule) return;
             const moduleKey = state.currentModule;
             const moduleData = state.pickUpAndPutDown[moduleKey];
-            
             if (moduleData) {
               moduleData.currentScenario = {
                 scenarioId,
@@ -188,8 +220,6 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
                 expertRankings: {},
                 userRankingDirections: { 'A': true, 'B': true, 'C': true },
                 isRevealed: false,
-                dateStarted: new Date().toISOString(),
-                dateCompleted: undefined,
                 shouldComplete: false,
               };
             }
@@ -206,40 +236,362 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
             }
           });
         },
+
+        // Performance actions
+        updateModulePerformance: (moduleId: number, scenariosCompleted: number, averageScore: number) => {
+          console.log('STORE: updateModulePerformance called with:', { moduleId, scenariosCompleted, averageScore });
+          set((state) => {
+            const performanceIndex = state.performanceData.findIndex(p => p.moduleId === moduleId);
+            if (performanceIndex >= 0) {
+              state.performanceData[performanceIndex] = {
+                moduleId,
+                scenariosCompleted,
+                averageScore,
+                lastUpdated: new Date().toISOString(),
+              };
+              console.log('STORE: Performance data updated:', state.performanceData[performanceIndex]);
+            }
+          });
+        },
+
+        incrementScenariosCompleted: (moduleId: number, newScore: number) => {
+          console.log('🔴 SCENARIO COMPLETED: Starting', { moduleId, newScore });
+          
+          set((state) => {
+            console.log('🔴 SCENARIO COMPLETED: Inside set', { 
+              isOnline: state.isOnline, 
+              email: state.email,
+              hasEmail: !!state.email 
+            });
+            
+            const performanceIndex = state.performanceData.findIndex(p => p.moduleId === moduleId);
+            
+            if (performanceIndex >= 0) {
+              const current = state.performanceData[performanceIndex];
+              const newScenariosCompleted = current.scenariosCompleted + 1;
+              const newAverageScore = ((current.averageScore * current.scenariosCompleted) + newScore) / newScenariosCompleted;
+              
+              state.performanceData[performanceIndex] = {
+                moduleId,
+                scenariosCompleted: newScenariosCompleted,
+                averageScore: Math.round(newAverageScore * 100) / 100,
+                lastUpdated: new Date().toISOString(),
+              };
+              
+              console.log('🔴 SCENARIO COMPLETED: Performance updated', state.performanceData[performanceIndex]);
+              
+              // Handle sync based on online status
+              if (state.isOnline && state.email) {
+                console.log('🔴 SCENARIO COMPLETED: Online with email - scheduling sync');
+                setTimeout(() => {
+                  console.log('🔴 SCENARIO COMPLETED: Executing sync');
+                  get().syncPerformanceToServer();
+                }, 100);
+              } else if (state.email) {
+                console.log('🔴 SCENARIO COMPLETED: Offline with email - queuing sync');
+                const newSync: PendingSync = {
+                  id: Math.random().toString(36),
+                  type: 'performance_update' as const,
+                  timestamp: new Date().toISOString(),
+                  data: [...state.performanceData],
+                  email: state.email,
+                  retryCount: 0
+                };
+                state.pendingSyncs.push(newSync);
+              } else {
+                console.log('🔴 SCENARIO COMPLETED: No email - skipping sync');
+              }
+            }
+          });
+        },
+
+        // Auth actions
+        setEmail: (email: string) => {
+          console.log('🚨 STORE: setEmail called with:', email);
+          set((state) => {
+            state.email = email;
+          });
+        },
+
+        clearAuth: () => {
+          set((state) => {
+            state.email = null;
+            state.pendingSyncs = [];
+            state.lastSuccessfulSync = null;
+          });
+        },
+
+        // NEW: Position sync action
+        setModuleAndScenarioFromPerformance: () => {
+          set((state) => {
+            const { performanceData, currentModule, pickUpAndPutDown } = state;
+            
+            if (!performanceData || performanceData.length === 0) {
+              console.log('📊 POSITION: No performance data available');
+              return;
+            }
+
+            // Get current scenario
+            const currentModuleData = pickUpAndPutDown[currentModule!];
+            const currentScenario = currentModuleData?.currentScenario;
+            
+            if (!currentScenario) {
+              console.log('📊 POSITION: No current scenario found');
+              return;
+            }
+
+            // Filter modules that are IN PROGRESS (not completed) and sort by lastUpdated
+            const modulesInProgress = performanceData
+              .filter(module => module.scenariosCompleted > 0 && module.scenariosCompleted < 50)
+              .sort((a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime());
+
+            if (modulesInProgress.length > 0) {
+              // Get the most recently updated module that's still in progress
+              const latestModule = modulesInProgress[0];
+              const nextScenarioId = latestModule.scenariosCompleted + 1;
+              
+              console.log('📊 POSITION: Progress check', {
+                currentModule: currentModule,
+                currentScenario: currentScenario.scenarioId,
+                currentRevealed: currentScenario.isRevealed,
+                latestModule: latestModule.moduleId,
+                latestProgress: latestModule.scenariosCompleted,
+                nextScenarioId: nextScenarioId
+              });
+
+              // Advance if we're behind progress AND the current scenario is not revealed
+              const shouldAdvance = currentScenario.scenarioId < nextScenarioId && currentScenario.isRevealed === false;
+
+              if (shouldAdvance) {
+                // Set the current module
+                state.currentModule = latestModule.moduleId.toString();
+                
+                // Initialize the PUPd state for this module
+                const moduleKey = latestModule.moduleId.toString();
+                if (!state.pickUpAndPutDown[moduleKey]) {
+                  state.pickUpAndPutDown[moduleKey] = { currentScenario: null };
+                }
+                
+                state.pickUpAndPutDown[moduleKey].currentScenario = {
+                  scenarioId: nextScenarioId,
+                  userRankings: {},
+                  expertRankings: {},
+                  userRankingDirections: { 'A': true, 'B': true, 'C': true },
+                  isRevealed: false,
+                  shouldComplete: false,
+                };
+                
+                console.log('📊 POSITION: Advanced to next scenario', {
+                  fromModule: currentModule,
+                  fromScenario: currentScenario.scenarioId,
+                  toModule: state.currentModule,
+                  toScenario: nextScenarioId
+                });
+              } else {
+                console.log('📊 POSITION: No advance needed', {
+                  currentModule: currentModule,
+                  currentScenario: currentScenario.scenarioId,
+                  currentRevealed: currentScenario.isRevealed,
+                  expectedNext: nextScenarioId
+                });
+              }
+            }
+            // If no modules in progress, do nothing - preserve current scenario
+          });
+        },
+
+        // Sync actions
+        setOnlineStatus: (isOnline: boolean) => {
+          console.log('🌐 NETWORK: setOnlineStatus called with:', isOnline);
+          set((state) => {
+            const wasOffline = !state.isOnline && isOnline;
+            state.isOnline = isOnline;
+            
+            console.log('🌐 NETWORK: Online status changed', { 
+              wasOffline, 
+              pendingSyncs: state.pendingSyncs.length,
+              hasEmail: !!state.email
+            });
+            
+            // Auto-retry pending syncs ONLY when coming online
+            if (wasOffline && state.pendingSyncs.length > 0 && state.email) {
+              console.log('🌐 NETWORK: Back online - scheduling retry of pending syncs');
+              setTimeout(() => {
+                console.log('🌐 NETWORK: Executing pending sync retry');
+                get().retryPendingSyncs();
+              }, 1000);
+            }
+          });
+        },
+
+        syncOnAppLoad: async () => {
+          const state = get();
+          if (!state.email || !state.isOnline) {
+            console.log('🔄 APP LOAD: Cannot sync - missing email or offline');
+            return;
+          }
+
+          try {
+            console.log('🔄 APP LOAD: Wombat2 Fetching latest performance data from server',state.email);
+            const response = await fetch(`/api/performance?email=${state.email}`);
+            
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}: ${await response.text()}`);
+            }
+            
+            const serverData = await response.json();
+            console.log('🔄 APP LOAD: Server data fetched:', serverData.performanceData);
+            
+            set((state) => {
+              let updatedCount = 0;
+              
+              // Merge server data with local data - server wins on conflicts
+              state.performanceData = state.performanceData.map(local => {
+                const server = serverData.performanceData.find((s: ModulePerformance) => s.moduleId === local.moduleId);
+                
+                if (server && server.scenariosCompleted > local.scenariosCompleted) {
+                  console.log('🔄 APP LOAD: Updating module', local.moduleId, 'from server');
+                  console.log('🔄 APP LOAD: Local:', local.scenariosCompleted, 'Server:', server.scenariosCompleted);
+                  updatedCount++;
+                  return server; // Server has more progress
+                }
+                
+                return local; // Keep local progress
+              });
+              
+              console.log('🔄 APP LOAD: Updated', updatedCount, 'modules from server');
+              state.lastSuccessfulSync = new Date().toISOString();
+            });
+
+            // NEW: After syncing performance data, set the module/scenario position
+            get().setModuleAndScenarioFromPerformance();
+            
+          } catch (error) {
+            console.warn('🔄 APP LOAD: Sync failed:', error);
+          }
+        },
+
+        syncPerformanceToServer: async () => {
+          const state = get();
+          console.log('📡 SYNC: syncPerformanceToServer called', { 
+            email: state.email,
+            isOnline: state.isOnline,
+            pendingSyncs: state.pendingSyncs.length
+          });
+
+          if (!state.email) {
+            console.log('📡 SYNC: Cannot sync - email is null in store');
+            return;
+          }
+
+          try {
+            console.log('📡 SYNC: Starting sync to server with performanceData length:', state.performanceData.length);
+            console.log('performanceData:',state.performanceData);
+            const response = await fetch('/api/performance', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ 
+                performanceData: state.performanceData,
+                email: state.email,
+                timestamp: new Date().toISOString()
+              }),
+            });
+            
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}: ${await response.text()}`);
+            }
+            
+            const result = await response.json();
+            console.log('📡 SYNC: Sync successful:', result);
+            
+            set((state) => {
+              state.lastSuccessfulSync = new Date().toISOString();
+              const beforeClear = state.pendingSyncs.length;
+              // Clear only successful syncs
+              state.pendingSyncs = state.pendingSyncs.filter(sync => 
+                !(sync.type === 'performance_update' && sync.email === state.email)
+              );
+              const afterClear = state.pendingSyncs.length;
+              console.log('📡 SYNC: Cleared pending syncs', { beforeClear, afterClear });
+            });
+            
+          } catch (error) {
+            console.warn('📡 SYNC: Sync failed:', error);
+            set((state) => {
+              // Only add to pending syncs if we're offline
+              if (!state.isOnline) {
+                console.log('📡 SYNC: Offline - adding to pending syncs');
+                const newSync: PendingSync = {
+                  id: Math.random().toString(36),
+                  type: 'performance_update' as const,
+                  timestamp: new Date().toISOString(),
+                  data: state.performanceData,
+                  email: state.email!,
+                  retryCount: 0
+                };
+                state.pendingSyncs.push(newSync);
+                console.log('📡 SYNC: Added to pending syncs:', newSync);
+                console.log('📡 SYNC: Total pending syncs now:', state.pendingSyncs.length);
+              } else {
+                console.log('📡 SYNC: Online but sync failed - not adding to pending syncs');
+              }
+            });
+          }
+        },
+
+        syncPerformanceFromServer: async () => {
+          const state = get();
+          
+          if (!state.email || !state.isOnline) {
+            console.log('STORE: Cannot fetch - missing email or offline');
+            return;
+          }
+
+          try {
+            console.log('STORE: Fetching performance data from server');
+            const response = await fetch(`/api/performance?email=${encodeURIComponent(state.email)}`);
+            
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}: ${await response.text()}`);
+            }
+            
+            const serverData = await response.json();
+            console.log('STORE: Fetched server data:', serverData);
+            
+            set((state) => {
+              state.performanceData = serverData.performanceData;
+              state.lastSuccessfulSync = new Date().toISOString();
+            });
+          } catch (error) {
+            console.warn('STORE: Failed to fetch performance data:', error);
+          }
+        },
+
+        retryPendingSyncs: async () => {
+          const state = get();
+          console.log('🔄 RETRY: retryPendingSyncs called', {
+            isOnline: state.isOnline,
+            hasEmail: !!state.email,
+            pendingSyncs: state.pendingSyncs.length
+          });
+          
+          if (state.isOnline && state.email && state.pendingSyncs.length > 0) {
+            console.log('🔄 RETRY: Conditions met - executing sync');
+            get().syncPerformanceToServer();
+          } else {
+            console.log('🔄 RETRY: Conditions not met - skipping', {
+              isOnline: state.isOnline,
+              hasEmail: !!state.email,
+              pendingSyncs: state.pendingSyncs.length
+            });
+          }
+        },
       })),
       {
         name: 'pick-up-and-put-down-storage',
-        version: 1,
         storage: createJSONStorage(() => localStorage),
-        onRehydrateStorage: () => {
-          return (state, error) => {
-            if (error) {
-              console.error('Rehydration failed:', error);
-            } else if (state) {
-              // Ensure valid state after rehydration (especially when localStorage is empty)
-              if (!state.currentModule) {
-                state.currentModule = "1";
-              }
-              if (!state.pickUpAndPutDown || !state.pickUpAndPutDown["1"]) {
-                state.pickUpAndPutDown = {
-                  "1": {
-                    completedScenarios: [],
-                    currentScenario: {
-                      scenarioId: 1,
-                      userRankings: {},
-                      expertRankings: {},
-                      userRankingDirections: { 'A': true, 'B': true, 'C': true },
-                      isRevealed: false,
-                      dateStarted: new Date().toISOString(),
-                      dateCompleted: undefined,
-                      shouldComplete: false,
-                    },
-                  },
-                };
-              }
-            }
-          };
-        },
       }
     ),
     { name: 'PickUpAndPutDownStore' }

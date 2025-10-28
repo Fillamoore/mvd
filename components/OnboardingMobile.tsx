@@ -1,7 +1,8 @@
-// components/OnboardingMobile.tsx
+// components/FirstOnboardingMobile.tsx
 'use client';
-import { useState, useRef, useEffect } from 'react';
-import Image from 'next/image';
+import { useState, useEffect, useRef } from 'react';
+import { createUser } from '@/app/actions/createUser';
+import { useLocalStore } from '@/store/useLocalStore';
 
 interface OnboardingProps {
   onComplete: () => void;
@@ -10,13 +11,22 @@ interface OnboardingProps {
 const italicWords = ['do'];
 
 const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
-  const [isExiting, setIsExiting] = useState(false);
+
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
+  const [email, setEmail] = useState('');
   const startXRef = useRef(0);
   const [isSwiping, setIsSwiping] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const totalSlides = 9;
+  const isOnline = useLocalStore((state) => state.isOnline);
+  const setEmailInStore = useLocalStore((state) => state.setEmail);
+
+  const emailRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const submitButtonRef = useRef<HTMLButtonElement>(null);  
+
+  const totalSlides = 10;
 
   const slides = [
     {
@@ -41,13 +51,13 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
       image: '/platform.webp',
       title: "Inch by inch",
       description:
-        "Imagine if you could practice day by day with real-life scenarios drawn from high-stakes professional work. You could be honing your know-how today. And showing up with it at work tomorrow.",
+        "Imagine if you could practice day by day with real-life scenarios drawn from high-stakes professional work? You could be honing your know-how today. And putting ti into practice at work tomorrow.",
     },
     {
       image: '/qikr-app-mobile.webp',
       title: 'With qikr...',
       description:
-        "The qikr app gives you 2000+ high-stakes scenarios to practice on. It's easy to dip in and out of - so you can use it in your spare moments. The Matrix charts your progress across areas of know-how over time.",
+        "The qikr app gives you 2000+ high-stakes scenarios to practice on. It's easy to dip in and out of from your mobile or laptop and it works fine offline. The Matrix charts your progress over time.",
     },
     {
       image: '/mobile.webp',
@@ -72,41 +82,29 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
       title: 'Choose a module',
       description:
         "In module view, topmost is the Matrix, underneath is the modules list. Tap on a tile or a list item to switch modules whenever you like. You can try qikr free for 10 days. Ready to give it a go?",
-    }
+    },
+    {
+      image: '/desktop4.webp',
+      title: 'Free trial',
+      description: "Try qikr free for 10 days by registering below. Most people dip in and out of the app on both their iPhone and laptop. Register on your laptop with the same email and we'll synchonise your progress automatically."
+    },
   ];
 
-  // Preload images on component mount
+  // Focus on name input when last slide is reached
   useEffect(() => {
-    const preloadImages = async () => {
-      const imagePromises = slides.map((slide) => {
-        return new Promise((resolve, reject) => {
-          const img = new window.Image(); // Use window.Image instead of Image
-          img.src = slide.image;
-          img.onload = resolve;
-          img.onerror = reject;
-        });
-      });
-
-      try {
-        await Promise.all(imagePromises);
-        setImagesLoaded(true);
-      } catch (error) {
-        console.error('Error preloading images:', error);
-        // Continue even if some images fail to load
-        setImagesLoaded(true);
-      }
-    };
-
-    preloadImages();
-  }, []);
+    if (currentSlide === totalSlides - 1) {
+      setTimeout(() => {
+        emailRef.current?.focus();
+      }, 500);
+    }
+  }, [currentSlide]);
 
   const nextSlide = () => {
-    if (currentSlide < totalSlides - 1) {
+    // currentSlide is zero-based 
+    if (currentSlide < totalSlides - 1){
       setCurrentSlide(currentSlide + 1);
-    } else {
-      handleComplete();
     }
-  };
+  }
 
   const prevSlide = () => {
     if (currentSlide > 0) {
@@ -117,7 +115,6 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
   const handleComplete = () => {
     setIsExiting(true);
     setTimeout(() => {
-      localStorage.setItem('onboardingCompleted', 'true');
       onComplete();
     }, 500);
   };  
@@ -159,15 +156,51 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
     setIsSwiping(false);
   };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+
+    e.preventDefault();
+    
+    // NEW: Check online status before proceeding
+    if (!isOnline) {
+      alert('You need to be online to complete onboarding. Please check your internet connection and try again.');
+      return;
+    }
+    
+    setIsLoading(true);
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert('Please enter a valid email address');
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+
+      // 1. CREATE USER IN DATABASE (with magic token)
+      const userCreation = await createUser(email.trim());
+    
+      if (!userCreation.success) {
+        throw new Error(userCreation.error || 'OnboardingMobile failed to create user account');
+      }
+
+      setEmailInStore(email);      
+      handleComplete();
+      
+    } catch (error) {
+      console.error('Error during onboarding:', error);
+      alert(`There was an error setting up your account: ${(error as Error).message}. Please try again.`);    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div
       className={`fixed inset-0 bg-black flex items-center justify-start z-50 transition-opacity duration-500 ease-in-out ${
         isExiting ? 'opacity-0' : 'opacity-100'
       }`}
     > 
-      <div className={`bg-white rounded-[8px] w-full max-w-[380px] h-[635px] overflow-hidden transition-opacity duration-300 ${
-        !imagesLoaded ? 'opacity-0' : 'opacity-100'
-      }`}>
+      <div className={`bg-white rounded-[8px] w-full max-w-[380px] h-[635px] overflow-hidden transition-opacity duration-300 opacity-100'}`}>
         <div
           className="flex w-full transition-transform duration-500 ease-in-out z-0 transform-gpu"
           style={{
@@ -181,6 +214,9 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
 
             const titleMargins = index < 4 ? 'mt-10 mb-10' : 'mt-6 mb-4';
             const textMargins = index < 4 ? 'mt-[-70px] mb-[95px]' : 'mt-[5px] mb-[16px]';
+            const lastSlide = index === 9;
+            const lastSlideBottomMargin = lastSlide? 'mb-[30px]': 'mb-[70px]';
+            const lastSlideBottomContainerMargin = lastSlide? 'pb-2': 'pb-8';
 
             return (
               <div
@@ -198,6 +234,7 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
                   ))}
                 </h2>
 
+                {!lastSlide && (
                   <div className="w-full h-full flex justify-center">
                     <img
                       src={slide.image}
@@ -205,17 +242,55 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
                       className={index < 4 ? 'w-[320px] h-[180px] rounded-[10px]' : 'w-[150px] h-auto mb-3'}
                     />
                   </div>
+                )}
 
                 <div className={`text-gray-600 text-lg leading-relaxed ${textMargins} px-1`}>
-                  {slide.description.split(' ').map((word, i) => (
-                    <span
-                      key={i}
-                      className={italicWords.includes(word.toLowerCase()) ? 'italic' : ''}
-                    >
-                      {word}{' '}
-                    </span>
-                  ))}
+                  {slide.description.split(' ').map((word, i) => {
+                    const hasAsterisk = word.endsWith('*');
+                    const displayWord = hasAsterisk ? word.slice(0, -1) : word;
+                    const isItalic = italicWords.includes(word.toLowerCase().replace('*', ''));
+                    
+                    return (
+                      <span
+                        key={i}
+                        className={isItalic ? 'italic' : ''}
+                      >
+                        {displayWord}
+                        {hasAsterisk && <sup>*</sup>}
+                        {' '}
+                      </span>
+                    );
+                  })}
                 </div>
+
+                {/* Form only on the last slide */}
+                {lastSlide && (
+                  <form ref={formRef} onSubmit={handleSubmit} className="w-full max-w-xs">
+                    <div className="mb-4">
+                      <input
+                        ref={emailRef}
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="email"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lilac-500 focus:border-transparent"
+                        required
+                        disabled={isLoading}
+                      />
+                    </div>
+                    <button
+                      ref={submitButtonRef}
+                      type="submit"
+                      disabled={isLoading || !isOnline}
+                      className="w-full bg-lilac-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-lilac-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-lilac-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isLoading ? 'Setting up...' : 'Try qikr out for 10 days'}
+                    </button>
+                    <div className="text-sm text-gray-400 mt-6">
+                      * we won't use your email in any other way
+                    </div>
+                  </form>
+                )}
 
               </div>
             );

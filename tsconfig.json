@@ -23,6 +23,6 @@
     },
     "types": ["jest", "node"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "data/module2-scenarios.ts.bak", "lib/validation-service.ts", "lib/lib/email-service.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "data/module2-scenarios.ts.bak", "lib/validation-service.ts", "lib/lib/email-service.ts", "lib/encryption.ts.bak"],
   "exclude": ["node_modules"]
 }

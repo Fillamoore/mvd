@@ -82,21 +82,28 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
   const [hoverModule, setHoverModule] = useState<number | null>(null);
   const [moduleData, setModuleData] = useState<ModuleData[]>([]);
 
-  const { currentModule, pickUpAndPutDown, setCurrentModule } = useLocalStore(useShallow(state => ({
+  const { currentModule, pickUpAndPutDown, performanceData, setCurrentModule } = useLocalStore(useShallow(state => ({
     currentModule: state.currentModule,
     pickUpAndPutDown: state.pickUpAndPutDown,
+    performanceData: state.performanceData, // ADD THIS
     setCurrentModule: state.setCurrentModule,
   })));
   
   const currentModuleId = currentModule ? parseInt(currentModule, 10) : 1;
   
   const getTileScore = (moduleId: number): number => {
-    const moduleData = pickUpAndPutDown[moduleId.toString()];
+    // OLD CODE (causing error):
+    // const moduleData = pickUpAndPutDown[moduleId.toString()];
+    // if (moduleData && moduleData.completedScenarios.length > 0) {
+    //   const totalScore = moduleData.completedScenarios.reduce((sum, scenario) => sum + scenario.score, 0);
+    //   const averageScore = totalScore / moduleData.completedScenarios.length;
+    //   return averageScore;
+    // }
     
-    if (moduleData && moduleData.completedScenarios.length > 0) {
-      const totalScore = moduleData.completedScenarios.reduce((sum, scenario) => sum + scenario.score, 0);
-      const averageScore = totalScore / moduleData.completedScenarios.length;
-      return averageScore;
+    // NEW CODE (using performanceData):
+    const performance = performanceData.find(p => p.moduleId === moduleId);
+    if (performance && performance.scenariosCompleted > 0) {
+      return performance.averageScore;
     }
     
     return 0;
@@ -148,7 +155,6 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
   // This new function handles both state update and navigation
   const handleModuleClick = (moduleId: number) => {
     setCurrentModule(moduleId);
-    //router.push(`/scenario-player?module=${moduleId}`);
   };
 
   return (
@@ -200,7 +206,8 @@ export default function MasterView({ isMobile = false }: MasterViewProps) {
                   style={{
                     backgroundColor: dynamicBg,
                   }}
-                  title={`${moduleName}${completed ? ` - ${score.toFixed(0)}%` : ''}`}
+                  // FIX: Use safe number conversion for score
+                  title={`${moduleName}${completed ? ` - ${(Number(score) || 0).toFixed(0)}%` : ''}`}
                   onMouseEnter={() => setHoverModule(id)}
                   onMouseLeave={() => setHoverModule(null)}
                   onClick={() => {

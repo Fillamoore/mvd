@@ -3,21 +3,13 @@ CREATE TABLE users (
 
   -- Authentication
   email TEXT UNIQUE NOT NULL,
-  otp TEXT,
-  otp_expires TIMESTAMP,
 
   -- Trial logic
   trial_start TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   trial_end TIMESTAMP GENERATED ALWAYS AS (trial_start + INTERVAL '10 days') STORED,
   status TEXT CHECK (status IN ('trial', 'active', 'expired')) DEFAULT 'trial',
 
-  -- Persona metadata
-  display_name TEXT,
-  role_description TEXT,
-  company_type TEXT,
-  country TEXT,
-  knowhow_goal TEXT,
-  real_or_not BOOLEAN DEFAULT TRUE,
+  real BOOLEAN DEFAULT TRUE,
 
   -- Subscription (Paddle integration)
   paddle_user_id TEXT,

@@ -1,5 +1,4 @@
-// components/ScenarioCard.tsx
-
+// components/ScenarioCard.tsx (SIMPLIFIED - NO HYDRATION COMPLEXITY)
 'use client';
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
@@ -32,6 +31,16 @@ interface ScenarioCardProps {
 const EMPTY_USER_RANKINGS: { [key: string]: number | null } = {};
 const EMPTY_RANKING_DIRECTIONS: { [key: string]: boolean } = {};
 
+function getVaryWidth(textLength: number) {
+  const vary = textLength % 40;
+  const mobileOffset = Math.floor((vary / 40) * 10); 
+  const desktopOffset = Math.floor((vary / 40) * 10); 
+  return {
+    mobile: 95,
+    desktop: 70,
+  };
+}
+
 export default function ScenarioCard({
   scenarioId,
   moduleId,
@@ -45,7 +54,6 @@ export default function ScenarioCard({
   readonly = false,
 }: ScenarioCardProps) {
 
-  const [isHydrated, setIsHydrated] = useState(false);
   const [isModuleComplete, setIsModuleComplete] = useState(false);
 
   // Get store state and actions
@@ -68,11 +76,13 @@ export default function ScenarioCard({
 
   const { 
     rankScenario, 
-    revealScenario, 
-    setExpertRankings, 
-    completeCurrentScenario,
-    setNextScenario 
-  } = useLocalStore();
+    setNextScenario,
+    triggerScenarioCompletion
+  } = useLocalStore(useShallow((state) => ({
+    rankScenario: state.rankScenario,
+    setNextScenario: state.setNextScenario,
+    triggerScenarioCompletion: state.triggerScenarioCompletion,
+  })));
 
   const isLastScenario = scenarioId === totalScenarios;
 
@@ -95,76 +105,29 @@ export default function ScenarioCard({
 
   const score = isRevealed ? calculateScore : 0;
 
-  function getVaryWidth(textLength: number) {
-    const vary = textLength % 40;
-    const mobileOffset = Math.floor((vary / 40) * 10); 
-    const desktopOffset = Math.floor((vary / 40) * 10); 
-    return {
-      mobile: 95, //  + mobileOffset, // 85–95%
-      desktop: 70, // + desktopOffset // 60–70%
-    };
-  } 
-
   const handleScenarioCompletion = useCallback(() => {
-    if (!currentScenario || !expertRationales) return;
-    const expertRankingsMap: { [key: string]: number } = {};
-    expertRationales.forEach(response => {
-      expertRankingsMap[response.id] = response.expertRanking;
-    });
-
-    // Create completed scenario record
-    const completedScenario = {
-      scenarioId: currentScenario.scenarioId,
-      userRankings: { ...currentScenario.userRankings },
-      expertRankings: expertRankingsMap,
-      score: calculateScore,
-      timestamp: new Date().toISOString(),
-      dateStarted: currentScenario.dateStarted,
-      dateCompleted: new Date().toISOString(),
-    };
-
-    // Save completion to store
-    completeCurrentScenario(completedScenario);
-
-    // Determine next scenario
+    console.log('SCENARIO CARD: handleScenarioCompletion called - moving to next scenario');
+    
     if (isLastScenario) {
+      console.log('SCENARIO CARD: Module completed!');
       setIsModuleComplete(true);
-      // Module completion logic can be added here
     } else {
       const nextScenarioId = scenarioId + 1;
+      console.log('SCENARIO CARD: Moving to next scenario:', nextScenarioId);
       setNextScenario(nextScenarioId);
     }
-  }, [currentScenario, expertRationales, calculateScore, isLastScenario, scenarioId, completeCurrentScenario, setNextScenario]);
+  }, [isLastScenario, scenarioId, setNextScenario]);
 
   useEffect(() => {
-    if (shouldComplete && currentScenario && isRevealed) {
+    console.log('SCENARIO CARD: useEffect - shouldComplete:', shouldComplete);
+    if (shouldComplete) {
+      console.log('SCENARIO CARD: Triggering scenario completion (navigation)');
       handleScenarioCompletion();
     }
-  }, [shouldComplete, currentScenario, isRevealed, handleScenarioCompletion]);
-
-  useEffect(() => {
-    const unsubscribe = useLocalStore.persist.onFinishHydration(() => {
-      setIsHydrated(true);
-    });
-    
-    if (useLocalStore.persist.hasHydrated()) {
-      setIsHydrated(true);
-    }
-    
-    return unsubscribe;
-  }, []);
-
-  useEffect(() => {
-    if (isHydrated && expertRationales) {
-      const expertRankingsMap: { [key: string]: number } = {};
-      expertRationales.forEach(response => {
-        expertRankingsMap[response.id] = response.expertRanking;
-      });
-      setExpertRankings(moduleId, scenarioId, expertRankingsMap);
-    }
-  }, [isHydrated, expertRationales, moduleId, scenarioId, setExpertRankings]);
+  }, [shouldComplete, handleScenarioCompletion]);
 
   const handleResponseClick = (responseId: string) => {
+    
     if (!readonly && !isRevealed) {
       const currentValue = userRankings[responseId] ?? null;
       const currentDirection = userRankingDirections[responseId] ?? true;
@@ -191,8 +154,14 @@ export default function ScenarioCard({
       }
       
       rankScenario(moduleId, scenarioId, responseId, newValue, newDirection);
+  
     }
   };
+
+  // Debug: Log current state
+  useEffect(() => {
+    console.log('SCENARIO CARD: Current state - moduleId:', moduleId, 'scenarioId:', scenarioId, 'isRevealed:', isRevealed, 'shouldComplete:', shouldComplete);
+  }, [moduleId, scenarioId, isRevealed, shouldComplete]);
 
   if (isModuleComplete) {
     return (
@@ -204,19 +173,6 @@ export default function ScenarioCard({
       </div>
     );
   }
-
-  {/*}
-  if (!isHydrated) {
-    return (
-      <div className="scenario-card scenario-fade-in">
-        <div className="prompt-card bg-lilac-400 rounded p-2 mb-6 text-left max-w-[60%]">
-          <h3 className="text-sm leading-tight select-none text-black">{prompt}</h3>
-        </div>
-        <div className="text-center py-8 text-gray-500">Loading scenario...</div>
-      </div>
-    );
-  }
-  */}
 
   const { mobile, desktop } = getVaryWidth(prompt.length);
   const isMobile = window.innerWidth < 768; 

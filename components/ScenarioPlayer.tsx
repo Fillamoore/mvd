@@ -1,4 +1,4 @@
-// components/ScenarioPlayer.tsx
+// components/ScenarioPlayer.tsx - FIXED VERSION
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -15,11 +15,13 @@ export default function ScenarioPlayer() {
   const {
     currentModule,
     pickUpAndPutDown,
+    performanceData,
     setCurrentScenario,
     setExpertRankings,
   } = useLocalStore(useShallow((state) => ({
     currentModule: state.currentModule,
     pickUpAndPutDown: state.pickUpAndPutDown,
+    performanceData: state.performanceData,
     setCurrentScenario: state.setCurrentScenario,
     setExpertRankings: state.setExpertRankings,
   })));
@@ -62,11 +64,23 @@ export default function ScenarioPlayer() {
   const isRevealed = storedCurrentScenario?.isRevealed || false;
   const userRankings = storedCurrentScenario?.userRankings || {};
 
+  // SET EXPERT RANKINGS IMMEDIATELY WHEN SCENARIO DATA IS AVAILABLE
+  useEffect(() => {
+    if (currentScenarioData && currentScenarioData.responses) {
+      const rankings: { [responseId: string]: number } = {};
+      currentScenarioData.responses.forEach(response => {
+        // Assuming response has expertRanking property
+        rankings[response.id] = (response as any).expertRanking;
+      });
+      setExpertRankings(moduleId, currentScenarioData.id, rankings);
+      console.log('📊 SCENARIO PLAYER: Set expert rankings immediately', rankings);
+    }
+  }, [currentScenarioData, moduleId, setExpertRankings]);
+
   const getTileScore = (): number => {
-    const moduleData = pickUpAndPutDown[moduleId.toString()];
-    if (moduleData && moduleData.completedScenarios.length > 0) {
-      const totalScore = moduleData.completedScenarios.reduce((sum, scenario) => sum + scenario.score, 0);
-      return totalScore / moduleData.completedScenarios.length;
+    const performance = performanceData.find(p => p.moduleId === moduleId);
+    if (performance && performance.scenariosCompleted > 0) {
+      return performance.averageScore;
     }
     return 0;
   };
