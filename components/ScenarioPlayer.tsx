@@ -69,8 +69,7 @@ export default function ScenarioPlayer() {
     if (currentScenarioData && currentScenarioData.responses) {
       const rankings: { [responseId: string]: number } = {};
       currentScenarioData.responses.forEach(response => {
-        // Assuming response has expertRanking property
-        rankings[response.id] = (response as any).expertRanking;
+        rankings[response.id] = 'expertRanking' in response ? (response as { expertRanking: number }).expertRanking : 0;
       });
       setExpertRankings(moduleId, currentScenarioData.id, rankings);
       console.log('📊 SCENARIO PLAYER: Set expert rankings immediately', rankings);
