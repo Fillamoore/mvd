@@ -287,7 +287,7 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
                       {isLoading ? 'Setting up...' : 'Try qikr out for 10 days'}
                     </button>
                     <div className="text-sm text-gray-400 mt-6">
-                      * we won't use your email in any other way
+                      * we won&apost use your email in any other way
                     </div>
                   </form>
                 )}
