@@ -1,4 +1,4 @@
-// app/api/debug/route.ts
+// app/api/debug/route.ts - FIXED VERSION
 import { db } from '@/lib/db';
 
 export async function GET() {
@@ -19,12 +19,15 @@ export async function GET() {
       database: test.rows[0],
       environment: env
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const err = error as Error;
     return Response.json({
       status: 'ERROR',
-      message: error.message,
-      code: error.code,
-      stack: error.stack
+      message: err.message,
+      // @ts-ignore - code might not exist on Error
+      code: err.code,
+      // @ts-ignore - stack might not exist
+      stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
     }, { status: 500 });
   }
 }
