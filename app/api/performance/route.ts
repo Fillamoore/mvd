@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { db, logPoolStats } from '@/lib/db';
 
 type ModuleData = {
   moduleId: number;
@@ -12,6 +12,7 @@ export async function POST(request: NextRequest) {
     const { performanceData, email } = await request.json();
 
     console.log('in api/performance, email', email);
+    logPoolStats();
 
     if (!email) {
       return NextResponse.json({ error: 'Missing email' }, { status: 401 });
@@ -31,8 +32,8 @@ export async function POST(request: NextRequest) {
     const user = userResult.rows[0];
     console.log(`Syncing performance data for user ${email}:`);
     console.log(`User ${user.id} ready for sync (trial: ${user.status})`);
+    logPoolStats();
 
-    // Fetch existing performance data
     const existingResult = await db.query(
       `SELECT module_id, scenarios_completed, average_score
        FROM user_performance
@@ -48,7 +49,6 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // Filter only changed modules
     const changedModules = performanceData.filter(
       ({ moduleId, scenariosCompleted, averageScore }: ModuleData) => {
         const existing = existingMap.get(moduleId);
@@ -63,8 +63,8 @@ export async function POST(request: NextRequest) {
 
     console.log(`📦 Incoming modules: ${performanceData.length}`);
     console.log(`🔍 Changed modules: ${changedModules.map((m: ModuleData) => m.moduleId).join(', ')}`);
+    logPoolStats();
 
-    // Update only changed modules
     for (const moduleData of changedModules) {
       console.log(`🛠 Updating module ${moduleData.moduleId} for user ${user.id}`);
       try {
@@ -95,6 +95,7 @@ export async function POST(request: NextRequest) {
             new Date().toISOString(),
           ]
         );
+        logPoolStats();
       } catch (error) {
         console.error(`❌ Failed to update module ${moduleData.moduleId}:`, error);
       }
@@ -108,6 +109,7 @@ export async function POST(request: NextRequest) {
 
   } catch (error) {
     console.error('Sync error:', error);
+    logPoolStats();
     return NextResponse.json({ error: 'Sync failed' }, { status: 500 });
   }
 }
@@ -116,6 +118,9 @@ export async function GET(request: NextRequest) {
   try {
     const url = new URL(request.url);
     const email = url.searchParams.get('email');
+
+    console.log('in api/performance GET, email', email);
+    logPoolStats();
 
     if (!email) {
       return NextResponse.json({ error: 'Missing email' }, { status: 401 });
@@ -135,6 +140,7 @@ export async function GET(request: NextRequest) {
     const user = userResult.rows[0];
     console.log(`Fetching performance data for user ${email}`);
     console.log(`User ${user.id} fetched (trial: ${user.status})`);
+    logPoolStats();
 
     const result = await db.query(
       `SELECT 
@@ -163,11 +169,13 @@ export async function GET(request: NextRequest) {
     });
 
     console.log(`Fetched ${performanceData.length} modules from DB, returning ${fullPerformanceData.length} total modules`);
+    logPoolStats();
 
     return NextResponse.json({ performanceData: fullPerformanceData });
 
   } catch (error) {
     console.error('Fetch performance error:', error);
+    logPoolStats();
     return NextResponse.json({ error: 'Fetch failed' }, { status: 500 });
   }
 }
