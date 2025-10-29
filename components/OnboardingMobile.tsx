@@ -177,11 +177,28 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
 
     try {
 
-      // 1. CREATE USER IN DATABASE (with magic token)
+      // 1. CREATE USER IN DATABASE 
+      {/*
+      console.log("about to createUser with email:",email)
       const userCreation = await createUser(email.trim());
     
       if (!userCreation.success) {
-        throw new Error(userCreation.error || 'OnboardingMobile failed to create user account');
+        throw new Error(userCreation.error || 'Failed to create user account');
+      }
+      */}
+
+      console.log("📡 About to POST to /api/create-user with:", email);
+
+      const response = await fetch('/api/create-user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+
+      const userCreation = await response.json();
+
+      if (!userCreation.success) {
+        throw new Error(userCreation.error || 'Failed to create user account');
       }
 
       setEmailInStore(email);      
@@ -189,6 +206,7 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
       
     } catch (error) {
       console.error('Error during onboarding:', error);
+      alert(`There was an error setting up your account, email: ${email}.`);
       alert(`There was an error setting up your account: ${(error as Error).message}. Please try again.`);    } finally {
       setIsLoading(false);
     }
