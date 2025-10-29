@@ -1,13 +1,15 @@
-// pages/api/db-check.ts
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: NextRequest) {
   try {
-    const result = await db.query('SELECT NOW()'); // simple connectivity test
-    res.status(200).json({ status: 'success', time: result.rows[0].now });
-  } catch (error: any) {
-    console.error('DB error:', error);
-    res.status(500).json({ status: 'error', message: error.message });
+    const result = await db.query('SELECT NOW()');
+    return NextResponse.json({ status: 'success', time: result.rows[0].now });
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : 'Unexpected error occurred';
+    console.error('DB error:', message);
+    return NextResponse.json({ status: 'error', message }, { status: 500 });
   }
 }
