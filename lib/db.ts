@@ -1,7 +1,6 @@
 import { Pool } from 'pg';
 
 declare global {
-  // Extend globalThis with a typed pgPool property
   var pgPool: Pool | undefined;
 }
 
@@ -9,7 +8,9 @@ const pool =
   global.pgPool ??
   new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false },
+    ssl: {
+      rejectUnauthorized: false,
+    },
     max: 3,
     idleTimeoutMillis: 10000,
     connectionTimeoutMillis: 5000,
