@@ -49,7 +49,7 @@ export async function createUser(email: string): Promise<{ success: boolean; err
           INSERT INTO user_performance (user_id, module_id, scenarios_completed, average_score)
           VALUES ($1, $2, 0, 0)`,
           [user_id, moduleId]
-      );
+        );
       }
       console.log("✅ All performance records created");
 
@@ -57,7 +57,7 @@ export async function createUser(email: string): Promise<{ success: boolean; err
       console.log("🎉 Transaction committed successfully");
       return { success: true };
     
-    } catch (innerError: any) {
+    } catch (innerError: unknown) {
       console.error("💥 Inner error:", innerError);
       await client.query('ROLLBACK');
       throw innerError;
@@ -66,16 +66,19 @@ export async function createUser(email: string): Promise<{ success: boolean; err
       console.log("🔓 Connection released");
     }
   
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const err = error as Error;
     console.error('💥 FATAL ERROR in createUser:', {
-      message: error.message,
-      code: error.code,
-      detail: error.detail,
-      stack: error.stack
+      message: err.message,
+      // @ts-expect-error - code might not exist on Error
+      code: err.code,
+      // @ts-expect-error - detail might not exist on Error  
+      detail: err.detail,
+      stack: err.stack
     });
     return { 
       success: false, 
-      error: `Database error: ${error.code} - ${error.message}`
+      error: `Database error: ${err.message}`
     };
   }
 }

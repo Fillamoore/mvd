@@ -129,7 +129,8 @@ const OnboardingDesktop: React.FC<OnboardingProps> = ({ onComplete }) => {
 
     try {
 
-      // 1. CREATE USER IN DATABASE (with magic token)
+      // 1. CREATE USER IN DATABASE 
+      console.log("about to createUser with email:",email)
       const userCreation = await createUser(email.trim());
     
       if (!userCreation.success) {
