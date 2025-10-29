@@ -5,6 +5,7 @@ export async function POST(req: NextRequest) {
   try {
     const { email } = await req.json();
 
+    // Uh?
     if (!email || typeof email !== 'string') {
       console.error("❌ Invalid email payload:", email);
       return NextResponse.json(
