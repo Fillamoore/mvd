@@ -1,4 +1,3 @@
-// app/actions/createUser.ts
 'use server';
 
 import { db } from '@/lib/db';
@@ -7,20 +6,20 @@ export async function createUser(email: string): Promise<{ success: boolean; err
   console.log("🎯 createUser called with email:", email);
   console.log("📦 NODE_ENV:", process.env.NODE_ENV);
   console.log("🔗 DATABASE_URL exists:", !!process.env.DATABASE_URL);
-  
+
+  let client;
   try {
     console.log("🔑 Attempting to get DB connection...");
-    const client = await db.connect();
+    client = await db.connect();
     console.log("✅ Got DB connection");
 
     try {
       console.log("🚀 Starting transaction");
       await client.query('BEGIN');
 
-      // Check if user exists
       console.log("👤 Checking for existing user...");
       const existingUser = await client.query(
-        `SELECT id FROM users WHERE email = $1`, 
+        `SELECT id FROM users WHERE email = $1`,
         [email]
       );
       console.log(`📊 Found ${existingUser.rows.length} existing users`);
@@ -28,11 +27,9 @@ export async function createUser(email: string): Promise<{ success: boolean; err
       if (existingUser.rows.length > 0) {
         console.log("✅ User exists, committing and returning");
         await client.query('COMMIT');
-        client.release();
         return { success: true };
       }
 
-      // Create the user
       console.log("👤 Creating new user...");
       const result = await client.query(`
         INSERT INTO users (email, created_at)
@@ -42,7 +39,6 @@ export async function createUser(email: string): Promise<{ success: boolean; err
       const user_id = result.rows[0].id;
       console.log("✅ User created with ID:", user_id);
 
-      // Create performance rows
       console.log("📈 Creating performance records...");
       for (let moduleId = 1; moduleId <= 49; moduleId++) {
         await client.query(`
@@ -51,34 +47,37 @@ export async function createUser(email: string): Promise<{ success: boolean; err
           [user_id, moduleId]
         );
       }
-      console.log("✅ All performance records created");
 
       await client.query('COMMIT');
       console.log("🎉 Transaction committed successfully");
       return { success: true };
-    
-    } catch (innerError: unknown) {
+
+    } catch (innerError) {
       console.error("💥 Inner error:", innerError);
-      await client.query('ROLLBACK');
+      try {
+        await client.query('ROLLBACK');
+        console.log("↩️ Transaction rolled back");
+      } catch (rollbackError) {
+        const msg = rollbackError instanceof Error ? rollbackError.message : String(rollbackError);
+        console.warn("⚠️ Rollback failed:", msg);
+      }
       throw innerError;
     } finally {
-      client.release();
-      console.log("🔓 Connection released");
+      try {
+        client.release();
+        console.log("🔓 Connection released");
+      } catch (releaseError) {
+        const msg = releaseError instanceof Error ? releaseError.message : String(releaseError);
+        console.warn("⚠️ Release failed (already released?):", msg);
+      }
     }
-  
-  } catch (error: unknown) {
-    const err = error as Error;
-    console.error('💥 FATAL ERROR in createUser:', {
-      message: err.message,
-      // @ts-expect-error - code might not exist on Error
-      code: err.code,
-      // @ts-expect-error - detail might not exist on Error  
-      detail: err.detail,
-      stack: err.stack
-    });
-    return { 
-      success: false, 
-      error: `Database error: ${err.message}`
+
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('💥 FATAL ERROR in createUser:', error);
+    return {
+      success: false,
+      error: `Database error: ${message}`
     };
   }
 }

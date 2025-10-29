@@ -206,7 +206,6 @@ const OnboardingMobile: React.FC<OnboardingProps> = ({ onComplete }) => {
       
     } catch (error) {
       console.error('Error during onboarding:', error);
-      alert(`There was an error setting up your account, email: ${email}.`);
       alert(`There was an error setting up your account: ${(error as Error).message}. Please try again.`);    } finally {
       setIsLoading(false);
     }
