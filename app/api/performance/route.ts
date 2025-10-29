@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 
+type ModuleData = {
+  moduleId: number;
+  scenariosCompleted: number;
+  averageScore: number;
+};
+
 export async function POST(request: NextRequest) {
   try {
     const { performanceData, email } = await request.json();
@@ -42,20 +48,25 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    // Filter only changed modules
     const changedModules = performanceData.filter(
-      ({ moduleId, scenariosCompleted, averageScore }: { moduleId: number; scenariosCompleted: number; averageScore: number }) => {
+      ({ moduleId, scenariosCompleted, averageScore }: ModuleData) => {
         const existing = existingMap.get(moduleId);
         if (!existing) return true;
         return (
           scenariosCompleted > existing.scenariosCompleted ||
           (scenariosCompleted === existing.scenariosCompleted &&
-          averageScore > existing.averageScore)
+           averageScore > existing.averageScore)
         );
       }
     );
 
+    console.log(`📦 Incoming modules: ${performanceData.length}`);
+    console.log(`🔍 Changed modules: ${changedModules.map((m: ModuleData) => m.moduleId).join(', ')}`);
+
     // Update only changed modules
     for (const moduleData of changedModules) {
+      console.log(`🛠 Updating module ${moduleData.moduleId} for user ${user.id}`);
       try {
         await db.query(
           `INSERT INTO user_performance (
@@ -76,17 +87,23 @@ export async function POST(request: NextRequest) {
               ELSE user_performance.average_score
             END,
             last_updated = CURRENT_TIMESTAMP`,
-          [user.id, moduleData.moduleId, moduleData.scenariosCompleted, moduleData.averageScore, new Date().toISOString()]
+          [
+            user.id,
+            moduleData.moduleId,
+            moduleData.scenariosCompleted,
+            moduleData.averageScore,
+            new Date().toISOString(),
+          ]
         );
       } catch (error) {
-        console.error(`Failed to update module ${moduleData.moduleId}:`, error);
+        console.error(`❌ Failed to update module ${moduleData.moduleId}:`, error);
       }
     }
 
-    return NextResponse.json({ 
-      success: true, 
+    return NextResponse.json({
+      success: true,
       message: 'Performance data synced',
-      modulesUpdated: changedModules.length
+      modulesUpdated: changedModules.length,
     });
 
   } catch (error) {
@@ -141,7 +158,7 @@ export async function GET(request: NextRequest) {
         moduleId,
         scenariosCompleted: 0,
         averageScore: 0,
-        lastUpdated: new Date().toISOString()
+        lastUpdated: new Date().toISOString(),
       };
     });
 
