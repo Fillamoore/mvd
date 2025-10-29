@@ -130,13 +130,29 @@ const OnboardingDesktop: React.FC<OnboardingProps> = ({ onComplete }) => {
     try {
 
       // 1. CREATE USER IN DATABASE 
+      {/*
       console.log("about to createUser with email:",email)
       const userCreation = await createUser(email.trim());
     
       if (!userCreation.success) {
         throw new Error(userCreation.error || 'Failed to create user account');
       }
-            
+      */}
+
+      console.log("📡 About to POST to /api/create-user with:", email);
+
+      const response = await fetch('/api/create-user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+
+      const userCreation = await response.json();
+
+      if (!userCreation.success) {
+        throw new Error(userCreation.error || 'Failed to create user account');
+      }
+
       setEmailInStore(email);      
       handleComplete();
       
