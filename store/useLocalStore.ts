@@ -341,93 +341,79 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
           });
         },
 
-        syncOnAppLoad: async () => {
-          const state = get();
-          if (!state.email || !state.isOnline) {
-            console.log('🔄 APP LOAD: Cannot sync - missing email or offline');
-            return;
-          }
+syncOnAppLoad: async () => {
+  const state = get();
+  if (!state.email || !state.isOnline) {
+    console.log('🔄 APP LOAD: Cannot sync - missing email or offline');
+    return;
+  }
 
-          try {
-            console.log('🔄 APP LOAD: Local state BEFORE sync:', state.performanceData);
-            
-            const response = await fetch(`/api/performance?email=${state.email}`);
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            
-            const serverData = await response.json();
-            console.log('🔄 APP LOAD: Server data:', serverData.performanceData);
+  try {
+    console.log('🔄 APP LOAD: Local state BEFORE sync:', state.performanceData);
+    
+    const response = await fetch(`/api/performance?email=${state.email}`);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    
+    const serverData = await response.json();
+    console.log('🔄 APP LOAD: Server data:', serverData.performanceData);
 
-            // COMPLETE SYNC: Merge server data with local, adding any missing modules
-            set((state) => {
-              const serverModules = serverData.performanceData || [];
-              const localModules = state.performanceData || [];
-              
-              // Create a map of local modules for easy lookup
-              const localModuleMap = new Map();
-              localModules.forEach(module => {
-                localModuleMap.set(module.moduleId, module);
-              });
-              
-              // Merge strategy: for each server module, use server data if it's more recent/complete
-              // OR if the module doesn't exist locally
-              const mergedPerformanceData = serverModules.map((serverModule: ModulePerformance) => {
-                const localModule = localModuleMap.get(serverModule.moduleId);
-                
-                if (!localModule) {
-                  // Module exists only on server - add it
-                  return serverModule;
-                }
-                
-                // Module exists in both - use the one with higher progress
-                if (serverModule.scenariosCompleted > localModule.scenariosCompleted) {
-                  return serverModule;
-                }
-                
-                // Local has same or better progress - keep local
-                return localModule;
-              });
-              
-              // Update the state with the merged data
-              state.performanceData = mergedPerformanceData;
-            });
+    // COMPLETE SYNC: Merge server data with local
+    set((state) => {
+      const serverModules = serverData.performanceData || [];
+      const localModules = state.performanceData || [];
+      
+      console.log('🔄 MERGE: Local modules count:', localModules.length);
+      console.log('🔄 MERGE: Server modules count:', serverModules.length);
 
-            // POSITIONING LOGIC - remains the same
-            const { performanceData, currentModule, pickUpAndPutDown } = get();
-            
-            if (!performanceData || performanceData.length === 0) return;
+      // Create a map for easier lookup
+      const mergedMap = new Map();
+      
+      // First, add all local modules to the map
+      localModules.forEach(module => {
+        mergedMap.set(module.moduleId, module);
+      });
+      
+      // Then, update with server modules where they have better progress
+      serverModules.forEach((serverModule: { moduleId: string | number; scenariosCompleted: number; lastUpdated: string }) => { 
+        const localModule = mergedMap.get(serverModule.moduleId);
+        
+        if (!localModule) {
+          // Module doesn't exist locally - add it
+          console.log('🔄 MERGE: Adding new module from server:', serverModule.moduleId);
+          mergedMap.set(serverModule.moduleId, serverModule);
+        } else if (serverModule.scenariosCompleted > localModule.scenariosCompleted) {
+          // Server has better progress - update it
+          console.log('🔄 MERGE: Updating module from server:', serverModule.moduleId, 
+                     'Local progress:', localModule.scenariosCompleted, 
+                     'Server progress:', serverModule.scenariosCompleted);
+          mergedMap.set(serverModule.moduleId, serverModule);
+        } else {
+          console.log('🔄 MERGE: Keeping local data for module:', serverModule.moduleId,
+                     'Local progress:', localModule.scenariosCompleted,
+                     'Server progress:', serverModule.scenariosCompleted);
+        }
+      });
+      
+      // Convert back to array
+      const mergedPerformanceData = Array.from(mergedMap.values());
+      console.log('🔄 MERGE: Final merged data:', mergedPerformanceData);
+      
+      // Update the state
+      state.performanceData = mergedPerformanceData;
+    });
 
-            // Get the most recently updated module that's still in progress
-            const modulesInProgress = performanceData
-              .filter(module => module.scenariosCompleted > 0 && module.scenariosCompleted < 50)
-              .sort((a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime());
+    // Wait a moment for state to update, then log the result
+    setTimeout(() => {
+      const newState = get();
+      console.log('🔄 APP LOAD: Local state AFTER sync:', newState.performanceData);
+    }, 100);
 
-            if (modulesInProgress.length > 0) {
-              const latestModule = modulesInProgress[0];
-              const nextScenarioId = latestModule.scenariosCompleted + 1;
-              
-              console.log('🔄 POSITIONING: Moving to scenario', nextScenarioId, 'in module', latestModule.moduleId);
+    // ... rest of your positioning logic
 
-              set((state) => {
-                state.currentModule = latestModule.moduleId.toString();
-                const moduleKey = latestModule.moduleId.toString();
-                if (!state.pickUpAndPutDown[moduleKey]) {
-                  state.pickUpAndPutDown[moduleKey] = { currentScenario: null };
-                }
-                state.pickUpAndPutDown[moduleKey].currentScenario = {
-                  scenarioId: nextScenarioId,
-                  userRankings: {},
-                  expertRankings: {},
-                  userRankingDirections: { 'A': true, 'B': true, 'C': true },
-                  isRevealed: false,
-                  shouldComplete: false,
-                };
-              });
-            }
-            
-          } catch (error) {
-            console.warn('🔄 APP LOAD: Sync failed:', error);
-          }
-        },
+  } catch (error) {
+    console.warn('🔄 APP LOAD: Sync failed:', error);
+  }
+},
 
         syncPerformanceToServer: async () => {
           const state = get();
