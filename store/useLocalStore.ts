@@ -357,15 +357,41 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
             const serverData = await response.json();
             console.log('🔄 APP LOAD: Server data:', serverData.performanceData);
 
-            // Merge server data with local
+            // COMPLETE SYNC: Merge server data with local, adding any missing modules
             set((state) => {
-              state.performanceData = state.performanceData.map(local => {
-                const server = serverData.performanceData.find((s: ModulePerformance) => s.moduleId === local.moduleId);
-                return (server && server.scenariosCompleted > local.scenariosCompleted) ? server : local;
+              const serverModules = serverData.performanceData || [];
+              const localModules = state.performanceData || [];
+              
+              // Create a map of local modules for easy lookup
+              const localModuleMap = new Map();
+              localModules.forEach(module => {
+                localModuleMap.set(module.moduleId, module);
               });
+              
+              // Merge strategy: for each server module, use server data if it's more recent/complete
+              // OR if the module doesn't exist locally
+              const mergedPerformanceData = serverModules.map((serverModule: ModulePerformance) => {
+                const localModule = localModuleMap.get(serverModule.moduleId);
+                
+                if (!localModule) {
+                  // Module exists only on server - add it
+                  return serverModule;
+                }
+                
+                // Module exists in both - use the one with higher progress
+                if (serverModule.scenariosCompleted > localModule.scenariosCompleted) {
+                  return serverModule;
+                }
+                
+                // Local has same or better progress - keep local
+                return localModule;
+              });
+              
+              // Update the state with the merged data
+              state.performanceData = mergedPerformanceData;
             });
 
-            // POSITIONING LOGIC - directly here
+            // POSITIONING LOGIC - remains the same
             const { performanceData, currentModule, pickUpAndPutDown } = get();
             
             if (!performanceData || performanceData.length === 0) return;
