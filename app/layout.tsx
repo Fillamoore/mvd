@@ -37,8 +37,9 @@ export default function RootLayout() {
   // FIXED: Only sync when we transition to main_app state
   useEffect(() => {
     console.log('🔄 APP: State changed', { appState, email, isOnline });
-    
-    if (appState === 'main_app' && email && isOnline) {
+   
+    // Check for sync up as soon as the splash cycle starts.
+    if (appState === 'splash' && email && isOnline) {
       console.log('🔄 APP: Main app loaded with email and online - triggering sync');
       syncOnAppLoad();
     }

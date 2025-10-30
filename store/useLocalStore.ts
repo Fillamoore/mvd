@@ -64,9 +64,6 @@ export interface PickUpAndPutDownStore {
   setEmail: (email: string) => void;
   clearAuth: () => void;
 
-  // NEW: Position sync action
-  setModuleAndScenarioFromPerformance: () => void;
-
   // Sync actions
   syncOnAppLoad: () => Promise<void>;
   setOnlineStatus: (isOnline: boolean) => void;
@@ -165,7 +162,6 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
           });
         },
 
-        // In useLocalStore.ts - update revealScenario with more debugging
         revealScenario: (moduleId: number, userRankings: { [responseId: string]: number | null }, expertRankings: { [responseId: string]: number }) => {
           set((state) => {
             const moduleKey = moduleId.toString();
@@ -321,85 +317,6 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
           });
         },
 
-        // NEW: Position sync action
-        setModuleAndScenarioFromPerformance: () => {
-          set((state) => {
-            const { performanceData, currentModule, pickUpAndPutDown } = state;
-            
-            if (!performanceData || performanceData.length === 0) {
-              console.log('📊 POSITION: No performance data available');
-              return;
-            }
-
-            // Get current scenario
-            const currentModuleData = pickUpAndPutDown[currentModule!];
-            const currentScenario = currentModuleData?.currentScenario;
-            
-            if (!currentScenario) {
-              console.log('📊 POSITION: No current scenario found');
-              return;
-            }
-
-            // Filter modules that are IN PROGRESS (not completed) and sort by lastUpdated
-            const modulesInProgress = performanceData
-              .filter(module => module.scenariosCompleted > 0 && module.scenariosCompleted < 50)
-              .sort((a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime());
-
-            if (modulesInProgress.length > 0) {
-              // Get the most recently updated module that's still in progress
-              const latestModule = modulesInProgress[0];
-              const nextScenarioId = latestModule.scenariosCompleted + 1;
-              
-              console.log('📊 POSITION: Progress check', {
-                currentModule: currentModule,
-                currentScenario: currentScenario.scenarioId,
-                currentRevealed: currentScenario.isRevealed,
-                latestModule: latestModule.moduleId,
-                latestProgress: latestModule.scenariosCompleted,
-                nextScenarioId: nextScenarioId
-              });
-
-              // Advance if we're behind progress AND the current scenario is not revealed
-              const shouldAdvance = currentScenario.scenarioId < nextScenarioId && currentScenario.isRevealed === false;
-
-              if (shouldAdvance) {
-                // Set the current module
-                state.currentModule = latestModule.moduleId.toString();
-                
-                // Initialize the PUPd state for this module
-                const moduleKey = latestModule.moduleId.toString();
-                if (!state.pickUpAndPutDown[moduleKey]) {
-                  state.pickUpAndPutDown[moduleKey] = { currentScenario: null };
-                }
-                
-                state.pickUpAndPutDown[moduleKey].currentScenario = {
-                  scenarioId: nextScenarioId,
-                  userRankings: {},
-                  expertRankings: {},
-                  userRankingDirections: { 'A': true, 'B': true, 'C': true },
-                  isRevealed: false,
-                  shouldComplete: false,
-                };
-                
-                console.log('📊 POSITION: Advanced to next scenario', {
-                  fromModule: currentModule,
-                  fromScenario: currentScenario.scenarioId,
-                  toModule: state.currentModule,
-                  toScenario: nextScenarioId
-                });
-              } else {
-                console.log('📊 POSITION: No advance needed', {
-                  currentModule: currentModule,
-                  currentScenario: currentScenario.scenarioId,
-                  currentRevealed: currentScenario.isRevealed,
-                  expectedNext: nextScenarioId
-                });
-              }
-            }
-            // If no modules in progress, do nothing - preserve current scenario
-          });
-        },
-
         // Sync actions
         setOnlineStatus: (isOnline: boolean) => {
           console.log('🌐 NETWORK: setOnlineStatus called with:', isOnline);
@@ -432,39 +349,54 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
           }
 
           try {
-            console.log('🔄 APP LOAD: Wombat2 Fetching latest performance data from server',state.email);
-            const response = await fetch(`/api/performance?email=${state.email}`);
+            console.log('🔄 APP LOAD: Local state BEFORE sync:', state.performanceData);
             
-            if (!response.ok) {
-              throw new Error(`HTTP ${response.status}: ${await response.text()}`);
-            }
+            const response = await fetch(`/api/performance?email=${state.email}`);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
             
             const serverData = await response.json();
-            console.log('🔄 APP LOAD: Server data fetched:', serverData.performanceData);
-            
+            console.log('🔄 APP LOAD: Server data:', serverData.performanceData);
+
+            // Merge server data with local
             set((state) => {
-              let updatedCount = 0;
-              
-              // Merge server data with local data - server wins on conflicts
               state.performanceData = state.performanceData.map(local => {
                 const server = serverData.performanceData.find((s: ModulePerformance) => s.moduleId === local.moduleId);
-                
-                if (server && server.scenariosCompleted > local.scenariosCompleted) {
-                  console.log('🔄 APP LOAD: Updating module', local.moduleId, 'from server');
-                  console.log('🔄 APP LOAD: Local:', local.scenariosCompleted, 'Server:', server.scenariosCompleted);
-                  updatedCount++;
-                  return server; // Server has more progress
-                }
-                
-                return local; // Keep local progress
+                return (server && server.scenariosCompleted > local.scenariosCompleted) ? server : local;
               });
-              
-              console.log('🔄 APP LOAD: Updated', updatedCount, 'modules from server');
-              state.lastSuccessfulSync = new Date().toISOString();
             });
 
-            // NEW: After syncing performance data, set the module/scenario position
-            get().setModuleAndScenarioFromPerformance();
+            // POSITIONING LOGIC - directly here
+            const { performanceData, currentModule, pickUpAndPutDown } = get();
+            
+            if (!performanceData || performanceData.length === 0) return;
+
+            // Get the most recently updated module that's still in progress
+            const modulesInProgress = performanceData
+              .filter(module => module.scenariosCompleted > 0 && module.scenariosCompleted < 50)
+              .sort((a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime());
+
+            if (modulesInProgress.length > 0) {
+              const latestModule = modulesInProgress[0];
+              const nextScenarioId = latestModule.scenariosCompleted + 1;
+              
+              console.log('🔄 POSITIONING: Moving to scenario', nextScenarioId, 'in module', latestModule.moduleId);
+
+              set((state) => {
+                state.currentModule = latestModule.moduleId.toString();
+                const moduleKey = latestModule.moduleId.toString();
+                if (!state.pickUpAndPutDown[moduleKey]) {
+                  state.pickUpAndPutDown[moduleKey] = { currentScenario: null };
+                }
+                state.pickUpAndPutDown[moduleKey].currentScenario = {
+                  scenarioId: nextScenarioId,
+                  userRankings: {},
+                  expertRankings: {},
+                  userRankingDirections: { 'A': true, 'B': true, 'C': true },
+                  isRevealed: false,
+                  shouldComplete: false,
+                };
+              });
+            }
             
           } catch (error) {
             console.warn('🔄 APP LOAD: Sync failed:', error);
