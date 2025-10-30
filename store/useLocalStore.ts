@@ -362,8 +362,8 @@ syncOnAppLoad: async () => {
       const serverModules = serverData.performanceData || [];
       const localModules = state.performanceData || [];
       
-      console.log('🔄 MERGE: Local modules count:', localModules.length);
-      console.log('🔄 MERGE: Server modules count:', serverModules.length);
+      //console.log('🔄 MERGE: Local modules count:', localModules.length);
+      //console.log('🔄 MERGE: Server modules count:', serverModules.length);
 
       // Create a map for easier lookup
       const mergedMap = new Map();
@@ -379,18 +379,18 @@ syncOnAppLoad: async () => {
         
         if (!localModule) {
           // Module doesn't exist locally - add it
-          console.log('🔄 MERGE: Adding new module from server:', serverModule.moduleId);
+          //console.log('🔄 MERGE: Adding new module from server:', serverModule.moduleId);
           mergedMap.set(serverModule.moduleId, serverModule);
         } else if (serverModule.scenariosCompleted > localModule.scenariosCompleted) {
           // Server has better progress - update it
-          console.log('🔄 MERGE: Updating module from server:', serverModule.moduleId, 
-                     'Local progress:', localModule.scenariosCompleted, 
-                     'Server progress:', serverModule.scenariosCompleted);
+          //console.log('🔄 MERGE: Updating module from server:', serverModule.moduleId, 
+          //           'Local progress:', localModule.scenariosCompleted, 
+          //           'Server progress:', serverModule.scenariosCompleted);
           mergedMap.set(serverModule.moduleId, serverModule);
         } else {
-          console.log('🔄 MERGE: Keeping local data for module:', serverModule.moduleId,
-                     'Local progress:', localModule.scenariosCompleted,
-                     'Server progress:', serverModule.scenariosCompleted);
+          //console.log('🔄 MERGE: Keeping local data for module:', serverModule.moduleId,
+          //           'Local progress:', localModule.scenariosCompleted,
+          //           'Server progress:', serverModule.scenariosCompleted);
         }
       });
       
