@@ -99,6 +99,8 @@ export default function ScenarioPlayer() {
     );
   }
 
+  console.log("SCENARIO PLAYER: just before render",currentScenarioData.id);
+  
   return (
     <div className={`scenarios-player-pane border-1 border-gray-700 h-full flex flex-col ${containerBorderRadius}`}>
 
