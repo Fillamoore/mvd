@@ -56,34 +56,16 @@ export default function ScenarioCard({
 
   const [isModuleComplete, setIsModuleComplete] = useState(false);
 
-  // Get store state and actions
-  const { 
-    userRankings, 
-    userRankingDirections, 
-    isRevealed,
-    currentScenario,
-    shouldComplete
-  } = useLocalStore(useShallow((state) => {
-    const currentScenario = state.pickUpAndPutDown[moduleId.toString()]?.currentScenario;
-    return {
-      userRankings: (currentScenario?.userRankings || EMPTY_USER_RANKINGS) as { [key: string]: number | null },
-      userRankingDirections: (currentScenario?.userRankingDirections || EMPTY_RANKING_DIRECTIONS) as { [key: string]: boolean },
-      isRevealed: currentScenario?.isRevealed || false,
-      currentScenario: currentScenario,
-      shouldComplete: currentScenario?.shouldComplete || false 
-    };
-  }));
 
-  const { 
-    rankScenario, 
-    setNextScenario,
-    triggerScenarioCompletion
-  } = useLocalStore(useShallow((state) => ({
-    rankScenario: state.rankScenario,
-    setNextScenario: state.setNextScenario,
-    triggerScenarioCompletion: state.triggerScenarioCompletion,
-  })));
+  const { pickUpAndPutDown } = useLocalStore();
+  const currentScenario = pickUpAndPutDown[moduleId]?.currentScenario;
+  const userRankings = currentScenario?.userRankings || EMPTY_USER_RANKINGS;
+  const userRankingDirections = currentScenario?.userRankingDirections || EMPTY_RANKING_DIRECTIONS;
+  const isRevealed = currentScenario?.isRevealed || false;
+  const shouldComplete = currentScenario?.shouldComplete || false;
 
+  const { rankScenario, setNextScenario, triggerScenarioCompletion } = useLocalStore();
+  
   const isLastScenario = scenarioId === totalScenarios;
 
   const calculateScore = useMemo(() => {
@@ -106,22 +88,22 @@ export default function ScenarioCard({
   const score = isRevealed ? calculateScore : 0;
 
   const handleScenarioCompletion = useCallback(() => {
-    console.log('SCENARIO CARD: handleScenarioCompletion called - moving to next scenario');
+   // console.log('SCENARIO CARD: handleScenarioCompletion called - moving to next scenario');
     
     if (isLastScenario) {
-      console.log('SCENARIO CARD: Module completed!');
+   //   console.log('SCENARIO CARD: Module completed!');
       setIsModuleComplete(true);
     } else {
       const nextScenarioId = scenarioId + 1;
-      console.log('SCENARIO CARD: Moving to next scenario:', nextScenarioId);
+   //   console.log('SCENARIO CARD: Moving to next scenario:', nextScenarioId);
       setNextScenario(nextScenarioId);
     }
   }, [isLastScenario, scenarioId, setNextScenario]);
 
   useEffect(() => {
-    console.log('SCENARIO CARD: useEffect - shouldComplete:', shouldComplete);
+  //  console.log('SCENARIO CARD: useEffect - shouldComplete:', shouldComplete);
     if (shouldComplete) {
-      console.log('SCENARIO CARD: Triggering scenario completion (navigation)');
+  //    console.log('SCENARIO CARD: Triggering scenario completion (navigation)');
       handleScenarioCompletion();
     }
   }, [shouldComplete, handleScenarioCompletion]);
@@ -159,10 +141,12 @@ export default function ScenarioCard({
   };
 
   // Debug: Log current state
+  {/*
   useEffect(() => {
     console.log('SCENARIO CARD: Current state - moduleId:', moduleId, 'scenarioId:', scenarioId, 'isRevealed:', isRevealed, 'shouldComplete:', shouldComplete);
   }, [moduleId, scenarioId, isRevealed, shouldComplete]);
-
+  */}
+    
   if (isModuleComplete) {
     return (
       <div className="scenario-card scenario-fade-in flex justify-center items-center h-screen">

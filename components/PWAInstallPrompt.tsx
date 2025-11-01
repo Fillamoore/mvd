@@ -1,42 +1,9 @@
-// components/PWAInstallPrompt.tsx - SIMPLE FIX
+// components/PWAInstallPrompt.tsx - FINAL SIMPLIFIED
 'use client';
 
-import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
-interface PWAInstallPromptProps {
-  onInstallComplete?: () => void;
-}
-
-export default function PWAInstallPrompt({ onInstallComplete }: PWAInstallPromptProps) {
-  const [showPrompt, setShowPrompt] = useState(false);
-
-  useEffect(() => {
-    // SIMPLE CHECK: Only show if we&apos;re in regular Safari browser, NOT when launched from home screen
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-    
-    if (isStandalone) {
-      // App was launched from home screen - DON&apos;T show install prompt
-      setShowPrompt(false);
-      return;
-    }
-
-    // Only show for iOS Safari in regular browser mode
-    const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as Window & { MSStream?: unknown }).MSStream;
-    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-    
-    if (isIOSDevice && isSafari) {
-      setShowPrompt(true);
-    }
-  }, []);
-
-  const handleClose = () => {
-    setShowPrompt(false);
-    onInstallComplete?.();
-  };
-
-  if (!showPrompt) return null; // SIMPLIFIED - just check showPrompt
-
+export default function PWAInstallPrompt() {
   return (
     <div className="fixed inset-0 bg-black z-50 flex items-center justify-center p-4">
       <div className="flex flex-col items-center">
@@ -91,10 +58,6 @@ export default function PWAInstallPrompt({ onInstallComplete }: PWAInstallPrompt
                 priority={true} 
                 loading="eager"   
               />
-            </div>
-            
-            <div className="flex justify-between items-center">
-              <p className="font-medium text-gray-800">4. Quit Safari</p>
             </div>
             
             <div className="flex items-center">

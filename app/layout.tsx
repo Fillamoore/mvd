@@ -1,4 +1,4 @@
-// app/layout.tsx (FINAL - NO checkUserExists)
+// app/layout.tsx - WITH SINGLE ONLINE STATUS SOURCE
 'use client';
 
 import './globals.css';
@@ -22,73 +22,66 @@ const lato = Lato({
 
 type AppState = 'checking' | 'pwa_install' | 'onboarding' | 'splash' | 'main_app' | 'offline_block';
 type OnboardingFlow = 'onboarding-desktop' | 'onboarding-mobile';
-
 export default function RootLayout() {
-  
-  useOnlineStatus(); 
 
-  const email = useLocalStore((state) => state.email);
-  const isOnline = useLocalStore((state) => state.isOnline);
-  const syncOnAppLoad = useLocalStore((state) => state.syncOnAppLoad);
+  // Put the hook in place to check for online status changes.
+  useOnlineStatus();
+    
+  const isOnline = useLocalStore((state) => state.isOnline); 
   const [appState, setAppState] = useState<AppState>('checking');
   const [onboardingFlow, setOnboardingFlow] = useState<OnboardingFlow>('onboarding-desktop');
   const [isMobile, setIsMobile] = useState(false);
-  
-  // FIXED: Only sync when we transition to main_app state
+  const syncWithDBOnStartup = useLocalStore((state: any) => state.syncWithDBOnStartup);
+
   useEffect(() => {
-    console.log('🔄 APP: State changed', { appState, email, isOnline });
-   
-    // Check for sync up as soon as the splash cycle starts.
-    if (appState === 'splash' && email && isOnline) {
-      console.log('🔄 APP: Main app loaded with email and online - triggering sync');
-      syncOnAppLoad();
+    
+    const email = useLocalStore.getState().email;
+
+    // Use store's isOnline instead of navigator.onLine
+    if (!isOnline && !email) {
+      setAppState('offline_block');
+      return;
     }
-  }, [appState, email, isOnline]);
-  
-  useEffect(() => {
-    const determineFlow = async () => {
 
-      const emailFromStore = useLocalStore.getState().email;
+    const ua = navigator.userAgent;
+    const isIOS = /iPhone|iPad|iPod/.test(ua);
+    const isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
 
-      // Check here for first time login (implied by no email from store). If online, make a HARD STOP. 
-      if (!navigator.onLine && !emailFromStore) {
-        setAppState('offline_block');
-        return;
-      }
+    setIsMobile(isIOS);
 
-      const ua = navigator.userAgent;
-      const isIOS = /iPhone|iPad|iPod/.test(ua);
-      const isSafari = /^((?!chrome|android).)*safari/i.test(ua);
-      const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    // PWA install prompt for iOS Safari
+    if (isIOS && isSafari && !isStandalone) {
+      setAppState('pwa_install');
+      return; 
+    }
 
-      setIsMobile(isIOS);
-
-      // PWA install prompt for iOS Safari
-      if (isIOS && isSafari && !isStandalone) {
-        setAppState('pwa_install');
-        return; 
-      }
-
-      // If first time in, do the right onboarding for this device. 
-      if (!emailFromStore) {
-        setOnboardingFlow(isIOS ? 'onboarding-mobile' : 'onboarding-desktop');
-        setAppState('onboarding');
-      } else {
-        setAppState('splash');
-      }
-
-    };
-
-    determineFlow();
-  }, []);
+    // If first time in, do the right onboarding for this device. 
+    if (!email) {
+      setOnboardingFlow(isIOS ? 'onboarding-mobile' : 'onboarding-desktop');
+      setAppState('onboarding');
+    } else {
+      // Do the DB handshake once onboarding has completed and BEFORE the main app loads to avoid timing issues.
+      //console.log('Layout: calling syncOnAppLoad where onboarding wasn\'t needed.'); 
+      setAppState('splash');      
+      //if (isOnline){
+      //  console.log('Desktop Layout: ',email);
+      //  syncWithDBOnStartup();
+      //}
+      
+    }
+  }, [isOnline]); // Add isOnline to dependencies
 
   const handleOnboardingComplete = () => {
+    // Do the DB handshake once onboarding has completed and BEFORE the main app loads to avoid timing issues.
+    console.log('Layout: calling syncOnAppLoad after onboarding completed.'); 
     setAppState('splash');
-  };
 
-  const handlePWAInstallComplete = () => {
-    const hasAuthToken = !!localStorage.getItem('auth_token');
-    setAppState(hasAuthToken ? 'splash' : 'onboarding');
+    {/*
+    if (isOnline) {
+      syncWithDBOnStartup();
+    }
+    */}  
   };
 
   const renderOnboarding = () => {
@@ -99,6 +92,8 @@ export default function RootLayout() {
         return <OnboardingMobile onComplete={handleOnboardingComplete} />;
     }
   };
+
+  //console.log('in layout, about to render',appState);
 
   return (
     <html lang="en">
@@ -114,33 +109,39 @@ export default function RootLayout() {
       </head>
 
       <body className={`${lato.className} h-screen w-screen overflow-hidden pb-[env(safe-area-inset-bottom)] bg-black`}>
-        {appState === 'checking' && (
-          <div className="flex justify-center items-center h-full">
-            <img src="/spinner.webp" alt="Loading..." className="w-16 h-16 animate-spin filter invert" />
-          </div>
-        )}
-
+        
         {appState === 'offline_block' && <OfflineBlock />}
 
-        {appState === 'pwa_install' && (
-          <PWAInstallPrompt onInstallComplete={handlePWAInstallComplete} />
-        )}
+        {appState === 'pwa_install' && <PWAInstallPrompt />}
 
         {appState === 'onboarding' && renderOnboarding()}
 
-        {(appState === 'main_app' || appState === 'splash') && (
-          <div className={`w-full h-full transition-opacity duration-500 ${
-            appState === 'main_app' ? 'opacity-100' : 'opacity-0'
-          }`}>
+        {appState === 'splash' && (
+          <div className="w-full h-full invisible">
             {isMobile ? <MobileLayout /> : <DesktopLayout />}
           </div>
         )}
+        
+        {appState === 'main_app' && (
+          <div className="w-full h-full visible">
+            {isMobile ? <MobileLayout /> : <DesktopLayout />}
+          </div>
+        )}
+
+        {/*
+        <div className={`w-full h-full ${
+          appState === 'splash' ? 'invisible' : 'visible'
+        }`}>
+          {isMobile ? <MobileLayout /> : <DesktopLayout />}
+        </div>
+        */}
 
         {appState === 'splash' && (
           <div className="fixed inset-0 z-50">
             <SplashScreen onComplete={() => setAppState('main_app')} />
           </div>
         )}
+        
       </body>
     </html>
   );

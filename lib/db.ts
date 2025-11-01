@@ -22,13 +22,17 @@ if (!global.pgPool) {
   global.pgPool = pool;
 }
 
+
 export const logPoolStats = () => {
+  {/*
   console.log("🧠 Pool stats:", {
     total: pool.totalCount,
     idle: pool.idleCount,
     waiting: pool.waitingCount,
   });
+  */}
 };
+
 
 export const db = {
   query: (text: string, params?: unknown[]) => pool.query(text, params),

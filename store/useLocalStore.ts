@@ -65,7 +65,7 @@ export interface PickUpAndPutDownStore {
   clearAuth: () => void;
 
   // Sync actions
-  syncOnAppLoad: () => Promise<void>;
+  syncWithDBOnStartup: () => Promise<void>;
   setOnlineStatus: (isOnline: boolean) => void;
   syncPerformanceToServer: () => Promise<void>;
   syncPerformanceFromServer: () => Promise<void>;
@@ -188,7 +188,7 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
             const averageDifference = totalDifference / ratedResponses;
             const score = Math.round(100 - (averageDifference / 2) * 100);
             
-            console.log('🔴 REVEAL: Calling incrementScenariosCompleted with:', { moduleId, score });
+            //console.log('🔴 REVEAL: Calling incrementScenariosCompleted with:', { moduleId, score });
             // Update performance AFTER the state update is complete
             get().incrementScenariosCompleted(moduleId, score);
           }
@@ -251,15 +251,18 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
         },
 
         incrementScenariosCompleted: (moduleId: number, newScore: number) => {
-          console.log('🔴 SCENARIO COMPLETED: Starting', { moduleId, newScore });
+          //console.log('🔴 SCENARIO COMPLETED: Starting', { moduleId, newScore });
           
           set((state) => {
+
+            {/*
             console.log('🔴 SCENARIO COMPLETED: Inside set', { 
               isOnline: state.isOnline, 
               email: state.email,
               hasEmail: !!state.email 
             });
-            
+            */}
+
             const performanceIndex = state.performanceData.findIndex(p => p.moduleId === moduleId);
             
             if (performanceIndex >= 0) {
@@ -274,17 +277,17 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
                 lastUpdated: new Date().toISOString(),
               };
               
-              console.log('🔴 SCENARIO COMPLETED: Performance updated', state.performanceData[performanceIndex]);
+              //console.log('🔴 SCENARIO COMPLETED: Performance updated', state.performanceData[performanceIndex]);
               
               // Handle sync based on online status
               if (state.isOnline && state.email) {
-                console.log('🔴 SCENARIO COMPLETED: Online with email - scheduling sync');
+                //console.log('🔴 SCENARIO COMPLETED: Online with email - scheduling sync');
                 setTimeout(() => {
-                  console.log('🔴 SCENARIO COMPLETED: Executing sync');
+                  //console.log('🔴 SCENARIO COMPLETED: Executing sync');
                   get().syncPerformanceToServer();
                 }, 100);
               } else if (state.email) {
-                console.log('🔴 SCENARIO COMPLETED: Offline with email - queuing sync');
+                //console.log('🔴 SCENARIO COMPLETED: Offline with email - queuing sync');
                 const newSync: PendingSync = {
                   id: Math.random().toString(36),
                   type: 'performance_update' as const,
@@ -294,8 +297,6 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
                   retryCount: 0
                 };
                 state.pendingSyncs.push(newSync);
-              } else {
-                console.log('🔴 SCENARIO COMPLETED: No email - skipping sync');
               }
             }
           });
@@ -319,101 +320,103 @@ export const useLocalStore = create<PickUpAndPutDownStore>()(
 
         // Sync actions
         setOnlineStatus: (isOnline: boolean) => {
-          console.log('🌐 NETWORK: setOnlineStatus called with:', isOnline);
+          //console.log('🌐 NETWORK: setOnlineStatus called with:', isOnline);
           set((state) => {
             const wasOffline = !state.isOnline && isOnline;
             state.isOnline = isOnline;
             
+            {/*
             console.log('🌐 NETWORK: Online status changed', { 
               wasOffline, 
               pendingSyncs: state.pendingSyncs.length,
               hasEmail: !!state.email
             });
-            
+            */}
+
             // Auto-retry pending syncs ONLY when coming online
             if (wasOffline && state.pendingSyncs.length > 0 && state.email) {
-              console.log('🌐 NETWORK: Back online - scheduling retry of pending syncs');
+              //console.log('🌐 NETWORK: Back online - scheduling retry of pending syncs');
               setTimeout(() => {
-                console.log('🌐 NETWORK: Executing pending sync retry');
+                //console.log('🌐 NETWORK: Executing pending sync retry');
                 get().retryPendingSyncs();
               }, 1000);
             }
           });
         },
 
-syncOnAppLoad: async () => {
-  const state = get();
-  if (!state.email || !state.isOnline) {
-    console.log('🔄 APP LOAD: Cannot sync - missing email or offline');
-    return;
-  }
+        syncWithDBOnStartup: async () => {
+          const state = get();
+          if (!state.email || !state.isOnline) {
+            console.log('🔄 APP LOAD: Cannot sync - missing email or offline');
+            return;
+          }
 
-  try {
-    console.log('🔄 APP LOAD: Local state BEFORE sync:', state.performanceData);
-    
-    const response = await fetch(`/api/performance?email=${state.email}`);
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    
-    const serverData = await response.json();
-    console.log('🔄 APP LOAD: Server data:', serverData.performanceData);
+          try {
+            console.log('🔄 APP LOAD: Local state BEFORE sync:', state.performanceData);
+            
+            const response = await fetch(`/api/performance?email=${state.email}`);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            
+            const serverData = await response.json();
+            console.log('🔄 APP LOAD: Server data:', serverData.performanceData);
 
-    // COMPLETE SYNC: Merge server data with local
-    set((state) => {
-      const serverModules = serverData.performanceData || [];
-      const localModules = state.performanceData || [];
-      
-      //console.log('🔄 MERGE: Local modules count:', localModules.length);
-      //console.log('🔄 MERGE: Server modules count:', serverModules.length);
+            // COMPLETE SYNC: Merge server data with local
+            set((state) => {
+              const serverModules = serverData.performanceData || [];
+              const localModules = state.performanceData || [];
+              
+              //console.log('🔄 MERGE: Local modules count:', localModules.length);
+              //console.log('🔄 MERGE: Server modules count:', serverModules.length);
 
-      // Create a map for easier lookup
-      const mergedMap = new Map();
-      
-      // First, add all local modules to the map
-      localModules.forEach(module => {
-        mergedMap.set(module.moduleId, module);
-      });
-      
-      // Then, update with server modules where they have better progress
-      serverModules.forEach((serverModule: { moduleId: string | number; scenariosCompleted: number; lastUpdated: string }) => { 
-        const localModule = mergedMap.get(serverModule.moduleId);
-        
-        if (!localModule) {
-          // Module doesn't exist locally - add it
-          //console.log('🔄 MERGE: Adding new module from server:', serverModule.moduleId);
-          mergedMap.set(serverModule.moduleId, serverModule);
-        } else if (serverModule.scenariosCompleted > localModule.scenariosCompleted) {
-          // Server has better progress - update it
-          //console.log('🔄 MERGE: Updating module from server:', serverModule.moduleId, 
-          //           'Local progress:', localModule.scenariosCompleted, 
-          //           'Server progress:', serverModule.scenariosCompleted);
-          mergedMap.set(serverModule.moduleId, serverModule);
-        } else {
-          //console.log('🔄 MERGE: Keeping local data for module:', serverModule.moduleId,
-          //           'Local progress:', localModule.scenariosCompleted,
-          //           'Server progress:', serverModule.scenariosCompleted);
-        }
-      });
-      
-      // Convert back to array
-      const mergedPerformanceData = Array.from(mergedMap.values());
-      console.log('🔄 MERGE: Final merged data:', mergedPerformanceData);
-      
-      // Update the state
-      state.performanceData = mergedPerformanceData;
-    });
+              // Create a map for easier lookup
+              const mergedMap = new Map();
+              
+              // First, add all local modules to the map
+              localModules.forEach(module => {
+                mergedMap.set(module.moduleId, module);
+              });
+              
+              // Then, update with server modules where they have better progress
+              serverModules.forEach((serverModule: { moduleId: string | number; scenariosCompleted: number; lastUpdated: string }) => { 
+                const localModule = mergedMap.get(serverModule.moduleId);
+                
+                if (!localModule) {
+                  // Module doesn't exist locally - add it
+                  //console.log('🔄 MERGE: Adding new module from server:', serverModule.moduleId);
+                  mergedMap.set(serverModule.moduleId, serverModule);
+                } else if (serverModule.scenariosCompleted > localModule.scenariosCompleted) {
+                  // Server has better progress - update it
+                  //console.log('🔄 MERGE: Updating module from server:', serverModule.moduleId, 
+                  //           'Local progress:', localModule.scenariosCompleted, 
+                  //           'Server progress:', serverModule.scenariosCompleted);
+                  mergedMap.set(serverModule.moduleId, serverModule);
+                } else {
+                  //console.log('🔄 MERGE: Keeping local data for module:', serverModule.moduleId,
+                  //           'Local progress:', localModule.scenariosCompleted,
+                  //           'Server progress:', serverModule.scenariosCompleted);
+                }
+              });
+              
+              // Convert back to array
+              const mergedPerformanceData = Array.from(mergedMap.values());
+              console.log('🔄 MERGE: Final merged data:', mergedPerformanceData);
+              
+              // Update the state
+              state.performanceData = mergedPerformanceData;
+            });
 
-    // Wait a moment for state to update, then log the result
-    setTimeout(() => {
-      const newState = get();
-      console.log('🔄 APP LOAD: Local state AFTER sync:', newState.performanceData);
-    }, 100);
+            // Wait a moment for state to update, then log the result
+            setTimeout(() => {
+              const newState = get();
+              console.log('🔄 APP LOAD: Local state AFTER sync:', newState.performanceData);
+            }, 100);
 
-    // ... rest of your positioning logic
+            // ... rest of your positioning logic
 
-  } catch (error) {
-    console.warn('🔄 APP LOAD: Sync failed:', error);
-  }
-},
+          } catch (error) {
+            console.warn('🔄 APP LOAD: Sync failed:', error);
+          }
+        },
 
         syncPerformanceToServer: async () => {
           const state = get();

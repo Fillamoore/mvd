@@ -42,7 +42,7 @@ export default function DesktopControlButton() {
     if (!isRevealed) {
       // REVEAL: SAFE - allRated guarantees no nulls!
       const moduleId = parseInt(currentModule);
-      console.log('🔄 DESKTOP BUTTON: Revealing scenario');
+      //console.log('🔄 DESKTOP BUTTON: Revealing scenario');
       revealScenario(moduleId, userRankings as { [responseId: string]: number }, expertRankings as { [responseId: string]: number });    } else {
       // NEXT: Just trigger navigation
       triggerScenarioCompletion();

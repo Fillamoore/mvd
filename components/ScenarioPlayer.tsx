@@ -1,35 +1,28 @@
-// components/ScenarioPlayer.tsx - FIXED VERSION
+// components/ScenarioPlayer.tsx 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import ScenarioCard from '@/components/ScenarioCard';
 import { useLocalStore } from '@/store/useLocalStore';
 import Image from 'next/image';
-import { useShallow } from 'zustand/react/shallow';
 import VerticalProgressBar from '@/components/VerticalProgressBar';
 import { ModuleTile } from '@/components/ModuleTile';
 import DesktopControlButton from '@/components/DesktopControlButton';
 import { getScenariosByModuleId, getModuleById, type Response } from '@/data/scenarios-content';
 
-export default function ScenarioPlayer() {
-  const {
-    currentModule,
-    pickUpAndPutDown,
-    performanceData,
-    setCurrentScenario,
-    setExpertRankings,
-  } = useLocalStore(useShallow((state) => ({
-    currentModule: state.currentModule,
-    pickUpAndPutDown: state.pickUpAndPutDown,
-    performanceData: state.performanceData,
-    setCurrentScenario: state.setCurrentScenario,
-    setExpertRankings: state.setExpertRankings,
-  })));
+const ScenarioPlayer = memo(function ScenarioPlayer() {
+  //console.log('🎯 ScenarioPlayer RENDER');
+
+  const currentModule = useLocalStore((state) => state.currentModule);
+  const pickUpAndPutDown = useLocalStore((state) => state.pickUpAndPutDown);
+  const performanceData = useLocalStore((state) => state.performanceData);
+  const setExpertRankings = useLocalStore((state) => state.setExpertRankings);
 
   const [hydrated, setHydrated] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
   
+  // A one-off check / set of isMobile flag. Not sure if actually needed!
   useEffect(() => {
     setHydrated(true);
     // Add a tiny delay to ensure everything is settled
@@ -47,7 +40,9 @@ export default function ScenarioPlayer() {
     };
   }, []);
 
+  // Get the moduleId from the store. If it doesn't exist, set to 1.
   const moduleId = currentModule ? parseInt(currentModule, 10) : 1;
+  // Get all the scenarios for this module.
   const currentModuleData = getModuleById(moduleId);
   if (!currentModuleData) {
     throw new Error(`Module with ID ${moduleId} not found in scenarios-content.ts`);
@@ -72,7 +67,7 @@ export default function ScenarioPlayer() {
         rankings[response.id] = 'expertRanking' in response ? (response as { expertRanking: number }).expertRanking : 0;
       });
       setExpertRankings(moduleId, currentScenarioData.id, rankings);
-      console.log('📊 SCENARIO PLAYER: Set expert rankings immediately', rankings);
+      //console.log('📊 SCENARIO PLAYER: Set expert rankings immediately', rankings);
     }
   }, [currentScenarioData, moduleId, setExpertRankings]);
 
@@ -99,8 +94,8 @@ export default function ScenarioPlayer() {
     );
   }
 
-  console.log("SCENARIO PLAYER: just before render",currentScenarioData.id);
-  
+  //console.log("SCENARIO PLAYER: just before render", currentScenarioData?.id);
+
   return (
     <div className={`scenarios-player-pane border-1 border-gray-700 h-full flex flex-col ${containerBorderRadius}`}>
 
@@ -117,11 +112,9 @@ export default function ScenarioPlayer() {
           </div>
           <h1 className="ml-1 text-base font-bold text-lilac-300 select-none">{currentModuleData.title}</h1>
         </div>
-        <div className="mr-[6px]">
-          <div className="flex items-center gap-[2px]">
-            <div className="p-1">
+        <div className="mr-[10px]">
+          <div className="flex items-center gap-[8px]">
               <ModuleTile moduleId={moduleId} score={getTileScore()} />
-            </div>
             <VerticalProgressBar
               current={currentScenarioIndex}
               total={moduleScenarios.length}
@@ -163,4 +156,6 @@ export default function ScenarioPlayer() {
       {!isMobile && <DesktopControlButton />}
     </div>
   );
-}
+});
+
+export default ScenarioPlayer;

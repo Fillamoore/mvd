@@ -16,6 +16,7 @@ interface SplashScreenProps {
 type SplashPhase = 'logo' | 'grid' | 'animating' | 'done';
 
 const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
+  
   const [phase, setPhase] = useState<SplashPhase>('logo');
   const [spiralOrder, setSpiralOrder] = useState<{ id: number; row: number; col: number }[]>([]);
   const [tileScores, setTileScores] = useState<number[][]>([]);
@@ -187,14 +188,14 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
   }, [animatedTiles, isMobile, dotPosition]);
 
   return (
-    <div className={`fixed inset-0 flex flex-col ${isMobile ? 'mt-10' : 'mt-12'} justify-start h-screen text-white z-50 bg-black`}>
+    <div className={`fixed inset-0 flex flex-col ${isMobile ? 'mt-[130px]' : 'mt-[180px]'} h-screen text-white z-50 bg-black`}>
       <div className={`flex flex-col items-center ${phase === 'logo' ? 'opacity-0 pointer-events-none' : 'opacity-100 transition-opacity duration-500'}`}>
           <img
             src="/qikr-logo.webp"
             alt="qikr logo"
             className={isMobile ? 'w-[110px] h-auto' : 'w-[135px] h-auto'}
           />
-        <div className={`mt-2 flex flex-col items-center `}>
+        <div className={`mt-4 flex flex-col items-center `}>
           {renderGrid()}
           {renderProgressBar()}
         </div>

@@ -23,11 +23,14 @@ export const ModuleTile = ({ moduleId, score = 0 }: ModuleTileProps) => {
     : undefined;
 
   return (
-    <div
-      className={`w-9 h-9 rounded-[4px] border-1 border-gray-500 ${bgClass}`}
-      style={{
-        backgroundColor: dynamicBg,
-      }}
-    />
+    <span
+      title={hasProgress ? `${Math.round(score)}%` : ''}
+      className="inline-block"
+    >
+      <div
+        className={`w-[38px] h-[38px] rounded-[4px] border border-gray-500 mt-[1px] mb-[1px] ${bgClass}`}
+        style={{ backgroundColor: dynamicBg }}
+      />
+    </span>
   );
 };

@@ -11,8 +11,6 @@ interface RankingBoxProps {
 export default function RankingBox({ responseId, type }: RankingBoxProps) {
   // Each RankingBox subscribes ONLY to its specific ranking data
 
-  //console.log("Ranking box - responseId, type: ",responseId,type);
-
   const rankingValue = useLocalStore(state => {
     if (!state.currentModule) return null;
     
