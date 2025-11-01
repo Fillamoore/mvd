@@ -18,13 +18,11 @@ export const ModuleTile = ({ moduleId, score = 0 }: ModuleTileProps) => {
     bgClass = 'bg-lilac-charcoal-a';
   }
 
-  const dynamicBg = hasProgress
-    ? `rgba(200, 160, 255, ${score / 100})`
-    : undefined;
+  const dynamicBg = `rgba(200, 160, 255, ${score / 100})`;
 
   return (
     <span
-      title={hasProgress ? `${Math.round(score)}%` : ''}
+      title={`${Math.round(score)}%`}
       className="inline-block"
     >
       <div
