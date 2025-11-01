@@ -31,7 +31,6 @@ export default function RootLayout() {
   const [appState, setAppState] = useState<AppState>('checking');
   const [onboardingFlow, setOnboardingFlow] = useState<OnboardingFlow>('onboarding-desktop');
   const [isMobile, setIsMobile] = useState(false);
-  const syncWithDBOnStartup = useLocalStore((state: any) => state.syncWithDBOnStartup);
 
   useEffect(() => {
     
@@ -61,27 +60,12 @@ export default function RootLayout() {
       setOnboardingFlow(isIOS ? 'onboarding-mobile' : 'onboarding-desktop');
       setAppState('onboarding');
     } else {
-      // Do the DB handshake once onboarding has completed and BEFORE the main app loads to avoid timing issues.
-      //console.log('Layout: calling syncOnAppLoad where onboarding wasn\'t needed.'); 
       setAppState('splash');      
-      //if (isOnline){
-      //  console.log('Desktop Layout: ',email);
-      //  syncWithDBOnStartup();
-      //}
-      
     }
-  }, [isOnline]); // Add isOnline to dependencies
+  }, [isOnline]);
 
   const handleOnboardingComplete = () => {
-    // Do the DB handshake once onboarding has completed and BEFORE the main app loads to avoid timing issues.
-    console.log('Layout: calling syncOnAppLoad after onboarding completed.'); 
     setAppState('splash');
-
-    {/*
-    if (isOnline) {
-      syncWithDBOnStartup();
-    }
-    */}  
   };
 
   const renderOnboarding = () => {
@@ -93,15 +77,13 @@ export default function RootLayout() {
     }
   };
 
-  //console.log('in layout, about to render',appState);
-
   return (
     <html lang="en">
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#000000" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="qikr" />
         <link rel="apple-touch-icon" href="/icon-192.webp" />
@@ -127,14 +109,6 @@ export default function RootLayout() {
             {isMobile ? <MobileLayout /> : <DesktopLayout />}
           </div>
         )}
-
-        {/*
-        <div className={`w-full h-full ${
-          appState === 'splash' ? 'invisible' : 'visible'
-        }`}>
-          {isMobile ? <MobileLayout /> : <DesktopLayout />}
-        </div>
-        */}
 
         {appState === 'splash' && (
           <div className="fixed inset-0 z-50">
