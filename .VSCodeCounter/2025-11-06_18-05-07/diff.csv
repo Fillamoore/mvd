@@ -1,0 +1,10 @@
+"filename", "language", "TypeScript", "TypeScript JSX", "PostCSS", "comment", "blank", "total"
+"c:\Users\Laptop\mvd\app\actions\createUser.ts", "TypeScript", -72, 0, 0, 0, -12, -84
+"c:\Users\Laptop\mvd\app\api\create-user\route.ts", "TypeScript", -25, 0, 0, -1, -5, -31
+"c:\Users\Laptop\mvd\app\api\db_check\route.ts", "TypeScript", -14, 0, 0, 0, -2, -16
+"c:\Users\Laptop\mvd\app\api\performance\route.ts", "TypeScript", -154, 0, 0, 0, -28, -182
+"c:\Users\Laptop\mvd\app\globals.css", "PostCSS", 0, 0, -225, -18, -48, -291
+"c:\Users\Laptop\mvd\app\layout.tsx", "TypeScript JSX", 0, -94, 0, -5, -23, -122
+"c:\Users\Laptop\mvd\app\menu\page.tsx", "TypeScript JSX", 0, -37, 0, -1, -1, -39
+"c:\Users\Laptop\mvd\data\scenarios-content.ts", "TypeScript", 304, 0, 0, 17, 17, 338
+"Total", "-", 39, -131, -225, -8, -102, -427

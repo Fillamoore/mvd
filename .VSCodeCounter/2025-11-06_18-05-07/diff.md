@@ -1,0 +1,33 @@
+# Diff Summary
+
+Date : 2025-11-06 18:05:07
+
+Directory c:\\Users\\Laptop\\mvd\\data
+
+Total : 8 files,  -317 codes, -8 comments, -102 blanks, all -427 lines
+
+[Summary](results.md) / [Details](details.md) / Diff Summary / [Diff Details](diff-details.md)
+
+## Languages
+| language | files | code | comment | blank | total |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| TypeScript | 5 | 39 | 16 | -30 | 25 |
+| TypeScript JSX | 2 | -131 | -6 | -24 | -161 |
+| PostCSS | 1 | -225 | -18 | -48 | -291 |
+
+## Directories
+| path | files | code | comment | blank | total |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| . | 8 | -317 | -8 | -102 | -427 |
+| . (Files) | 1 | 304 | 17 | 17 | 338 |
+| .. | 7 | -621 | -25 | -119 | -765 |
+| ..\\app | 7 | -621 | -25 | -119 | -765 |
+| ..\\app (Files) | 2 | -319 | -23 | -71 | -413 |
+| ..\\app\\actions | 1 | -72 | 0 | -12 | -84 |
+| ..\\app\\api | 3 | -193 | -1 | -35 | -229 |
+| ..\\app\\api\\create-user | 1 | -25 | -1 | -5 | -31 |
+| ..\\app\\api\\db_check | 1 | -14 | 0 | -2 | -16 |
+| ..\\app\\api\\performance | 1 | -154 | 0 | -28 | -182 |
+| ..\\app\\menu | 1 | -37 | -1 | -1 | -39 |
+
+[Summary](results.md) / [Details](details.md) / Diff Summary / [Diff Details](diff-details.md)

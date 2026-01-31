@@ -70,7 +70,7 @@ const OnboardingDesktop: React.FC<OnboardingProps> = ({ onComplete }) => {
     {
       image: '/desktop4.webp',
       title: 'How am I doing?',
-      description: "The tile in the top right (and the one highlighted in the Matrix) shows your average score and the progress bar shows how far you've progressed through the module. Ready to give it a go?",
+      description: "The tile top right (and the one highlighted in the Matrix) shows your average score and the progress bar shows how far you've progressed through the module. Ready to give it a go?",
     },
     {
       image: '/desktop4.webp',
